@@ -1,0 +1,50 @@
+/* ProductPerks — the `.pinfo .perks` block from
+ * `mockups/styles/main.css` lines 293–295. Token-only.
+ *
+ * Layout: a stacked column of items (8px gap), each item is a flex
+ * row with a teal check-circle on the left (18×18, teal-soft fill,
+ * teal-line border) and the bullet text on the right (12px body
+ * text). The whole block has `padding: var(--s-4) 0` so it sits
+ * with the same vertical rhythm as the rest of the `pinfo` column.
+ *
+ * Per AGENTS.md: no inline colors, no magic pixels. All sizes are
+ * tokens; the only literal is the check-circle's 18×18 size (the
+ * mockup's literal value, smaller than any radius token). */
+
+.perks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: var(--s-4) 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.check {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--r-pill);
+  background: var(--teal-soft);
+  border: 1px solid var(--teal-line);
+  display: grid;
+  place-items: center;
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 600;
+  /* Don't let the circle shrink when the text wraps to multiple lines. */
+  flex-shrink: 0;
+}
+
+.text {
+  min-width: 0;
+  /* Long bullets wrap inside the column rather than overflowing the
+   * pinfo grid column. */
+  overflow-wrap: anywhere;
+}

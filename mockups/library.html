@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My library — Uthena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design-system-dark.css">
+<style>
+  .lib-header { background: var(--bg-warm); border-bottom: 1px solid var(--border); padding: 28px 0; }
+  .lib-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .lib-greeting h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 4px; }
+  .lib-greeting .sub { color: var(--text-2); font-size: 13.5px; }
+  .lib-stats { display: flex; gap: 24px; }
+  .lib-stat { text-align: right; }
+  .lib-stat .v { font-family: var(--font-mono); font-size: 22px; font-weight: 600; letter-spacing: -0.015em; }
+  .lib-stat .l { font-size: 10.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+
+  .lib-body { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 24px 0 60px; }
+  @media (max-width: 900px) { .lib-body { grid-template-columns: 1fr; } .lib-sidebar { display: none; } }
+
+  .lib-sidebar { display: flex; flex-direction: column; gap: 2px; }
+  .lib-side-section { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); padding: 12px 10px 6px; font-weight: 600; }
+  .lib-side-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: var(--r-sm); color: var(--text-2); font-size: 13.5px; cursor: pointer; border-left: 2px solid transparent; }
+  .lib-side-item:hover { background: var(--bg-1); color: var(--text-1); }
+  .lib-side-item.active { background: var(--bg-1); color: var(--text-1); border-left-color: var(--accent); }
+  .lib-side-item svg { color: var(--text-3); }
+  .lib-side-item.active svg { color: var(--accent); }
+  .lib-side-item .num { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3); }
+
+  .lib-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+  .lib-tab { padding: 9px 14px; font-size: 13px; font-weight: 500; color: var(--text-2); border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+  .lib-tab:hover { color: var(--text-1); }
+  .lib-tab.active { color: var(--text-1); border-color: var(--accent); }
+
+  .continue {
+    background: var(--bg-brand); border: 1px solid var(--accent-line);
+    border-radius: var(--r-md); padding: 18px;
+    display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: center; margin-bottom: 20px;
+  }
+  @media (max-width: 768px) { .continue { grid-template-columns: 1fr; } }
+  .continue .lbl { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .continue .lbl::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .continue h3 { font-size: 17px; line-height: 1.3; margin-bottom: 4px; font-weight: 600; }
+  .continue .meta { color: var(--text-3); font-size: 12px; margin-bottom: 12px; font-family: var(--font-mono); }
+  .continue .thumb { aspect-ratio: 16/9; background: var(--bg-2); border-radius: var(--r-sm); position: relative; overflow: hidden; }
+  .continue .thumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(11,12,14,0.6)); }
+  .continue .thumb .play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(236, 236, 238, 0.95); display: flex; align-items: center; justify-content: center; }
+  .continue .thumb .play::after { content: ""; width: 0; height: 0; border-left: 12px solid #0B0C0E; border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 3px; }
+  .continue .thumb .pos { position: absolute; bottom: 6px; right: 6px; font-family: var(--font-mono); font-size: 10.5px; background: rgba(11,12,14,0.8); padding: 2px 6px; border-radius: 3px; color: #fff; }
+
+  .lib-list { display: flex; flex-direction: column; }
+  .lib-row { display: grid; grid-template-columns: 200px 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--border); }
+  .lib-row:first-child { border-top: none; }
+  .lib-row .thumb { aspect-ratio: 16/9; background: var(--bg-2); border-radius: var(--r-sm); position: relative; overflow: hidden; }
+  .lib-row .thumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(11,12,14,0.5)); }
+  .lib-row .info .ttl { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .lib-row .info .meta { font-size: 12px; color: var(--text-3); margin-bottom: 8px; font-family: var(--font-mono); }
+  .lib-row .info .prog-row { display: flex; align-items: center; gap: 10px; }
+  .lib-row .info .prog-bar { width: 160px; height: 3px; background: var(--bg-2); border-radius: 99px; overflow: hidden; }
+  .lib-row .info .prog-bar .fill { height: 100%; background: var(--accent); }
+  .lib-row .info .pct { font-size: 11px; color: var(--text-3); font-family: var(--font-mono); }
+  .lib-row .actions { display: flex; gap: 6px; }
+
+  .vault { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 768px) { .vault { grid-template-columns: 1fr; } }
+  .vault-item { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px; position: relative; }
+  .vault-item .ic { width: 32px; height: 32px; border-radius: var(--r-sm); background: var(--bg-2); display: flex; align-items: center; justify-content: center; color: var(--text-2); margin-bottom: 10px; }
+  .vault-item .nm { font-size: 13px; font-weight: 500; margin-bottom: 4px; line-height: 1.4; }
+  .vault-item .meta { font-size: 11px; color: var(--text-3); display: flex; justify-content: space-between; font-family: var(--font-mono); }
+  .vault-item .foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+  .vault-item .foot .expires { color: var(--text-3); }
+  .vault-item .foot .dl { color: var(--accent); font-weight: 500; }
+
+  h2.h { font-size: 14px; font-weight: 600; margin: 32px 0 12px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-word">uthena</span><span class="logo-mark-dot"></span>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link" href="catalog.html">Marketplace</a>
+      <a class="nav-link active" href="library.html">My library</a>
+      <a class="nav-link" href="#">Mini-shop</a>
+      <a class="nav-link" href="#">Affiliate</a>
+    </nav>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Search my library...">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">Sign out</a>
+      <div class="av" style="width: 28px; height: 28px; border-radius: 50%; background: var(--bg-2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--text-1); border: 1px solid var(--border-2);">KR</div>
+    </div>
+  </div>
+</header>
+
+<section class="lib-header">
+  <div class="container lib-header-inner">
+    <div class="lib-greeting">
+      <h1>Welcome back, Klaas</h1>
+      <div class="sub">Pick up where you left off — 3 courses in progress, 14 owned, 47 files in vault.</div>
+    </div>
+    <div class="lib-stats">
+      <div class="lib-stat"><div class="v">14</div><div class="l">Courses owned</div></div>
+      <div class="lib-stat"><div class="v">47</div><div class="l">Files</div></div>
+      <div class="lib-stat"><div class="v">62h</div><div class="l">Watched</div></div>
+      <div class="lib-stat"><div class="v">12</div><div class="l">Certificates</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="lib-body">
+    <aside class="lib-sidebar">
+      <div class="lib-side-section">My library</div>
+      <a class="lib-side-item active">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        All
+        <span class="num">14</span>
+      </a>
+      <a class="lib-side-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        In progress
+        <span class="num">3</span>
+      </a>
+      <a class="lib-side-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Completed
+        <span class="num">8</span>
+      </a>
+      <a class="lib-side-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        Bookmarked
+        <span class="num">5</span>
+      </a>
+      <a class="lib-side-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        File vault
+        <span class="num">47</span>
+      </a>
+      <a class="lib-side-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        Certificates
+        <span class="num">12</span>
+      </a>
+
+      <div class="lib-side-section">My business</div>
+      <a class="lib-side-item" href="#">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        My mini-shop
+      </a>
+      <a class="lib-side-item" href="#">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Earnings
+      </a>
+
+      <div class="lib-side-section">Account</div>
+      <a class="lib-side-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4"/></svg>
+        Settings
+      </a>
+    </aside>
+
+    <div>
+      <div class="continue">
+        <div>
+          <div class="lbl">Continue watching</div>
+          <h3>Module 4: Visual Content &amp; AI Design</h3>
+          <div class="meta">AI for Personal Branding · Lesson 3 of 5 · 11:42 remaining</div>
+          <div class="flex gap-2">
+            <button class="btn btn-primary btn-sm">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Resume at 8:32
+            </button>
+            <button class="btn btn-secondary btn-sm">View course</button>
+          </div>
+        </div>
+        <div class="thumb">
+          <div class="play"></div>
+          <div class="pos">8:32 / 19:50</div>
+        </div>
+      </div>
+
+      <h2 class="h">All courses · 14</h2>
+      <div class="lib-tabs" style="margin-top: -8px;">
+        <button class="lib-tab active">All <span class="t-faint">· 14</span></button>
+        <button class="lib-tab">In progress <span class="t-faint">· 3</span></button>
+        <button class="lib-tab">Completed <span class="t-faint">· 8</span></button>
+        <button class="lib-tab">File vault <span class="t-faint">· 47</span></button>
+        <button class="lib-tab">Certificates <span class="t-faint">· 12</span></button>
+      </div>
+
+      <div class="lib-list">
+        <div class="lib-row">
+          <div class="thumb"></div>
+          <div class="info">
+            <div class="ttl">AI for Personal Branding</div>
+            <div class="meta">12 modules · 47 lessons · 6h 24m · TJ Walker</div>
+            <div class="prog-row">
+              <div class="prog-bar"><div class="fill" style="width: 38%;"></div></div>
+              <span class="pct">38% · 18/47 lessons</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary btn-sm">Continue</button>
+            <button class="btn btn-secondary btn-sm">Details</button>
+          </div>
+        </div>
+        <div class="lib-row">
+          <div class="thumb"></div>
+          <div class="info">
+            <div class="ttl">B2B Sales Mastery</div>
+            <div class="meta">10 modules · 38 lessons · 5h 12m · Digital Crest Institute</div>
+            <div class="prog-row">
+              <div class="prog-bar"><div class="fill" style="width: 100%;"></div></div>
+              <span class="pct">100% · Completed Mar 18</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-secondary btn-sm">Review</button>
+            <button class="btn btn-ghost btn-sm">Certificate</button>
+          </div>
+        </div>
+        <div class="lib-row">
+          <div class="thumb"></div>
+          <div class="info">
+            <div class="ttl">Python Pro Bootcamp</div>
+            <div class="meta">15 modules · 58 lessons · 12h 08m · Python Pro Team</div>
+            <div class="prog-row">
+              <div class="prog-bar"><div class="fill" style="width: 62%;"></div></div>
+              <span class="pct">62% · 36/58 lessons</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary btn-sm">Continue</button>
+            <button class="btn btn-secondary btn-sm">Details</button>
+          </div>
+        </div>
+        <div class="lib-row">
+          <div class="thumb"></div>
+          <div class="info">
+            <div class="ttl">Generative AI for Leaders</div>
+            <div class="meta">8 modules · 32 lessons · 4h 48m · TJ Walker</div>
+            <div class="prog-row">
+              <div class="prog-bar"><div class="fill" style="width: 0%;"></div></div>
+              <span class="pct">Not started</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary btn-sm">Start course</button>
+            <button class="btn btn-secondary btn-sm">Details</button>
+          </div>
+        </div>
+        <div class="lib-row">
+          <div class="thumb"></div>
+          <div class="info">
+            <div class="ttl">SQLite Databases From Scratch</div>
+            <div class="meta">6 modules · 22 lessons · 3h 14m · DB Academy</div>
+            <div class="prog-row">
+              <div class="prog-bar"><div class="fill" style="width: 100%;"></div></div>
+              <span class="pct">100% · Completed Feb 28</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-secondary btn-sm">Review</button>
+            <button class="btn btn-ghost btn-sm">Certificate</button>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="h">File vault · 47</h2>
+      <p class="t-mute mb-4 t-sm">All your course source files, in one place. Downloaded via signed URLs that expire after 24 hours.</p>
+
+      <div class="vault">
+        <div class="vault-item">
+          <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+          <div class="nm">AI for Personal Branding — Source Videos</div>
+          <div class="meta"><span>ZIP · 8.4 GB</span><span>47 files</span></div>
+          <div class="foot"><span class="expires">Expires in 24h</span><a class="dl" href="#">Generate link</a></div>
+        </div>
+        <div class="vault-item">
+          <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="nm">Course Transcripts &amp; Worksheets</div>
+          <div class="meta"><span>PDF · 12 MB</span><span>47 pages</span></div>
+          <div class="foot"><span class="expires">Expires in 24h</span><a class="dl" href="#">Generate link</a></div>
+        </div>
+        <div class="vault-item">
+          <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+          <div class="nm">Sales Page Graphics Pack</div>
+          <div class="meta"><span>ZIP · 248 MB</span><span>32 files</span></div>
+          <div class="foot"><span class="expires">Expires in 24h</span><a class="dl" href="#">Generate link</a></div>
+        </div>
+        <div class="vault-item">
+          <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="nm">Email Swipes (7 templates)</div>
+          <div class="meta"><span>ZIP · 2 MB</span><span>7 files</span></div>
+          <div class="foot"><span class="expires">Expires in 24h</span><a class="dl" href="#">Generate link</a></div>
+        </div>
+        <div class="vault-item">
+          <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+          <div class="nm">Canva Templates Bundle</div>
+          <div class="meta"><span>ZIP · 124 MB</span><span>24 templates</span></div>
+          <div class="foot"><span class="expires">Expires in 24h</span><a class="dl" href="#">Generate link</a></div>
+        </div>
+        <div class="vault-item">
+          <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+          <div class="nm">B2B Sales — Source Videos</div>
+          <div class="meta"><span>ZIP · 6.2 GB</span><span>38 files</span></div>
+          <div class="foot"><span class="expires">Expires in 24h</span><a class="dl" href="#">Generate link</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

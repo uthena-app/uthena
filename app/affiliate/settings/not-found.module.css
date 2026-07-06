@@ -1,0 +1,66 @@
+/* /affiliate/settings not-found surface. */
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 480px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.heading {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.body {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--bg);
+  background: var(--accent);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cta:hover {
+  background: var(--accent-hover);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

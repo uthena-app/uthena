@@ -1,0 +1,139 @@
+/* FaqAccordion — group + item + collapsible panel. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.groupH {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.item {
+  border-bottom: 1px solid var(--line);
+}
+
+.q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 16px 4px;
+  background: transparent;
+  border: none;
+  color: var(--text-1);
+  font-size: 15.5px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+.q:hover {
+  color: var(--heading);
+}
+
+.q:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.qText {
+  flex: 1;
+}
+
+.qChevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: var(--text-2);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  transition: transform 160ms ease, color 120ms ease, background 120ms ease;
+}
+
+.item[data-open] .qChevron {
+  transform: rotate(180deg);
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+
+.a {
+  /* `hidden` attribute is set when collapsed. The CSS still keeps the
+     panel smooth when expanded. */
+  color: var(--text-2);
+}
+
+.aInner {
+  padding: 0 4px 18px;
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+.aInner p {
+  margin: 0 0 12px;
+}
+
+.aInner p:last-child {
+  margin-bottom: 0;
+}
+
+.aInner ul,
+.aInner ol {
+  margin: 0 0 12px;
+  padding-left: 22px;
+}
+
+.aInner li {
+  margin-bottom: 4px;
+}
+
+.aInner a {
+  color: var(--accent);
+}
+
+.aInner a:hover {
+  color: var(--accent-hover);
+}
+
+.aInner code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.empty {
+  color: var(--text-2);
+  font-size: 14.5px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+}

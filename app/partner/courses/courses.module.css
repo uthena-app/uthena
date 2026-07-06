@@ -1,0 +1,271 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1100px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 13px;
+  margin: 0;
+  max-width: 540px;
+}
+
+.uploadBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 8px;
+  background: var(--action);
+  color: #1a0e00;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.uploadBtn:hover {
+  background: var(--action-hover);
+}
+
+.empty {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.emptyTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+}
+
+.emptyLede {
+  font-size: 14px;
+  color: var(--text-3);
+  margin: 0 0 8px;
+  max-width: 480px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.row {
+  display: grid;
+  /* P6.2 — 6 columns now (was 4): thumb | body | status | units | revenue | action.
+   * The units + revenue columns sit between body + status so the action
+   * column stays anchored at the right edge for muscle memory. */
+  grid-template-columns: 80px 1fr auto auto auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.row:last-child {
+  border-bottom: none;
+}
+.row:hover {
+  background: var(--bg-elev-2);
+}
+
+@media (max-width: 880px) {
+  /* Tablet — collapse the metric columns into the body col by stacking
+   * them on the right edge. Body still expands; metrics stay right-aligned. */
+  .row {
+    grid-template-columns: 60px 1fr auto auto auto;
+    gap: 12px;
+  }
+  .statusCol {
+    grid-column: 3;
+  }
+  .unitsCol,
+  .revenueCol {
+    grid-column: 4;
+  }
+  .actionCol {
+    grid-column: 5;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Mobile — 2-col layout: thumb + body, with status / units / revenue /
+   * action all stacked under the body in column 2. */
+  .row {
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: auto auto;
+  }
+  .statusCol,
+  .unitsCol,
+  .revenueCol,
+  .actionCol {
+    grid-column: 2;
+  }
+  /* P6.2 — Units + revenue metrics get a smaller footprint on mobile
+   * so the row doesn't grow too tall. Display them inline next to status
+   * to keep the visual rhythm compact. */
+  .unitsCol,
+  .revenueCol {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+  }
+  .unitsCol .metricLabel,
+  .revenueCol .metricLabel {
+    display: inline;
+  }
+}
+
+.thumbCol {
+  width: 80px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbPlaceholder {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+}
+
+.bodyCol {
+  min-width: 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0 0 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shortDesc {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0 0 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.meta {
+  font-size: 11px;
+  color: var(--text-3);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.statusCol {
+  display: flex;
+  align-items: center;
+}
+
+.actionCol {
+  display: flex;
+  align-items: center;
+}
+
+/* P6.2 — Per-product revenue aggregate columns (resolves STUB-035).
+ * Right-aligned, monospace numbers so partners can scan revenue /
+ * units across the list. Tabular-nums prevents the layout from
+ * jumping when a row's number of digits changes (e.g. 9 → 10). */
+.unitsCol,
+.revenueCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  min-width: 78px;
+  font-variant-numeric: tabular-nums;
+}
+
+.metricLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.metricValue {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.openBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-1);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.openBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}

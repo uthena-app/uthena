@@ -1,0 +1,54 @@
+/* Root loading fallback — generic catalog-shaped skeleton. Token-only. */
+
+.page {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-4) var(--space-9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 720px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.band {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-7);
+  background: var(--bg-elev-1);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .page {
+    padding: var(--space-6) var(--space-3) var(--space-8);
+  }
+}

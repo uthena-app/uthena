@@ -1,0 +1,190 @@
+/* global-error.module.css — token-only styles for the root-layout crash
+   boundary. Must be fully self-contained (the root layout's <link> tags
+   and <style> tags are GONE — this page replaces them). */
+
+.reset {
+  /* Mini CSS reset — replaces the root layout's globals.css.
+     Keeps the page readable even when nothing else loads. */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.doc {
+  /* Self-contained <html>/<body> replacement. The font stack
+     falls back to system fonts in case next/font is unreachable. */
+  font-family: var(--font-display), 'Inter Tight', 'Inter',
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text-1);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-7) var(--space-5);
+  text-align: center;
+}
+
+/* Same warn-icon treatment as error.module.css, but standalone
+   (no CSS-module cross-reference). */
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-line);
+  color: var(--warn);
+  margin-bottom: var(--s-5);
+}
+
+.eyebrow {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--heading);
+  margin: var(--s-3) 0 var(--s-3);
+  max-width: 480px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 0 var(--s-5);
+}
+
+/* Reference code card — same shape as error.tsx, no copy button
+   (clipboard API may be unavailable when the root layout crashes). */
+.refCard {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  margin: 0 0 var(--s-5);
+  max-width: 100%;
+}
+
+.refLabel {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.refCode {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-1);
+  letter-spacing: 0.02em;
+  user-select: all;
+}
+
+/* Action group — primary reset + secondary home. */
+.actions {
+  display: flex;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: var(--r-sm);
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-body);
+  transition: background 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+
+.btnPrimary {
+  composes: btn;
+  background: var(--action);
+  color: var(--on-action);
+}
+
+.btnPrimary:hover {
+  background: var(--action-hover);
+}
+
+.btnPrimary:active {
+  transform: translateY(1px);
+}
+
+.btnPrimary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btnSecondary {
+  composes: btn;
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  border-color: var(--line);
+}
+
+.btnSecondary:hover {
+  background: var(--bg-elev-2);
+  border-color: var(--line-strong);
+}
+
+.btnSecondary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.foot {
+  margin-top: var(--s-7);
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.5;
+  max-width: 480px;
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    padding: var(--space-6) var(--space-4);
+  }
+  .h1 {
+    font-size: 24px;
+  }
+  .refCard {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

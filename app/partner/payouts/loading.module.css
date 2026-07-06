@@ -1,0 +1,76 @@
+/* Partner payouts loading fallback — header + summary grid + ledger
+   list. Token-only. Mirrors partner/payouts/page.module.css. */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5) var(--space-9);
+}
+
+.header {
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-7);
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--space-4);
+}
+
+.ledger {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ledgerHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.entries {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 1fr 100px 80px 80px;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+
+.entry:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 720px) {
+  .summary {
+    grid-template-columns: 1fr;
+  }
+  .entry {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,143 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+}
+
+.sub { color: var(--text-3); font-size: 14px; margin: 0; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.nav {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 0;
+  border-right: 1px solid var(--line);
+  padding-right: 16px;
+}
+
+.navLink {
+  font-size: 14px;
+  color: var(--text-2);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+.navLink:hover { color: var(--heading); background: var(--bg-elev-1); }
+
+.content { min-width: 0; display: flex; flex-direction: column; gap: 32px; }
+
+.section {}
+
+.h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sectionHint {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.list, .vaultList { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+
+.empty { color: var(--text-3); font-size: 13px; padding: 12px 0; }
+
+.vaultCta {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.vaultCta:hover { text-decoration: underline; }
+
+/* P7.9 — summary line above the vault groups when filters are active.
+   Tabular-num for the count so the digit doesn't shift when the
+   filter changes the result count. */
+.vaultSummary {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0 0 12px;
+  font-variant-numeric: tabular-nums;
+}
+.vaultSummaryClear {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 4px;
+}
+.vaultSummaryClear:hover { text-decoration: underline; }
+
+/* P7.1 Slice 1 — grouped file vault. One h3 per product, with a small
+   file-count badge in the corner. */
+.vaultGroups { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 20px; }
+.vaultGroup { display: flex; flex-direction: column; gap: 4px; }
+.vaultGroupHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.vaultGroupTitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+}
+.vaultGroupCount {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* P7.4 — bulk-download form wrapper. The form has no visual
+   styling of its own — it just groups the vault rows so the
+   checkbox submit picks up every `input[name="file_ids"]` inside. */
+.bulkForm { margin: 0; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .nav { position: static; flex-direction: row; border-right: none; border-bottom: 1px solid var(--line); padding: 0 0 12px; }
+  .navLink { padding: 6px 10px; }
+}
+
+@media (max-width: 640px) {
+  .page { padding: 24px 16px 64px; }
+  .h1 { font-size: 26px; }
+  .vaultGroups { gap: 16px; }
+}

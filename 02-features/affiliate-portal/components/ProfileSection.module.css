@@ -1,0 +1,158 @@
+/* ProfileSection — /affiliate/settings Profile section. */
+
+.section {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+  padding: 1.5rem;
+}
+
+.header {
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: var(--text-1);
+}
+
+.subheading {
+  font-size: 0.875rem;
+  margin: 0;
+  color: var(--text-2);
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.counter {
+  margin: -0.25rem 0 0;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-3);
+  text-align: right;
+}
+
+.bioField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.bioLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-1);
+}
+
+.bioTextarea {
+  background: var(--bg-inset);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm, 6px);
+  padding: 0.625rem 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--text-1);
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 5rem;
+}
+
+.bioTextarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.bioTextarea[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.error {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--danger);
+}
+
+.savingState {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.previewColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--bg-inset);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md, 8px);
+  padding: 1rem;
+  align-self: start;
+}
+
+.previewLabel {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+}
+
+.previewLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.previewLink:hover {
+  text-decoration: underline;
+}
+
+.previewLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.toastOk {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--success);
+  background: var(--success-soft);
+  border: 1px solid var(--success-line);
+  border-radius: var(--radius-sm, 6px);
+}
+
+.toastErr {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-line);
+  border-radius: var(--radius-sm, 6px);
+}

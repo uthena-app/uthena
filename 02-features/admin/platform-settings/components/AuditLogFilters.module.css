@@ -1,0 +1,66 @@
+/* AuditLogFilters.module.css */
+
+.root {
+  display: grid;
+  gap: var(--space-3, 12px);
+  padding: var(--space-4, 16px);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3, 12px);
+}
+
+.field {
+  display: grid;
+  gap: 4px;
+}
+
+.label {
+  font-size: var(--text-xs, 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-mute);
+  font-weight: var(--weight-medium, 500);
+}
+
+.input {
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm, 6px);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: var(--text-sm, 14px);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2, 8px);
+}
+
+.applyButton,
+.clearButton {
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--weight-medium, 500);
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.applyButton {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+
+.clearButton {
+  background: var(--bg-2);
+  color: var(--text-1);
+}

@@ -1,0 +1,90 @@
+/* DmcaAgentCard — the data-driven agent contact card on /dmca.
+   Tokens only; no inline colors. */
+
+.card {
+  margin: 0 0 32px;
+  padding: 24px 28px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  color: var(--text-1);
+}
+
+.heading {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin: 0 0 12px;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0 0 14px;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  margin: 0 0 6px;
+  flex-wrap: wrap;
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--text-3);
+  min-width: 120px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 13px;
+}
+
+.value {
+  color: var(--text-1);
+  word-break: break-word;
+}
+
+.link {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.link:hover {
+  color: var(--accent-hover);
+  border-bottom-color: var(--accent-line);
+}
+
+.fallback {
+  margin: 0 0 32px;
+  padding: 20px 24px;
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-line);
+  border-radius: 8px;
+  color: var(--text-1);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.fallback strong {
+  color: var(--heading);
+}
+
+.fallbackHint {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+}

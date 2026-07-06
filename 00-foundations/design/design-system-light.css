@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Uthena v4 — LIGHT theme tokens
+   Applied when <html data-theme="light">. Same token names as the dark
+   theme, different values. The two brand colors (orange + teal) keep the
+   same hex — only their soft/line opacities are bumped for legibility on
+   cream. The footer is DARK on a light page (because a light footer would
+   vanish into the canvas).
+   ========================================================================== */
+
+[data-theme="light"] {
+  /* Canvas — warm off-white. Cards pop UP off the page (inverts the
+     dark theme's depth direction: lightest at page, deeper on raised). */
+  --bg:           #FAF9F5;          /* page — warm cream */
+  --bg-elev-1:    #FFFFFF;          /* card — pops off page */
+  --bg-elev-2:    #F2EFE8;          /* raised / hover (warmer) */
+  --bg-elev-3:    #EAE6DC;          /* input fill, chip */
+  --bg-inset:     #F2EFE8;          /* code, table stripe */
+  --bg-brand:     rgba(26, 188, 156, 0.06);
+
+  /* Borders — warmer hairlines */
+  --line:         #E5E1D6;
+  --line-strong:  #D5D0C2;
+
+  /* Text — near-black on cream */
+  --heading:      #0B0C0D;
+  --text-1:       #0B0C0D;
+  --text-2:       #2A2D32;
+  --text-3:       #6B6F7A;
+  --text-4:       #A0A4AC;
+  --text:         var(--text-1);
+
+  /* Action — same orange, but hover is DARKER (not lighter) because the
+     base orange is bright on a bright bg — a lighter hover would wash out. */
+  --action:        #F3924A;
+  --action-hover:  #E57A2A;
+  --action-soft:   rgba(243, 146, 74, 0.16);
+  --action-line:   rgba(243, 146, 74, 0.40);
+  --action-glow:   rgba(243, 146, 74, 0.35);
+
+  /* Identity — same teal, darker hover for legibility on cream */
+  --accent:        #1ABC9C;
+  --accent-hover:  #159A82;
+  --accent-soft:   rgba(26, 188, 156, 0.14);
+  --accent-line:   rgba(26, 188, 156, 0.40);
+  --accent-glow:   rgba(26, 188, 156, 0.35);
+
+  /* v4 canonical aliases */
+  --orange:        var(--action);
+  --orange-hover:  var(--action-hover);
+  --orange-soft:   var(--action-soft);
+  --orange-line:   var(--action-line);
+  --teal:          var(--accent);
+  --teal-hover:    var(--accent-hover);
+  --teal-soft:     var(--accent-soft);
+  --teal-line:     var(--accent-line);
+
+  /* Sale / new — orange-soft / teal-soft inherit the bumped opacities */
+  --sale:          var(--action);
+  --sale-soft:     var(--action-soft);
+  --new:           var(--accent);
+  --new-soft:      var(--accent-soft);
+
+  /* Footer — DARK on light page. A light footer would disappear.
+     Use a deep warm gray that echoes the dark-theme canvas color. */
+  --footer-bg:    #15181B;
+  --footer-fg:    #ECECEE;
+  --footer-line:  #2A2F35;
+
+  /* Semantic — slightly darker for legibility on cream */
+  --success:        #2E8B5F;
+  --success-soft:   rgba(46, 139, 95, 0.10);
+  --success-line:   rgba(46, 139, 95, 0.25);
+  --warn:           #B8860B;
+  --warn-soft:      rgba(184, 134, 11, 0.10);
+  --warn-line:      rgba(184, 134, 11, 0.25);
+  --danger:         #C73E3E;
+  --danger-soft:    rgba(199, 62, 62, 0.10);
+  --danger-line:    rgba(199, 62, 62, 0.25);
+  --info:           #4561D8;
+  --info-soft:      rgba(69, 97, 216, 0.10);
+  --info-line:      rgba(69, 97, 216, 0.25);
+
+  /* Star */
+  --star:          var(--action);
+
+  /* Shadows — softer on light bg */
+  --shadow-sm:   0 1px 2px rgba(40, 35, 20, 0.05);
+  --shadow-md:   0 4px 16px rgba(40, 35, 20, 0.08);
+  --shadow-lg:   0 12px 36px rgba(40, 35, 20, 0.10);
+  --shadow-glow: 0 0 0 1px var(--accent-line), 0 6px 20px rgba(26, 188, 156, 0.14);
+
+  /* Overlays & on-color text — see the dark-theme block in tokens.css
+     for the rationale. The orange action color reads brighter on cream
+     so we keep the same deep brown text on it. The backdrop is a
+     warm gray instead of pure black so the modal feels like a sheet
+     of glass over the page rather than a vignette. */
+  --bg-overlay:    rgba(40, 35, 20, 0.45);
+  --on-action:     #1A0E00;
+  --on-success:    #FFFFFF;   /* readable icon/text on the light-theme --success fill (deeper green than dark mode; white wins on contrast) */
+  --on-danger:     #FFFFFF;
+}
+
+/* Selection — orange in both themes (visible on either bg) */
+[data-theme="light"] ::selection { background: var(--action); color: #FFFFFF; }

@@ -1,0 +1,21 @@
+/* ApiTokensAuditStrip.module.css — token-only mono strip, matches
+   the design-system's audit-strip DNA (small, muted, mono-tinted). */
+
+.strip {
+  font-size: 12px;
+  font-family: ui-monospace, 'SF Mono', 'Menlo', 'Cascadia Code', monospace;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--text-muted);
+}
+
+.label {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.value {
+  color: var(--text);
+}

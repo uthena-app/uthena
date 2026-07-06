@@ -1,0 +1,142 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 80ms ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn_primary {
+  background: var(--action);
+  color: #1A0E00;
+}
+.btn_primary:hover:not(:disabled) {
+  background: var(--action-hover);
+}
+
+.btn_secondary {
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  border-color: var(--line);
+}
+.btn_secondary:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  background: var(--bg-elev-2);
+}
+
+.btn_ghost {
+  background: transparent;
+  color: var(--text-1);
+}
+.btn_ghost:hover:not(:disabled) {
+  background: var(--bg-elev-1);
+}
+
+.btn_danger {
+  background: var(--danger);
+  color: #ffffff;
+}
+.btn_danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--danger) 80%, white);
+}
+
+.size_sm {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+.size_md {
+  height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+}
+.size_lg {
+  height: 48px;
+  padding: 0 22px;
+  font-size: 15px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.loading {
+  cursor: wait;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.btnLabel {
+  display: inline-flex;
+  align-items: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.input {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-size: 14px;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.input:hover {
+  border-color: var(--line-strong);
+}
+
+.input:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.inputError {
+  border-color: var(--danger);
+}
+.inputError:focus-visible {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px var(--danger-soft);
+}
+
+.error {
+  font-size: 12px;
+  color: var(--danger);
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text-3);
+}

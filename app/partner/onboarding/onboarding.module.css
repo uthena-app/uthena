@@ -1,0 +1,9 @@
+/* /partner/onboarding — token-only page wrapper.
+   The shell owns its own layout; this just gives the route a consistent
+   vertical rhythm that matches /partner/courses and /partner/settings. */
+
+.page {
+  min-height: calc(100vh - 64px);
+  background: var(--bg);
+  color: var(--text-1);
+}

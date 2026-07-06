@@ -1,0 +1,31 @@
+/* PastDueRetryButton — warn-CTA styling. Matches the PastDueBanner's
+   warn palette. Token-only — no inline colors. The hardcoded dark text
+   on `--warn` is the same on-warn shade used across the design system
+   for warn-fill buttons; if a future `--on-warn` token lands, swap it. */
+
+.button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--warn);
+  color: #1A0E00;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 120ms ease;
+}
+
+.button:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--warn);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}

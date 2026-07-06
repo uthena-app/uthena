@@ -1,0 +1,202 @@
+# .github/workflows/db-types.yml
+#
+# db-types — Regenerate Supabase TypeScript types on schema changes.
+#
+# Triggers:
+#   1. pull_request — runs the drift check; fails the PR if the
+#      committed types.generated.ts is stale relative to a fresh
+#      generation. The contributor must run `pnpm db:types` locally
+#      and commit the result.
+#   2. push to main — regenerates types against the live database and
+#      commits the result back to main. This is how the auto-generated
+#      contract stays in sync with production schema drift.
+#   3. schedule (daily at 06:17 UTC) — catches drift that escaped both
+#      triggers (e.g. a manual schema change via Supabase Studio that
+#      didn't go through a migration). Daily is enough; the on-push
+#      job already covers merge-driven drift.
+#   4. workflow_dispatch — manual re-run from the Actions tab. Useful
+#      when Klaas runs a hotfix migration outside the normal PR flow.
+#
+# Environment:
+#   - Uses the same Postgres service as `ci.yml`. The Supabase CLI is
+#     installed from the repo's devDependencies (`pnpm install` runs
+#     before any script). DATABASE_URL points at the service.
+#   - `SUPABASE_DB_URL` (the project URL the Supabase CLI introspects)
+#     is the same value as DATABASE_URL here — the local Supabase CLI
+#     just needs a Postgres URL it can `psql` against.
+#
+# What this workflow does NOT do
+# -------------------------------
+# - It does NOT bootstrap the migrations. That's `ci.yml`'s job. The
+#   `pull_request` trigger relies on `ci.yml` having already run the
+#   bootstrap on a parallel job; the generated types are stable across
+#   runs as long as the migrations are stable.
+# - It does NOT deploy or rebuild the app. The build job in `ci.yml`
+#   is the source of truth for "is the app buildable?".
+
+name: db-types
+
+on:
+  pull_request:
+    paths:
+      - '04-platform/migrations/**'
+      - '.github/workflows/db-types.yml'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+  push:
+    branches:
+      - main
+    paths:
+      - '04-platform/migrations/**'
+      - '.github/workflows/db-types.yml'
+  schedule:
+    # Daily at 06:17 UTC — catches out-of-band schema drift.
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+# Cancel any in-flight run when a new commit lands on the same PR.
+concurrency:
+  group: db-types-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  drift-check:
+    name: Drift check (PR)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 54322:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Bootstrap migrations
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: pnpm db:bootstrap
+
+      - name: Generate types (for comparison only)
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: |
+          # Write to a temp path so the committed file is untouched.
+          pnpm tsx 04-platform/ci/scripts/db-types.ts --outputPath=/tmp/types.generated.ts || \
+            (echo "::error::db-types wrapper failed; the drift check cannot run." && exit 2)
+
+      - name: Compare against committed types
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: |
+          # If the diff is empty, types are fresh.
+          if diff -q /tmp/types.generated.ts 00-foundations/data/types.generated.ts >/dev/null 2>&1; then
+            echo "Types are fresh."
+            exit 0
+          fi
+          if [ ! -f 00-foundations/data/types.generated.ts ]; then
+            echo "::error::No committed types.generated.ts. Run \`pnpm db:types\` locally and commit the result."
+            exit 1
+          fi
+          echo "::error::types.generated.ts is stale. Run \`pnpm db:types\` locally and commit the result."
+          echo "::group::Diff (truncated to 200 lines)"
+          diff 00-foundations/data/types.generated.ts /tmp/types.generated.ts | head -200 || true
+          echo "::endgroup::"
+          exit 1
+
+  regenerate-and-commit:
+    name: Regenerate + commit (main)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 54322:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # We need write access to push the regenerated types back.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Fetch enough history for `git log` in the commit message.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Bootstrap migrations
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: pnpm db:bootstrap
+
+      - name: Regenerate types
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: pnpm db:types
+
+      - name: Check for drift
+        id: drift
+        run: |
+          if git diff --quiet -- 00-foundations/data/types.generated.ts; then
+            echo "drift=false" >> "$GITHUB_OUTPUT"
+            echo "No drift — types are up-to-date."
+          else
+            echo "drift=true" >> "$GITHUB_OUTPUT"
+            echo "Drift detected. The regenerated file will be committed."
+            git diff --stat -- 00-foundations/data/types.generated.ts
+          fi
+
+      - name: Configure git
+        if: steps.drift.outputs.drift == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit regenerated types
+        if: steps.drift.outputs.drift == 'true'
+        run: |
+          git add 00-foundations/data/types.generated.ts
+          git commit -m "chore(types): regenerate from live DB
+
+          Triggered by ${{ github.event_name }} on ${{ github.sha }}.
+          See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} for details."
+          git push

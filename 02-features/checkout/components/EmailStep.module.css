@@ -1,0 +1,155 @@
+/* EmailStep — token-only. Mirrors the right-column visual rhythm of
+   the legacy /checkout page so the wizard refactor doesn't surprise
+   users who have the old layout muscle-memorized. */
+
+.wrap {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--space-7, 28px) var(--space-6, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5, 20px);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.lede {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 56ch;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+  margin: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+
+.fieldLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.fieldValue {
+  font-size: 15px;
+  color: var(--heading);
+  margin: 0;
+}
+
+.emailPill {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: var(--r-sm, 8px);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--heading);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.changeNote {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.changeLink {
+  color: var(--accent, var(--orange));
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.changeLink:hover {
+  text-decoration: underline;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: var(--space-2, 8px);
+  padding-top: var(--space-5, 20px);
+  border-top: 1px solid var(--line);
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 22px;
+  background: var(--action, var(--orange));
+  color: #1A0E00;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.primaryCta:hover {
+  background: var(--action-hover, #FFA862);
+}
+
+.secondaryCta {
+  font-size: 13px;
+  color: var(--text-2);
+  text-decoration: none;
+}
+
+.secondaryCta:hover {
+  color: var(--heading);
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    padding: var(--space-5, 20px) var(--space-4, 16px);
+  }
+  .h2 {
+    font-size: 19px;
+  }
+  .actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .primaryCta {
+    justify-content: center;
+  }
+  .secondaryCta {
+    text-align: center;
+  }
+}

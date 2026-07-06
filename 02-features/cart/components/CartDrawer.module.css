@@ -1,0 +1,408 @@
+/* ==========================================================================
+   CartDrawer.module.css — global slide-in cart drawer (P4.1).
+
+   Slide direction: from the right. Width: min(420px, 100vw) so it
+   feels like a real drawer on desktop and a full-screen sheet on
+   mobile (≤ 480px).
+
+   Visual language: matches the existing mobile-nav + search-overlay
+   surfaces so the design system reads as one set:
+   - Backdrop: --bg-overlay + 6px blur (mirrors SearchOverlay).
+   - Drawer:   --bg-elev-1 surface + --line left border + --shadow-lg.
+   - Header:   title (eyebrow + count) + close button.
+   - Body:     vertical list of compact line rows (thumbnail 64×48 +
+                eyebrow + title + license + price + remove ✕).
+   - Footer:   sticky subtotal + checkout CTA (orange --action) +
+                view-cart link (secondary).
+
+   prefers-reduced-motion disables the 180ms slide.
+   ========================================================================== */
+
+/* ---- Backdrop ---- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: flex-end;
+  animation: cd-fade-in 120ms ease-out;
+}
+
+@keyframes cd-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop { animation: none; }
+}
+
+/* ---- Drawer shell ---- */
+.drawer {
+  width: min(420px, 100vw);
+  max-width: 100vw;
+  height: 100%;
+  background: var(--bg-elev-1);
+  border-left: 1px solid var(--line);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  animation: cd-slide-in 180ms ease-out;
+}
+
+@keyframes cd-slide-in {
+  from { transform: translateX(16px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer { animation: none; }
+}
+
+/* ---- Header ---- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--heading);
+  margin: 0;
+}
+
+.closeBtn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  color: var(--text-1);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.closeBtn:hover,
+.closeBtn:focus-visible {
+  background: var(--bg-elev-2);
+  border-color: var(--line-strong);
+}
+
+/* ---- Body (scrolls when items overflow) ---- */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--space-2) 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* P4.3 — slot for the cart-expiration warning banner. Stretches
+   the banner edge-to-edge within the drawer's padded body. */
+.expirationSlot {
+  list-style: none;
+  padding: var(--space-3) var(--space-4) 0;
+  margin: 0;
+  display: block;
+}
+.expirationSlot > * { display: block; }
+
+/* ---- Line row ---- */
+.line {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+}
+
+.line:last-child { border-bottom: none; }
+
+.thumbLink {
+  display: block;
+  text-decoration: none;
+}
+
+.thumb,
+.thumbPlaceholder {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  display: block;
+}
+
+.lineBody {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lineTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading);
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3;
+}
+
+.lineTitle:hover { color: var(--accent); }
+
+.license {
+  font-size: 11px;
+  color: var(--text-2);
+  margin: 2px 0 0;
+}
+
+.licenseDesc {
+  color: var(--text-3);
+}
+
+.linePrice {
+  font-size: 13px;
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+  margin: 2px 0 0;
+  font-weight: 600;
+}
+
+.linePriceEach {
+  color: var(--text-3);
+  font-weight: 400;
+}
+
+.removeBtn {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  color: var(--text-3);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.removeBtn:hover,
+.removeBtn:focus-visible {
+  color: var(--danger);
+  background: var(--bg-elev-2);
+  border-color: var(--line);
+}
+
+.removeBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.removeSpinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--line);
+  border-top-color: var(--text-2);
+  border-radius: 50%;
+  animation: cd-spin 600ms linear infinite;
+  display: inline-block;
+}
+
+@keyframes cd-spin {
+  to { transform: rotate(360deg); }
+}
+
+.removeError {
+  margin: var(--space-3) var(--space-4) 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--danger-soft, rgba(220, 80, 80, 0.08));
+  border: 1px solid var(--danger, #DC5050);
+  border-radius: var(--r-sm);
+  color: var(--danger);
+  font-size: 12px;
+}
+
+/* ---- Empty state ---- */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+  gap: var(--space-3);
+}
+
+.emptyIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-1);
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+}
+
+.emptyBody {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0 0 var(--space-2);
+  max-width: 240px;
+}
+
+.emptyCta {
+  display: inline-block;
+  padding: 10px 18px;
+  background: var(--action);
+  color: var(--on-action);
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: background 120ms ease;
+}
+
+.emptyCta:hover { background: var(--action-hover); }
+
+/* ---- Footer (sticky bottom) ---- */
+.footer {
+  flex-shrink: 0;
+  padding: var(--space-4);
+  border-top: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.subtotalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 14px;
+}
+
+.subtotalLabel {
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.subtotalValue {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+}
+
+.taxNote {
+  font-size: 11px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.checkoutBtn {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--action);
+  color: var(--on-action);
+  border: 0;
+  border-radius: var(--r-md);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.005em;
+  transition: background 120ms ease;
+}
+
+.checkoutBtn:hover,
+.checkoutBtn:focus-visible {
+  background: var(--action-hover);
+}
+
+.viewCartBtn {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-md);
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 120ms ease;
+}
+
+.viewCartBtn:hover,
+.viewCartBtn:focus-visible {
+  background: var(--accent-soft);
+}
+
+/* ---- Mobile (small screens) ---- */
+@media (max-width: 480px) {
+  .drawer {
+    width: 100vw;
+    border-left: 0;
+  }
+  .line {
+    padding: var(--space-3);
+  }
+}

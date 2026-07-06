@@ -1,0 +1,338 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 640px;
+}
+
+.section {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.h2 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.lede {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 0;
+  margin-top: -8px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+.input,
+.textarea {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-size: 14px;
+  font-family: inherit;
+}
+.input {
+  height: 40px;
+}
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+.input:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.counter {
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: right;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.help {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.error {
+  font-size: 12px;
+  color: var(--danger);
+  margin: 0;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
+}
+@media (max-width: 540px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.submitError {
+  font-size: 13px;
+  color: var(--danger);
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-line);
+  border-radius: 8px;
+}
+
+.submitOk {
+  font-size: 13px;
+  color: var(--success);
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--success-soft);
+  border: 1px solid var(--success-line);
+  border-radius: 8px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* P6.5 Slice 1 — read-only masked display for PII fields. The
+ * PayPal email is shown as "k***@example.com" until the partner
+ * clicks Edit. The row is a flex container with the masked value
+ * on the left + the Edit button on the right, mirroring the
+ * mockup's pencil affordance. */
+.readonlyRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-elev-2);
+}
+
+.masked {
+  font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', Menlo, monospace);
+  font-size: 14px;
+  color: var(--text-1);
+  letter-spacing: 0.02em;
+}
+
+.maskedInline {
+  font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', Menlo, monospace);
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.empty {
+  font-style: italic;
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+.editBtn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text-1);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.editBtn:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.editBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
+/* P12.17 — Headshot link. Per spec, the partner's avatar/headshot
+ * lives on `/account/profile` (where the P9.2 AvatarUploader lives),
+ * not on /partner/settings. The Partner section surfaces a compact
+ * link card pointing there, with a "Edit on profile page →" affordance.
+ * The link is a real <a href> (RSC, no client JS) so it works without
+ * JS and renders cleanly even if the JS bundle fails to load. */
+.headshotLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  text-decoration: none;
+  font-size: 14px;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.headshotLink:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.headshotLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+.headshotLinkArrow {
+  font-size: 12px;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+/* P12.17 — Social links grid. Two columns at the design width,
+ * collapse to one column on narrow viewports (540px). The grid
+ * keeps the form balanced while still being mobile-friendly. */
+.socialGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
+@media (max-width: 540px) {
+  .socialGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* P12.17 — Public profile toggle row. Same hairline-bordered card
+ * pattern as the read-only Row; the Switch is the platform primitive.
+ * The card stays aligned with the social-links grid above it. */
+.publicProfileRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-elev-2);
+}
+.publicProfileText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.publicProfileLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+.publicProfileHint {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+.publicProfileDisabled {
+  font-size: 12px;
+  color: var(--warn);
+  margin: 0;
+  padding: 8px 12px;
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-line);
+  border-radius: 8px;
+}
+
+/*
+ * P12.18 — Next payout preview block. Read-only card with
+ * 3 rows (status / date / amount). Uses the same hairline-bordered
+ * card + mono numeric pattern as the rest of the partner portal
+ * (matches `<SummaryCards>` on `/partner/payouts`). The status badge
+ * uses the `data-status` attribute selector pattern so the colour
+ * token follows the same mapping as the rest of the page.
+ */
+.payoutPreviewCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-top: 4px;
+}
+.payoutPreviewRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 24px;
+}
+.payoutPreviewLabel {
+  font-size: 12px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.payoutPreviewMono {
+  font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', Menlo, monospace);
+  font-size: 13px;
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+.payoutPreviewBadge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  /* The default is the "warn" tone (below-minimum); the
+   * [data-status='success'] override flips to green. */
+  color: var(--warn);
+  background: var(--warn-soft);
+  border-color: var(--warn-line);
+}
+.payoutPreviewBadge[data-status='success'] {
+  color: var(--success);
+  background: var(--success-soft);
+  border-color: var(--success-line);
+}

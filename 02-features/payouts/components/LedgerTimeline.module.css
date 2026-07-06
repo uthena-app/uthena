@@ -1,0 +1,177 @@
+/* LedgerTimeline — horizontal strip on desktop, vertical stack
+   on mobile. Four dots + connecting lines. Dot color encodes the
+   milestone state (done / active / pending / skipped). */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+}
+
+.h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.headline {
+  margin: 0;
+  font-size: 13px;
+  color: var(--heading);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 12px;
+  min-width: 0;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--bg-elev-2);
+  border: 2px solid var(--line);
+  flex: 0 0 12px;
+  z-index: 1;
+  margin-bottom: 8px;
+}
+
+.line {
+  position: absolute;
+  top: 5px;
+  left: 12px;
+  right: 0;
+  height: 2px;
+  background: var(--line);
+  z-index: 0;
+}
+
+.text {
+  min-width: 0;
+}
+
+.label {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.at {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--heading);
+}
+
+.atMuted {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.hint {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+/* State: done — accent dot, line advances. */
+.item[data-state='done'] .dot {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.item[data-state='done'] .line {
+  background: var(--accent);
+}
+
+/* State: active — pulsing accent dot. Static (no animation per
+   AGENTS.md "no pulse animations" rule). */
+.item[data-state='active'] .dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+/* State: pending — muted dot. */
+.item[data-state='pending'] .dot {
+  background: var(--bg-elev-2);
+  border-color: var(--line);
+}
+
+/* State: skipped — faded text + dot, communicates "this row
+   type never fires this milestone" (refunds skip Locked). */
+.item[data-state='skipped'] {
+  opacity: 0.45;
+}
+.item[data-state='skipped'] .dot {
+  background: var(--bg-elev-2);
+  border-color: var(--line);
+  border-style: dashed;
+}
+
+/* Mobile — stack the four milestones vertically; the connecting
+   line moves to vertical. */
+@media (max-width: 720px) {
+  .list {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .item {
+    padding: 0 0 16px 24px;
+  }
+  .item:last-child {
+    padding-bottom: 0;
+  }
+  .dot {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    margin: 0;
+  }
+  .line {
+    top: 16px;
+    bottom: 0;
+    left: 5px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+  .item:last-child .line {
+    display: none;
+  }
+  .text {
+    padding-left: 4px;
+  }
+}

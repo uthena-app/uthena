@@ -1,0 +1,77 @@
+/* LinksStatsRow — P13.5 link-generator stats row.
+
+   4-up grid (collapses to 2-up at ≤1024px, single-column on mobile).
+   Each card mirrors the KpiCards rhythm (background tile + label +
+   value + optional subtle line) so the two surfaces look like part
+   of the same family. */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.tile {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--heading);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+.subtle {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.muted {
+  /* "—" placeholder when the value is null (e.g. no clicks yet so
+     conversion rate is not defined). Mirrors the empty-state feel
+     of the dashboard's No activity yet subline. */
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .tile {
+    padding: 16px 18px;
+  }
+  .value {
+    font-size: 24px;
+  }
+}

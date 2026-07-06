@@ -1,0 +1,80 @@
+/* DashboardHeader — eyebrow + h1 + status pill + lede. Mirrors the
+   partner dashboard visual rhythm, with a teal status pill (the
+   affiliate role accent). */
+
+.header {
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  font-size: 15px;
+  color: var(--text-2);
+  margin: 0;
+  max-width: 640px;
+}
+
+/* Status pill — color-coded by affiliate.status */
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+}
+
+.statusPill[data-status='approved'] {
+  background: var(--teal-soft);
+  border-color: var(--teal-line);
+  color: var(--teal);
+}
+
+.statusPill[data-status='pending'] {
+  background: var(--bg-elev-2);
+  border-color: var(--line);
+  color: var(--warn);
+}
+
+.statusPill[data-status='suspended'] {
+  background: var(--bg-elev-2);
+  border-color: var(--line);
+  color: var(--danger);
+}
+
+@media (max-width: 640px) {
+  .h1 {
+    font-size: 24px;
+  }
+}

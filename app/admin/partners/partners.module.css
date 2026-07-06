@@ -1,0 +1,43 @@
+/* /admin/partners — token-only CSS. */
+.header {
+  margin-bottom: var(--gap-4, 16px);
+}
+
+.h1 {
+  font-size: var(--font-size-2xl, 28px);
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: var(--fg, #111);
+}
+
+.sub {
+  font-size: var(--font-size-sm, 14px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 0;
+  max-width: 80ch;
+}
+
+.placeholder {
+  padding: 32px 16px;
+  border: 1px dashed var(--line, rgba(0, 0, 0, 0.12));
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-elev-1, #fff);
+  text-align: center;
+  margin-bottom: var(--gap-6, 24px);
+}
+
+.placeholderTitle {
+  font-size: var(--font-size-md, 16px);
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--fg, #111);
+}
+
+.placeholderText {
+  font-size: var(--font-size-sm, 14px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 0;
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
+}

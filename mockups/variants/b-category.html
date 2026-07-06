@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>marketplace — Uthena · Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="b-terminal.css">
+<style>
+  /* ==================== CATALOG — Terminal ==================== */
+  /* Like a real file manager: tree sidebar, table view, toolbar. */
+
+  .shell { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 28px - 48px - 26px); }
+  @media (max-width: 1000px) { .shell { grid-template-columns: 1fr; } .shell-side { display: none; } }
+
+  .shell-side { background: var(--bg-1); border-right: 1px solid var(--border); padding: 16px 0; font-family: var(--font-mono); font-size: 12px; }
+  .shell-side h5 { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); font-weight: 600; padding: 0 16px; margin: 16px 0 8px; }
+  .shell-side h5:first-child { margin-top: 0; }
+  .shell-side ul { list-style: none; }
+  .shell-side li { display: flex; align-items: center; gap: 8px; padding: 4px 16px; color: var(--text-2); cursor: pointer; font-family: var(--font-mono); font-size: 12px; }
+  .shell-side li:hover { color: var(--text-1); background: var(--bg-2); }
+  .shell-side li.active { color: var(--accent); background: var(--accent-soft); border-left: 2px solid var(--accent); padding-left: 14px; }
+  .shell-side li .ic { color: var(--text-4); font-size: 10px; width: 12px; }
+  .shell-side li .num { margin-left: auto; font-size: 10.5px; color: var(--text-3); }
+  .shell-side li.active .num { color: var(--accent); }
+
+  .shell-main { padding: 0; }
+
+  /* Page header */
+  .page-head { padding: 28px 32px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .page-head h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 6px; }
+  .page-head .meta { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-3); }
+  .page-head .meta .v { color: var(--text-1); }
+
+  /* Filter bar — command-line style */
+  .cmd-bar { display: flex; gap: 8px; align-items: center; padding: 10px 32px; background: var(--bg-1); border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 12px; flex-wrap: wrap; }
+  .cmd-bar .prompt { color: var(--accent); }
+  .cmd-bar .cmd { color: var(--text-2); }
+  .cmd-bar .cmd .hl { color: var(--text-1); }
+  .cmd-bar .sep { color: var(--text-4); margin: 0 4px; }
+  .cmd-bar .right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+  /* Active filters row */
+  .active-row { display: flex; gap: 6px; align-items: center; padding: 10px 32px; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 11.5px; color: var(--text-3); }
+  .active-row .lbl { text-transform: uppercase; letter-spacing: 0.08em; margin-right: 8px; }
+  .active-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-soft); border: 1px solid var(--accent-line); color: var(--accent); padding: 2px 8px; border-radius: var(--r-sm); }
+  .active-chip button { color: var(--accent); opacity: 0.6; line-height: 1; }
+  .active-row .clear { color: var(--text-3); margin-left: auto; text-decoration: underline; }
+
+  /* Main table */
+  .cat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cat-table th { background: var(--bg-1); text-align: left; padding: 10px 16px; font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); font-weight: 600; border-bottom: 1px solid var(--border); position: sticky; top: 48px; }
+  .cat-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .cat-table tr:hover td { background: var(--bg-1); }
+  .cat-table .nm { color: var(--text-1); font-weight: 500; }
+  .cat-table .nm .ic { color: var(--text-4); margin-right: 8px; }
+  .cat-table .num { font-family: var(--font-mono); }
+  .cat-table .num.right { text-align: right; }
+  .cat-table .num.bold { font-weight: 600; }
+  .cat-table .star { color: var(--warn); font-size: 11px; }
+  .cat-table .trend { font-family: var(--font-mono); font-size: 11.5px; }
+  .cat-table .trend.up { color: var(--success); }
+  .cat-table .trend.down { color: var(--danger); }
+
+  /* Footer pagination */
+  .cat-foot { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; background: var(--bg-1); border-top: 1px solid var(--border); font-family: var(--font-mono); font-size: 11.5px; color: var(--text-3); }
+  .pg-bar { display: flex; gap: 4px; }
+  .pg-bar button { padding: 4px 9px; background: transparent; border: 1px solid var(--border); border-radius: var(--r-sm); color: var(--text-2); font-family: var(--font-mono); font-size: 11.5px; }
+  .pg-bar button:hover { color: var(--text-1); border-color: var(--border-2); }
+  .pg-bar button.active { background: var(--accent); color: #07090C; border-color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="var-tag">B · TERMINAL · CATEGORY</div>
+
+<div class="ide-bar">
+  <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+  <div class="tabs">
+    <span class="tab active">uthena — /browse</span>
+    <span class="tab">filters.json</span>
+    <span class="tab">results.csv</span>
+  </div>
+  <div class="right">
+    <span>v3.2.1</span>
+    <span>main</span>
+    <span>UTC+7 08:14</span>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo"><span class="mark">u</span>uthena</a>
+    <div class="nav-crumbs">
+      <span>uthena</span><span class="sep">/</span>
+      <span class="leaf">marketplace</span>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="search 612 products">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">cart · 0</a>
+      <a class="btn btn-secondary btn-sm" href="#">Sign in</a>
+      <a class="btn btn-primary btn-sm" href="#">Get started</a>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <!-- LEFT: file tree -->
+  <aside class="shell-side">
+    <h5>Categories</h5>
+    <ul>
+      <li class="active"><span class="ic">▾</span> All <span class="num">612</span></li>
+      <li><span class="ic">▸</span> AI &amp; ChatGPT <span class="num">64</span></li>
+      <li><span class="ic">▸</span> Business <span class="num">92</span></li>
+      <li><span class="ic">▸</span> Marketing <span class="num">87</span></li>
+      <li><span class="ic">▸</span> Programming <span class="num">54</span></li>
+      <li><span class="ic">▸</span> Design <span class="num">41</span></li>
+      <li><span class="ic">▸</span> Finance <span class="num">38</span></li>
+      <li><span class="ic">▸</span> Health <span class="num">29</span></li>
+      <li><span class="ic">▸</span> Photography <span class="num">26</span></li>
+      <li><span class="ic">▸</span> + 7 more</li>
+    </ul>
+
+    <h5>License</h5>
+    <ul>
+      <li><span class="ic">☑</span> PLR <span class="num">487</span></li>
+      <li><span class="ic">☐</span> MRR <span class="num">312</span></li>
+      <li><span class="ic">☐</span> Whitelabel <span class="num">201</span></li>
+    </ul>
+
+    <h5>Length</h5>
+    <ul>
+      <li><span class="ic">☐</span> &lt; 1h <span class="num">42</span></li>
+      <li><span class="ic">☑</span> 1–3h <span class="num">187</span></li>
+      <li><span class="ic">☐</span> 3–6h <span class="num">241</span></li>
+      <li><span class="ic">☐</span> 6h+ <span class="num">142</span></li>
+    </ul>
+
+    <h5>Price</h5>
+    <ul>
+      <li><span class="ic">▸</span> $0 – $100</li>
+      <li><span class="ic">▸</span> $100 – $500</li>
+      <li><span class="ic">▸</span> $500 – $2k</li>
+      <li><span class="ic">▸</span> $2k+</li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="shell-main">
+    <div class="page-head">
+      <div>
+        <h1>marketplace/</h1>
+        <div class="meta"><span class="v">612</span> products · <span class="v">15</span> categories · updated 8m ago</div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-secondary btn-sm">⟳ Refresh</button>
+        <button class="btn btn-secondary btn-sm">⇣ Export CSV</button>
+        <button class="btn btn-secondary btn-sm">⌐ Subscribe</button>
+      </div>
+    </div>
+
+    <!-- Command line bar — looks like a filter CLI -->
+    <div class="cmd-bar">
+      <span class="prompt">$</span>
+      <span class="cmd">uthena filter</span>
+      <span class="cmd">--license=<span class="hl">plr</span></span>
+      <span class="cmd">--length=<span class="hl">1-3h</span></span>
+      <span class="cmd">--price=<span class="hl">0-200</span></span>
+      <span class="cmd">--sort=<span class="hl">newest</span></span>
+      <div class="right">
+        <span class="cmd">187 results · 412ms</span>
+      </div>
+    </div>
+
+    <!-- Active filters -->
+    <div class="active-row">
+      <span class="lbl">Active</span>
+      <span class="active-chip">license: plr <button>×</button></span>
+      <span class="active-chip">length: 1–3h <button>×</button></span>
+      <span class="active-chip">price: $0–$200 <button>×</button></span>
+      <a class="clear">clear all</a>
+    </div>
+
+    <!-- Table -->
+    <table class="cat-table">
+      <thead>
+        <tr>
+          <th style="width:36px;"><input type="checkbox" style="accent-color:var(--accent);"></th>
+          <th>Product</th>
+          <th>Category</th>
+          <th>License</th>
+          <th>Length</th>
+          <th>Rating</th>
+          <th class="right" style="text-align:right;">Price</th>
+          <th class="right" style="text-align:right;">Sales (7d)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📄</span>AI for Personal Branding</span></td>
+          <td><span class="badge badge-mute">AI · video</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">4h 12m</td>
+          <td><span class="star">★★★★★</span> <span class="t-faint t-num">3</span></td>
+          <td class="num right bold">$5,700</td>
+          <td class="num right">38</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📦</span>Python Pro — Complete Bootcamp</span></td>
+          <td><span class="badge badge-mute">DEV · video</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">2h 48m</td>
+          <td><span class="star">★★★★★</span> <span class="t-faint t-num">12</span></td>
+          <td class="num right"><span style="text-decoration:line-through;color:var(--text-3);margin-right:6px;">$9,781</span><span class="bold" style="color:var(--success);">$79</span></td>
+          <td class="num right">31</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📄</span>Network Hacking 2025</span></td>
+          <td><span class="badge badge-mute">SEC · video</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">1h 56m</td>
+          <td><span class="star">★★★★☆</span> <span class="t-faint t-num">8</span></td>
+          <td class="num right bold">$9,781</td>
+          <td class="num right">24</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📦</span>B2B Sales Skills — Cold to Closed</span></td>
+          <td><span class="badge badge-mute">BIZ · bundle</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">2h 30m</td>
+          <td><span class="star">★★★★★</span> <span class="t-faint t-num">27</span></td>
+          <td class="num right bold" style="color:var(--success);">$79</td>
+          <td class="num right">58</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📄</span>AI Explained for Beginners</span></td>
+          <td><span class="badge badge-mute">AI · video</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">2h 14m</td>
+          <td><span class="star">★★★★★</span> <span class="t-faint t-num">1</span></td>
+          <td class="num right bold">$6,781</td>
+          <td class="num right">22</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📄</span>SQLite Databases From Scratch</span></td>
+          <td><span class="badge badge-mute">DEV · video</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">1h 42m</td>
+          <td><span class="star">★★★★★</span> <span class="t-faint t-num">19</span></td>
+          <td class="num right bold">$6,781</td>
+          <td class="num right">19</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📄</span>Smartphone Videography Masterclass</span></td>
+          <td><span class="badge badge-mute">MED · video</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">2h 06m</td>
+          <td><span class="star">★★★★★</span> <span class="t-faint t-num">14</span></td>
+          <td class="num right bold">$3,200</td>
+          <td class="num right">16</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📦</span>Canva Content &amp; Graphic Design</span></td>
+          <td><span class="badge badge-mute">DES · bundle</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">2h 22m</td>
+          <td><span class="star">★★★★★</span> <span class="t-faint t-num">32</span></td>
+          <td class="num right bold">$4,500</td>
+          <td class="num right">14</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📄</span>Balance: Unity Between Work &amp; Life</span></td>
+          <td><span class="badge badge-mute">HEA · video</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">1h 28m</td>
+          <td><span class="star">★★★★☆</span> <span class="t-faint t-num">6</span></td>
+          <td class="num right bold">$1,890</td>
+          <td class="num right">11</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" style="accent-color:var(--accent);"></td>
+          <td><span class="nm"><span class="ic">📄</span>Asking Great Sales Questions</span></td>
+          <td><span class="badge badge-mute">BIZ · video</span></td>
+          <td><span class="badge badge-accent">PLR</span></td>
+          <td class="num">1h 12m</td>
+          <td><span class="star">★★★★★</span> <span class="t-faint t-num">9</span></td>
+          <td class="num right bold">$2,400</td>
+          <td class="num right">9</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cat-foot">
+      <span>Showing 1–10 of 187 · 4 pages</span>
+      <div class="pg-bar">
+        <button>← prev</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>next →</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="status-bar">
+  <div class="seg"><span class="dot live"></span><span>All systems normal</span></div>
+  <div class="seg"><span>marketplace.csv · 187 rows</span></div>
+  <div class="seg"><span>UTF-8</span></div>
+  <div class="right">
+    <span>filters: 3</span>
+    <span>412ms</span>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><h5>Uthena</h5><p class="t-sm t-mute" style="max-width:300px;">The wholesale catalogue behind a generation of digital product businesses.</p></div>
+      <div><h5>Marketplace</h5><ul><li><a href="#">All products</a></li><li><a href="#">Newest</a></li><li><a href="#">On sale</a></li><li><a href="#">Bundles</a></li></ul></div>
+      <div><h5>Earn</h5><ul><li><a href="#">Affiliate</a></li><li><a href="#">Partner</a></li><li><a href="#">Reseller</a></li><li><a href="#">Payouts</a></li></ul></div>
+      <div><h5>Developers</h5><ul><li><a href="#">API</a></li><li><a href="#">CLI</a></li><li><a href="#">Webhooks</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Status</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Uthena, Inc. · v3.2.1</span>
+      <span>main · UTC+7</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

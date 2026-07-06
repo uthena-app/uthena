@@ -1,0 +1,71 @@
+/* PartnerPagination — token-only CSS. */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-3, 12px);
+  margin-bottom: var(--gap-6, 24px);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  color: var(--fg, #111);
+  font-size: var(--font-size-sm, 14px);
+  text-decoration: none;
+  background: var(--bg-elev-1, #fff);
+}
+
+.link:hover {
+  background: var(--bg-elev-2, #fafafa);
+  color: var(--accent, #2563eb);
+}
+
+.link.disabled {
+  color: var(--fg-muted, rgba(0, 0, 0, 0.4));
+  background: transparent;
+  pointer-events: none;
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  color: var(--fg, #111);
+  font-size: var(--font-size-sm, 14px);
+  text-decoration: none;
+  background: var(--bg-elev-1, #fff);
+}
+
+.page:hover {
+  background: var(--bg-elev-2, #fafafa);
+  color: var(--accent, #2563eb);
+}
+
+.page.current {
+  background: var(--accent, #2563eb);
+  color: var(--on-action, #fff);
+  border-color: var(--accent, #2563eb);
+}
+
+.gap {
+  padding: 0 4px;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+}

@@ -1,0 +1,130 @@
+/* FAQ section — 2-column native <details>/<summary> grid on desktop,
+   1 column on mobile. Mockup-faithful to mockups/styles/main.css
+   lines 186–199. */
+
+.sec {
+  padding: var(--space-9) 0;
+}
+
+.secHead {
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: var(--space-1);
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+  line-height: 1.05;
+}
+
+.faq {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5) var(--space-7);
+}
+
+.row {
+  border-top: 1px solid var(--line);
+  padding: var(--space-4) 0;
+}
+
+.summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--heading);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+  list-style: none;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary::marker {
+  display: none;
+  content: '';
+}
+
+.summary:hover {
+  color: var(--accent);
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.marker {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--text-1);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.marker::before,
+.marker::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  transition: transform 160ms ease;
+}
+
+.marker::before {
+  top: 7px;
+  left: 2px;
+  right: 2px;
+  height: 2px;
+}
+
+.marker::after {
+  left: 7px;
+  top: 2px;
+  bottom: 2px;
+  width: 2px;
+}
+
+.row[open] .marker::after {
+  transform: scaleY(0);
+}
+
+.answer {
+  margin: var(--space-3) 0 0;
+  font-size: 13px;
+  color: var(--text-1);
+  line-height: 1.55;
+}
+
+@media (max-width: 880px) {
+  .sec {
+    padding: var(--space-7) 0;
+  }
+  .faq {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

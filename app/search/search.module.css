@@ -1,0 +1,230 @@
+/* Search results — P0.19.
+   Same layout rhythm as /browse and /bundles so the page feels
+   part of the catalog family. The differences from /browse:
+   - No facet sidebar (search has no category/price/license filters;
+     the overlay's "type-to-search" is the filter experience).
+   - No sort / density controls (results are newest-first by design).
+   - The active-filter chip is replaced by an active-query chip
+     ("Search: q ✕") that links back to /search with no q.
+   - Three designed empty states (no-q prompt, no-matches, error)
+     instead of one "clear filters" empty state. */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.header {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  line-height: 1.1;
+  font-family: var(--font-display);
+  word-break: break-word;
+}
+
+/* Teal accent on the lead-in (matches the home h1 + /browse h1 pattern
+   so the search results page reads as part of the catalog family).
+   `Results for` and `No matches for` get the teal; the query echo
+   itself uses a different treatment (see .queryEcho below) so the
+   user's literal input is visually distinct from the chrome around
+   it. */
+.h1Accent {
+  color: var(--teal);
+}
+
+/* The user's literal query is rendered in a <code>-like mono pill so
+   it's visually distinct from the chrome. Same rationale as inline
+   code in docs — user input is data, not prose. */
+.queryEcho {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--heading);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  padding: 2px 10px;
+  border-radius: var(--r-sm);
+  vertical-align: 0.05em;
+  word-break: break-word;
+}
+
+.lede {
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+/* Active-query chip — mirrors the /browse `.chip.on` shape exactly
+   (teal-soft background, teal-line border, teal text). The chip's
+   ✕ links to /search (no q) so the user can clear the search in
+   one click. */
+.filterChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+.chip:hover {
+  border-color: var(--line-strong);
+  color: var(--heading);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.chipOn {
+  background: var(--teal-soft);
+  border-color: var(--teal-line);
+  color: var(--teal);
+}
+
+.chipOn:hover {
+  background: var(--teal-soft);
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+.chipX {
+  color: var(--text-faint);
+  font-size: 11px;
+}
+
+.chipOn .chipX {
+  color: var(--teal);
+  opacity: 0.7;
+}
+
+/* Results head — count on the left, no controls on the right (search
+   results are newest-first by design; no sort/density). Kept as a
+   row so the layout rhythm matches /browse + /bundles + /collections. */
+.resultsHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+/* Product grid — same 3-col comfortable shape as /bundles and
+   /collections/[handle]. No density toggle on search (results are
+   a single column-density layout by design — "compact" is a browse
+   affordance, not a search affordance). */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .h1 {
+    font-size: 32px;
+  }
+}
+
+/* Empty-state action button. Pairs with the EmptyState primitive's
+   `action` slot — same shape as /bundles's linkBtn. */
+.linkBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  color: var(--on-accent, #fff);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.linkBtn:hover {
+  background: var(--accent-soft, var(--accent));
+  border-color: var(--accent-soft, var(--accent));
+}
+.linkBtn:focus-visible {
+  outline: 2px solid var(--teal, var(--accent));
+  outline-offset: 2px;
+}
+
+/* Tail CTA — mirrors the /bundles pattern: a centered "or browse
+   the full catalog →" line below the grid. Same tone, same purpose
+   (quiet fallback path for users who didn't find what they wanted
+   via the primary affordance). */
+.tailCta {
+  text-align: center;
+  margin-top: 48px;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.tailLink {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 120ms ease;
+}
+
+.tailLink:hover {
+  color: var(--teal);
+  text-decoration: underline;
+}
+
+.tailLink:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

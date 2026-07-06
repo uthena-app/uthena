@@ -1,0 +1,61 @@
+/* RiskScoreBadge — token-only CSS. */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: var(--font-size-xs, 12px);
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  background: var(--bg-elev-1, #fff);
+  color: var(--fg, #111);
+  cursor: help;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background: var(--band-color, currentColor);
+}
+
+.value {
+  font-weight: 600;
+}
+
+.band {
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+/* Bands — token-only via CSS variables per data-band attribute. */
+.badge[data-band='normal'] {
+  --band-color: var(--success, #16a34a);
+  background: var(--success-soft, rgba(22, 163, 74, 0.08));
+  border-color: var(--success-line, rgba(22, 163, 74, 0.25));
+  color: var(--success-fg, #166534);
+}
+
+.badge[data-band='watch'] {
+  --band-color: var(--warn, #d97706);
+  background: var(--warn-soft, rgba(217, 119, 6, 0.08));
+  border-color: var(--warn-line, rgba(217, 119, 6, 0.25));
+  color: var(--warn-fg, #92400e);
+}
+
+.badge[data-band='high'] {
+  --band-color: var(--danger, #dc2626);
+  background: var(--danger-soft, rgba(220, 38, 38, 0.08));
+  border-color: var(--danger-line, rgba(220, 38, 38, 0.30));
+  color: var(--danger-fg, #991b1b);
+}
+
+.badge[data-band='severe'] {
+  --band-color: var(--danger-strong, #7f1d1d);
+  background: var(--danger-strong-soft, rgba(127, 29, 29, 0.12));
+  border-color: var(--danger-strong-line, rgba(127, 29, 29, 0.45));
+  color: var(--danger-strong-fg, #fef2f2);
+}

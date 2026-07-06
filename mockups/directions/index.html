@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uthena — Design Direction Explorations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0C0D0F;--card:#131519;--raised:#191C21;--border:#22252B;--border2:#2E323A;--t1:#ECECEE;--t2:#A4A8B0;--t3:#6C707A}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--t1);font:15px/1.6 Inter,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1100px;margin:0 auto;padding:64px 32px}
+  .eyebrow{font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:16px}
+  h1{font-size:34px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px}
+  .sub{color:var(--t2);max-width:640px;margin-bottom:14px}
+  .note{color:var(--t3);font-size:13px;margin-bottom:48px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .dir{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:14px;transition:border-color .15s}
+  .dir:hover{border-color:var(--border2)}
+  .dir .num{font:500 11px/1 'JetBrains Mono',monospace;color:var(--t3);letter-spacing:.1em}
+  .dir h2{font-size:20px;font-weight:600;letter-spacing:-.01em}
+  .dir p{color:var(--t2);font-size:14px;flex:1}
+  .swatches{display:flex;gap:6px}
+  .sw{width:34px;height:22px;border-radius:5px;border:1px solid rgba(255,255,255,.08)}
+  .mood{font-size:12.5px;color:var(--t3)}
+  .links{display:flex;gap:8px;margin-top:4px}
+  .links a{flex:1;text-align:center;padding:9px 0;border:1px solid var(--border2);border-radius:8px;color:var(--t1);font-size:13.5px;font-weight:500;text-decoration:none;background:var(--raised);transition:all .15s}
+  .links a:hover{border-color:#4A4F5A;background:#1F2329}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Uthena · Explorations · June 2026</div>
+  <h1>Four design directions</h1>
+  <p class="sub">Each direction covers the same three pages — home, category (AI Courses), product detail — with identical content and structure from the specs, so only the design varies. All dark, all professional.</p>
+  <p class="note">Baseline for comparison: the current v3 mockups in <code>mockups/</code> (teal, Linear-mood). These four deliberately explore different territory.</p>
+
+  <div class="grid">
+    <div class="dir">
+      <div class="num">/01</div>
+      <h2>Ledger</h2>
+      <div class="swatches">
+        <div class="sw" style="background:#0A0D12"></div><div class="sw" style="background:#10141B"></div><div class="sw" style="background:#2BD48D"></div><div class="sw" style="background:#ECECEE"></div>
+      </div>
+      <p>The operator's financial terminal. Blue-black canvas, emerald accent, IBM&nbsp;Plex&nbsp;Mono on every number, ruled lines and ledger motifs. Sells the "keep 100% of revenue" story by looking like money infrastructure.</p>
+      <div class="mood">Mood: Stripe Dashboard × trading terminal · Inter + IBM Plex Mono</div>
+      <div class="links"><a href="01-ledger/home.html">Home</a><a href="01-ledger/category.html">Category</a><a href="01-ledger/product.html">Product</a></div>
+    </div>
+
+    <div class="dir">
+      <div class="num">/02</div>
+      <h2>Atelier</h2>
+      <div class="swatches">
+        <div class="sw" style="background:#131110"></div><div class="sw" style="background:#1A1816"></div><div class="sw" style="background:#C9A35C"></div><div class="sw" style="background:#EDE6DA"></div>
+      </div>
+      <p>The premium licensing house. Warm charcoal, Fraunces serif display, brass-gold accent, numbered editorial sections, gallery-style cards. Positions the catalog as a curated collection — justifies premium pricing.</p>
+      <div class="mood">Mood: fine licensing house / type foundry · Fraunces + Inter</div>
+      <div class="links"><a href="02-atelier/home.html">Home</a><a href="02-atelier/category.html">Category</a><a href="02-atelier/product.html">Product</a></div>
+    </div>
+
+    <div class="dir">
+      <div class="num">/03</div>
+      <h2>Signal</h2>
+      <div class="swatches">
+        <div class="sw" style="background:#0C0B12"></div><div class="sw" style="background:#14121C"></div><div class="sw" style="background:#8B7CF6"></div><div class="sw" style="background:#5EE6D0"></div>
+      </div>
+      <p>The modern SaaS launch. Deep indigo canvas, electric violet with a single cyan gradient pairing, Space&nbsp;Grotesk headlines, restrained glow on hero and final CTA only. The most "2026 startup" of the four.</p>
+      <div class="mood">Mood: Linear / Raycast / Frame.io · Space Grotesk + Inter + JetBrains Mono</div>
+      <div class="links"><a href="03-signal/home.html">Home</a><a href="03-signal/category.html">Category</a><a href="03-signal/product.html">Product</a></div>
+    </div>
+
+    <div class="dir">
+      <div class="num">/04</div>
+      <h2>Forge</h2>
+      <div class="swatches">
+        <div class="sw" style="background:#0E0F10"></div><div class="sw" style="background:#151618"></div><div class="sw" style="background:#F25C26"></div><div class="sw" style="background:#ECECEE"></div>
+      </div>
+      <p>The industrial catalog. Graphite canvas, visible ruled grid with crosshair marks, zero-radius collapsed-border cards with index numbers, condensed Archivo headlines, single orange accent — a nod to the logo. Inventory for serious operators.</p>
+      <div class="mood">Mood: Vercel × industrial parts catalog · Archivo + Inter + IBM Plex Mono</div>
+      <div class="links"><a href="04-forge/home.html">Home</a><a href="04-forge/category.html">Category</a><a href="04-forge/product.html">Product</a></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

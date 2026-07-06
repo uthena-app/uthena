@@ -1,0 +1,92 @@
+/* Cart loading fallback — header + 2-col (line items + summary).
+   Token-only. Mirrors cart/cart.module.css. */
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5) var(--space-9);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.lines {
+  min-width: 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.line {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.lineBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.lineActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-end;
+}
+
+.summary {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.summaryRows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

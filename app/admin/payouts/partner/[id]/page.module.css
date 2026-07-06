@@ -1,0 +1,45 @@
+/* /admin/payouts/partner/[id] — page styles. Token-only, mirrors
+   /admin/payouts/page.module.css rhythm (admin shell spacing) but
+   tighter for a single-record view (1040px max-width matches
+   AdminPartnerPayouts.module.css). */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.crumb {
+  margin: 0;
+  font-size: 13px;
+}
+
+.crumbLink {
+  color: var(--text-2);
+  text-decoration: none;
+}
+
+.crumbLink:hover {
+  color: var(--heading);
+  text-decoration: underline;
+}
+
+.notFoundWrap {
+  max-width: 480px;
+  margin: 48px auto;
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.notFoundTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 8px;
+}
+
+.notFoundText {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 0 0 24px;
+}

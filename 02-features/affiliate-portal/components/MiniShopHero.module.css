@@ -1,0 +1,131 @@
+/* MiniShopHero — P13.8 public mini-shop hero.
+   Identity on the left, avatar top-right (decorative), 4 stat tiles
+   below the bio. Mobile: stacks single-column with the avatar
+   appearing first (CSS order). */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  grid-template-areas:
+    'identity avatar'
+    'identity stats';
+  gap: 24px 32px;
+  padding: 32px 0 40px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 40px;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'avatar'
+      'identity'
+      'stats';
+  }
+}
+
+.identity {
+  grid-area: identity;
+}
+
+.avatar {
+  grid-area: avatar;
+  justify-self: end;
+  width: 88px;
+  height: 88px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line-strong);
+}
+
+.avatarImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+
+.h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.lede {
+  font-size: 16px;
+  color: var(--text-2);
+  margin: 0 0 16px;
+  max-width: 560px;
+  line-height: 1.5;
+}
+
+.verifiedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--teal-soft);
+  border: 1px solid var(--teal-line);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.verifiedIcon {
+  width: 12px;
+  height: 12px;
+  color: var(--teal);
+}
+
+.stats {
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  align-content: start;
+  margin: 0;
+  padding: 0;
+}
+
+.statTile {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.statLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 6px;
+}
+
+.statValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  margin: 0;
+}

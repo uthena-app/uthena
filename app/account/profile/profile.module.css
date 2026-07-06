@@ -1,0 +1,109 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 760px;
+}
+
+.header {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* P1.4 — security card. Neutral (not destructive) treatment;
+   uses the standard card background + hairline border, with an
+   accent-colored CTA link so the action is discoverable without
+   screaming. Visually sits between the profile form and the
+   danger zone, signaling "manage your account" territory. */
+.security {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.securityH {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.securityLede {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.securityLink {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--accent-line);
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.securityLink:hover {
+  background: color-mix(in srgb, var(--accent-soft) 60%, var(--bg-elev-1));
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+
+.securityLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.danger {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--danger-line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dangerH {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--danger);
+  margin: 0;
+}
+
+.dangerLede {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.5;
+}

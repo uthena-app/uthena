@@ -1,0 +1,227 @@
+/* ProsePage — the shared legal-doc layout shell.
+   Tokens only; no inline colors or magic values. */
+
+.page {
+  min-height: 70vh;
+  padding: 48px 16px 96px;
+  background: var(--bg);
+}
+
+.prose {
+  max-width: 720px;
+  margin: 0 auto;
+  color: var(--text-1);
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+.header {
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.h1 {
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--heading);
+  margin: 0 0 12px;
+}
+
+.meta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.metaLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.body {
+  /* The body is rendered React from the safe markdown renderer. We
+     style the elements here. */
+}
+
+.body h2 {
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--heading);
+  margin: 40px 0 12px;
+}
+
+.body h3 {
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 32px 0 10px;
+}
+
+.body h4 {
+  font-size: 15.5px;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 24px 0 8px;
+}
+
+.body p {
+  margin: 0 0 16px;
+}
+
+.body ul,
+.body ol {
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+
+.body li {
+  margin-bottom: 6px;
+}
+
+.body li > p {
+  margin: 0 0 6px;
+}
+
+.body strong {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.body code {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--text-1);
+}
+
+.body pre {
+  background: var(--bg-inset);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  font-size: 13px;
+  margin: 0 0 16px;
+}
+
+.body pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: var(--text-1);
+}
+
+.body blockquote {
+  margin: 0 0 16px;
+  padding: 8px 16px;
+  border-left: 2px solid var(--accent);
+  background: var(--bg-elev-1);
+  color: var(--text-2);
+  border-radius: 0 6px 6px 0;
+}
+
+.body blockquote > p:last-child {
+  margin-bottom: 0;
+}
+
+.body hr {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 32px 0;
+}
+
+.body a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.body a:hover {
+  color: var(--accent-hover);
+  border-bottom-color: var(--accent-line);
+}
+
+.body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 16px;
+  font-size: 14px;
+}
+
+.body th,
+.body td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.body th {
+  color: var(--heading);
+  font-weight: 600;
+  background: var(--bg-elev-1);
+}
+
+.seeAlso {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.seeAlsoLabel {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--text-3);
+  margin: 0 0 12px;
+}
+
+.seeAlsoList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seeAlsoLink {
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.seeAlsoLink:hover {
+  color: var(--accent-hover);
+}
+
+.footContact {
+  margin-top: 32px;
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.footLink {
+  color: var(--accent);
+}
+
+.footLink:hover {
+  color: var(--accent-hover);
+}

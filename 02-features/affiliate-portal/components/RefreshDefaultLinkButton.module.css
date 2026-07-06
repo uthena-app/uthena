@@ -1,0 +1,41 @@
+/* RefreshDefaultLinkButton — primary action styled to match the
+   disabled "Create link" CTA's shape but in the active teal
+   accent. Used in the empty-state branch of DefaultLinkHero. */
+
+.refreshBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+  transition: background-color 120ms ease, border-color 120ms ease, opacity 120ms ease;
+}
+
+.refreshBtn:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.refreshBtn:focus-visible {
+  outline: 2px solid var(--border-3, var(--accent));
+  outline-offset: 2px;
+}
+
+.refreshBtn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.refreshBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

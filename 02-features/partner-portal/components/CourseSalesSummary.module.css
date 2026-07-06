@@ -1,0 +1,154 @@
+/* CourseSalesSummary.module.css — Sales tab on the partner course
+ * detail page (P12.11 Slice 1).
+ *
+ * Layout: header + 4-card responsive grid + footer recency row +
+ * drill-down link to the future /partner/courses/[id]/sales page.
+ *
+ * Token-only styling (no inline colors). Mirrors the visual language
+ * of the existing ActivityFeed + EarningsChart cards: card with
+ * light border + label / value / hint stack inside each tile. The
+ * drill-down link is a single accent link inside a faint strip at
+ * the bottom.
+ */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 1.5rem);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+}
+
+.h2 {
+  font-size: var(--font-lg, 1.125rem);
+  font-weight: 600;
+  color: var(--on-bg, #111);
+  margin: 0;
+}
+
+.subtle {
+  font-size: var(--font-sm, 0.875rem);
+  color: var(--on-bg-muted, #555);
+  margin: 0;
+  max-width: 60ch;
+  line-height: 1.5;
+}
+
+/* Stat grid: 4 cards, collapses to 2x2 on narrow, 1x4 on wide.
+ * Uses CSS variables so the card padding / gap track the design
+ * tokens. */
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4, 1rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .statGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .statGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Each card: bordered block with label / value / hint stacked.
+ * The value is rendered in a monospace number font so digit widths
+ * align across cards — partners read these as KPIs, not prose. */
+.statCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+  padding: var(--space-4, 1rem);
+  background: var(--bg-surface, #fff);
+  border: 1px solid var(--line, #e5e5e5);
+  border-radius: var(--radius-md, 8px);
+  min-width: 0;
+}
+
+.statLabel {
+  font-size: var(--font-xs, 0.75rem);
+  color: var(--on-bg-muted, #777);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.statValue {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-feature-settings: 'tnum' 1;
+  font-size: var(--font-xl, 1.5rem);
+  font-weight: 600;
+  color: var(--on-bg, #111);
+  line-height: 1.1;
+  /* Long numbers (e.g. 1,234,567) can overflow — let them break. */
+  word-break: break-word;
+}
+
+.statHint {
+  font-size: var(--font-xs, 0.75rem);
+  color: var(--on-bg-muted, #777);
+  line-height: 1.4;
+  min-height: 1em; /* keep cards the same height when hints differ */
+}
+
+/* Recency footer — small mono text under the grid. */
+.footer {
+  font-size: var(--font-sm, 0.875rem);
+  color: var(--on-bg-muted, #555);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footerValue {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  color: var(--on-bg, #111);
+  font-weight: 500;
+}
+
+.footerMuted {
+  color: var(--on-bg-muted, #777);
+  font-style: italic;
+}
+
+/* Drill-down link block — single bordered strip at the bottom with
+ * the link + a smaller hint about deferred scope. */
+.drillLinkRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+  padding: var(--space-4, 1rem);
+  background: var(--bg-surface-2, #fafafa);
+  border: 1px solid var(--line, #e5e5e5);
+  border-radius: var(--radius-md, 8px);
+  margin: 0;
+}
+
+.drillLink {
+  font-size: var(--font-base, 0.9375rem);
+  font-weight: 500;
+  color: var(--accent, #2057d9);
+  text-decoration: none;
+}
+
+.drillLink:hover,
+.drillLink:focus-visible {
+  text-decoration: underline;
+}
+
+.drillLinkHint {
+  font-size: var(--font-xs, 0.75rem);
+  color: var(--on-bg-muted, #777);
+  line-height: 1.5;
+}

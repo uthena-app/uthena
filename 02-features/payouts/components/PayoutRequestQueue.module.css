@@ -1,0 +1,259 @@
+/* PayoutRequestQueue.module.css — token-only styles for the
+   P6.7 Slice 1 admin payouts queue section. */
+
+.section {
+  margin-bottom: 32px;
+}
+
+.header {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 4px;
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Chip strip — matches the CatalogPill/filter pattern from P0.8. */
+.chipStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.chip:hover {
+  background: var(--bg-elev-2);
+  border-color: var(--accent);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.chip[data-active='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.chip[data-active='true']:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.chipLabel {
+  font-weight: 600;
+}
+
+.chipCount {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--bg-elev-2);
+  color: var(--text-2);
+  min-width: 18px;
+  text-align: center;
+}
+
+.chip[data-active='true'] .chipCount {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--on-accent);
+}
+
+/* List rows. */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+  overflow: hidden;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 120px 100px 110px;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  align-items: center;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowMain {
+  min-width: 0;
+}
+
+.rowPartner {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0 0 2px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.rowPartnerLink {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted transparent;
+  transition: border-color 0.12s, color 0.12s;
+}
+
+.rowPartnerLink:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.rowPartnerLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.rowId {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.rowMethod {
+  font-size: 12px;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--font-mono, ui-monospace, 'SF Mono', Menlo, Consolas, monospace);
+  font-size: 12px;
+}
+
+.rowAmount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  color: var(--success);
+}
+
+.rowAmount[data-direction='debit'] {
+  color: var(--danger);
+}
+
+.rowDate {
+  color: var(--text-3);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+/* Status pill — color is driven by [data-status='...'] attribute so the
+   admin immediately sees the request state at a glance. */
+.statusPill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  color: var(--text-2);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.statusPill[data-status='pending'] {
+  background: var(--accent-soft, var(--bg-elev-2));
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.statusPill[data-status='approved'] {
+  background: var(--success-soft, var(--bg-elev-2));
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.statusPill[data-status='paid'] {
+  background: var(--success-soft, var(--bg-elev-2));
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.statusPill[data-status='denied'] {
+  background: var(--danger-soft, var(--bg-elev-2));
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.statusPill[data-status='failed'] {
+  background: var(--danger-soft, var(--bg-elev-2));
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.statusPill[data-status='canceled'] {
+  background: var(--bg-elev-2);
+  border-color: var(--text-3);
+  color: var(--text-3);
+}
+
+.empty {
+  color: var(--text-3);
+  font-size: 13px;
+  padding: 24px 0;
+  margin: 0;
+}
+
+/* Mobile: stack into 1 column (matches the LedgerSection pattern from
+   /admin/payouts/page.module.css). */
+@media (max-width: 720px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .rowAmount {
+    text-align: left;
+  }
+}

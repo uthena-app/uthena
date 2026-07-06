@@ -1,0 +1,37 @@
+/* ManageInStripeButton — secondary-CTA styling. The button is the
+   "Manage in Stripe" entry point that mints a Billing Portal session
+   via `openBillingPortalAction`. It stays secondary visually so it
+   doesn't compete with the primary Cancel / Resume actions above it
+   (SubscriptionStatusCard renders all three in a row).
+
+   Token-only — no inline colors, no magic values. The transparent
+   background + --line-strong border + --text-1 color are the same
+   secondary-button shape used across the design system (matches
+   CancelButton's "Keep subscription" + ResumeButton's outline). */
+
+.button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--text-1);
+  border: 1px solid var(--line-strong);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 120ms ease;
+}
+
+.button:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--line-strong);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}

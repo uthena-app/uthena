@@ -1,0 +1,523 @@
+/* AdminPartnerPayouts.module.css — token-only styles for the
+   P6.8 Slice 1 admin partner payouts detail page.
+
+   Pattern mirrors /partner/payouts/[id]/page.module.css for the
+   hero rhythm (single-record view, tighter max-width) plus
+   /admin/payouts/page.module.css for the admin token-driven
+   `data-*` attribute selectors. No inline colors, no magic values. */
+
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ===== Hero ====================================================== */
+
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.heroText {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.displayName {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.partnerId {
+  font-variant-numeric: tabular-nums;
+  font-size: 18px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.sub {
+  margin: 4px 0 0;
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+.slug {
+  font-family: var(--font-mono, ui-monospace, 'SF Mono', Menlo, Consolas, monospace);
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.dot {
+  color: var(--text-3);
+}
+
+.heroBadges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.statusPill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.statusPill[data-status='approved'] {
+  background: var(--success-soft);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.statusPill[data-status='pending'] {
+  background: var(--warn-soft);
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+.statusPill[data-status='suspended'] {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.royalty {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.royalty strong {
+  color: var(--heading);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.approved {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+/* ===== Summary cards ============================================== */
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+}
+
+.summaryCard {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.summaryCard:last-of-type {
+  border-bottom: none;
+}
+
+.summaryLabel {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.summaryValue {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--heading);
+}
+
+.summaryCard[data-accent='success'] .summaryValue {
+  color: var(--success);
+}
+
+.summaryCard[data-accent='warn'] .summaryValue {
+  color: var(--warn);
+}
+
+.summaryCard[data-accent='mute'] .summaryValue {
+  color: var(--text-2);
+}
+
+.summaryCard[data-accent='accent'] .summaryValue {
+  color: var(--accent);
+}
+
+.lifetime {
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.lifetime strong {
+  color: var(--heading);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: var(--text-3);
+}
+
+/* ===== Section header (shared) ==================================== */
+
+.sectionHeader {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 4px;
+}
+
+.sectionSub {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* ===== List (shared between ledger + requests) ==================== */
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+  overflow: hidden;
+}
+
+/* ===== Ledger row (admin context — data-* attribute colors) ======= */
+
+.ledgerRow {
+  display: grid;
+  grid-template-columns: 90px 1fr 120px 120px;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+  font-size: 13px;
+}
+
+.ledgerRow:last-child {
+  border-bottom: none;
+}
+
+.ledgerDateCol {
+  min-width: 0;
+}
+
+.ledgerDate {
+  margin: 0;
+  color: var(--text-3);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ledgerOrderId {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.ledgerMainCol {
+  min-width: 0;
+}
+
+.ledgerKind {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ledgerKind[data-kind='order_sale'] {
+  color: var(--success);
+}
+.ledgerKind[data-kind='subscription'] {
+  color: var(--accent);
+}
+.ledgerKind[data-kind='refund'] {
+  color: var(--danger);
+}
+.ledgerKind[data-kind='payout'] {
+  color: var(--accent);
+}
+.ledgerKind[data-kind='clawback'] {
+  color: var(--danger);
+}
+.ledgerKind[data-kind='adjustment'] {
+  color: var(--text-2);
+}
+
+.ledgerDesc {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ledgerStatus {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.ledgerStatus[data-status='available'] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.ledgerStatus[data-status='paid'] {
+  background: var(--bg-elev-2);
+  color: var(--text-3);
+}
+
+.ledgerStatus[data-status='locked'],
+.ledgerStatus[data-status='pending_payout'] {
+  background: var(--warn-soft);
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+.ledgerStatus[data-status='void'] {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.ledgerAmount {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ledgerAmount[data-direction='credit'] {
+  color: var(--success);
+}
+
+.ledgerAmount[data-direction='debit'] {
+  color: var(--danger);
+}
+
+/* ===== Requests section =========================================== */
+
+.requests {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Storage section (P7.10) ==================================== */
+
+.storage {
+  display: flex;
+  flex-direction: column;
+}
+
+.storageList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+  overflow: hidden;
+}
+
+.storageRow {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 16px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+
+.storageRow:last-child {
+  border-bottom: none;
+}
+
+.storageRow[data-status='draft'] {
+  /* Draft products render with a slightly muted left border so the
+     admin can see at a glance which products aren't yet shipped. */
+  border-left: 3px solid var(--warn-line);
+  padding-left: 13px;
+}
+
+.storageRow[data-status='published'] {
+  border-left: 3px solid var(--success-line);
+  padding-left: 13px;
+}
+
+.storageRow[data-status='archived'] {
+  border-left: 3px solid var(--line);
+  padding-left: 13px;
+}
+
+.storageMainCol {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.storageTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.storageMeta {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.storageSlug {
+  font-family: var(--font-mono, ui-monospace, 'SF Mono', Menlo, Consolas, monospace);
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.storageFileCount {
+  color: var(--text-2);
+}
+
+.storageBar {
+  margin-top: 4px;
+  height: 6px;
+  width: 100%;
+  background: var(--bg-elev-2);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.storageBarFill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 200ms ease-out;
+  border-radius: 3px;
+}
+
+.storageBarFill[data-fill='light'] {
+  background: var(--accent-soft);
+}
+
+.storageBarFill[data-fill='mid'] {
+  background: var(--accent);
+}
+
+.storageBarFill[data-fill='heavy'] {
+  background: var(--warn);
+}
+
+.storageSize {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--heading);
+  text-align: right;
+}
+
+/* ===== Mobile ====================================================== */
+
+@media (max-width: 720px) {
+  .hero {
+    flex-direction: column;
+  }
+  .heroBadges {
+    align-items: flex-start;
+    width: 100%;
+  }
+  .ledgerRow {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .ledgerAmount {
+    text-align: left;
+  }
+  .storageRow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .storageSize {
+    text-align: left;
+  }
+}

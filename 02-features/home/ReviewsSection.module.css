@@ -1,0 +1,93 @@
+/* Reviews section — score + quote two-column layout. */
+
+.sec {
+  padding: var(--space-9) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.secHead {
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: var(--space-1);
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+  line-height: 1.05;
+}
+
+.rev {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.score {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.scoreNum {
+  font-family: var(--font-mono);
+  font-size: 48px;
+  color: var(--heading);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.stars {
+  color: var(--star);
+  letter-spacing: 3px;
+  font-size: 20px;
+}
+
+.scoreSub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-soft);
+  margin: 6px 0 0;
+}
+
+.quote {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--heading);
+}
+
+.cite {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--text-soft);
+  display: block;
+  margin-top: var(--space-3);
+}
+
+@media (max-width: 880px) {
+  .sec {
+    padding: var(--space-7) 0;
+  }
+  .rev {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  .scoreNum {
+    font-size: 36px;
+  }
+}

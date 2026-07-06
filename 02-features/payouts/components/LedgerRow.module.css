@@ -1,0 +1,78 @@
+/* LedgerRow — one row in the partner ledger table.
+   P6.4 — wrapped in <li> + <Link>; the `<a>` carries the grid
+   layout + hover/focus affordance. */
+
+.li {
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 100px 1fr 140px 120px;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 6px;
+  /* Compensate for the +6px inset so the row's bottom border still
+     aligns with the previous layout. Without this, the focus ring
+     would push the border out. */
+  margin: 0 -6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  transition: background-color 120ms ease;
+}
+
+.li:last-child .row { border-bottom: none; }
+
+.row:hover {
+  background: var(--bg-elev-2);
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.dateCol { color: var(--text-2); font-variant-numeric: tabular-nums; }
+.date { margin: 0; font-size: 13px; }
+.lockedHint, .paidHint { margin: 4px 0 0; font-size: 11px; color: var(--text-3); }
+
+.kindCol { min-width: 0; }
+.kind {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.desc { margin: 4px 0 0; color: var(--text-2); font-size: 12px; line-height: 1.4; }
+.orderId { margin: 2px 0 0; color: var(--text-3); font-size: 11px; font-variant-numeric: tabular-nums; }
+
+.statusCol { color: var(--text-2); }
+.status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.amountCol { text-align: right; }
+.amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .row { grid-template-columns: 1fr; gap: 6px; }
+  .amountCol { text-align: left; }
+}

@@ -1,0 +1,49 @@
+/* Account overview loading fallback — header + 3-KPI grid + card.
+   Token-only. Mirrors account/overview.module.css. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  max-width: 920px;
+}
+
+.header {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.kpiCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--space-5);
+}
+
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+}

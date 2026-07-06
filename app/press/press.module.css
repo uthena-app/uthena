@@ -1,0 +1,55 @@
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-6, 24px);
+  display: grid;
+  gap: var(--space-5, 20px);
+}
+
+.header {
+  display: grid;
+  gap: var(--space-2, 8px);
+}
+
+.h1 {
+  font-family: var(--font-display, 'Inter Tight', system-ui);
+  font-size: var(--text-3xl, 30px);
+  font-weight: var(--weight-bold, 700);
+  color: var(--text-1);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  font-size: var(--text-lg, 18px);
+  color: var(--text-2);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.section {
+  display: grid;
+  gap: var(--space-2, 8px);
+}
+
+.sectionH {
+  font-size: var(--text-lg, 18px);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--text-1);
+  margin: 0;
+}
+
+.list {
+  margin: 0;
+  padding-left: var(--space-5, 20px);
+  display: grid;
+  gap: var(--space-2, 8px);
+}
+
+.link {
+  color: var(--accent);
+  text-decoration: none;
+}
+.link:hover {
+  text-decoration: underline;
+}

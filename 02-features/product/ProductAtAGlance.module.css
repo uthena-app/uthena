@@ -1,0 +1,109 @@
+/* ProductAtAGlance — the `.brief` block from
+ * `mockups/styles/main.css` lines 313–319. Token-only.
+ *
+ * The brief is a sticky right-rail card with:
+ *   - h5 "At a glance" eyebrow (uppercase, mono, --text-soft)
+ *   - Five data rows (Format / Modules / License / Instructor /
+ *     Updated), each a label-on-top + value-below block separated
+ *     by hairline --line dividers
+ *   - Two CTAs at the bottom (Add to cart primary, Preview
+ *     curriculum secondary)
+ *
+ * Sticky positioning keeps the brief visible as the user scrolls
+ * the tab panels; `top: 120px` matches the mockup's value and
+ * clears the site header. On mobile (< 1024 px) the brief stacks
+ * below the tabs and sticky behavior is disabled.
+ *
+ * Per AGENTS.md: no inline colors, no magic pixels. The brief's
+ * background is the elevated surface (`--bg-elev-1`), matching the
+ * product card's body color so the page reads as a single
+ * editorial system. */
+
+.brief {
+  padding: var(--s-5);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  align-self: start;
+  position: sticky;
+  top: 120px;
+}
+
+.h5 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.value {
+  font-size: 14px;
+  color: var(--heading);
+  line-height: 1.4;
+  /* `overflow-wrap: anywhere` keeps a long partner name (e.g. a 60
+   * char display_name) from blowing up the layout. */
+  overflow-wrap: anywhere;
+}
+
+.value b {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.link {
+  color: var(--heading);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 120ms ease;
+}
+
+.link:hover {
+  color: var(--teal);
+  border-bottom-color: var(--teal-line);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+.divider {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: var(--s-2);
+}
+
+@media (max-width: 1024px) {
+  /* On tablet / mobile, the page's 2-column grid collapses
+   * (`pdpBelow` is `1fr` at this breakpoint). Drop the sticky
+   * behavior so the brief scrolls naturally with the rest of the
+   * content — there's no panel column to stick alongside. */
+  .brief {
+    position: static;
+    top: auto;
+  }
+}

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marketplace — Uthena · Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="a-editorial.css">
+<style>
+  /* ==================== CATALOG — Editorial ==================== */
+  /* Editorial: serif H1, no sidebar, filters live in a sticky
+     horizontal pill row, generous gutters, covers as art. */
+
+  .cat-head { padding: 80px 0 48px; }
+  .cat-head .crumb { font-size: 12.5px; color: var(--text-3); margin-bottom: 24px; }
+  .cat-head .crumb a { color: var(--text-2); }
+  .cat-head h1 { font-family: var(--font-display); font-weight: 400; font-size: 64px; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px; }
+  .cat-head h1 em { font-style: italic; color: var(--accent); }
+  .cat-head .lede { font-size: 17px; line-height: 1.6; color: var(--text-2); max-width: 640px; }
+  .cat-head-inner { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .cat-head-inner .meta { font-size: 12.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; }
+  .cat-head-inner .meta strong { color: var(--text-1); font-family: var(--font-mono); font-weight: 500; }
+
+  /* Filter row — horizontal pills, sticky */
+  .filter-bar {
+    position: sticky; top: 64px; z-index: 40;
+    background: rgba(10, 11, 13, 0.78);
+    backdrop-filter: saturate(150%) blur(20px);
+    -webkit-backdrop-filter: saturate(150%) blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  .filter-row { display: flex; gap: 8px; align-items: center; overflow-x: auto; padding: 4px 0; }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: var(--r-pill);
+    font-size: 13px; color: var(--text-2);
+    background: transparent; border: 1px solid var(--border-2);
+    white-space: nowrap; cursor: pointer;
+    transition: color .12s ease, border-color .12s ease, background .12s ease;
+  }
+  .pill:hover { color: var(--text-1); border-color: var(--border-3); }
+  .pill.active { color: var(--text-1); background: var(--bg-2); border-color: var(--border-3); }
+  .pill .num { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3); }
+  .pill.active .num { color: var(--text-2); }
+  .pill-divider { width: 1px; height: 22px; background: var(--border-2); margin: 0 4px; flex-shrink: 0; }
+  .pill-sort { margin-left: auto; }
+  .pill svg { color: var(--text-3); }
+
+  /* Active filter chips */
+  .active-chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 20px 0 0; }
+  .active-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--bg-brand); border: 1px solid var(--accent-line);
+    color: var(--accent); font-size: 12.5px;
+    padding: 5px 12px; border-radius: var(--r-pill);
+  }
+  .active-chip button { color: var(--accent); opacity: 0.6; line-height: 1; padding: 0; }
+  .active-chip button:hover { opacity: 1; }
+
+  /* GRID — 3 cols, generous gaps */
+  .catalog-grid { padding: 48px 0 120px; }
+  .grid-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; }
+  .grid-meta .count { font-family: var(--font-display); font-style: italic; font-size: 20px; color: var(--text-2); }
+  .grid-meta .count strong { color: var(--text-1); font-weight: 400; font-style: normal; }
+  .grid-meta .view { display: flex; gap: 4px; }
+  .grid-meta .view button { padding: 6px 12px; border: 1px solid var(--border-2); border-radius: var(--r-pill); font-size: 12px; color: var(--text-3); }
+  .grid-meta .view button.active { color: var(--text-1); border-color: var(--border-3); background: var(--bg-2); }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 32px; }
+  @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+
+  .cc { display: flex; flex-direction: column; gap: 16px; transition: transform .2s ease; }
+  .cc:hover { transform: translateY(-3px); }
+  .cc .art { aspect-ratio: 4/5; border-radius: var(--r-md); overflow: hidden; background: var(--bg-2); border: 1px solid var(--border); position: relative; }
+  .cc .art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(10,11,13,0.5)); }
+  .cc .ribbon { position: absolute; top: 14px; left: 14px; z-index: 2; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-1); background: rgba(10,11,13,0.75); backdrop-filter: blur(10px); padding: 4px 9px; border-radius: var(--r-pill); }
+  .cc .save { position: absolute; top: 14px; right: 14px; z-index: 2; background: rgba(77, 178, 130, 0.9); color: #0A0B0D; font-size: 11px; font-weight: 500; padding: 4px 9px; border-radius: var(--r-pill); }
+  .cc .meta { display: flex; flex-direction: column; gap: 6px; padding: 0 4px; }
+  .cc .cat { font-size: 11.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; }
+  .cc .ttl { font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.2; letter-spacing: -0.015em; }
+  .cc .foot { display: flex; justify-content: space-between; align-items: center; padding: 0 4px; }
+  .cc .price { font-family: var(--font-mono); font-size: 14px; font-weight: 500; }
+  .cc .price small { color: var(--text-3); font-weight: 400; text-decoration: line-through; margin-right: 4px; }
+  .cc .meta-row { display: flex; gap: 10px; align-items: center; font-size: 12px; color: var(--text-3); }
+
+  /* Pagination — large, editorial */
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 80px; }
+  .pg {
+    min-width: 40px; height: 40px; padding: 0 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; border: 1px solid var(--border-2); border-radius: var(--r-pill);
+    color: var(--text-2); font-size: 13px; font-family: var(--font-mono);
+  }
+  .pg:hover { color: var(--text-1); border-color: var(--border-3); }
+  .pg.active { background: var(--text-1); color: #0A0B0D; border-color: var(--text-1); }
+  .pg.dots { border: none; background: none; color: var(--text-3); }
+</style>
+</head>
+<body>
+
+<div class="var-tag">A · EDITORIAL · CATEGORY</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">uthena<span class="logo-mark"></span></a>
+    <nav class="nav-links">
+      <a class="nav-link" href="#">Index</a>
+      <a class="nav-link active" href="#">Marketplace</a>
+      <a class="nav-link" href="#">Collections</a>
+      <a class="nav-link" href="#">For partners</a>
+      <a class="nav-link" href="#">Journal</a>
+    </nav>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Search 612 products">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">Sign in</a>
+      <a class="btn btn-accent btn-sm" href="#">Open account</a>
+    </div>
+  </div>
+</header>
+
+<!-- HEADER -->
+<section class="cat-head">
+  <div class="container">
+    <div class="crumb"><a href="#">Index</a> / Marketplace</div>
+    <h1>The <em>Marketplace</em>.</h1>
+    <p class="lede">Six hundred and twelve private-label products across fifteen categories. Filter by license, length, price, and rating. Every product comes with the rights to edit, rebrand, and resell.</p>
+    <div class="cat-head-inner">
+      <div class="meta"><strong>612</strong> &nbsp;·&nbsp; 15 categories &nbsp;·&nbsp; Updated daily</div>
+      <div style="display:flex;gap:8px;">
+        <a class="btn btn-secondary btn-sm" href="#">Export CSV</a>
+        <a class="btn btn-secondary btn-sm" href="#">Subscribe to feed</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTER BAR — sticky -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="filter-row">
+      <button class="pill active">All <span class="num">· 612</span></button>
+      <button class="pill">AI &amp; ChatGPT <span class="num">· 64</span></button>
+      <button class="pill">Business <span class="num">· 92</span></button>
+      <button class="pill">Marketing <span class="num">· 87</span></button>
+      <button class="pill">Programming <span class="num">· 54</span></button>
+      <button class="pill">Design <span class="num">· 41</span></button>
+      <button class="pill">Finance <span class="num">· 38</span></button>
+      <button class="pill">Health <span class="num">· 29</span></button>
+      <button class="pill">+ 8 more</button>
+      <div class="pill-divider"></div>
+      <button class="pill">License · PLR</button>
+      <button class="pill">Length · 1–3h</button>
+      <button class="pill">$0 – $200</button>
+      <div class="pill-divider"></div>
+      <button class="pill pill-sort">Newest first
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- GRID -->
+<section class="catalog-grid">
+  <div class="container">
+    <div class="active-chips">
+      <span class="active-chip">License: PLR <button>×</button></span>
+      <span class="active-chip">Length: 1–3h <button>×</button></span>
+      <span class="active-chip">Price: $0–$200 <button>×</button></span>
+      <a href="#" style="font-size:12.5px;color:var(--text-3);align-self:center;margin-left:4px;text-decoration:underline;">Clear all</a>
+    </div>
+
+    <div class="grid-meta">
+      <div class="count">Showing <strong>187</strong> of 612 products</div>
+      <div class="view">
+        <button class="active">Grid</button>
+        <button>Index</button>
+        <button>Table</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <a href="#" class="cc">
+        <div class="art" style="background:linear-gradient(135deg,#1a4744 0%,#0d2a28 100%);">
+          <span class="ribbon">AI · 47 LESSONS</span>
+        </div>
+        <div class="meta">
+          <span class="cat">Artificial Intelligence</span>
+          <span class="ttl">Using AI to Build a Profitable Personal Brand</span>
+        </div>
+        <div class="foot">
+          <div class="meta-row"><span>★★★★★</span><span>· 3 reviews</span></div>
+          <span class="price">$5,700</span>
+        </div>
+      </a>
+
+      <a href="#" class="cc">
+        <div class="art" style="background:linear-gradient(135deg,#4a3018 0%,#2a1a0d 100%);">
+          <span class="ribbon">DEV · 89 LESSONS</span>
+          <span class="save">80% OFF</span>
+        </div>
+        <div class="meta">
+          <span class="cat">Programming</span>
+          <span class="ttl">Python Pro — The Complete Python Bootcamp</span>
+        </div>
+        <div class="foot">
+          <div class="meta-row"><span>★★★★★</span><span>· 12 reviews</span></div>
+          <div>
+            <span class="price"><small>$9,781</small>$79</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="cc">
+        <div class="art" style="background:linear-gradient(135deg,#2a1f4a 0%,#16102a 100%);">
+          <span class="ribbon">SEC · 64 LESSONS</span>
+        </div>
+        <div class="meta">
+          <span class="cat">Network Security</span>
+          <span class="ttl">Complete Network Hacking Course 2025</span>
+        </div>
+        <div class="foot">
+          <div class="meta-row"><span>★★★★☆</span><span>· 8 reviews</span></div>
+          <span class="price">$9,781</span>
+        </div>
+      </a>
+
+      <a href="#" class="cc">
+        <div class="art" style="background:linear-gradient(135deg,#3a2030 0%,#1f1018 100%);">
+          <span class="ribbon">SALES · 42 LESSONS</span>
+        </div>
+        <div class="meta">
+          <span class="cat">Business</span>
+          <span class="ttl">B2B Sales Skills — Cold Lead to Closed Deal</span>
+        </div>
+        <div class="foot">
+          <div class="meta-row"><span>★★★★★</span><span>· 27 reviews</span></div>
+          <span class="price">$79</span>
+        </div>
+      </a>
+
+      <a href="#" class="cc">
+        <div class="art" style="background:linear-gradient(135deg,#103a30 0%,#081f1a 100%);">
+          <span class="ribbon">FIN · 56 LESSONS</span>
+        </div>
+        <div class="meta">
+          <span class="cat">Finance</span>
+          <span class="ttl">SQLite Databases — Build and Manage From Scratch</span>
+        </div>
+        <div class="foot">
+          <div class="meta-row"><span>★★★★★</span><span>· 19 reviews</span></div>
+          <span class="price">$6,781</span>
+        </div>
+      </a>
+
+      <a href="#" class="cc">
+        <div class="art" style="background:linear-gradient(135deg,#4a2a10 0%,#2a1808 100%);">
+          <span class="ribbon">AI · 31 LESSONS</span>
+        </div>
+        <div class="meta">
+          <span class="cat">Artificial Intelligence</span>
+          <span class="ttl">Artificial Intelligence Explained for Beginners</span>
+        </div>
+        <div class="foot">
+          <div class="meta-row"><span>★★★★★</span><span>· 1 review</span></div>
+          <span class="price">$6,781</span>
+        </div>
+      </a>
+
+      <a href="#" class="cc">
+        <div class="art" style="background:linear-gradient(135deg,#1a2a4a 0%,#0d161f 100%);">
+          <span class="ribbon">MGMT · 38 LESSONS</span>
+        </div>
+        <div class="meta">
+          <span class="cat">Productivity</span>
+          <span class="ttl">Smartphone Videography Masterclass</span>
+        </div>
+        <div class="foot">
+          <div class="meta-row"><span>★★★★★</span><span>· 14 reviews</span></div>
+          <span class="price">$3,200</span>
+        </div>
+      </a>
+
+      <a href="#" class="cc">
+        <div class="art" style="background:linear-gradient(135deg,#2a3a2a 0%,#161f16 100%);">
+          <span class="ribbon">HEALTH · 28 LESSONS</span>
+        </div>
+        <div class="meta">
+          <span class="cat">Health &amp; Fitness</span>
+          <span class="ttl">Balance: Unity Between Work &amp; Life</span>
+        </div>
+        <div class="foot">
+          <div class="meta-row"><span>★★★★☆</span><span>· 6 reviews</span></div>
+          <span class="price">$1,890</span>
+        </div>
+      </a>
+
+      <a href="#" class="cc">
+        <div class="art" style="background:linear-gradient(135deg,#3a1f3a 0%,#1f101f 100%);">
+          <span class="ribbon">DESIGN · 44 LESSONS</span>
+        </div>
+        <div class="meta">
+          <span class="cat">Design</span>
+          <span class="ttl">Canva Content Creation &amp; Graphic Design</span>
+        </div>
+        <div class="foot">
+          <div class="meta-row"><span>★★★★★</span><span>· 32 reviews</span></div>
+          <span class="price">$4,500</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="pagination">
+      <button class="pg">← Prev</button>
+      <button class="pg active">1</button>
+      <button class="pg">2</button>
+      <button class="pg">3</button>
+      <button class="pg">4</button>
+      <span class="pg dots">…</span>
+      <button class="pg">34</button>
+      <button class="pg">Next →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-mark">uthena<span class="logo-mark"></span></div>
+        <p style="color:var(--text-2);font-size:14px;line-height:1.6;margin-top:20px;max-width:340px;">The home for digital product entrepreneurs. Six hundred and twelve private-label products, one platform, one operator.</p>
+      </div>
+      <div>
+        <h5>Marketplace</h5>
+        <ul><li><a href="#">All products</a></li><li><a href="#">Newest</a></li><li><a href="#">On sale</a></li><li><a href="#">Bundles</a></li></ul>
+      </div>
+      <div>
+        <h5>For partners</h5>
+        <ul><li><a href="#">Become a partner</a></li><li><a href="#">Affiliate program</a></li><li><a href="#">Reseller storefronts</a></li><li><a href="#">Payouts</a></li></ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul><li><a href="#">Licensing guide</a></li><li><a href="#">Journal</a></li><li><a href="#">Help center</a></li><li><a href="#">API</a></li></ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul><li><a href="#">About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Refunds</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Uthena, Inc.</span>
+      <span>Six hundred and twelve products. One platform.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

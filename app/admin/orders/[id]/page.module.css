@@ -1,0 +1,48 @@
+/* /admin/orders/[id] — token-only CSS. */
+
+.crumb {
+  margin-bottom: var(--gap-3, 12px);
+}
+
+.crumbLink {
+  font-size: var(--font-size-sm, 13px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  text-decoration: none;
+}
+
+.crumbLink:hover {
+  color: var(--fg, #111);
+}
+
+.crumbLink:focus-visible {
+  outline: 2px solid var(--accent, #ea580c);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.header {
+  margin-bottom: var(--gap-4, 16px);
+}
+
+.h1 {
+  font-size: var(--font-size-2xl, 28px);
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: var(--fg, #111);
+}
+
+.sub {
+  font-size: var(--font-size-sm, 13px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.7));
+  margin: 0;
+}
+
+.code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--bg-elev-2, #fafafa);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  color: var(--fg, #111);
+}

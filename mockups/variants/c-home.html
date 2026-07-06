@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Uthena — Variant C: Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="c-control.css">
+<style>
+  /* ==================== HOMEPAGE — Control ==================== */
+  /* Two-column hero (text + visual), pillars, gallery,
+     stats strip, partner cards, testimonial, FAQ. The reliable shape. */
+
+  .hero { position: relative; padding: 80px 0 96px; overflow: hidden;
+    background: linear-gradient(180deg, var(--bg-warm) 0%, var(--bg-base) 100%);
+  }
+  .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--border) 30%, var(--border) 70%, transparent 100%); }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; position: relative; z-index: 1; }
+  @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+  .eyebrow-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 10px 5px 6px;
+    background: var(--bg-1); border: 1px solid var(--border-2);
+    border-radius: var(--r-pill);
+    font-size: 12px; font-weight: 500; color: var(--text-1);
+  }
+  .eyebrow-tag .pip { width: 18px; height: 18px; border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--accent) 0deg, #E8B341 120deg, #FF580D 240deg, var(--accent) 360deg);
+    position: relative;
+  }
+  .eyebrow-tag .pip::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--bg-1); }
+
+  .hero h1 { margin: 22px 0 22px; max-width: 720px; }
+  .hero h1 .accent { color: var(--accent); }
+  .hero-sub { color: var(--text-2); font-size: 17px; max-width: 580px; line-height: 1.6; }
+  .hero-ctas { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
+  .hero-trust { display: flex; gap: 28px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .hero-trust .item { display: flex; flex-direction: column; }
+  .hero-trust .v { font-family: var(--font-mono); font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .hero-trust .l { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* Right side preview — "data" card, looks like a real product surface */
+  .preview-card { background: var(--bg-1); border: 1px solid var(--border-2); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+  .preview-head { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--bg-inset); }
+  .preview-head .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--bg-3); }
+  .preview-head .dot:nth-child(1) { background: rgba(229, 83, 83, 0.5); }
+  .preview-head .dot:nth-child(2) { background: rgba(232, 179, 65, 0.5); }
+  .preview-head .dot:nth-child(3) { background: rgba(77, 178, 130, 0.5); }
+  .preview-head .url { margin-left: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+  .preview-body { padding: 20px; }
+  .preview-body h4 { font-size: 11.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 14px; }
+  .preview-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .preview-row:last-child { border-bottom: none; }
+  .preview-row .nm { font-size: 13.5px; font-weight: 500; }
+  .preview-row .mt { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+  .preview-row .v { font-family: var(--font-mono); font-size: 13.5px; font-weight: 600; }
+  .preview-row .v.up { color: var(--success); }
+
+  /* Section */
+  .section { padding: 80px 0; }
+  .section.alt { background: var(--bg-cool); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; gap: 24px; flex-wrap: wrap; }
+  .section-head h2 { max-width: 720px; }
+  .section-head .sub { color: var(--text-2); margin-top: 10px; max-width: 580px; font-size: 14.5px; }
+
+  /* Pillars */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 768px) { .pillars { grid-template-columns: 1fr; } }
+  .pillar { display: flex; flex-direction: column; padding: 28px; background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); }
+  .pillar .num { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--accent); margin-bottom: 16px; display: inline-flex; align-items: center; gap: 8px; }
+  .pillar .num::before { content: ""; width: 16px; height: 1px; background: var(--accent-line); }
+  .pillar h3 { font-size: 17px; margin-bottom: 8px; }
+  .pillar p { color: var(--text-2); font-size: 13.5px; line-height: 1.65; }
+
+  /* Stat strip */
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; margin: 40px 0; }
+  .stat-strip .item { padding: 22px 24px; border-right: 1px solid var(--border); }
+  .stat-strip .item:last-child { border-right: none; }
+  .stat-strip .item .v { font-family: var(--font-mono); font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+  .stat-strip .item .l { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+  @media (max-width: 768px) { .stat-strip { grid-template-columns: repeat(2, 1fr); gap: 0; }
+    .stat-strip .item:nth-child(2) { border-right: none; }
+    .stat-strip .item:nth-child(1), .stat-strip .item:nth-child(2) { border-bottom: 1px solid var(--border); } }
+
+  /* Category row */
+  .cat-row { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .cat-link { padding: 6px 12px; border-radius: var(--r-sm); font-size: 13px; color: var(--text-2); transition: color .12s ease, background .12s ease; }
+  .cat-link:hover { color: var(--text-1); background: var(--bg-1); }
+  .cat-link.active { color: var(--text-1); background: var(--bg-2); font-weight: 500; }
+  .cat-link .num { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); margin-left: 4px; }
+
+  /* Product card */
+  .pc { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; transition: border-color .12s ease, transform .12s ease, box-shadow .12s ease; display: block; }
+  .pc:hover { border-color: var(--accent-line); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .pc-thumb { aspect-ratio: 16/9; position: relative; overflow: hidden; background: var(--bg-2); }
+  .pc-thumb-art { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .pc-thumb-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(11,12,14,0.6)); }
+  .pc-thumb-tag { position: absolute; top: 8px; left: 8px; z-index: 2; }
+  .pc-body { padding: 14px 16px 16px; }
+  .pc-cat { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 6px; }
+  .pc-ttl { font-size: 14px; font-weight: 500; line-height: 1.4; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.8em; }
+  .pc-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); }
+  .pc-price { font-family: var(--font-mono); font-size: 13.5px; font-weight: 600; }
+  .pc-meta { font-size: 11.5px; color: var(--text-3); display: flex; gap: 8px; align-items: center; }
+
+  /* Steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 768px) { .steps { grid-template-columns: 1fr; } }
+  .step { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); padding: 28px; }
+  .step .n { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--accent); margin-bottom: 14px; }
+  .step h3 { font-size: 16px; margin-bottom: 8px; }
+  .step p { color: var(--text-2); font-size: 13.5px; line-height: 1.65; }
+
+  /* Earn */
+  .earn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 768px) { .earn-grid { grid-template-columns: 1fr; } }
+  .earn-card { padding: 32px; background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-lg); display: flex; flex-direction: column; }
+  .earn-card.featured { background: var(--bg-brand); border-color: var(--accent-line); }
+  .earn-card .role { font-size: 11.5px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 16px; }
+  .earn-card .role.cool { color: var(--text-3); }
+  .earn-card h3 { font-size: 19px; margin-bottom: 10px; line-height: 1.3; }
+  .earn-card .num-big { font-family: var(--font-mono); font-size: 48px; font-weight: 700; letter-spacing: -0.025em; line-height: 1; margin: 16px 0 12px; }
+  .earn-card.featured .num-big { color: var(--accent); }
+  .earn-card .num-big small { font-size: 14px; color: var(--text-3); font-weight: 400; margin-left: 6px; }
+  .earn-card p { color: var(--text-2); font-size: 13.5px; max-width: 380px; }
+  .earn-card ul { list-style: none; margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+  .earn-card li { display: flex; gap: 10px; font-size: 13px; color: var(--text-2); align-items: flex-start; }
+  .earn-card li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .earn-card .actions { margin-top: 24px; }
+
+  /* Testimonial */
+  .testimonial { padding: 32px; background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-lg); display: grid; grid-template-columns: 1fr 240px; gap: 32px; align-items: center; }
+  @media (max-width: 768px) { .testimonial { grid-template-columns: 1fr; } }
+  .testimonial blockquote { font-size: 19px; line-height: 1.55; color: var(--text-1); font-weight: 400; }
+  .testimonial cite { display: block; margin-top: 16px; font-size: 13px; color: var(--text-3); font-style: normal; }
+  .testimonial cite strong { color: var(--text-1); display: block; font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+
+  /* FAQ */
+  .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
+  @media (max-width: 880px) { .faq { grid-template-columns: 1fr; } }
+  .faq-item { padding: 22px 0; border-top: 1px solid var(--border); }
+  .faq-item h4 { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+  .faq-item p { color: var(--text-2); font-size: 14px; line-height: 1.65; }
+</style>
+</head>
+<body>
+
+<div class="var-tag">C · CONTROL</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="word">uthena</span><span class="dot"></span>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link active" href="#">Home</a>
+      <a class="nav-link" href="#">Marketplace</a>
+      <a class="nav-link" href="#">Tools &amp; Assets</a>
+      <a class="nav-link" href="#">Bundles</a>
+      <a class="nav-link" href="#">For partners</a>
+      <a class="nav-link" href="#">Affiliates</a>
+    </nav>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Search 600+ products...">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">Sign in</a>
+      <a class="btn btn-primary btn-sm" href="#">Get started</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow-tag"><span class="pip"></span> Wholesale digital products · v3.2</span>
+        <h1 class="h-display">Wholesale your digital business, <span class="accent">ready to rebrand.</span></h1>
+        <p class="hero-sub">Six hundred and twelve curated PLR video courses and digital assets. Buy a license, make it your own, sell as if you made it. Keep one hundred percent of the income.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary btn-lg" href="#">Browse the marketplace</a>
+          <a class="btn btn-secondary btn-lg" href="#">How licensing works</a>
+        </div>
+        <div class="hero-trust">
+          <div class="item">
+            <div class="v">612</div>
+            <div class="l">Products in catalogue</div>
+          </div>
+          <div class="item">
+            <div class="v">15</div>
+            <div class="l">Categories</div>
+          </div>
+          <div class="item">
+            <div class="v">100%</div>
+            <div class="l">You keep revenue</div>
+          </div>
+          <div class="item">
+            <div class="v">$2.4M</div>
+            <div class="l">Paid to partners</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-card">
+        <div class="preview-head">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">uthena.com/partner-dashboard</span>
+        </div>
+        <div class="preview-body">
+          <h4>This month · your partner account</h4>
+          <div class="preview-row">
+            <div>
+              <div class="nm">Courses sold</div>
+              <div class="mt">via your storefront</div>
+            </div>
+            <div class="v">142</div>
+          </div>
+          <div class="preview-row">
+            <div>
+              <div class="nm">Revenue</div>
+              <div class="mt">net of refunds</div>
+            </div>
+            <div class="v up">$80,940</div>
+          </div>
+          <div class="preview-row">
+            <div>
+              <div class="nm">Payout pending</div>
+              <div class="mt">releases on 1st</div>
+            </div>
+            <div class="v">$48,564</div>
+          </div>
+          <div class="preview-row">
+            <div>
+              <div class="nm">Active referrals</div>
+              <div class="mt">28-day window</div>
+            </div>
+            <div class="v">38</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE PILLARS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="t-eyebrow">§01 — What you get</span>
+        <h2 class="h-1" style="margin-top:12px;">A complete inventory, not a list of files.</h2>
+        <p class="sub">Six hundred and twelve products across fifteen categories. Every course, template, and asset is reviewed for quality and rights before it ships.</p>
+      </div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">01 / 03</div>
+        <h3>A curated catalogue</h3>
+        <p>Every product is reviewed for quality and rights before it ships. No junk, no filler — just inventory you can sell with confidence.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">02 / 03</div>
+        <h3>One license. One hundred percent.</h3>
+        <p>Private label rights let you edit, rebrand, and resell as your own. You set the price. You keep the margin. The platform takes nothing from your sales.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">03 / 03</div>
+        <h3>Infrastructure that runs itself</h3>
+        <p>Your storefront, course player, file vault, payment tracking, and payout ledger — hosted, branded, and audited to the second.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY + GRID -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="t-eyebrow">§02 — The catalogue</span>
+        <h2 class="h-1" style="margin-top:12px;">Featured this week.</h2>
+        <p class="sub">A small selection of what's new and selling well across the marketplace.</p>
+      </div>
+      <a class="btn btn-secondary" href="#">View all 612 →</a>
+    </div>
+
+    <div class="cat-row">
+      <a class="cat-link active">All <span class="num">· 612</span></a>
+      <a class="cat-link">AI &amp; ChatGPT <span class="num">· 64</span></a>
+      <a class="cat-link">Business <span class="num">· 92</span></a>
+      <a class="cat-link">Marketing <span class="num">· 87</span></a>
+      <a class="cat-link">Programming <span class="num">· 54</span></a>
+      <a class="cat-link">Design <span class="num">· 41</span></a>
+      <a class="cat-link">Finance <span class="num">· 38</span></a>
+      <a class="cat-link">+ 8 more</a>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <a class="pc">
+        <div class="pc-thumb">
+          <div class="pc-thumb-art" style="background:linear-gradient(135deg,#1a4744 0%,#0d2a28 100%);"></div>
+          <div class="pc-thumb-tag"><span class="badge badge-accent">AI</span></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-cat">Artificial Intelligence</div>
+          <div class="pc-ttl">Using AI to Build a Profitable Personal Brand on Social Media</div>
+          <div class="pc-foot">
+            <span class="pc-price">$5,700</span>
+            <div class="pc-meta"><span>★★★★★</span><span class="t-faint">· 3</span></div>
+          </div>
+        </div>
+      </a>
+
+      <a class="pc">
+        <div class="pc-thumb">
+          <div class="pc-thumb-art" style="background:linear-gradient(135deg,#4a3018 0%,#2a1a0d 100%);"></div>
+          <div class="pc-thumb-tag"><span class="badge">DEV</span></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-cat">Programming</div>
+          <div class="pc-ttl">Python Pro — The Complete Python Bootcamp for Noobs</div>
+          <div class="pc-foot">
+            <span class="pc-price">$9,781</span>
+            <div class="pc-meta"><span>★★★★★</span><span class="t-faint">· 12</span></div>
+          </div>
+        </div>
+      </a>
+
+      <a class="pc">
+        <div class="pc-thumb">
+          <div class="pc-thumb-art" style="background:linear-gradient(135deg,#2a1f4a 0%,#16102a 100%);"></div>
+          <div class="pc-thumb-tag"><span class="badge">SEC</span></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-cat">Network Security</div>
+          <div class="pc-ttl">Complete Network Hacking Course 2025: Beginner to Advanced</div>
+          <div class="pc-foot">
+            <span class="pc-price">$9,781</span>
+            <div class="pc-meta"><span>★★★★☆</span><span class="t-faint">· 8</span></div>
+          </div>
+        </div>
+      </a>
+
+      <a class="pc">
+        <div class="pc-thumb">
+          <div class="pc-thumb-art" style="background:linear-gradient(135deg,#3a2030 0%,#1f1018 100%);"></div>
+          <div class="pc-thumb-tag"><span class="badge badge-success">-80%</span></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-cat">Business</div>
+          <div class="pc-ttl">B2B Sales Skills — From Cold Lead Generation to Closing</div>
+          <div class="pc-foot">
+            <span class="pc-price" style="color:var(--success);">$79</span>
+            <div class="pc-meta"><span>★★★★★</span><span class="t-faint">· 27</span></div>
+          </div>
+        </div>
+      </a>
+
+      <a class="pc">
+        <div class="pc-thumb">
+          <div class="pc-thumb-art" style="background:linear-gradient(135deg,#103a30 0%,#081f1a 100%);"></div>
+          <div class="pc-thumb-tag"><span class="badge">FIN</span></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-cat">Finance</div>
+          <div class="pc-ttl">How To Create and Manage SQLite Databases From Scratch</div>
+          <div class="pc-foot">
+            <span class="pc-price">$6,781</span>
+            <div class="pc-meta"><span>★★★★★</span><span class="t-faint">· 19</span></div>
+          </div>
+        </div>
+      </a>
+
+      <a class="pc">
+        <div class="pc-thumb">
+          <div class="pc-thumb-art" style="background:linear-gradient(135deg,#4a2a10 0%,#2a1808 100%);"></div>
+          <div class="pc-thumb-tag"><span class="badge">AI</span></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-cat">Artificial Intelligence</div>
+          <div class="pc-ttl">Artificial Intelligence Explained for Beginners</div>
+          <div class="pc-foot">
+            <span class="pc-price">$6,781</span>
+            <div class="pc-meta"><span>★★★★★</span><span class="t-faint">· 1</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<section class="section">
+  <div class="container">
+    <div class="stat-strip">
+      <div class="item"><div class="v">612</div><div class="l">Products in catalogue</div></div>
+      <div class="item"><div class="v">15</div><div class="l">Categories</div></div>
+      <div class="item"><div class="v">347</div><div class="l">Active partners</div></div>
+      <div class="item"><div class="v">$2.4M</div><div class="l">Paid to partners to date</div></div>
+    </div>
+
+    <div class="section-head" style="margin-bottom:32px;">
+      <div>
+        <span class="t-eyebrow">§03 — How it works</span>
+        <h2 class="h-1" style="margin-top:12px;">Three steps to your first sale.</h2>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n">STEP 01</div>
+        <h3>Find your product</h3>
+        <p>Six hundred and twelve products across fifteen categories. Filter by license, length, price, and rating.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 02</div>
+        <h3>Buy the PLR license</h3>
+        <p>Get a private label license. Modify the content, change the instructor name, translate it — make it your own.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 03</div>
+        <h3>Keep one hundred percent</h3>
+        <p>Sell on your storefront, your platform, or your agency offering. Every dollar you make is yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EARN -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="t-eyebrow">§04 — Earn with Uthena</span>
+        <h2 class="h-1" style="margin-top:12px;">Two ways to earn.</h2>
+        <p class="sub">Refer customers as an affiliate, or list your own courses as a partner. Either way, the platform handles the rest.</p>
+      </div>
+    </div>
+    <div class="earn-grid">
+      <div class="earn-card">
+        <span class="role cool">Affiliate</span>
+        <h3>Send traffic. Keep the commission.</h3>
+        <div class="num-big">20<small>%</small></div>
+        <p>Every customer you refer earns you twenty percent, recurring, for the life of the account. Custom storefront, real-time stats, weekly payouts.</p>
+        <ul>
+          <li>Custom mini-storefront at uthena.com/[handle]</li>
+          <li>Real-time clicks, conversions, and commissions</li>
+          <li>Weekly payouts via PayPal or USDC</li>
+        </ul>
+        <div class="actions"><a class="btn btn-secondary" href="#">Join the program →</a></div>
+      </div>
+      <div class="earn-card featured">
+        <span class="role">Partner · Sell your own</span>
+        <h3>List your courses with PLR rights.</h3>
+        <div class="num-big">60<small>%</small></div>
+        <p>Upload your course, set your price, and earn sixty percent of every sale. Uthena handles the storefront, payments, and PLR distribution.</p>
+        <ul>
+          <li>Upload, set a price, and you're live</li>
+          <li>Real-time sales dashboard and payout ledger</li>
+          <li>Monthly payouts via PayPal Mass Payout</li>
+        </ul>
+        <div class="actions"><a class="btn btn-primary" href="#">Become a partner →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="section">
+  <div class="container">
+    <div class="testimonial">
+      <div>
+        <span class="t-eyebrow">§05 — A note from a buyer</span>
+        <blockquote style="margin-top: 14px;">"I bought the courses to resell. The quality is what kept me coming back. Six months in, Uthena is the only marketplace on my shortlist."</blockquote>
+        <cite><strong>Craig Ballantyne</strong> Reseller · 14 products in catalogue</cite>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:var(--font-mono);font-size:36px;font-weight:600;letter-spacing:-0.02em;color:var(--accent);">4.8</div>
+        <div style="color:var(--warn);font-size:14px;letter-spacing:2px;margin:4px 0;">★★★★★</div>
+        <div class="t-faint t-sm">23 verified reviews</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="t-eyebrow">§06 — Questions</span>
+        <h2 class="h-1" style="margin-top:12px;">Frequently asked.</h2>
+      </div>
+      <a class="btn btn-ghost" href="#">Help center →</a>
+    </div>
+    <div class="faq">
+      <div class="faq-item">
+        <h4>What is private label rights?</h4>
+        <p>Private label rights (PLR) let you edit, rebrand, and resell a product as your own. You can change the instructor name, translate the content, add your own modules, and resell at any price. The product is yours to run your business on.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How much can I earn as a partner?</h4>
+        <p>You earn sixty percent of every sale. The platform handles pricing, payment processing, refunds, and PLR distribution. Top partners earn $20k+ per month; the average is around $3,400.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Do you offer refunds?</h4>
+        <p>Yes. Seven-day refund policy on all products, after any downloaded files are removed. Refund rate is below one percent across the catalogue.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I use Uthena courses on other platforms?</h4>
+        <p>You can sell the course on any platform you own — your website, your own course platform, your agency offering. The license does not allow resale on Udemy, Skillshare, or other third-party course marketplaces.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo" style="font-size:18px;margin-bottom:14px;"><span class="word">uthena</span><span class="dot"></span></div>
+        <p class="t-sm t-mute" style="max-width:280px;">The home for digital product entrepreneurs. Six hundred and twelve private-label products, one platform, one operator.</p>
+      </div>
+      <div><h5>Marketplace</h5><ul><li><a href="#">All products</a></li><li><a href="#">Newest</a></li><li><a href="#">On sale</a></li><li><a href="#">Bundles</a></li></ul></div>
+      <div><h5>For partners</h5><ul><li><a href="#">Become a partner</a></li><li><a href="#">Affiliate program</a></li><li><a href="#">Reseller storefronts</a></li><li><a href="#">Payouts</a></li></ul></div>
+      <div><h5>Resources</h5><ul><li><a href="#">Licensing guide</a></li><li><a href="#">Help center</a></li><li><a href="#">Changelog</a></li><li><a href="#">API</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Refunds</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Uthena, Inc.</span>
+      <span>Six hundred and twelve products. One platform.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

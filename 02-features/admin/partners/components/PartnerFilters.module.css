@@ -1,0 +1,78 @@
+/* PartnerFilters — token-only CSS for the filter form. */
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--gap-3, 12px);
+  padding: 16px;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-elev-1, #fff);
+  margin-bottom: var(--gap-6, 24px);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.input {
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg, #fff);
+  color: var(--fg, #111);
+  font-size: var(--font-size-sm, 14px);
+}
+
+.input:focus {
+  outline: 2px solid var(--accent, #2563eb);
+  outline-offset: 2px;
+}
+
+.actions {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+}
+
+.submit {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--accent, #2563eb);
+  color: var(--on-action, #fff);
+  border: 1px solid var(--accent, #2563eb);
+  font-size: var(--font-size-sm, 14px);
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: var(--accent-2, #1d4ed8);
+}
+
+.reset {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  font-size: var(--font-size-sm, 14px);
+  text-decoration: none;
+}
+
+.reset:hover {
+  background: var(--bg-elev-1, #f8f8f8);
+  color: var(--fg, #111);
+}

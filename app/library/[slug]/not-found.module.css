@@ -1,0 +1,89 @@
+.page {
+  max-width: var(--max-narrow);
+  margin: 0 auto;
+  padding: var(--space-9) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  text-align: center;
+  align-items: center;
+  max-width: 560px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.body {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.6;
+  max-width: 44ch;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: var(--r-sm);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.primary {
+  background: var(--action);
+  color: var(--on-action);
+  border: 1px solid var(--action);
+}
+
+.primary:hover {
+  background: var(--action-hover);
+}
+
+.secondary {
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  border: 1px solid var(--line);
+}
+
+.secondary:hover {
+  border-color: var(--accent-line);
+  color: var(--accent);
+}

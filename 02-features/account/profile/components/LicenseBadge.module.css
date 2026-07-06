@@ -1,0 +1,38 @@
+/* LicenseBadge — pill colors. Tones are intentionally distinct from
+   the StatusBadge palette so a row with [Badge: PLR] + [Status: Paid]
+   is visually unambiguous (different hue families). */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  line-height: 1.4;
+}
+
+.plr {
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+  border-color: var(--accent-line);
+}
+
+.mrr {
+  background: var(--action-soft);
+  color: var(--action-hover);
+  border-color: var(--action-line);
+}
+
+.rr {
+  background: var(--warn-soft);
+  color: var(--warn);
+  border-color: var(--warn-line);
+}
+
+.personal {
+  background: var(--bg-elev-3);
+  color: var(--text-2);
+  border-color: var(--line);
+}

@@ -1,0 +1,66 @@
+/* /admin/customers/[id] loading — token-only CSS. */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-4, 16px);
+  max-width: 960px;
+}
+
+.crumb {
+  margin-bottom: var(--gap-3, 12px);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--gap-3, 12px);
+}
+
+.tabbar {
+  display: flex;
+  gap: var(--gap-2, 8px);
+  padding-bottom: var(--gap-3, 12px);
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3, 12px);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  border-radius: var(--radius-md, 8px);
+  padding: 16px 20px;
+  background: var(--bg-elev-1, #fff);
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-3, 12px);
+}
+
+.statTile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.06));
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-elev-2, #fafafa);
+}
+
+.dlRow {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 24px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.04));
+}
+
+@media (max-width: 900px) {
+  .statsRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

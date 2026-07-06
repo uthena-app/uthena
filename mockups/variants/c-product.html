@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI for Personal Branding — Uthena · Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="c-control.css">
+<style>
+  /* ==================== PRODUCT — Control ==================== */
+  /* Two-column: video + thumbs left, sticky buy box right.
+     Tabs for overview, curriculum, license, reviews. */
+
+  .pdp { padding: 40px 0 32px; }
+  .pdp-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+  @media (max-width: 960px) { .pdp-grid { grid-template-columns: 1fr; } }
+
+  .crumbs { color: var(--text-3); font-size: 12.5px; margin-bottom: 18px; display: flex; gap: 6px; align-items: center; }
+  .crumbs a { color: var(--text-2); }
+  .crumbs a:hover { color: var(--text-1); }
+
+  .product-title { font-size: 32px; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 14px; }
+  .product-sub { color: var(--text-2); font-size: 15.5px; line-height: 1.6; margin-bottom: 20px; max-width: 640px; }
+  .product-meta { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .pmeta-item { display: flex; gap: 6px; align-items: center; font-size: 13px; color: var(--text-2); }
+  .pmeta-item strong { color: var(--text-1); font-weight: 600; }
+  .pmeta-sep { color: var(--text-4); }
+
+  .instructor-row { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+  .instructor-row .av { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--text-1); border: 1px solid var(--border-2); }
+  .instructor-row .nm { font-weight: 500; font-size: 13.5px; }
+  .instructor-row .role { color: var(--text-3); font-size: 12.5px; }
+
+  .product-video { aspect-ratio: 16/9; border-radius: var(--r-md); overflow: hidden; background: var(--bg-2); border: 1px solid var(--border-2); position: relative; cursor: pointer; margin-bottom: 12px; }
+  .product-video-art { position: absolute; inset: 0; background: linear-gradient(135deg, #1a4744 0%, #0d2a28 100%); background-size: cover; background-position: center; }
+  .product-video-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(11,12,14,0.7)); }
+  .product-video .play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; background: rgba(236, 236, 238, 0.95); z-index: 2; display: flex; align-items: center; justify-content: center; }
+  .product-video .play::after { content: ""; width: 0; height: 0; border-left: 16px solid #0B0C0E; border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
+  .product-video .duration { position: absolute; bottom: 12px; right: 12px; z-index: 2; background: rgba(11,12,14,0.8); padding: 3px 8px; border-radius: var(--r-xs); font-family: var(--font-mono); font-size: 11px; }
+  .thumb-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .thumb-strip .t { aspect-ratio: 16/9; border-radius: var(--r-xs); background: var(--bg-2); border: 1px solid var(--border); cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--text-3); font-size: 11px; font-family: var(--font-mono); }
+  .thumb-strip .t:hover { border-color: var(--border-3); }
+  .thumb-strip .t.active { border-color: var(--accent); }
+
+  .buy-box { position: sticky; top: 80px; background: var(--bg-1); border: 1px solid var(--border-2); border-radius: var(--r-md); padding: 22px; box-shadow: var(--shadow-sm); }
+  .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .price-now { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; font-family: var(--font-mono); }
+  .price-was { font-size: 14px; color: var(--text-3); text-decoration: line-through; font-family: var(--font-mono); }
+  .price-save { background: var(--success-soft); color: var(--success); padding: 2px 8px; border-radius: var(--r-xs); font-size: 11.5px; font-weight: 600; }
+  .price-note { color: var(--text-3); font-size: 12px; margin-bottom: 16px; }
+
+  .license-picker { display: flex; flex-direction: column; gap: 6px; margin: 14px 0 18px; }
+  .license-opt { border: 1px solid var(--border); border-radius: var(--r-sm); padding: 12px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: border-color .12s ease, background .12s ease; }
+  .license-opt:hover, .license-opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .license-opt .lname { font-weight: 500; font-size: 13.5px; }
+  .license-opt .ldesc { color: var(--text-3); font-size: 12px; margin-top: 2px; }
+  .license-opt .lprice { font-family: var(--font-mono); font-weight: 600; font-size: 13.5px; }
+
+  .buy-trust { display: flex; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-3); }
+  .buy-trust-item { display: flex; gap: 5px; align-items: center; }
+  .buy-trust-item svg { color: var(--success); }
+
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-top: 48px; }
+  .tab { padding: 10px 16px; font-weight: 500; font-size: 13px; color: var(--text-2); border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+  .tab.active { color: var(--text-1); border-color: var(--accent); }
+  .tab:hover { color: var(--text-1); }
+  .tab-content { padding: 32px 0 64px; }
+  .tab-content h3 { font-size: 17px; margin: 24px 0 12px; }
+  .tab-content h3:first-child { margin-top: 0; }
+  .tab-content p { color: var(--text-2); margin-bottom: 12px; font-size: 14px; line-height: 1.65; }
+  .tab-content ul { color: var(--text-2); padding-left: 20px; margin-bottom: 12px; font-size: 14px; line-height: 1.7; }
+  .tab-content li { margin-bottom: 4px; }
+
+  .curriculum { display: flex; flex-direction: column; margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .module { border-bottom: 1px solid var(--border); }
+  .module:last-child { border-bottom: none; }
+  .module-head { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 12px 16px; cursor: pointer; font-weight: 500; font-size: 13.5px; background: var(--bg-1); }
+  .module-head:hover { background: var(--bg-2); }
+  .module-head .meta { color: var(--text-3); font-size: 12px; font-weight: 400; font-family: var(--font-mono); }
+  .module-body { background: var(--bg-inset); }
+  .lesson { display: grid; grid-template-columns: 24px 1fr 60px; gap: 10px; align-items: center; padding: 8px 16px; font-size: 12.5px; color: var(--text-2); border-top: 1px solid var(--border); }
+  .lesson:hover { background: var(--bg-2); color: var(--text-1); }
+  .lesson .lic { color: var(--text-3); }
+  .lesson.preview { color: var(--text-1); }
+  .lesson.preview .lic { color: var(--accent); }
+  .lesson .ldur { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); text-align: right; }
+
+  .reviews-grid { display: grid; grid-template-columns: 280px 1fr; gap: 32px; margin-top: 16px; }
+  @media (max-width: 768px) { .reviews-grid { grid-template-columns: 1fr; } }
+  .rating-summary { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); padding: 22px; }
+  .rating-big { font-size: 52px; font-weight: 700; font-family: var(--font-mono); letter-spacing: -0.03em; line-height: 1; }
+  .rating-stars { color: var(--text-3); font-size: 14px; letter-spacing: 2px; margin: 8px 0; }
+  .rating-count { color: var(--text-3); font-size: 12px; }
+  .rating-bar { display: grid; grid-template-columns: 30px 1fr 24px; align-items: center; gap: 8px; margin-top: 10px; font-size: 11.5px; color: var(--text-2); }
+  .rating-bar .bar { height: 4px; background: var(--bg-2); border-radius: 99px; overflow: hidden; }
+  .rating-bar .fill { height: 100%; background: var(--text-1); }
+  .rating-bar .num { text-align: right; font-family: var(--font-mono); color: var(--text-3); }
+
+  .review { padding: 18px 0; border-bottom: 1px solid var(--border); }
+  .review:last-child { border-bottom: none; }
+  .review-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .review .stars { color: var(--text-3); letter-spacing: 1px; font-size: 12px; }
+  .review .date { color: var(--text-3); font-size: 12px; margin-top: 4px; }
+  .review .author { font-weight: 600; font-size: 13.5px; }
+  .review .verified { color: var(--success); font-size: 11.5px; margin-top: 2px; }
+  .review p { color: var(--text-2); font-size: 14px; line-height: 1.65; }
+
+  .license-explainer { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; margin-top: 16px; }
+  .license-explainer .grid2 { display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 768px) { .license-explainer .grid2 { grid-template-columns: 1fr; } }
+  .license-explainer .col { padding: 22px; }
+  .license-explainer .col:first-child { border-right: 1px solid var(--border); }
+  @media (max-width: 768px) { .license-explainer .col:first-child { border-right: none; border-bottom: 1px solid var(--border); } }
+  .license-explainer h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; font-weight: 600; }
+  .license-explainer h4.yes { color: var(--success); }
+  .license-explainer h4.no { color: var(--danger); }
+  .license-list { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+  .license-list li { display: flex; gap: 8px; }
+  .license-list li.yes { color: var(--text-2); }
+  .license-list li.no { color: var(--text-3); }
+  .license-list li::before { content: "✓"; font-weight: 700; flex-shrink: 0; }
+  .license-list li.no::before { content: "✕"; color: var(--danger); }
+</style>
+</head>
+<body>
+
+<div class="var-tag">C · CONTROL · PRODUCT</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo"><span class="word">uthena</span><span class="dot"></span></a>
+    <nav class="nav-links">
+      <a class="nav-link" href="#">Home</a>
+      <a class="nav-link active" href="#">Marketplace</a>
+      <a class="nav-link" href="#">Tools &amp; Assets</a>
+      <a class="nav-link" href="#">Bundles</a>
+      <a class="nav-link" href="#">For partners</a>
+      <a class="nav-link" href="#">Affiliates</a>
+    </nav>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Search 600+ products...">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">Sign in</a>
+      <a class="btn btn-primary btn-sm" href="#">Get started</a>
+    </div>
+  </div>
+</header>
+
+<section class="pdp">
+  <div class="container">
+    <div class="crumbs">
+      <a href="#">Marketplace</a> <span class="t-faint">/</span>
+      <a href="#">AI &amp; ChatGPT</a> <span class="t-faint">/</span>
+      <span style="color:var(--text-2);">AI for Personal Branding</span>
+    </div>
+
+    <div class="pdp-grid">
+      <div>
+        <div class="product-video">
+          <div class="product-video-art"></div>
+          <div class="play"></div>
+          <span class="duration">0:32 / 4:12</span>
+        </div>
+        <div class="thumb-strip">
+          <div class="t active">▶</div>
+          <div class="t">2</div>
+          <div class="t">3</div>
+          <div class="t">4</div>
+        </div>
+
+        <h1 class="product-title" style="margin-top:24px;">Using AI to Build a Profitable Personal Brand on Social Media</h1>
+        <p class="product-sub">A complete forty-seven-lesson course on building, scaling, and monetising a personal brand with AI tools. Comes with private label rights — edit, rebrand, and resell as your own.</p>
+
+        <div class="product-meta">
+          <div class="pmeta-item">★★★★★ <strong>4.7</strong> <span class="t-faint">(3 reviews)</span></div>
+          <span class="pmeta-sep">·</span>
+          <div class="pmeta-item"><strong>4h 12m</strong> total</div>
+          <span class="pmeta-sep">·</span>
+          <div class="pmeta-item"><strong>47</strong> lessons</div>
+          <span class="pmeta-sep">·</span>
+          <div class="pmeta-item"><strong>8</strong> modules</div>
+          <span class="pmeta-sep">·</span>
+          <div class="pmeta-item">Subtitles <strong>EN</strong></div>
+        </div>
+
+        <div class="instructor-row">
+          <div class="av">DC</div>
+          <div>
+            <div class="nm">Digital Crest Institute</div>
+            <div class="role">12 courses on Uthena · 8,400+ students</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="buy-box">
+          <div class="price-row">
+            <div class="price-now">$5,700</div>
+            <div class="price-was">$11,400</div>
+            <div class="price-save">Save 50%</div>
+          </div>
+          <div class="price-note">One-time payment. Lifetime access. All future updates included.</div>
+
+          <div class="license-picker">
+            <div class="license-opt selected">
+              <div>
+                <div class="lname">Private Label Rights</div>
+                <div class="ldesc">Edit, rebrand, and resell as your own. Keep 100% of revenue.</div>
+              </div>
+              <div class="lprice">$5,700</div>
+            </div>
+            <div class="license-opt">
+              <div>
+                <div class="lname">Master Resell Rights</div>
+                <div class="ldesc">Includes the right to sell resell rights to others.</div>
+              </div>
+              <div class="lprice">$8,200</div>
+            </div>
+          </div>
+
+          <a class="btn btn-primary btn-lg btn-block" href="#">Add to cart</a>
+
+          <div class="buy-trust">
+            <div class="buy-trust-item">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+              14-day return rights
+            </div>
+            <div class="buy-trust-item">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+              Instant access
+            </div>
+            <div class="buy-trust-item">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+              Lifetime updates
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <a class="tab active">Overview</a>
+      <a class="tab">Curriculum</a>
+      <a class="tab">License</a>
+      <a class="tab">Reviews <span class="t-faint t-num" style="font-size:12px;margin-left:4px;">(3)</span></a>
+    </div>
+
+    <div class="tab-content">
+      <h3>What this course is</h3>
+      <p>A complete, end-to-end playbook for building a personal brand on social media using AI tools. The course covers positioning, content production, audience growth, monetisation, and the day-to-day operations of running a one-person media business.</p>
+
+      <h3>What you'll get</h3>
+      <ul>
+        <li>47 video lessons across 8 modules</li>
+        <li>The full transcript and slide decks</li>
+        <li>The content calendar template and prompt library</li>
+        <li>Private label rights — your name, your brand, your revenue</li>
+      </ul>
+
+      <h3>Who this is for</h3>
+      <p>Digital entrepreneurs, course creators, affiliate marketers, and agencies who want to add personal-brand services or products to their offering.</p>
+
+      <h3>Curriculum</h3>
+      <div class="curriculum">
+        <div class="module">
+          <div class="module-head">
+            <span>Module 01 · Foundations of an AI-first personal brand</span>
+            <span class="meta">6 lessons · 28 min</span>
+          </div>
+          <div class="lesson preview">
+            <span>▶</span>
+            <div>
+              <div>Why a personal brand, and why now</div>
+              <div class="lic">Free preview</div>
+            </div>
+            <div class="ldur">4:12</div>
+          </div>
+          <div class="lesson">
+            <span>·</span>
+            <div>The AI brand stack in 2026</div>
+            <div class="ldur">5:48</div>
+          </div>
+          <div class="lesson">
+            <span>·</span>
+            <div>Positioning without a niche</div>
+            <div class="ldur">6:21</div>
+          </div>
+          <div class="lesson">
+            <span>·</span>
+            <div>The first 90 days</div>
+            <div class="ldur">5:04</div>
+          </div>
+        </div>
+
+        <div class="module">
+          <div class="module-head">
+            <span>Module 02 · Content production with AI</span>
+            <span class="meta">8 lessons · 42 min</span>
+          </div>
+          <div class="lesson preview">
+            <span>▶</span>
+            <div>
+              <div>The content engine</div>
+              <div class="lic">Free preview</div>
+            </div>
+            <div class="ldur">6:18</div>
+          </div>
+          <div class="lesson">
+            <span>·</span>
+            <div>Writing hooks that stop the scroll</div>
+            <div class="ldur">5:32</div>
+          </div>
+          <div class="lesson">
+            <span>·</span>
+            <div>Short-form video scripts</div>
+            <div class="ldur">7:04</div>
+          </div>
+        </div>
+
+        <div class="module">
+          <div class="module-head">
+            <span>Module 03 · Distribution and growth</span>
+            <span class="meta">7 lessons · 38 min</span>
+          </div>
+          <div class="lesson">
+            <span>·</span>
+            <div>Cross-platform repurposing</div>
+            <div class="ldur">4:55</div>
+          </div>
+          <div class="lesson">
+            <span>·</span>
+            <div>The algorithm factors that matter</div>
+            <div class="ldur">5:48</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Reviews</h3>
+      <div class="reviews-grid">
+        <div class="rating-summary">
+          <div class="rating-big">4.7</div>
+          <div class="rating-stars">★★★★★</div>
+          <div class="rating-count">Based on 3 verified reviews</div>
+          <div class="rating-bar"><span>5★</span><div class="bar"><div class="fill" style="width:66%"></div></div><span class="num">2</span></div>
+          <div class="rating-bar"><span>4★</span><div class="bar"><div class="fill" style="width:33%"></div></div><span class="num">1</span></div>
+          <div class="rating-bar"><span>3★</span><div class="bar"><div class="fill" style="width:0%"></div></div><span class="num">0</span></div>
+          <div class="rating-bar"><span>2★</span><div class="bar"><div class="fill" style="width:0%"></div></div><span class="num">0</span></div>
+          <div class="rating-bar"><span>1★</span><div class="bar"><div class="fill" style="width:0%"></div></div><span class="num">0</span></div>
+        </div>
+
+        <div>
+          <div class="review">
+            <div class="review-head">
+              <div>
+                <div class="author">Craig Ballantyne</div>
+                <div class="verified">✓ Verified buyer</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="stars">★★★★★</div>
+                <div class="date">Feb 3, 2026</div>
+              </div>
+            </div>
+            <p>I bought the courses to resell and am very happy with the quality. The structure is solid, the modules build on each other, and the templates save me days of work.</p>
+          </div>
+          <div class="review">
+            <div class="review-head">
+              <div>
+                <div class="author">Joe Holbrook</div>
+                <div class="verified">✓ Verified buyer</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="stars">★★★★★</div>
+                <div class="date">Jan 8, 2026</div>
+              </div>
+            </div>
+            <p>Course is well organized and flows well. Engaging for anyone looking to build a personal brand with AI tools. The PLR license means I can rebrand and resell it as my own.</p>
+          </div>
+          <div class="review">
+            <div class="review-head">
+              <div>
+                <div class="author">Anonymous</div>
+                <div class="verified">✓ Verified buyer</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="stars">★★★★☆</div>
+                <div class="date">Mar 16, 2026</div>
+              </div>
+            </div>
+            <p>Very satisfied. The course is clear and the templates work out of the box. Would love a module on LinkedIn.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>License terms</h3>
+      <div class="license-explainer">
+        <div class="grid2">
+          <div class="col">
+            <h4 class="yes">You can</h4>
+            <ul class="license-list">
+              <li class="yes">Sell the course separately</li>
+              <li class="yes">Bundle it with other products</li>
+              <li class="yes">Add it to paid membership sites</li>
+              <li class="yes">Add bonuses for the sale</li>
+              <li class="yes">Sell as a physical or digital product</li>
+              <li class="yes">Put your own name on the sales letter</li>
+              <li class="yes">Rename the product</li>
+              <li class="yes">Edit the sales material and content</li>
+              <li class="yes">Use source material to create new products</li>
+              <li class="yes">Translate the course into other languages</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4 class="no">You cannot</h4>
+            <ul class="license-list">
+              <li class="no">Offer resale rights to others</li>
+              <li class="no">Use on YouTube or other free video sites</li>
+              <li class="no">Add to free membership sites</li>
+              <li class="no">Give away for free</li>
+              <li class="no">Use or sell on Udemy, Skillshare, or similar</li>
+              <li class="no">Offer master resale rights</li>
+              <li class="no">Offer private label rights</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo" style="font-size:18px;margin-bottom:14px;"><span class="word">uthena</span><span class="dot"></span></div>
+        <p class="t-sm t-mute" style="max-width:280px;">The home for digital product entrepreneurs. Six hundred and twelve private-label products, one platform, one operator.</p>
+      </div>
+      <div><h5>Marketplace</h5><ul><li><a href="#">All products</a></li><li><a href="#">Newest</a></li><li><a href="#">On sale</a></li><li><a href="#">Bundles</a></li></ul></div>
+      <div><h5>For partners</h5><ul><li><a href="#">Become a partner</a></li><li><a href="#">Affiliate program</a></li><li><a href="#">Reseller storefronts</a></li><li><a href="#">Payouts</a></li></ul></div>
+      <div><h5>Resources</h5><ul><li><a href="#">Licensing guide</a></li><li><a href="#">Help center</a></li><li><a href="#">Changelog</a></li><li><a href="#">API</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Refunds</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Uthena, Inc.</span>
+      <span>Six hundred and twelve products. One platform.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

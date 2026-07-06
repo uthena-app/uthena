@@ -1,0 +1,105 @@
+/* PartnerActionRail — right-side rail that hosts the destructive
+   actions on /admin/partners/[id]. Sticky on desktop (≥ 1024px);
+   stacks below the main column on mobile. Token-only CSS. */
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.railInner {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.heading {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.status {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.statusValue {
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.cta {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.ctaApprove {
+  background: var(--success, var(--action));
+  color: var(--on-action);
+}
+.ctaApprove:hover {
+  background: color-mix(in srgb, var(--success, var(--action)) 88%, white);
+}
+
+.ctaSuspend {
+  background: var(--danger);
+  color: var(--on-danger);
+}
+.ctaSuspend:hover {
+  background: color-mix(in srgb, var(--danger) 88%, white);
+}
+
+.ctaUnsuspend {
+  background: var(--action);
+  color: var(--on-action);
+}
+.ctaUnsuspend:hover {
+  background: var(--action-hover);
+}
+
+.ctaDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--bg-elev-2);
+  color: var(--text-3);
+  border-color: var(--line);
+}
+
+.helpText {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.divider {
+  height: 1px;
+  background: var(--line);
+  border: none;
+  margin: 4px 0;
+}
+
+@media (max-width: 1023px) {
+  .railInner {
+    position: static;
+    /* Full width on mobile; the rail sits below the main column. */
+  }
+}

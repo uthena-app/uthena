@@ -1,0 +1,94 @@
+/* RefundFilters.module.css — the URL-driven GET form above the refund
+   queue list. Matches the OrderFilters module shape (5-field row on
+   desktop, stacks on mobile). */
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.5fr 1fr auto;
+  gap: var(--space-3, 12px);
+  margin-bottom: var(--space-4, 16px);
+  align-items: end;
+}
+
+@media (max-width: 1100px) {
+  .form {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-soft, #b6bcc4);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.input {
+  height: 36px;
+  padding: 0 var(--space-3, 12px);
+  background: var(--bg-elev-2, #1c2024);
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 8px;
+  color: var(--text-1, #f4f4f4);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus-visible {
+  border-color: var(--accent, #4ad991);
+  box-shadow: 0 0 0 2px var(--accent-soft, rgba(74, 217, 145, 0.25));
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2, 8px);
+  align-items: end;
+}
+
+.submit {
+  height: 36px;
+  padding: 0 var(--space-4, 16px);
+  background: var(--accent, #4ad991);
+  color: var(--on-action, #1a0e00);
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit:hover {
+  filter: brightness(1.05);
+}
+
+.reset {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 var(--space-3, 12px);
+  color: var(--text-soft, #b6bcc4);
+  text-decoration: none;
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.reset:hover {
+  color: var(--text-1, #f4f4f4);
+  border-color: var(--accent, #4ad991);
+}

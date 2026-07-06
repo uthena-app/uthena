@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Cart — Uthena</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/theme-light.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    /* Inline cart styles for state-specific rendering */
+    .cart-page .empty-state { display: block; }
+    .cart-page.has-items .empty-state { display: none; }
+    .cart-page:not(.has-items) .cart-grid { display: none; }
+  </style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-ann">
+    <strong>Become an affiliate</strong> — earn <a href="#">20%</a> on every sale &nbsp;·&nbsp;
+    <span style="color: var(--text-3);">Sell your own courses with PLR licenses</span>
+  </div>
+  <div class="container">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">Uthena<span class="dot">.</span></a>
+      <div class="nav-search"><span style="font-size: 13px; color: var(--text-3);">⌕</span><input type="text" placeholder="Search…" aria-label="Search" /><kbd>⌘K</kbd></div>
+      <div class="nav-spacer"></div>
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="browse.html">All courses <span class="badge badge-accent" style="margin-left:4px;">465</span></a>
+        <a class="nav-link" href="browse.html?category=bundles">Bundles</a>
+        <a class="nav-link" href="index.html#earn">Earn with Uthena</a>
+        <a class="nav-link" href="index.html#faq">FAQs</a>
+      </nav>
+      <div class="nav-actions"><a class="btn btn-ghost btn-sm" href="#">Log in</a><a class="nav-cart-link" href="cart.html"><span>Cart</span><span class="ct">0</span></a></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="container cart-page" id="cartPage">
+    <h1>Your <span class="t-accent">cart</span></h1>
+    <p class="sub" id="cartSub">Sign in to save your cart to your account.</p>
+
+    <!-- Empty state (visible by default) -->
+    <div class="cart-empty empty-state" id="emptyState">
+      <div class="icn">⌽</div>
+      <h3>Your cart is empty</h3>
+      <p>Find a course your audience will buy. 465 PLR video courses to choose from.</p>
+      <a class="btn btn-primary btn-lg" href="browse.html">Browse catalog <span class="arrow">→</span></a>
+    </div>
+
+    <!-- Populated state -->
+    <div class="cart-grid" id="cartGrid">
+      <div>
+        <div class="cart-lines" id="cartLines"></div>
+        <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+          <a class="btn btn-ghost btn-sm" href="browse.html">← Continue shopping</a>
+          <button class="btn btn-danger btn-sm" id="clearCart">Clear cart</button>
+        </div>
+      </div>
+      <aside class="cart-summary">
+        <h3>Order summary</h3>
+        <div class="row"><span>Subtotal</span><span class="t-num" id="subtotal">$0</span></div>
+        <div class="row"><span>Discount</span><span class="t-num t-accent" id="discount">−$0</span></div>
+        <div class="row"><span>Tax (calculated at checkout)</span><span class="t-num t-faint">—</span></div>
+        <div class="row total"><span>Total</span><b class="t-num" id="total">$0</b></div>
+        <div class="coupon">
+          <input type="text" placeholder="Coupon code" id="couponInput" />
+          <button class="btn btn-secondary btn-sm" id="applyCoupon">Apply</button>
+        </div>
+        <div class="trust">
+          <div class="item"><span class="icn">✓</span><span>14-day return rights</span></div>
+          <div class="item"><span class="icn">✓</span><span>Secure checkout — Stripe</span></div>
+          <div class="item"><span class="icn">✓</span><span>Instant download</span></div>
+          <div class="item"><span class="icn">✓</span><span>PLR license included</span></div>
+        </div>
+        <a class="btn btn-primary btn-xl btn-block" href="checkout.html" id="checkoutBtn">Continue to checkout <span class="arrow">→</span></a>
+        <p class="t-xs t-faint text-center" style="margin: 0;">Demo: clicking checkout will take you to the auth-gated stub.</p>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="nav-logo" href="index.html" style="color: var(--footer-fg);">Uthena<span class="dot">.</span></a>
+        <p class="brand-line">Buy PLR licenses for video courses on Uthena. Pay once and sell the courses as part of your own offering — keep every dollar of revenue.</p>
+        <div class="pay-row"><span class="chip">VISA</span><span class="chip">MASTERCARD</span><span class="chip">AMEX</span><span class="chip">PAYPAL</span><span class="chip">APPLE PAY</span><span class="chip">SHOP PAY</span><span class="chip">USDC</span></div>
+      </div>
+      <div><h4>Marketplace</h4><ul><li><a href="browse.html">All courses</a></li><li><a href="browse.html?category=bundles">Bundles</a></li><li><a href="browse.html?filter=sale">Discounted</a></li><li><a href="browse.html?filter=new">New releases</a></li></ul></div>
+      <div><h4>Earn</h4><ul><li><a href="#">Affiliate program</a></li><li><a href="#">Sell your courses</a></li><li><a href="#">Become a reseller</a></li><li><a href="#">Instructor login</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Privacy policy</a></li><li><a href="#">Terms</a></li><li><a href="#">Refunds</a></li></ul></div>
+      <div><h4>Demo</h4><ul><li><a href="index.html">Home</a></li><li><a href="browse.html">Marketplace</a></li><li><a href="products/chatgpt-for-personal-branding.html">Sample PDP</a></li><li><a href="cart.html">Cart</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Uthena. All rights reserved.</span><span>Built for course creators who resell.</span></div>
+  </div>
+</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<button class="theme-toggle" aria-label="Toggle theme"><span class="icn">◐</span><span class="theme-label">Dark</span></button>
+
+<script src="scripts/main.js"></script>
+<script src="scripts/cart.js"></script>
+</body>
+</html>

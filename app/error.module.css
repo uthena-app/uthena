@@ -1,0 +1,156 @@
+/* error.module.css — token-only styles for the route-level error boundary.
+   Renders inside the root layout (SiteHeader + SiteFooter intact).
+   'use client' because it uses reset() + useEffect + navigator.clipboard. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  padding: var(--space-7) var(--space-5);
+  text-align: center;
+  background: var(--bg);
+  color: var(--text-1);
+}
+
+/* Warn icon — soft warn-tinted circle, warn-line border. */
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-line);
+  color: var(--warn);
+  margin-bottom: var(--s-5);
+}
+
+.eyebrow {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--heading);
+  margin: var(--s-3) 0 var(--s-3);
+  max-width: 480px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 0 var(--s-5);
+}
+
+/* Reference code card — opaque error ID the user can quote. */
+.refCard {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  margin: 0 0 var(--s-5);
+  max-width: 100%;
+}
+
+.refLabel {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.refCode {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-1);
+  letter-spacing: 0.02em;
+  /* Let it shrink without pushing the copy button off-screen. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: all;
+}
+
+.refCopy {
+  /* Tiny "Copy" button — square, hairline border, neutral. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 var(--s-3);
+  border-radius: var(--r-xs);
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.refCopy:hover {
+  background: var(--bg-elev-2);
+  border-color: var(--line-strong);
+}
+
+.refCopy:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.refCopied {
+  /* Confirms the copy worked. Same shape as refCopy; teal accent. */
+  composes: refCopy;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Action group — primary reset + secondary CTAs */
+.actions {
+  display: flex;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Reassurance footer */
+.foot {
+  margin-top: var(--s-7);
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.5;
+  max-width: 480px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .wrap {
+    padding: var(--space-6) var(--space-4);
+  }
+  .h1 {
+    font-size: 24px;
+  }
+  .refCard {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

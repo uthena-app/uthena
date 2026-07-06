@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Using AI to Create and Scale a Profitable Personal Brand — Uthena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0F10; --card:#151618; --raised:#1B1D1F; --inset:#101113;
+  --line:#232527; --line2:#303336;
+  --txt:#E9E9E7; --mut:#9A9DA1; --dim:#63666B;
+  --acc:#F25C26; --acc-h:#FF6E38; --tint:rgba(242,92,38,0.10);
+  --mono:'IBM Plex Mono',monospace; --head:'Archivo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font:400 14px/1.6 'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+ul{list-style:none}
+::selection{background:var(--acc);color:#0B0B0C}
+:focus-visible{outline:1px solid var(--acc);outline-offset:2px}
+
+.band{border-bottom:1px solid var(--line)}
+.wrap{max-width:1280px;margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}
+.xt::before,.xt::after{content:"";position:absolute;top:-6px;width:11px;height:11px;z-index:3;pointer-events:none;
+  background:linear-gradient(var(--line2),var(--line2)) center/11px 1px no-repeat,
+             linear-gradient(var(--line2),var(--line2)) center/1px 11px no-repeat}
+.xt::before{left:-6px}.xt::after{right:-6px}
+
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:10px}
+.eyebrow b{color:var(--acc);font-weight:500}
+.shead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:28px 40px 26px;border-bottom:1px solid var(--line)}
+.shead h2{font:800 26px/1.05 var(--head);letter-spacing:-.01em;text-transform:uppercase;margin-top:12px}
+.slink{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:color .15s}
+.slink:hover{color:var(--acc)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;height:46px;padding:0 24px;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;white-space:nowrap;cursor:pointer}
+.btn.solid{background:var(--acc);color:#0B0B0C}
+.btn.solid:hover{background:var(--acc-h)}
+.btn.ghost{border-color:var(--line2);color:var(--txt)}
+.btn.ghost:hover{border-color:var(--acc);color:var(--acc)}
+.btn.sm{height:38px;padding:0 16px}
+
+/* nav */
+.nav{display:flex;align-items:center;gap:20px;min-height:64px;padding:0 24px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font:800 17px/1 var(--head);letter-spacing:.07em;padding:10px 0}
+.logo i{width:11px;height:11px;background:var(--acc);display:inline-block}
+.links{display:flex;gap:2px}
+.links a{padding:23px 13px;font:500 13px 'Inter';color:var(--mut);transition:color .15s;white-space:nowrap}
+.links a:hover{color:var(--txt)}
+.links a.active{color:var(--txt);box-shadow:inset 0 -2px 0 var(--acc)}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.search{display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:var(--inset);height:38px;padding:0 12px;width:220px;color:var(--dim);transition:border-color .15s}
+.search:focus-within{border-color:var(--acc)}
+.search input{background:none;border:0;outline:0;color:var(--txt);font:400 11px var(--mono);letter-spacing:.06em;width:100%}
+.search input::placeholder{color:var(--dim)}
+
+/* breadcrumb */
+.crumb{font:500 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:18px 40px}
+.crumb a{color:var(--mut);transition:color .15s}
+.crumb a:hover{color:var(--acc)}
+.crumb .sep{color:var(--line2)}
+.crumb .cur{color:var(--txt)}
+
+/* hero */
+.phero{display:grid;grid-template-columns:1.22fr 1fr}
+.phero-left{border-right:1px solid var(--line)}
+.player{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#2B1B11,#15100D);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.player::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 8px,rgba(255,255,255,.025) 8px 9px)}
+.playbtn{position:relative;z-index:1;width:74px;height:74px;background:var(--acc);display:flex;align-items:center;justify-content:center;transition:background .15s}
+.playbtn:hover{background:var(--acc-h)}
+.playbtn svg{color:#0B0B0C;margin-left:3px}
+.pv-label{position:absolute;left:16px;bottom:14px;font:500 10px var(--mono);letter-spacing:.14em;color:var(--txt);z-index:1}
+.pv-fig{position:absolute;right:16px;top:13px;font:500 10px var(--mono);letter-spacing:.14em;color:var(--dim);z-index:1}
+.thumbstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+.pthumb{position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .15s;opacity:.65}
+.pthumb::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 7px,rgba(255,255,255,.025) 7px 8px)}
+.pthumb:hover{opacity:1}
+.pthumb.on{opacity:1;box-shadow:inset 0 0 0 1px var(--acc)}
+.pthumb svg{position:relative;z-index:1}
+.pt1{background:linear-gradient(135deg,#2B1B11,#15100D)}
+.pt2{background:linear-gradient(135deg,#23262B,#131517)}
+.pt3{background:linear-gradient(135deg,#1D1E27,#121316)}
+.pt4{background:linear-gradient(135deg,#212620,#131512)}
+
+.phero-right{padding:34px 38px 38px}
+.phero-right .cat{font:500 10px var(--mono);letter-spacing:.18em;color:var(--acc);text-transform:uppercase}
+.phero-right h1{font:800 clamp(24px,2.6vw,33px)/1.12 var(--head);letter-spacing:-.012em;margin:14px 0 14px}
+.phero-right .desc{color:var(--mut);font-size:14px}
+.meta{display:flex;flex-wrap:wrap;gap:7px 18px;font:500 10.5px var(--mono);letter-spacing:.08em;color:var(--mut);text-transform:uppercase;margin:18px 0 0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.meta .it{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.meta svg{color:var(--acc);flex:none}
+
+/* tiers */
+.tlabel{font:500 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:22px 0 10px}
+.tiers{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line)}
+.tier{background:var(--inset);display:flex;align-items:center;gap:14px;padding:15px 16px;text-align:left;position:relative;transition:background .15s;width:100%}
+.tier:hover{background:var(--card)}
+.tier.sel{background:var(--tint);box-shadow:inset 0 0 0 1px var(--acc)}
+.tr{width:15px;height:15px;border:1px solid var(--line2);background:var(--bg);flex:none;display:flex;align-items:center;justify-content:center}
+.tr::after{content:"";width:7px;height:7px;background:transparent;transition:background .15s}
+.tier.sel .tr{border-color:var(--acc)}
+.tier.sel .tr::after{background:var(--acc)}
+.tinfo{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tinfo b{font:600 11.5px var(--mono);letter-spacing:.1em;color:var(--txt)}
+.tinfo i{font:400 12px 'Inter';font-style:normal;color:var(--mut)}
+.tprice{margin-left:auto;font:500 16px var(--mono);color:var(--mut);transition:color .15s}
+.tier.sel .tprice{color:var(--acc)}
+.ttag{position:absolute;top:0;right:0;font:600 8.5px var(--mono);letter-spacing:.12em;background:var(--acc);color:#0B0B0C;padding:3px 8px}
+.buyrow{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.buyrow .solid{flex:1;min-width:200px}
+.buynote{margin-top:14px;font:500 9.5px var(--mono);letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+
+/* included */
+.inc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.inc-it{background:var(--bg);display:flex;align-items:center;gap:13px;padding:20px 26px;font-size:13px;color:var(--mut);transition:background .15s}
+.inc-it:hover{background:var(--card);color:var(--txt)}
+.inc-it svg{color:var(--acc);flex:none}
+
+/* tabs */
+.tabbar{display:flex;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabbar::-webkit-scrollbar{display:none}
+.tabbar button{font:500 11.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);padding:17px 24px;border-right:1px solid var(--line);white-space:nowrap;transition:color .15s,background .15s}
+.tabbar button:hover{color:var(--txt);background:var(--card)}
+.tabbar button.on{color:var(--acc);background:var(--tint);box-shadow:inset 0 -2px 0 var(--acc)}
+.panel{display:none;padding:42px 40px}
+.panel.on{display:block}
+.panel h3{font:800 16px/1.2 var(--head);letter-spacing:.03em;text-transform:uppercase;margin-bottom:16px}
+.panel p{color:var(--mut);font-size:14px}
+
+/* overview */
+.ov{display:grid;grid-template-columns:1.1fr 1fr;gap:48px}
+.ov p + p{margin-top:14px}
+.learn li{display:flex;gap:13px;padding:8px 0;color:var(--mut);font-size:13.5px;align-items:baseline}
+.learn li::before{content:"";width:7px;height:7px;background:var(--acc);flex:none;position:relative;top:1px}
+.plrbox{border:1px solid var(--line2);padding:24px 26px;margin-top:34px;background:var(--inset)}
+.plrbox .eyebrow{margin-bottom:12px}
+.plrbox p{font-size:13.5px}
+
+/* curriculum */
+.acc{border:1px solid var(--line)}
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-item:last-child{border-bottom:0}
+.acc-head{display:flex;width:100%;align-items:center;gap:16px;padding:18px 22px;text-align:left;transition:background .15s}
+.acc-head:hover{background:var(--card)}
+.acc-head .midx{font:500 11px var(--mono);letter-spacing:.1em;color:var(--acc)}
+.acc-head h4{font:700 14px/1.2 var(--head);letter-spacing:.04em;text-transform:uppercase}
+.acc-head .ainfo{margin-left:auto;font:500 10.5px var(--mono);letter-spacing:.1em;color:var(--dim);white-space:nowrap}
+.acc-head .chev{color:var(--dim);transition:transform .18s;flex:none}
+.acc-item.open .chev{transform:rotate(180deg)}
+.acc-body{display:none;border-top:1px solid var(--line);background:var(--inset)}
+.acc-item.open .acc-body{display:block}
+.lesson{display:flex;align-items:center;gap:13px;padding:11px 22px;border-bottom:1px solid var(--line);font-size:13px;color:var(--mut)}
+.lesson:last-child{border-bottom:0}
+.lesson .li{font:500 10px var(--mono);color:var(--dim);width:18px;flex:none}
+.lesson svg{color:var(--dim);flex:none}
+.lesson .dur{margin-left:auto;font:500 10.5px var(--mono);color:var(--dim);white-space:nowrap}
+.ptag{font:600 8.5px var(--mono);letter-spacing:.12em;color:var(--acc);background:var(--tint);border:1px solid rgba(242,92,38,.35);padding:2px 7px;flex:none}
+
+/* license */
+.licnote{margin-bottom:24px;font:500 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.lic{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.lic-col{background:var(--bg);padding:30px 32px}
+.lic-col h4{display:flex;align-items:center;gap:10px;font:600 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;margin-bottom:20px}
+.lic-col.can h4{color:var(--acc)}
+.lic-col.cant h4{color:var(--mut)}
+.lic-col li{display:flex;gap:12px;padding:8px 0;color:var(--mut);font-size:13.5px;align-items:baseline}
+.lic-col li svg{flex:none;position:relative;top:2px}
+.lic-col.can li svg{color:var(--acc)}
+.lic-col.cant li svg{color:var(--dim)}
+.lic-col.can li{color:var(--txt)}
+
+/* reviews */
+.rev{display:grid;grid-template-columns:300px 1fr;gap:48px}
+.rsum .big{font:500 58px/1 var(--mono);color:var(--txt);letter-spacing:-.02em}
+.rsum .stars{display:flex;gap:4px;color:var(--acc);margin:14px 0 8px}
+.rsum .cnt{font:500 10.5px var(--mono);letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.hist{margin-top:26px;display:flex;flex-direction:column;gap:9px}
+.hrow{display:flex;align-items:center;gap:10px;font:500 10px var(--mono);color:var(--dim)}
+.hrow .st{display:inline-flex;align-items:center;gap:4px;width:32px}
+.hrow .st svg{color:var(--acc)}
+.track{flex:1;height:7px;background:var(--inset);border:1px solid var(--line);position:relative}
+.track i{position:absolute;inset:0;right:auto;background:var(--acc)}
+.hrow .pc{width:34px;text-align:right}
+.rlist{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line)}
+.rcard{background:var(--bg);padding:24px 26px}
+.rhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.rhead b{font:600 13.5px 'Inter'}
+.vtag{font:600 8.5px var(--mono);letter-spacing:.12em;color:var(--acc);background:var(--tint);border:1px solid rgba(242,92,38,.35);padding:2px 7px}
+.rstars{display:flex;gap:3px;color:var(--acc);margin-left:auto}
+.rcard p{color:var(--mut);font-size:13.5px}
+
+/* instructor */
+.inst{display:flex;gap:36px;align-items:flex-start;flex-wrap:wrap}
+.avatar{width:100px;height:100px;flex:none;background:linear-gradient(135deg,#2B1B11,#15100D);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font:500 26px var(--mono);color:var(--acc);position:relative;overflow:hidden}
+.avatar::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(255,255,255,.03) 6px 7px)}
+.avatar span{position:relative;z-index:1}
+.inst .info{flex:1;min-width:260px}
+.inst h3{margin-bottom:6px}
+.inst .stat{font:500 10.5px var(--mono);letter-spacing:.14em;color:var(--acc);text-transform:uppercase;display:block;margin-bottom:16px}
+.inst p{max-width:580px;margin-bottom:22px}
+
+/* related cards */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+.card{background:var(--bg);display:flex;flex-direction:column;position:relative;transition:background .15s}
+.card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--acc);transform:scaleY(0);transform-origin:top;transition:transform .18s;z-index:2}
+.card:hover{background:var(--card)}
+.card:hover::after{transform:scaleY(1)}
+.thumb{position:relative;aspect-ratio:16/10;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.thumb::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 7px,rgba(255,255,255,.025) 7px 8px)}
+.thumb svg{position:relative;z-index:1}
+.t2{background:linear-gradient(135deg,#1B2026,#121417)}
+.t4{background:linear-gradient(135deg,#262219,#141311)}
+.t7{background:linear-gradient(135deg,#1D1E27,#121316)}
+.t8{background:linear-gradient(135deg,#212620,#131512)}
+.idx{position:absolute;top:10px;left:12px;font:500 10px var(--mono);letter-spacing:.14em;color:var(--dim);z-index:2}
+.cbody{padding:16px 18px 18px;display:flex;flex-direction:column;gap:9px;flex:1}
+.cat{font:500 10px var(--mono);letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
+.card h3{font:700 14.5px/1.4 var(--head);letter-spacing:.005em}
+.cmeta{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:12px;border-top:1px solid var(--line);font:500 11px var(--mono)}
+.rate{display:inline-flex;gap:6px;align-items:center;color:var(--mut)}
+.rate svg{color:var(--acc);flex:none}
+.price{color:var(--txt);letter-spacing:.06em;white-space:nowrap}
+
+/* footer */
+.foot{display:grid;grid-template-columns:2.1fr 1fr 1fr 1fr 1fr;gap:1px;background:var(--line)}
+.fcell{background:var(--bg);padding:38px 32px}
+.fcell h4{font:500 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+.fcell ul{display:flex;flex-direction:column;gap:10px}
+.fcell ul a{font-size:13px;color:var(--mut);transition:color .15s}
+.fcell ul a:hover{color:var(--txt)}
+.fbrand p{color:var(--mut);font-size:13px;max-width:300px;margin:16px 0 22px}
+.nl{display:flex;border:1px solid var(--line2);height:42px;max-width:320px}
+.nl input{flex:1;min-width:0;background:var(--inset);border:0;outline:0;padding:0 13px;color:var(--txt);font:400 11px var(--mono);letter-spacing:.06em}
+.nl input::placeholder{color:var(--dim)}
+.nl button{background:var(--acc);color:#0B0B0C;font:600 10px var(--mono);letter-spacing:.12em;padding:0 16px;transition:background .15s}
+.nl button:hover{background:var(--acc-h)}
+.nl:focus-within{border-color:var(--acc)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 24px;font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.foot-bottom .dot{display:inline-block;width:7px;height:7px;background:var(--acc);margin-right:8px;vertical-align:1px}
+
+/* responsive */
+@media(max-width:1080px){.search{display:none}}
+@media(max-width:1000px){
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .foot{grid-template-columns:1fr 1fr}
+  .fbrand{grid-column:1/-1}
+}
+@media(max-width:980px){
+  .phero{grid-template-columns:1fr}
+  .phero-left{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media(max-width:920px){
+  .links{order:4;width:calc(100% + 48px);margin:0 -24px;overflow-x:auto;border-top:1px solid var(--line);padding:0 12px}
+  .links a{padding:13px 12px}
+}
+@media(max-width:900px){
+  .ov{grid-template-columns:1fr;gap:36px}
+  .rev{grid-template-columns:1fr;gap:36px}
+  .lic{grid-template-columns:1fr}
+  .inc{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:860px){
+  .panel{padding:30px 28px}
+  .shead,.crumb{padding-left:28px;padding-right:28px}
+  .phero-right{padding:28px}
+}
+@media(max-width:560px){
+  .pgrid{grid-template-columns:1fr}
+  .inc{grid-template-columns:1fr}
+  .acc-head .ainfo{display:none}
+  .foot{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="band">
+  <div class="wrap nav">
+    <a class="logo" href="home.html"><i></i>UTHENA</a>
+    <nav class="links" aria-label="Primary">
+      <a href="category.html" class="active">Marketplace</a>
+      <a href="#">Bundles</a>
+      <a href="home.html#earn">Earn with Uthena</a>
+      <a href="#">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <label class="search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+        <input type="search" placeholder="SEARCH 612 PRODUCTS" aria-label="Search products">
+      </label>
+      <a class="btn ghost sm" href="#">Sign in</a>
+      <a class="btn solid sm" href="#">Get started</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ BREADCRUMB ============ -->
+<section class="band">
+  <div class="wrap crumb">
+    <a href="category.html">Marketplace</a><span class="sep">/</span>
+    <a href="category.html">AI Courses</a><span class="sep">/</span>
+    <span class="cur">Using AI to Create and Scale a Profitable Personal Brand</span>
+  </div>
+</section>
+
+<!-- ============ HERO ============ -->
+<section class="band">
+  <div class="wrap xt phero">
+    <div class="phero-left">
+      <div class="player">
+        <span class="pv-fig">FIG.01 — PREVIEW</span>
+        <button class="playbtn" type="button" aria-label="Watch preview">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <span class="pv-label">WATCH PREVIEW · 2:14</span>
+      </div>
+      <div class="thumbstrip">
+        <button class="pthumb pt1 on" type="button" aria-label="Preview 1">
+          <svg width="26" height="26" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="2"><circle cx="32" cy="32" r="18"/><circle cx="32" cy="32" r="6" fill="#F25C26" stroke="none"/></svg>
+        </button>
+        <button class="pthumb pt2" type="button" aria-label="Preview 2">
+          <svg width="26" height="26" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="2"><rect x="14" y="14" width="36" height="36"/><path d="M14 38l12-12 10 10 8-8 6 6"/></svg>
+        </button>
+        <button class="pthumb pt3" type="button" aria-label="Preview 3">
+          <svg width="26" height="26" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="2"><path d="M14 48V30M32 48V16M50 48V36"/></svg>
+        </button>
+        <button class="pthumb pt4" type="button" aria-label="Preview 4">
+          <svg width="26" height="26" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="2"><circle cx="22" cy="22" r="9"/><circle cx="42" cy="42" r="9"/><path d="M28 28l8 8"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="phero-right">
+      <span class="cat">AI Courses · PLR Licensed</span>
+      <h1>Using AI to Create and Scale a Profitable Personal Brand on Social Media</h1>
+      <p class="desc">A complete, rebrandable system for building a profitable personal brand with AI tools — yours to modify and sell.</p>
+
+      <div class="meta">
+        <span class="it"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.9 · 3 REVIEWS</span>
+        <span class="it">1,240 RESOLD</span>
+        <span class="it">42 LESSONS</span>
+        <span class="it">6H 30M</span>
+        <span class="it">UPDATED MAY 2026</span>
+      </div>
+
+      <p class="tlabel">Choose your license</p>
+      <div class="tiers" id="tiers">
+        <button class="tier" type="button" data-price="147" data-label="PLR + MRR Bundle" data-selected="true">
+          <span class="ttag">MOST POPULAR</span>
+          <span class="tr"></span>
+          <span class="tinfo"><b>PLR + MRR BUNDLE</b><i>PLR plus the right to resell whitelabel licenses</i></span>
+          <span class="tprice">$147</span>
+        </button>
+        <button class="tier" type="button" data-price="97" data-label="PLR License">
+          <span class="tr"></span>
+          <span class="tinfo"><b>PLR LICENSE</b><i>Modify everything, sell as your own</i></span>
+          <span class="tprice">$97</span>
+        </button>
+        <button class="tier" type="button" data-price="57" data-label="Whitelabel">
+          <span class="tr"></span>
+          <span class="tinfo"><b>WHITELABEL</b><i>Sell as-is under your brand</i></span>
+          <span class="tprice">$57</span>
+        </button>
+      </div>
+
+      <div class="buyrow">
+        <button class="btn solid" id="cartBtn" type="button">Add to cart — $147</button>
+        <button class="btn ghost" type="button">Buy now</button>
+      </div>
+      <p class="buynote">INSTANT DOWNLOAD · LIFETIME ACCESS · SECURE CHECKOUT</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INCLUDED ============ -->
+<section class="band">
+  <div class="wrap xt">
+    <div class="shead">
+      <div>
+        <div class="eyebrow"><b>/02</b>WHAT'S INCLUDED</div>
+        <h2>Everything ships with the license</h2>
+      </div>
+    </div>
+    <div class="inc">
+      <div class="inc-it"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>42 HD video lessons</div>
+      <div class="inc-it"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>All source files &amp; slide decks</div>
+      <div class="inc-it"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Sales page copy</div>
+      <div class="inc-it"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Promotional assets</div>
+      <div class="inc-it"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Lifetime updates</div>
+      <div class="inc-it"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Instant download</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TABS ============ -->
+<section class="band">
+  <div class="wrap xt">
+    <div class="tabbar" role="tablist" aria-label="Product details">
+      <button class="on" data-tab="overview" role="tab" aria-selected="true">Overview</button>
+      <button data-tab="curriculum" role="tab" aria-selected="false">Curriculum</button>
+      <button data-tab="license" role="tab" aria-selected="false">License</button>
+      <button data-tab="reviews" role="tab" aria-selected="false">Reviews</button>
+      <button data-tab="instructor" role="tab" aria-selected="false">Instructor</button>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="panel on" id="tab-overview" role="tabpanel">
+      <div class="ov">
+        <div>
+          <h3>About this course</h3>
+          <p>This is a complete operating system for personal branding in the AI era. Across 42 lessons, your students go from zero presence to a positioned, monetized brand — using AI tools for research, content production, distribution, and sales.</p>
+          <p>It works as a flagship product or as the anchor of a bundle. The teaching is platform-agnostic, the examples are current, and the production quality is consistent across all five modules.</p>
+          <div class="plrbox">
+            <div class="eyebrow"><b>+</b>WHAT YOU GET WITH THE PLR LICENSE</div>
+            <p>Full editing rights to every video, slide deck, and document. Rebrand it, restructure it, translate it, or split it into smaller products. Source files included — no watermarks, no attribution required, no royalties ever.</p>
+          </div>
+        </div>
+        <div>
+          <h3>What your students will learn</h3>
+          <ul class="learn">
+            <li>Build a positioning statement and content strategy with AI tools</li>
+            <li>Produce a month of content in a single batching day</li>
+            <li>Grow on two platforms with a repeatable engagement system</li>
+            <li>Turn followers into buyers with a simple offer ladder</li>
+            <li>Automate scheduling, repurposing, and analytics</li>
+            <li>Launch a first digital product within 90 days</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURRICULUM -->
+    <div class="panel" id="tab-curriculum" role="tabpanel">
+      <h3>5 modules · 42 lessons · 6h 30m</h3>
+      <div class="acc">
+
+        <div class="acc-item open">
+          <button class="acc-head" type="button" aria-expanded="true">
+            <span class="midx">M01</span>
+            <h4>Foundations</h4>
+            <span class="ainfo">6 LESSONS · 48M</span>
+            <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="lesson"><span class="li">01</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Welcome and how to use this course<span class="ptag">PREVIEW</span><span class="dur">04:12</span></div>
+            <div class="lesson"><span class="li">02</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>The personal brand operating model<span class="dur">08:45</span></div>
+            <div class="lesson"><span class="li">03</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Choosing your niche with AI research<span class="ptag">PREVIEW</span><span class="dur">09:30</span></div>
+            <div class="lesson"><span class="li">04</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Auditing your current presence<span class="dur">07:18</span></div>
+            <div class="lesson"><span class="li">05</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Setting your 90-day targets<span class="dur">08:02</span></div>
+            <div class="lesson"><span class="li">06</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Your AI tool stack<span class="dur">10:13</span></div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="midx">M02</span>
+            <h4>Positioning with AI</h4>
+            <span class="ainfo">8 LESSONS · 1H 12M</span>
+            <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="lesson"><span class="li">01</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Defining your category of one<span class="dur">09:15</span></div>
+            <div class="lesson"><span class="li">02</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>AI-assisted audience research<span class="dur">11:40</span></div>
+            <div class="lesson"><span class="li">03</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Writing your positioning statement<span class="dur">08:22</span></div>
+            <div class="lesson"><span class="li">04</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Voice and tone profiles with ChatGPT<span class="ptag">PREVIEW</span><span class="dur">09:48</span></div>
+            <div class="lesson"><span class="li">05</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Competitor gap analysis<span class="dur">10:05</span></div>
+            <div class="lesson"><span class="li">06</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Crafting your origin story<span class="dur">07:55</span></div>
+            <div class="lesson"><span class="li">07</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Visual identity with AI tools<span class="dur">08:30</span></div>
+            <div class="lesson"><span class="li">08</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Your one-line promise<span class="dur">06:25</span></div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="midx">M03</span>
+            <h4>Content Engine</h4>
+            <span class="ainfo">12 LESSONS · 1H 58M</span>
+            <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="lesson"><span class="li">01</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>The 30-day content system<span class="dur">10:05</span></div>
+            <div class="lesson"><span class="li">02</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Idea generation that never runs dry<span class="dur">09:12</span></div>
+            <div class="lesson"><span class="li">03</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Writing hooks with AI<span class="ptag">PREVIEW</span><span class="dur">08:48</span></div>
+            <div class="lesson"><span class="li">04</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Short-form scripts at scale<span class="dur">10:30</span></div>
+            <div class="lesson"><span class="li">05</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Long-form to short-form repurposing<span class="dur">09:55</span></div>
+            <div class="lesson"><span class="li">06</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Carousel and thread frameworks<span class="dur">09:20</span></div>
+            <div class="lesson"><span class="li">07</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>AI image and thumbnail workflows<span class="dur">10:15</span></div>
+            <div class="lesson"><span class="li">08</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Batching a month in one day<span class="dur">11:02</span></div>
+            <div class="lesson"><span class="li">09</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Editing with AI assistants<span class="dur">09:40</span></div>
+            <div class="lesson"><span class="li">10</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Quality control and brand voice checks<span class="dur">08:25</span></div>
+            <div class="lesson"><span class="li">11</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Scheduling and automation<span class="dur">10:48</span></div>
+            <div class="lesson"><span class="li">12</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>The weekly content review<span class="dur">10:00</span></div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="midx">M04</span>
+            <h4>Growth &amp; Distribution</h4>
+            <span class="ainfo">9 LESSONS · 1H 24M</span>
+            <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="lesson"><span class="li">01</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Platform strategy: pick two, win two<span class="dur">09:30</span></div>
+            <div class="lesson"><span class="li">02</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>The engagement flywheel<span class="dur">09:05</span></div>
+            <div class="lesson"><span class="li">03</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Collaborations and borrowed audiences<span class="dur">10:12</span></div>
+            <div class="lesson"><span class="li">04</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Turning comments into community<span class="dur">08:40</span></div>
+            <div class="lesson"><span class="li">05</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Newsletter as your owned channel<span class="dur">09:55</span></div>
+            <div class="lesson"><span class="li">06</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Cross-posting without the cringe<span class="dur">08:18</span></div>
+            <div class="lesson"><span class="li">07</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Analytics that actually matter<span class="dur">09:25</span></div>
+            <div class="lesson"><span class="li">08</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Paid boosts on a small budget<span class="dur">09:50</span></div>
+            <div class="lesson"><span class="li">09</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>The 90-day growth sprint<span class="dur">09:05</span></div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="midx">M05</span>
+            <h4>Monetization</h4>
+            <span class="ainfo">7 LESSONS · 1H 08M</span>
+            <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="lesson"><span class="li">01</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Your offer ladder<span class="dur">09:40</span></div>
+            <div class="lesson"><span class="li">02</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Pricing your first product<span class="dur">09:05</span></div>
+            <div class="lesson"><span class="li">03</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Selling without burning trust<span class="dur">10:12</span></div>
+            <div class="lesson"><span class="li">04</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>DM and funnel basics<span class="dur">09:30</span></div>
+            <div class="lesson"><span class="li">05</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Launch week, step by step<span class="dur">10:45</span></div>
+            <div class="lesson"><span class="li">06</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Retention and repeat buyers<span class="dur">09:08</span></div>
+            <div class="lesson"><span class="li">07</span><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Scaling past your time<span class="dur">09:40</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- LICENSE -->
+    <div class="panel" id="tab-license" role="tabpanel">
+      <h3>License terms</h3>
+      <p class="licnote">SUMMARY — THE FULL AGREEMENT SHIPS WITH YOUR DOWNLOAD</p>
+      <div class="lic">
+        <div class="lic-col can">
+          <h4><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>YOU CAN</h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Sell it separately</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Bundle it with other products</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Rename it</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Edit all content and materials</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Put your name on it</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Translate it into other languages</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Sell on your own site or membership</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12l5 5L20 6"/></svg>Keep 100% of the revenue</li>
+          </ul>
+        </div>
+        <div class="lic-col cant">
+          <h4><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg>YOU CANNOT</h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg>Resell the PLR rights themselves (unless you hold the MRR bundle)</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg>Upload it to YouTube or free sites</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg>Give it away for free</li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg>Sell it on Udemy, Skillshare, or marketplaces you don't own</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="panel" id="tab-reviews" role="tabpanel">
+      <div class="rev">
+        <div class="rsum">
+          <span class="big">4.9</span>
+          <div class="stars" aria-label="4.9 out of 5">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+          </div>
+          <span class="cnt">3 VERIFIED REVIEWS</span>
+          <div class="hist">
+            <div class="hrow"><span class="st">5<svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg></span><div class="track"><i style="width:92%"></i></div><span class="pc">92%</span></div>
+            <div class="hrow"><span class="st">4<svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg></span><div class="track"><i style="width:8%"></i></div><span class="pc">8%</span></div>
+            <div class="hrow"><span class="st">3<svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg></span><div class="track"><i style="width:0%"></i></div><span class="pc">0%</span></div>
+            <div class="hrow"><span class="st">2<svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg></span><div class="track"><i style="width:0%"></i></div><span class="pc">0%</span></div>
+            <div class="hrow"><span class="st">1<svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg></span><div class="track"><i style="width:0%"></i></div><span class="pc">0%</span></div>
+          </div>
+        </div>
+        <div class="rlist">
+          <div class="rcard">
+            <div class="rhead">
+              <b>Craig Ballantyne</b><span class="vtag">VERIFIED BUYER</span>
+              <span class="rstars">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+              </span>
+            </div>
+            <p>I bought the courses to resell and am very happy with the quality.</p>
+          </div>
+          <div class="rcard">
+            <div class="rhead">
+              <b>Digital Crest Institute</b><span class="vtag">VERIFIED BUYER</span>
+              <span class="rstars">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+              </span>
+            </div>
+            <p>Lambros courses are really awesome. The content is well structured and the video quality is top notch. Highly recommended for anyone building a resale catalog.</p>
+          </div>
+          <div class="rcard">
+            <div class="rhead">
+              <b>Anonymous</b><span class="vtag">VERIFIED BUYER</span>
+              <span class="rstars">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+              </span>
+            </div>
+            <p>Hands down one of the best courses around personal brand creation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSTRUCTOR -->
+    <div class="panel" id="tab-instructor" role="tabpanel">
+      <div class="inst">
+        <div class="avatar"><span>LF</span></div>
+        <div class="info">
+          <h3>Lambros Frantzis</h3>
+          <span class="stat">CREATOR OF 12 COURSES · 40,000+ STUDENTS</span>
+          <p>Lambros builds practical, no-fluff courses on AI, marketing, and personal branding. His catalog has been licensed by operators in 40+ countries and resold under hundreds of independent brands — consistent production quality, current examples, and structures that hold up to rebranding.</p>
+          <a class="btn ghost" href="category.html">View all courses</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ RELATED ============ -->
+<section class="band">
+  <div class="wrap xt">
+    <div class="shead">
+      <div>
+        <div class="eyebrow"><b>/04</b>RELATED</div>
+        <h2>Operators also bought</h2>
+      </div>
+      <a class="slink" href="category.html">All AI courses
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="pgrid">
+
+      <a class="card" href="product.html">
+        <div class="thumb t7">
+          <span class="idx">001</span>
+          <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><path d="M32 8l21 12v24L32 56 11 44V20z"/><path d="M32 8v48M11 20l42 24M53 20L11 44" opacity=".5"/><circle cx="32" cy="32" r="4.5" fill="#F25C26" stroke="none"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">AI</span>
+          <h3>Generative AI for Leaders</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.8</span>
+            <span class="price">$127</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t2">
+          <span class="idx">002</span>
+          <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><rect x="12" y="14" width="40" height="28"/><path d="M22 42l-4 10 12-10"/><path d="M20 24h24M20 32h16"/><rect x="42" y="28" width="6" height="6" fill="#F25C26" stroke="none"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">AI</span>
+          <h3>ChatGPT for Business Automation</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.7</span>
+            <span class="price">FROM $77</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t8">
+          <span class="idx">003</span>
+          <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><circle cx="32" cy="14" r="6"/><circle cx="14" cy="46" r="6"/><circle cx="50" cy="46" r="6" stroke="#F25C26"/><path d="M29 19L16 40M35 19l13 21M20 46h24"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">AI</span>
+          <h3>AI Agents for Lead Generation</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.9</span>
+            <span class="price">FROM $97</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t4">
+          <span class="idx">004</span>
+          <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><rect x="14" y="14" width="28" height="28"/><circle cx="40" cy="40" r="13"/><circle cx="40" cy="40" r="3.5" fill="#F25C26" stroke="none"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">AI</span>
+          <h3>Artificial Intelligence Explained for Beginners</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>5.0</span>
+            <span class="price">$67</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="band">
+  <div class="wrap xt">
+    <div class="foot">
+      <div class="fcell fbrand">
+        <a class="logo" href="home.html"><i></i>UTHENA</a>
+        <p>The home for digital product entrepreneurs — courses, tools, and assets you can rebrand, resell, and run your business on.</p>
+        <h4>Dispatch — new PLR drops, monthly</h4>
+        <form class="nl" onsubmit="return false">
+          <input type="email" placeholder="YOUR@EMAIL.COM" aria-label="Email address">
+          <button type="submit">JOIN</button>
+        </form>
+      </div>
+      <div class="fcell">
+        <h4>Marketplace</h4>
+        <ul>
+          <li><a href="category.html">All products</a></li>
+          <li><a href="category.html">AI courses</a></li>
+          <li><a href="#">Bundles</a></li>
+          <li><a href="#">New releases</a></li>
+        </ul>
+      </div>
+      <div class="fcell">
+        <h4>Earn</h4>
+        <ul>
+          <li><a href="home.html#earn">Sell your courses</a></li>
+          <li><a href="home.html#earn">Affiliate program</a></li>
+          <li><a href="#">Partner shops</a></li>
+          <li><a href="#">Payouts</a></li>
+        </ul>
+      </div>
+      <div class="fcell">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="fcell">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">License terms</a></li>
+          <li><a href="#">Refund policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom" style="border-top:1px solid var(--line)">
+      <span>© 2026 UTHENA</span>
+      <span>BUY IT. BRAND IT. SELL IT.</span>
+      <span><i class="dot"></i>612 PRODUCTS IN CATALOG</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // tier selection
+  var tiers = Array.prototype.slice.call(document.querySelectorAll('.tier'));
+  var cartBtn = document.getElementById('cartBtn');
+  function select(tier){
+    tiers.forEach(function(t){ t.classList.remove('sel'); t.setAttribute('aria-pressed','false'); });
+    tier.classList.add('sel');
+    tier.setAttribute('aria-pressed','true');
+    cartBtn.textContent = 'Add to cart — $' + tier.getAttribute('data-price');
+  }
+  tiers.forEach(function(t){
+    t.addEventListener('click', function(){ select(t); });
+    if(t.getAttribute('data-selected') === 'true') select(t);
+  });
+
+  // tabs
+  var tabBtns = Array.prototype.slice.call(document.querySelectorAll('.tabbar button'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  tabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabBtns.forEach(function(b){ b.classList.remove('on'); b.setAttribute('aria-selected','false'); });
+      panels.forEach(function(p){ p.classList.remove('on'); });
+      btn.classList.add('on');
+      btn.setAttribute('aria-selected','true');
+      document.getElementById('tab-' + btn.getAttribute('data-tab')).classList.add('on');
+    });
+  });
+
+  // accordion
+  var heads = Array.prototype.slice.call(document.querySelectorAll('.acc-head'));
+  heads.forEach(function(head){
+    head.addEventListener('click', function(){
+      var item = head.parentElement;
+      var open = item.classList.toggle('open');
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  // preview thumb strip
+  var pthumbs = Array.prototype.slice.call(document.querySelectorAll('.pthumb'));
+  pthumbs.forEach(function(th){
+    th.addEventListener('click', function(){
+      pthumbs.forEach(function(t){ t.classList.remove('on'); });
+      th.classList.add('on');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uthena — Buy it. Brand it. Sell it as your own.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0F10; --card:#151618; --raised:#1B1D1F; --inset:#101113;
+  --line:#232527; --line2:#303336;
+  --txt:#E9E9E7; --mut:#9A9DA1; --dim:#63666B;
+  --acc:#F25C26; --acc-h:#FF6E38; --tint:rgba(242,92,38,0.10);
+  --mono:'IBM Plex Mono',monospace; --head:'Archivo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font:400 14px/1.6 'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+ul{list-style:none}
+::selection{background:var(--acc);color:#0B0B0C}
+:focus-visible{outline:1px solid var(--acc);outline-offset:2px}
+
+/* ruled frame */
+.band{border-bottom:1px solid var(--line)}
+.wrap{max-width:1280px;margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}
+.xt::before,.xt::after{content:"";position:absolute;top:-6px;width:11px;height:11px;z-index:3;pointer-events:none;
+  background:linear-gradient(var(--line2),var(--line2)) center/11px 1px no-repeat,
+             linear-gradient(var(--line2),var(--line2)) center/1px 11px no-repeat}
+.xt::before{left:-6px}.xt::after{right:-6px}
+
+/* type helpers */
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:10px}
+.eyebrow b{color:var(--acc);font-weight:500}
+.shead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:28px 40px 26px;border-bottom:1px solid var(--line)}
+.shead h2{font:800 26px/1.05 var(--head);letter-spacing:-.01em;text-transform:uppercase;margin-top:12px}
+.slink{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:color .15s}
+.slink:hover{color:var(--acc)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;height:44px;padding:0 24px;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;white-space:nowrap;cursor:pointer}
+.btn.solid{background:var(--acc);color:#0B0B0C}
+.btn.solid:hover{background:var(--acc-h)}
+.btn.ghost{border-color:var(--line2);color:var(--txt)}
+.btn.ghost:hover{border-color:var(--acc);color:var(--acc)}
+.btn.sm{height:38px;padding:0 16px}
+
+/* nav */
+.nav{display:flex;align-items:center;gap:20px;min-height:64px;padding:0 24px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font:800 17px/1 var(--head);letter-spacing:.07em;padding:10px 0}
+.logo i{width:11px;height:11px;background:var(--acc);display:inline-block}
+.links{display:flex;gap:2px}
+.links a{padding:23px 13px;font:500 13px 'Inter';color:var(--mut);transition:color .15s;white-space:nowrap}
+.links a:hover{color:var(--txt)}
+.links a.active{color:var(--txt);box-shadow:inset 0 -2px 0 var(--acc)}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.search{display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:var(--inset);height:38px;padding:0 12px;width:220px;color:var(--dim);transition:border-color .15s}
+.search:focus-within{border-color:var(--acc)}
+.search input{background:none;border:0;outline:0;color:var(--txt);font:400 11px var(--mono);letter-spacing:.06em;width:100%}
+.search input::placeholder{color:var(--dim)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1fr 380px}
+.hero-main{padding:88px 48px 76px}
+.hero h1{font:800 clamp(42px,6.4vw,84px)/.95 var(--head);letter-spacing:-.02em;text-transform:uppercase;margin:24px 0 26px;max-width:820px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero .sub{color:var(--mut);font-size:15.5px;max-width:540px}
+.hero-ctas{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
+.hero-deco{border-left:1px solid var(--line);display:flex;flex-direction:column;background:repeating-linear-gradient(45deg,transparent 0 9px,rgba(255,255,255,.018) 9px 10px)}
+.deco-fig{flex:1;display:flex;align-items:center;justify-content:center;padding:40px}
+.deco-cap{border-top:1px solid var(--line);padding:14px 22px;display:flex;justify-content:space-between;gap:10px;font:500 10px var(--mono);letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+.stat{background:var(--bg);padding:32px 38px}
+.stat b{display:block;font:500 34px/1 var(--mono);color:var(--acc);margin-bottom:11px;letter-spacing:-.02em}
+.stat span{font:500 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.pillar{background:var(--bg);padding:36px;position:relative;transition:background .15s}
+.pillar:hover{background:var(--card)}
+.pillar .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:44px}
+.pillar .top svg{color:var(--dim)}
+.pillar h3{font:800 17px/1.2 var(--head);letter-spacing:.02em;text-transform:uppercase;margin-bottom:12px}
+.pillar p{color:var(--mut);font-size:13.5px}
+
+/* product cards */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+.card{background:var(--bg);display:flex;flex-direction:column;position:relative;transition:background .15s}
+.card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--acc);transform:scaleY(0);transform-origin:top;transition:transform .18s;z-index:2}
+.card:hover{background:var(--card)}
+.card:hover::after{transform:scaleY(1)}
+.thumb{position:relative;aspect-ratio:16/10;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.thumb::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 7px,rgba(255,255,255,.025) 7px 8px)}
+.thumb svg{position:relative;z-index:1}
+.t1{background:linear-gradient(135deg,#2B1B11,#15100D)}
+.t2{background:linear-gradient(135deg,#1B2026,#121417)}
+.t3{background:linear-gradient(135deg,#23262B,#131517)}
+.t4{background:linear-gradient(135deg,#262219,#141311)}
+.t5{background:linear-gradient(135deg,#1E2322,#121514)}
+.t6{background:linear-gradient(135deg,#28201E,#141212)}
+.t7{background:linear-gradient(135deg,#1D1E27,#121316)}
+.t8{background:linear-gradient(135deg,#212620,#131512)}
+.idx{position:absolute;top:10px;left:12px;font:500 10px var(--mono);letter-spacing:.14em;color:var(--dim);z-index:2}
+.badge{position:absolute;top:10px;right:10px;font:600 9px var(--mono);letter-spacing:.14em;padding:4px 8px;background:var(--acc);color:#0B0B0C;z-index:2}
+.badge.tintb{background:var(--tint);color:var(--acc);border:1px solid rgba(242,92,38,.35)}
+.cbody{padding:16px 18px 18px;display:flex;flex-direction:column;gap:9px;flex:1}
+.cat{font:500 10px var(--mono);letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
+.card h3{font:700 14.5px/1.4 var(--head);letter-spacing:.005em}
+.cmeta{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:12px;border-top:1px solid var(--line);font:500 11px var(--mono)}
+.rate{display:inline-flex;gap:6px;align-items:center;color:var(--mut)}
+.rate svg{color:var(--acc);flex:none}
+.price{color:var(--txt);letter-spacing:.06em;white-space:nowrap}
+.price s{color:var(--dim);margin-right:7px;font-weight:400}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.step{background:var(--bg);padding:40px 36px;transition:background .15s}
+.step:hover{background:var(--card)}
+.step .num{display:block;font:500 42px/1 var(--mono);color:var(--acc);margin-bottom:24px}
+.step h3{font:800 16px/1.25 var(--head);letter-spacing:.02em;text-transform:uppercase;margin-bottom:10px}
+.step p{color:var(--mut);font-size:13.5px}
+
+/* earn */
+.earn{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+.earn-cell{background:var(--bg);padding:46px 44px;transition:background .15s}
+.earn-cell:hover{background:var(--card)}
+.earn-cell .big{font:500 56px/1 var(--mono);color:var(--acc);letter-spacing:-.02em;display:block;margin:26px 0 18px}
+.earn-cell h3{font:800 17px/1.2 var(--head);letter-spacing:.02em;text-transform:uppercase;margin-bottom:10px}
+.earn-cell p{color:var(--mut);font-size:13.5px;max-width:420px;margin-bottom:24px}
+
+/* quote */
+.quote{padding:80px 48px;text-align:center}
+.quote .qsq{display:inline-block;width:11px;height:11px;background:var(--acc);margin-bottom:30px}
+.quote blockquote{font:600 clamp(21px,3vw,30px)/1.4 var(--head);letter-spacing:-.01em;max-width:760px;margin:0 auto 26px}
+.quote cite{font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mut);font-style:normal}
+
+/* cta band */
+.cta{padding:88px 48px;text-align:center;background:repeating-linear-gradient(45deg,transparent 0 9px,rgba(255,255,255,.014) 9px 10px)}
+.cta h2{font:800 clamp(30px,4.6vw,52px)/1 var(--head);letter-spacing:-.015em;text-transform:uppercase;margin:22px 0 16px}
+.cta p{color:var(--mut);max-width:480px;margin:0 auto 34px}
+.cta .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta .eyebrow{justify-content:center}
+
+/* footer */
+.foot{display:grid;grid-template-columns:2.1fr 1fr 1fr 1fr 1fr;gap:1px;background:var(--line)}
+.fcell{background:var(--bg);padding:38px 32px}
+.fcell h4{font:500 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+.fcell ul{display:flex;flex-direction:column;gap:10px}
+.fcell ul a{font-size:13px;color:var(--mut);transition:color .15s}
+.fcell ul a:hover{color:var(--txt)}
+.fbrand p{color:var(--mut);font-size:13px;max-width:300px;margin:16px 0 22px}
+.nl{display:flex;border:1px solid var(--line2);height:42px;max-width:320px}
+.nl input{flex:1;min-width:0;background:var(--inset);border:0;outline:0;padding:0 13px;color:var(--txt);font:400 11px var(--mono);letter-spacing:.06em}
+.nl input::placeholder{color:var(--dim)}
+.nl button{background:var(--acc);color:#0B0B0C;font:600 10px var(--mono);letter-spacing:.12em;padding:0 16px;transition:background .15s}
+.nl button:hover{background:var(--acc-h)}
+.nl:focus-within{border-color:var(--acc)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 24px;font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.foot-bottom .dot{display:inline-block;width:7px;height:7px;background:var(--acc);margin-right:8px;vertical-align:1px}
+
+/* responsive */
+@media(max-width:1080px){.search{display:none}}
+@media(max-width:1000px){
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .foot{grid-template-columns:1fr 1fr}
+  .fbrand{grid-column:1/-1}
+}
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr}
+  .hero-deco{display:none}
+}
+@media(max-width:920px){
+  .links{order:4;width:calc(100% + 48px);margin:0 -24px;overflow-x:auto;border-top:1px solid var(--line);padding:0 12px}
+  .links a{padding:13px 12px}
+  .links a.active{box-shadow:inset 0 -2px 0 var(--acc)}
+}
+@media(max-width:860px){
+  .stats{grid-template-columns:1fr 1fr}
+  .pillars,.steps{grid-template-columns:1fr}
+  .earn{grid-template-columns:1fr}
+  .hero-main{padding:64px 28px 56px}
+  .shead{padding:24px 28px 22px}
+  .quote,.cta{padding:64px 28px}
+}
+@media(max-width:560px){
+  .pgrid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat{padding:24px}
+  .stat b{font-size:26px}
+  .foot{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="band">
+  <div class="wrap nav">
+    <a class="logo" href="home.html"><i></i>UTHENA</a>
+    <nav class="links" aria-label="Primary">
+      <a href="category.html">Marketplace</a>
+      <a href="#">Bundles</a>
+      <a href="#earn">Earn with Uthena</a>
+      <a href="#">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <label class="search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+        <input type="search" placeholder="SEARCH 612 PRODUCTS" aria-label="Search products">
+      </label>
+      <a class="btn ghost sm" href="#">Sign in</a>
+      <a class="btn solid sm" href="category.html">Get started</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="band">
+  <div class="wrap hero">
+    <div class="hero-main">
+      <div class="eyebrow"><b>/00</b>PRIVATE BETA</div>
+      <h1>Buy it. Brand it.<br>Sell it <em>as your own.</em></h1>
+      <p class="sub">Buy the private label rights to 600+ video courses and digital assets. Modify them, sell them as your own, keep 100% of the revenue.</p>
+      <div class="hero-ctas">
+        <a class="btn solid" href="category.html">Browse the marketplace
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn ghost" href="#earn">Become a partner</a>
+      </div>
+    </div>
+    <aside class="hero-deco" aria-hidden="true">
+      <div class="deco-fig">
+        <svg width="190" height="190" viewBox="0 0 190 190" fill="none">
+          <rect x="25" y="25" width="140" height="140" stroke="#303336" stroke-width="1.5"/>
+          <rect x="47" y="47" width="96" height="96" stroke="#3E4146" stroke-width="1.5"/>
+          <rect x="69" y="69" width="52" height="52" stroke="#53565B" stroke-width="1.5"/>
+          <rect x="84" y="84" width="22" height="22" fill="#F25C26"/>
+          <path d="M25 165L165 25" stroke="#F25C26" stroke-width="1.5" stroke-dasharray="3 7" opacity=".45"/>
+        </svg>
+      </div>
+      <div class="deco-cap"><span>FIG.00 — LICENSE STACK</span><span>WL → PLR → MRR</span></div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="band">
+  <div class="wrap xt stats">
+    <div class="stat"><b>612</b><span>Products listed</span></div>
+    <div class="stat"><b>100+</b><span>Active partners</span></div>
+    <div class="stat"><b>$24M+</b><span>Resold by partners</span></div>
+    <div class="stat"><b>4.8/5</b><span>Avg product rating</span></div>
+  </div>
+</section>
+
+<!-- ============ PILLARS ============ -->
+<section class="band">
+  <div class="wrap xt">
+    <div class="shead">
+      <div>
+        <div class="eyebrow"><b>/01</b>THE SYSTEM</div>
+        <h2>Everything an operator needs</h2>
+      </div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="top">
+          <span class="eyebrow"><b>/01</b></span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7.5" height="7.5"/><rect x="13.5" y="3" width="7.5" height="7.5"/><rect x="3" y="13.5" width="7.5" height="7.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5"/></svg>
+        </div>
+        <h3>Marketplace</h3>
+        <p>600+ curated PLR video courses and digital assets. Every product ships with a whitelabel, PLR, or PLR + MRR license — pick the rights you need and start selling.</p>
+      </div>
+      <div class="pillar">
+        <div class="top">
+          <span class="eyebrow"><b>/02</b></span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="3" width="15" height="11"/><rect x="3" y="7" width="15" height="11" fill="#0E0F10"/><path d="M3 14h15"/></svg>
+        </div>
+        <h3>Platform</h3>
+        <p>Your own storefront, course player, file vault, and affiliate dashboard. We host the infrastructure. You put your name on it.</p>
+      </div>
+      <div class="pillar">
+        <div class="top">
+          <span class="eyebrow"><b>/03</b></span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="8" cy="6" r="2.2" fill="#0E0F10"/><circle cx="16" cy="12" r="2.2" fill="#0E0F10"/><circle cx="10" cy="18" r="2.2" fill="#0E0F10"/></svg>
+        </div>
+        <h3>Toolbox</h3>
+        <p>Every asset a course seller needs to launch and grow — sales copy, promo graphics, email sequences, and launch checklists included with your license.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOP SELLERS ============ -->
+<section class="band">
+  <div class="wrap xt">
+    <div class="shead">
+      <div>
+        <div class="eyebrow"><b>/02</b>TOP SELLERS</div>
+        <h2>Proven inventory</h2>
+      </div>
+      <a class="slink" href="category.html">View all 612
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="pgrid">
+
+      <a class="card" href="product.html">
+        <div class="thumb t1">
+          <span class="idx">001</span><span class="badge">FEATURED</span>
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><circle cx="32" cy="32" r="19"/><path d="M32 5v10M32 49v10M5 32h10M49 32h10"/><circle cx="32" cy="32" r="6.5" fill="#F25C26" stroke="none"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">AI</span>
+          <h3>Using AI to Create and Scale a Profitable Personal Brand on Social Media</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.9</span>
+            <span class="price">FROM $57</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t2">
+          <span class="idx">002</span><span class="badge tintb">HOT</span>
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><path d="M26 18L12 32l14 14M38 18l14 14-14 14"/><path d="M35 14l-6 36" stroke="#F25C26"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">Programming</span>
+          <h3>Python Pro — The Complete Python Bootcamp</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.8</span>
+            <span class="price">FROM $97</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t3">
+          <span class="idx">003</span>
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><circle cx="16" cy="44" r="6"/><circle cx="48" cy="44" r="6"/><circle cx="32" cy="16" r="6" stroke="#F25C26"/><path d="M28 21l-9 17M36 21l9 17M22 44h20"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">Technology</span>
+          <h3>Complete Network Hacking Course 2025</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.7</span>
+            <span class="price">FROM $97</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t4">
+          <span class="idx">004</span>
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><rect x="14" y="14" width="28" height="28"/><circle cx="40" cy="40" r="13"/><circle cx="40" cy="40" r="3.5" fill="#F25C26" stroke="none"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">AI</span>
+          <h3>Artificial Intelligence Explained for Beginners</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>5.0</span>
+            <span class="price">$67</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t5">
+          <span class="idx">005</span><span class="badge tintb">SALE</span>
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><path d="M14 50V36M28 50V26M42 50V16" stroke="#53565B"/><path d="M10 44L50 12" stroke="#F25C26"/><path d="M42 12h8v8" stroke="#F25C26"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">Business</span>
+          <h3>B2B Sales Skills: Cold Lead Gen to Closing</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.8</span>
+            <span class="price"><s>$399</s>$79</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t6">
+          <span class="idx">006</span><span class="badge tintb">NEW</span>
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><rect x="12" y="12" width="40" height="40"/><path d="M12 40l13-13 11 11 8-8 8 8" /><circle cx="42" cy="22" r="4" stroke="#F25C26"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">Design</span>
+          <h3>Canva Content Creation Masterclass 2025</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.9</span>
+            <span class="price">$87</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t7">
+          <span class="idx">007</span>
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><path d="M32 8l21 12v24L32 56 11 44V20z"/><path d="M32 8v48M11 20l42 24M53 20L11 44" opacity=".5"/><circle cx="32" cy="32" r="4.5" fill="#F25C26" stroke="none"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">AI</span>
+          <h3>Generative AI for Leaders</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.8</span>
+            <span class="price">$127</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb t8">
+          <span class="idx">008</span>
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><ellipse cx="32" cy="16" rx="18" ry="7"/><path d="M14 16v32c0 3.9 8.1 7 18 7s18-3.1 18-7V16"/><path d="M14 32c0 3.9 8.1 7 18 7s18-3.1 18-7" stroke="#F25C26"/></svg>
+        </div>
+        <div class="cbody">
+          <span class="cat">Programming</span>
+          <h3>How To Create and Manage SQLite Databases</h3>
+          <div class="cmeta">
+            <span class="rate"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.7</span>
+            <span class="price">$67</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="band">
+  <div class="wrap xt">
+    <div class="shead">
+      <div>
+        <div class="eyebrow"><b>/03</b>HOW IT WORKS</div>
+        <h2>Three steps to your own catalog</h2>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="num">01</span>
+        <h3>Find your course</h3>
+        <p>Filter 600+ products by topic, license type, and price. Preview every course before you buy.</p>
+      </div>
+      <div class="step">
+        <span class="num">02</span>
+        <h3>Buy the PLR license</h3>
+        <p>One payment, no royalties. Download the videos, source files, and sales assets instantly.</p>
+      </div>
+      <div class="step">
+        <span class="num">03</span>
+        <h3>Sell it as your own</h3>
+        <p>Rebrand it, price it, launch it on your own store. Keep 100% of every sale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EARN ============ -->
+<section class="band" id="earn">
+  <div class="wrap xt">
+    <div class="shead">
+      <div>
+        <div class="eyebrow"><b>/04</b>EARN WITH UTHENA</div>
+        <h2>Two ways in</h2>
+      </div>
+    </div>
+    <div class="earn">
+      <div class="earn-cell">
+        <div class="eyebrow"><b>A</b>FOR COURSE CREATORS</div>
+        <span class="big">60%</span>
+        <h3>Revenue share on every sale</h3>
+        <p>Upload your course once and get distribution across the marketplace and 100+ partner shops. Payouts via PayPal, no chasing invoices.</p>
+        <a class="slink" href="#">Become a partner
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="earn-cell">
+        <div class="eyebrow"><b>B</b>FOR AFFILIATES</div>
+        <span class="big">20%</span>
+        <h3>Commission, plus your own shop</h3>
+        <p>Earn on everything you refer — with your own branded mini-shop at uthena.com/yourname. No inventory, no support tickets.</p>
+        <a class="slink" href="#">Open your mini-shop
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIAL ============ -->
+<section class="band">
+  <div class="wrap xt quote">
+    <span class="qsq" aria-hidden="true"></span>
+    <blockquote>“I bought the courses to resell and am very happy with the quality.”</blockquote>
+    <cite>— Craig Ballantyne · Verified buyer</cite>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="band">
+  <div class="wrap xt cta">
+    <div class="eyebrow"><b>/05</b>GET STARTED</div>
+    <h2>Your catalog is one<br>license away.</h2>
+    <p>612 products, three license tiers, instant download. Buy once, sell as your own.</p>
+    <div class="row">
+      <a class="btn solid" href="category.html">Browse the marketplace</a>
+      <a class="btn ghost" href="#earn">Become a partner</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="band">
+  <div class="wrap xt">
+    <div class="foot">
+      <div class="fcell fbrand">
+        <a class="logo" href="home.html"><i></i>UTHENA</a>
+        <p>The home for digital product entrepreneurs — courses, tools, and assets you can rebrand, resell, and run your business on.</p>
+        <h4>Dispatch — new PLR drops, monthly</h4>
+        <form class="nl" onsubmit="return false">
+          <input type="email" placeholder="YOUR@EMAIL.COM" aria-label="Email address">
+          <button type="submit">JOIN</button>
+        </form>
+      </div>
+      <div class="fcell">
+        <h4>Marketplace</h4>
+        <ul>
+          <li><a href="category.html">All products</a></li>
+          <li><a href="category.html">AI courses</a></li>
+          <li><a href="#">Bundles</a></li>
+          <li><a href="#">New releases</a></li>
+        </ul>
+      </div>
+      <div class="fcell">
+        <h4>Earn</h4>
+        <ul>
+          <li><a href="#earn">Sell your courses</a></li>
+          <li><a href="#earn">Affiliate program</a></li>
+          <li><a href="#">Partner shops</a></li>
+          <li><a href="#">Payouts</a></li>
+        </ul>
+      </div>
+      <div class="fcell">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="fcell">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">License terms</a></li>
+          <li><a href="#">Refund policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom" style="border-top:1px solid var(--line)">
+      <span>© 2026 UTHENA</span>
+      <span>BUY IT. BRAND IT. SELL IT.</span>
+      <span><i class="dot"></i>612 PRODUCTS IN CATALOG</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

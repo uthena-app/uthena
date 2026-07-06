@@ -1,0 +1,82 @@
+/* ============================================================
+   Uthena v4 — DARK theme (demo copy)
+   Source of truth: 00-foundations/design/tokens.css
+   This file is a near-identical copy for the demo only. It
+   exists so the demo doesn't depend on the foundations folder
+   and can be opened by `python3 -m http.server` from anywhere.
+   ============================================================ */
+
+:root {
+  /* Surfaces — monochrome, 6 levels */
+  --bg:           #0E1012;
+  --bg-elev-1:    #15181B;
+  --bg-elev-2:    #1C2024;
+  --bg-elev-3:    #242A2F;
+  --bg-inset:     #0A0C0E;
+  --bg-brand:     rgba(26, 188, 156, 0.04);
+
+  /* Borders — hairlines, slightly warm */
+  --line:         #2A2F35;
+  --line-strong:  #3A4148;
+
+  /* Text */
+  --heading:      #FFFFFF;
+  --text-1:       #ECECEE;
+  --text-2:       #A1A4AC;
+  --text-3:       #6B6E76;
+  --text-4:       #4A4D55;
+
+  /* ACTION — orange */
+  --action:        #F3924A;
+  --action-hover:  #FFA862;
+  --action-soft:   rgba(243, 146, 74, 0.12);
+  --action-line:   rgba(243, 146, 74, 0.30);
+  --action-glow:   rgba(243, 146, 74, 0.35);
+
+  /* IDENTITY — teal */
+  --accent:        #1ABC9C;
+  --accent-hover:  #20D2AF;
+  --accent-soft:   rgba(26, 188, 156, 0.10);
+  --accent-line:   rgba(26, 188, 156, 0.25);
+  --accent-glow:   rgba(26, 188, 156, 0.35);
+
+  /* Footer (light, brand continuity) */
+  --footer-bg:    #F4F4F4;
+  --footer-fg:    #0B0C0D;
+  --footer-line:  #DEDEDE;
+
+  /* Semantic */
+  --success:        #4DB282;
+  --success-soft:   rgba(77, 178, 130, 0.12);
+  --success-line:   rgba(77, 178, 130, 0.25);
+  --warn:           #E8B341;
+  --warn-soft:      rgba(232, 179, 65, 0.12);
+  --warn-line:      rgba(232, 179, 65, 0.25);
+  --danger:         #E55353;
+  --danger-soft:    rgba(229, 83, 83, 0.12);
+  --danger-line:    rgba(229, 83, 83, 0.25);
+  --info:           #6B8AF0;
+  --info-soft:      rgba(107, 138, 240, 0.12);
+  --info-line:      rgba(107, 138, 240, 0.25);
+
+  --star:           var(--action);
+
+  /* Radii */
+  --r-xs:  6px;
+  --r-sm:  8px;
+  --r-md:  10px;
+  --r-lg:  14px;
+  --r-xl:  18px;
+  --r-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md:   0 6px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg:   0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 0 1px var(--accent-line), 0 8px 24px rgba(26, 188, 156, 0.12);
+
+  /* Type */
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}

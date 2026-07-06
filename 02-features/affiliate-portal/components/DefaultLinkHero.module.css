@@ -1,0 +1,326 @@
+/* DefaultLinkHero — P13.5 default-link hero card.
+
+   A single surface that dominates the link page. Holds the URL
+   (mono, copy-friendly), the CopyLinkButton, the "Create link"
+   disabled CTA (v2 tooltip), and a thin stats strip
+   (clicks / conversions / conversion_rate / last clicked).
+
+   Below 768px the URL + button stack (so the Copy button stays
+   tappable). The "Create link" CTA is fixed in the top-right of
+   the card on desktop, full-width below 768px. */
+
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.headingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+
+.heading {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--heading);
+}
+
+.sub {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 0;
+  max-width: 60ch;
+  line-height: 1.5;
+}
+
+/* The "Create link" CTA — disabled in v1 with a "Coming in v2"
+   tooltip on hover/focus. Inline `<button disabled>` + a peer
+   `<span>` carrying the tooltip text. Positioned to stay on the
+   right edge of the card on desktop, full-width below 768px. */
+.ctaWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev-2);
+  color: var(--text-3);
+  border-radius: 8px;
+  cursor: not-allowed;
+  opacity: 0.7;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--border-3, var(--accent));
+  outline-offset: 2px;
+}
+
+.ctaBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Inline tooltip — pure CSS via the title + a visible focus/hover
+   panel for keyboard users. The peer element (sibling of the
+   `.ctaWrap`) is positioned below the CTA on hover/focus of the
+   inner button. */
+.ctaTooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg-elev-3);
+  border: 1px solid var(--line-strong);
+  color: var(--text-1);
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 280px;
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease;
+  z-index: 1;
+  font-weight: 500;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.ctaWrap:hover .ctaTooltip,
+.ctaWrap:focus-within .ctaTooltip {
+  opacity: 1;
+}
+
+/* The URL block — a horizontal row of `<code>` + Copy on desktop,
+   stacks vertically on mobile so the Copy button stays tappable. */
+.urlRow {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.urlCode {
+  /* Inline `<code>` token for the `?ref=<code>` mention in the
+     subhead. Inline mono accent — not styled as a full URL block,
+     just a chip. */
+  font-family: var(--font-mono, ui-monospace, 'Menlo', monospace);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.urlBox {
+  flex: 1 1 320px;
+  min-width: 0;
+  background: var(--bg-inset);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-family: var(--font-mono, ui-monospace, 'Menlo', monospace);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--heading);
+  overflow-x: auto;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.urlBox::-webkit-scrollbar {
+  height: 6px;
+}
+
+.urlBox::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 3px;
+}
+
+/* Thin 4-up inline stats strip — mirrors KpiCards rhythm but
+   condensed (no card chrome, just label/value rows separated by
+   hairlines). */
+.statsStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 4px;
+}
+
+.statCell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 18px;
+  border-right: 1px solid var(--line);
+}
+
+.statCell:first-child {
+  padding-left: 0;
+}
+
+.statCell:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.statLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.statValue {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.statSub {
+  font-size: 11px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.muted {
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+/* Empty state ---------------------------------------------------- */
+
+.empty {
+  background: var(--bg-elev-1);
+  border: 1px dashed var(--line-strong);
+  border-radius: 14px;
+  padding: 48px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.emptyEyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warn);
+  margin: 0;
+}
+
+.emptyHeading {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--heading);
+}
+
+.emptyBody {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 0;
+  max-width: 56ch;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 22px;
+  }
+  .heading {
+    font-size: 19px;
+  }
+  .statsStrip {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 16px;
+  }
+  .statCell {
+    padding: 0 12px;
+    border-right: 0;
+  }
+  .statCell:nth-child(odd) {
+    padding-left: 0;
+  }
+  .statCell:nth-child(even) {
+    padding-right: 0;
+  }
+  .statValue {
+    font-size: 18px;
+  }
+  .cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsStrip {
+    grid-template-columns: 1fr;
+  }
+  .statCell {
+    padding: 0 !important;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px !important;
+  }
+  .statCell:last-child {
+    border-bottom: 0;
+    padding-bottom: 0 !important;
+  }
+}

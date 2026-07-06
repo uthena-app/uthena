@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>uthena — wholesale digital products</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="d-signal.css">
+<style>
+  /* ==================== HOMEPAGE — Signal ==================== */
+  /* Type is the hero. The brand DNA (tri-color) shows up as structure:
+     rule lines, section labels, dividers. Sharp 0px corners everywhere. */
+
+  /* Tri-color bar at the very top — full bleed */
+
+  /* HERO — giant type, minimal copy, full-width image below */
+  .hero { padding: 56px 0 0; }
+  .hero-meta { display: flex; gap: 24px; align-items: center; margin-bottom: 40px; font-family: var(--font-mono); font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.16em; flex-wrap: wrap; }
+  .hero-meta .dot { width: 6px; height: 6px; background: var(--teal); }
+  .hero-meta .dot.y { background: var(--yellow); }
+  .hero-meta .dot.o { background: var(--orange); }
+  .hero h1 { margin-bottom: 32px; }
+  .hero h1 .teal { color: var(--teal); }
+  .hero h1 .yellow { color: var(--yellow); }
+  .hero h1 .orange { color: var(--orange); }
+  .hero-bottom { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; padding-top: 32px; border-top: 1px solid var(--border); }
+  .hero-bottom .lede { color: var(--text-2); font-size: 18px; max-width: 580px; line-height: 1.55; }
+  .hero-bottom .ctas { display: flex; gap: 0; }
+  .hero-bottom .ctas .btn { border-radius: 0; }
+  .hero-bottom .ctas .btn + .btn { border-left-width: 0; }
+
+  /* HERO IMAGE — large course cover grid */
+  .cover-mosaic { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--border); margin-top: 56px; border: 1px solid var(--border); }
+  .cover-mosaic .m { aspect-ratio: 4/5; background-size: cover; background-position: center; position: relative; overflow: hidden; }
+  .cover-mosaic .m::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(8,9,11,0.7)); }
+  .cover-mosaic .m .lbl { position: absolute; left: 12px; bottom: 10px; z-index: 2; font-family: var(--font-mono); font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-1); }
+  .cover-mosaic .m .num { position: absolute; top: 10px; right: 12px; z-index: 2; font-family: var(--font-mono); font-size: 10px; color: var(--text-2); }
+  .cover-mosaic .m1 { background: linear-gradient(135deg, #1a4744 0%, #0d2a28 100%); grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+  .cover-mosaic .m2 { background: linear-gradient(135deg, #4a3018 0%, #2a1a0d 100%); }
+  .cover-mosaic .m3 { background: linear-gradient(135deg, #2a1f4a 0%, #16102a 100%); }
+  .cover-mosaic .m4 { background: linear-gradient(135deg, #3a2030 0%, #1f1018 100%); }
+  .cover-mosaic .m5 { background: linear-gradient(135deg, #103a30 0%, #081f1a 100%); }
+  .cover-mosaic .m6 { background: linear-gradient(135deg, #4a2a10 0%, #2a1808 100%); }
+  .cover-mosaic .m7 { background: linear-gradient(135deg, #1a2a4a 0%, #0d161f 100%); }
+  .cover-mosaic .m8 { background: linear-gradient(135deg, #2a3a2a 0%, #161f16 100%); }
+  .cover-mosaic .m9 { background: linear-gradient(135deg, #3a1f3a 0%, #1f101f 100%); }
+  .cover-mosaic .m10 { background: linear-gradient(135deg, #4a2a2a 0%, #2a1818 100%); }
+  @media (max-width: 880px) { .cover-mosaic { grid-template-columns: repeat(3, 1fr); } .cover-mosaic .m1 { grid-column: span 3; } }
+
+  /* Numbered band — big mono stats */
+  .band { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .band .item { padding: 48px 24px; border-right: 1px solid var(--border); position: relative; }
+  .band .item:last-child { border-right: none; }
+  .band .item .n { font-family: var(--font-mono); font-size: 64px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
+  .band .item .l { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-3); margin-top: 12px; }
+  .band .item .corner { position: absolute; top: 12px; right: 16px; font-family: var(--font-mono); font-size: 10px; color: var(--text-4); }
+  .band .item:nth-child(1) .n { color: var(--text-1); }
+  .band .item:nth-child(2) .n { color: var(--teal); }
+  .band .item:nth-child(3) .n { color: var(--yellow); }
+  .band .item:nth-child(4) .n { color: var(--orange); }
+  @media (max-width: 768px) { .band { grid-template-columns: repeat(2, 1fr); } .band .item:nth-child(2) { border-right: none; } .band .item:nth-child(1), .band .item:nth-child(2) { border-bottom: 1px solid var(--border); } }
+
+  /* Section — sharp, sectional */
+  .section { padding: 96px 0; border-bottom: 1px solid var(--border); position: relative; }
+  .section-head { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; margin-bottom: 64px; align-items: end; }
+  @media (max-width: 880px) { .section-head { grid-template-columns: 1fr; gap: 24px; } }
+  .section-head .num { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .section-head .num .accent { color: var(--teal); }
+  .section-head h2 { max-width: 720px; }
+  .section-head .right { color: var(--text-2); font-size: 16px; line-height: 1.6; max-width: 520px; }
+
+  /* Three pillars — sharp, full-width rows, color-coded by number */
+  .pillars { display: flex; flex-direction: column; }
+  .pillar { display: grid; grid-template-columns: 80px 1fr 280px; gap: 32px; align-items: start; padding: 40px 0; border-top: 1px solid var(--border); }
+  .pillar:last-child { border-bottom: 1px solid var(--border); }
+  .pillar .num { font-family: var(--font-mono); font-size: 80px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+  .pillar:nth-child(1) .num { color: var(--teal); }
+  .pillar:nth-child(2) .num { color: var(--yellow); }
+  .pillar:nth-child(3) .num { color: var(--orange); }
+  .pillar h3 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; line-height: 1.1; }
+  .pillar p { color: var(--text-2); font-size: 15.5px; line-height: 1.65; }
+  .pillar .meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; }
+  @media (max-width: 768px) { .pillar { grid-template-columns: 1fr; gap: 16px; } .pillar .num { font-size: 48px; } }
+
+  /* Product strip — full-bleed rows, not cards */
+  .strip { display: flex; flex-direction: column; }
+  .strip .row { display: grid; grid-template-columns: 80px 1.5fr 1fr 1fr 1fr 120px; gap: 24px; align-items: center; padding: 20px 0; border-top: 1px solid var(--border); transition: padding-left .15s ease, background .15s ease; }
+  .strip .row:last-child { border-bottom: 1px solid var(--border); }
+  .strip .row:hover { background: var(--bg-1); padding-left: 16px; padding-right: 16px; }
+  .strip .row.head { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-3); }
+  .strip .row .idx { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+  .strip .row .nm { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+  .strip .row .nm .cat { display: block; font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; margin-top: 4px; font-family: var(--font-mono); }
+  .strip .row .num { font-family: var(--font-mono); font-size: 14px; }
+  .strip .row .price { font-family: var(--font-mono); font-size: 16px; font-weight: 600; }
+  .strip .row .trend.up { color: var(--teal); }
+  .strip .row .trend.down { color: var(--orange); }
+  @media (max-width: 980px) { .strip .row { grid-template-columns: 60px 1fr 100px; gap: 12px; } .strip .row .cat-col, .strip .row .trend-col, .strip .row .sales-col { display: none; } }
+
+  /* EARN — full-bleed tri-color split section */
+  .earn { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .earn .card { padding: 64px 48px; }
+  .earn .card:first-child { border-right: 1px solid var(--border); }
+  .earn .card.aff { background: var(--bg-1); }
+  .earn .card.partner { background: var(--bg-2); border-top: 3px solid var(--teal); }
+  .earn .card .num { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 32px; color: var(--text-3); }
+  .earn .card.partner .num { color: var(--teal); }
+  .earn .card h3 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 16px; }
+  .earn .card .big { font-family: var(--font-mono); font-size: 96px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; margin: 32px 0 24px; }
+  .earn .card.aff .big { color: var(--yellow); }
+  .earn .card.partner .big { color: var(--teal); }
+  .earn .card .big small { font-size: 24px; color: var(--text-3); font-weight: 400; margin-left: 4px; }
+  .earn .card p { color: var(--text-2); font-size: 15px; line-height: 1.65; max-width: 380px; margin-bottom: 32px; }
+  @media (max-width: 880px) { .earn { grid-template-columns: 1fr; } .earn .card:first-child { border-right: none; border-bottom: 1px solid var(--border); } }
+
+  /* Pull-quote — huge, italic-feel */
+  .pq { padding: 120px 0; text-align: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .pq blockquote { font-size: clamp(32px, 5vw, 56px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; max-width: 1000px; margin: 0 auto; }
+  .pq blockquote .y { color: var(--yellow); }
+  .pq cite { display: block; margin-top: 32px; font-family: var(--font-mono); font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; font-style: normal; }
+  .pq cite strong { color: var(--text-1); font-weight: 500; }
+
+  /* FAQ */
+  .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
+  @media (max-width: 880px) { .faq { grid-template-columns: 1fr; } }
+  .faq-item { padding: 28px 0; border-top: 1px solid var(--border); }
+  .faq-item h4 { font-size: 17px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 10px; }
+  .faq-item p { color: var(--text-2); font-size: 14px; line-height: 1.65; }
+</style>
+</head>
+<body>
+
+<div class="tri-bar"></div>
+<div class="var-tag">D · SIGNAL</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="u">u</span><span class="t">t</span><span class="h">h</span><span class="ena">ena</span>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link active" href="#">Index</a>
+      <a class="nav-link" href="#">Marketplace</a>
+      <a class="nav-link" href="#">Collections</a>
+      <a class="nav-link" href="#">For partners</a>
+      <a class="nav-link" href="#">Journal</a>
+    </nav>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="612 products">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">Sign in</a>
+      <a class="btn btn-accent btn-sm" href="#">Open account</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-meta">
+      <span><span class="dot"></span> v3.2.1 · 612 products live</span>
+      <span><span class="dot y"></span> 15 categories</span>
+      <span><span class="dot o"></span> $0 platform fees</span>
+    </div>
+    <h1 class="h-display">
+      Wholesale<br>
+      your <span class="teal">digital</span><br>
+      <span class="yellow">business</span>,
+      <span class="orange">ready</span><br>
+      to rebrand.
+    </h1>
+    <div class="hero-bottom">
+      <p class="lede">Six hundred and twelve private-label products. One operator. One hundred percent of the income. The wholesale catalogue behind a generation of digital product businesses.</p>
+      <div class="ctas">
+        <a class="btn btn-primary btn-lg" href="#">Browse marketplace →</a>
+        <a class="btn btn-secondary btn-lg" href="#">How it works</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-mosaic">
+    <div class="m m1"><span class="lbl">AI · 47 lessons</span><span class="num">001</span></div>
+    <div class="m m2"><span class="lbl">DEV · 89 lessons</span><span class="num">002</span></div>
+    <div class="m m3"><span class="lbl">SEC · 64 lessons</span><span class="num">003</span></div>
+    <div class="m m4"><span class="lbl">SALES · 42</span><span class="num">004</span></div>
+    <div class="m m5"><span class="lbl">FIN · 56</span><span class="num">005</span></div>
+    <div class="m m6"><span class="lbl">AI · 31</span><span class="num">006</span></div>
+    <div class="m m7"><span class="lbl">MED · 38</span><span class="num">007</span></div>
+    <div class="m m8"><span class="lbl">HEA · 28</span><span class="num">008</span></div>
+    <div class="m m9"><span class="lbl">DES · 44</span><span class="num">009</span></div>
+    <div class="m m10"><span class="lbl">MKT · 52</span><span class="num">010</span></div>
+  </div>
+</section>
+
+<!-- BIG STAT BAND -->
+<section class="band">
+  <div class="item">
+    <span class="corner">[01]</span>
+    <div class="n">612</div>
+    <div class="l">Products in catalogue</div>
+  </div>
+  <div class="item">
+    <span class="corner">[02]</span>
+    <div class="n">15</div>
+    <div class="l">Categories</div>
+  </div>
+  <div class="item">
+    <span class="corner">[03]</span>
+    <div class="n">347</div>
+    <div class="l">Active partners</div>
+  </div>
+  <div class="item">
+    <span class="corner">[04]</span>
+    <div class="n">$2.4M</div>
+    <div class="l">Paid to partners to date</div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="num"><span class="accent">§02</span> — What you get</div>
+        <h2 class="h-1">A complete<br>inventory, not<br>a list of files.</h2>
+      </div>
+      <p class="right">Six hundred and twelve products across fifteen categories. Every course, template, and asset is reviewed for quality and rights before it ships. No junk, no filler.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">01</div>
+        <div>
+          <h3>A curated catalogue, not a dump.</h3>
+          <p>Every product is reviewed for quality and rights before it ships. No junk, no filler — just inventory you can sell with confidence.</p>
+        </div>
+        <div class="meta">Updated daily</div>
+      </div>
+      <div class="pillar">
+        <div class="num">02</div>
+        <div>
+          <h3>One license. One hundred percent of the income.</h3>
+          <p>Private label rights let you edit, rebrand, and resell as your own. You set the price. You keep the margin. The platform takes nothing from your sales.</p>
+        </div>
+        <div class="meta">PLR · MRR · Whitelabel</div>
+      </div>
+      <div class="pillar">
+        <div class="num">03</div>
+        <div>
+          <h3>Infrastructure that runs itself.</h3>
+          <p>Your storefront, course player, file vault, payment tracking, and payout ledger — hosted, branded, and audited to the second.</p>
+        </div>
+        <div class="meta">Self-serve onboarding</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRENDING STRIP -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="num"><span class="accent">§03</span> — The catalogue</div>
+        <h2 class="h-1">Trending this<br>week.</h2>
+      </div>
+      <p class="right">A small selection of what's selling well across the marketplace. Sorted by seven-day sales velocity.</p>
+    </div>
+    <div class="strip">
+      <div class="row head">
+        <span>#</span>
+        <span>Product</span>
+        <span class="cat-col">Category</span>
+        <span class="sales-col">Sales (7d)</span>
+        <span class="trend-col">Trend</span>
+        <span style="text-align:right;">Price</span>
+      </div>
+      <a href="#" class="row">
+        <span class="idx">001</span>
+        <span class="nm">AI for Personal Branding<span class="cat">Artificial Intelligence</span></span>
+        <span class="num cat-col">AI · video</span>
+        <span class="num sales-col">38</span>
+        <span class="num trend-col trend up">↑ 24%</span>
+        <span class="price" style="text-align:right;">$5,700</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">002</span>
+        <span class="nm">Python Pro — Complete Bootcamp<span class="cat">Programming</span></span>
+        <span class="num cat-col">DEV · video</span>
+        <span class="num sales-col">31</span>
+        <span class="num trend-col trend up">↑ 12%</span>
+        <span class="price" style="text-align:right;">$9,781</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">003</span>
+        <span class="nm">Network Hacking 2025<span class="cat">Network Security</span></span>
+        <span class="num cat-col">SEC · video</span>
+        <span class="num sales-col">24</span>
+        <span class="num trend-col trend up">↑ 8%</span>
+        <span class="price" style="text-align:right;">$9,781</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">004</span>
+        <span class="nm">B2B Sales — Cold to Closed<span class="cat">Business</span></span>
+        <span class="num cat-col">BIZ · bundle</span>
+        <span class="num sales-col">58</span>
+        <span class="num trend-col trend up">↑ 41%</span>
+        <span class="price" style="text-align:right;color:var(--orange);">$79</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">005</span>
+        <span class="nm">AI Explained for Beginners<span class="cat">Artificial Intelligence</span></span>
+        <span class="num cat-col">AI · video</span>
+        <span class="num sales-col">22</span>
+        <span class="num trend-col trend down">↓ 3%</span>
+        <span class="price" style="text-align:right;">$6,781</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">006</span>
+        <span class="nm">SQLite Databases — From Scratch<span class="cat">Finance</span></span>
+        <span class="num cat-col">FIN · video</span>
+        <span class="num sales-col">19</span>
+        <span class="num trend-col trend up">↑ 6%</span>
+        <span class="price" style="text-align:right;">$6,781</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">007</span>
+        <span class="nm">Smartphone Videography<span class="cat">Productivity</span></span>
+        <span class="num cat-col">MED · video</span>
+        <span class="num sales-col">16</span>
+        <span class="num trend-col trend up">↑ 11%</span>
+        <span class="price" style="text-align:right;">$3,200</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">008</span>
+        <span class="nm">Canva Content &amp; Graphic Design<span class="cat">Design</span></span>
+        <span class="num cat-col">DES · bundle</span>
+        <span class="num sales-col">14</span>
+        <span class="num trend-col trend up">↑ 9%</span>
+        <span class="price" style="text-align:right;">$4,500</span>
+      </a>
+    </div>
+    <div style="text-align:center; margin-top: 48px;">
+      <a class="btn btn-secondary btn-lg" href="#">All 612 products →</a>
+    </div>
+  </div>
+</section>
+
+<!-- EARN — split tri-color -->
+<section class="earn">
+  <div class="card aff">
+    <div class="num">§04 — Affiliate</div>
+    <h3>Send traffic.<br>Keep the commission.</h3>
+    <div class="big">20<small>%</small></div>
+    <p>Every customer you refer earns twenty percent, recurring, for the life of the account. Custom storefront, real-time stats, weekly payouts.</p>
+    <a class="btn btn-secondary btn-lg" href="#">Join the program →</a>
+  </div>
+  <div class="card partner">
+    <div class="num">§05 — Partner · Sell your own</div>
+    <h3>List your courses<br>with PLR rights.</h3>
+    <div class="big">60<small>%</small></div>
+    <p>Upload your course, set your price, and earn sixty percent of every sale. Uthena handles the storefront, payments, and PLR distribution.</p>
+    <a class="btn btn-accent btn-lg" href="#">Become a partner →</a>
+  </div>
+</section>
+
+<!-- PULLQUOTE -->
+<section class="pq">
+  <div class="container">
+    <blockquote>
+      "I bought the courses to resell. The quality is what kept me coming back. <span class="y">Six months in, Uthena is the only marketplace on my shortlist.</span>"
+    </blockquote>
+    <cite><strong>Craig Ballantyne</strong> · Reseller · 14 products in catalogue</cite>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="num"><span class="accent">§06</span> — Questions</div>
+        <h2 class="h-1">Frequently<br>asked.</h2>
+      </div>
+      <p class="right">Everything you need to know about the marketplace, licensing, and the partner program. Still have a question? Hit the help center.</p>
+    </div>
+    <div class="faq">
+      <div class="faq-item">
+        <h4>What is private label rights?</h4>
+        <p>Private label rights (PLR) let you edit, rebrand, and resell a product as your own. You can change the instructor name, translate the content, add your own modules, and resell at any price.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How much can I earn as a partner?</h4>
+        <p>You earn sixty percent of every sale. Top partners earn $20k+ per month; the average is around $3,400.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Do you offer refunds?</h4>
+        <p>Yes. Seven-day refund policy on all products, after any downloaded files are removed. Refund rate is below one percent across the catalogue.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I use Uthena courses on other platforms?</h4>
+        <p>You can sell on any platform you own. The license does not allow resale on Udemy, Skillshare, or other third-party course marketplaces.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-mark"><span class="u">u</span><span class="t">t</span><span class="h">h</span>ena</div>
+        <p style="color:var(--text-2);font-size:14px;line-height:1.6;margin-top:20px;max-width:340px;">The home for digital product entrepreneurs. Six hundred and twelve private-label products, one platform, one operator.</p>
+      </div>
+      <div>
+        <h5>Marketplace</h5>
+        <ul><li><a href="#">All products</a></li><li><a href="#">Newest</a></li><li><a href="#">On sale</a></li><li><a href="#">Bundles</a></li></ul>
+      </div>
+      <div>
+        <h5>For partners</h5>
+        <ul><li><a href="#">Become a partner</a></li><li><a href="#">Affiliate program</a></li><li><a href="#">Reseller storefronts</a></li><li><a href="#">Payouts</a></li></ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul><li><a href="#">Licensing guide</a></li><li><a href="#">Journal</a></li><li><a href="#">Help center</a></li><li><a href="#">API</a></li></ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul><li><a href="#">About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Refunds</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 uthena, inc.</span>
+      <span>612 products · 15 categories · $0 platform fees</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

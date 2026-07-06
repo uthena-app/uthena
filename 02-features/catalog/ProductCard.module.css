@@ -1,0 +1,230 @@
+/* Product card — token-only styles matching `mockups/home.html` lines
+ * 101–207 and `mockups/styles/main.css` lines 159–175. The card is
+ * used on every grid (home, browse, collection, search) so it must
+ * look identical in every context. */
+
+/* ===== Card shell ===== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+
+.card:hover {
+  border-color: var(--teal-line);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+/* ===== Cover (16:9) ===== */
+
+.cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--bg-elev-2);
+  overflow: hidden;
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--bg-elev-2) 0%, var(--bg-elev-3) 100%);
+}
+
+/* ===== License pill (PLR teal / MRR orange) ===== */
+
+.lic {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  background: var(--teal);
+  color: var(--on-accent);
+  border: 1px solid var(--teal);
+  backdrop-filter: blur(8px);
+  text-transform: uppercase;
+}
+
+.licMrr {
+  background: var(--orange);
+  color: var(--on-action);
+  border-color: var(--orange);
+}
+
+/* ===== Body (padded content) ===== */
+
+.body {
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+/* ===== Meta row (category · module count) ===== */
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+.metaRow > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metaRow > span:last-child {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ===== "Included with Personal Access" badge (P8.2) =====
+ * Rendered when the current user has an active Personal Access
+ * subscription that includes this product. The pill sits between
+ * the metaRow and the title so it catches the eye without competing
+ * with the cover-overlay license pill. Teal = identity claim
+ * (matches the PLR/Personal license pill on the cover). */
+.includedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  background: var(--teal-soft);
+  color: var(--teal);
+  border: 1px solid var(--teal-line);
+  line-height: 1;
+  /* Don't grow the badge to the full card width; pill width matches
+   * its label. */
+  max-width: 100%;
+}
+
+.includedCheck {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  /* Slight nudge so the checkmark sits visually centered with the
+   * cap-height of the uppercase label. */
+  transform: translateY(-0.5px);
+}
+
+/* ===== Title (two-line clamp) ===== */
+
+.title {
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--heading);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== Stars + count ===== */
+
+.stars {
+  font-size: 11px;
+  color: var(--star);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.starsCt {
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0;
+}
+
+/* Screen-reader-only text for the star rating — read by assistive
+ * tech as "4.5 out of 5 stars from 12 reviews" rather than as a
+ * string of star glyphs. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== Price row (now · was · save%) ===== */
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.priceNow {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--heading);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.priceWas {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-left: -2px;
+  text-decoration: line-through;
+}
+
+.save {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--orange);
+  border: 1px solid var(--orange-line);
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  margin-left: auto;
+  letter-spacing: 0.02em;
+}

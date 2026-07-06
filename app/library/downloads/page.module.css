@@ -1,0 +1,118 @@
+/* /library/downloads — page-level styles. Mirrors the library page
+   shell (max-width 1200, vertical rhythm 32px) so the two pages
+   feel like siblings. Token-only. */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+
+.sub {
+  color: var(--text-2);
+  font-size: 14px;
+  margin: 0;
+  max-width: 60ch;
+  line-height: 1.5;
+}
+
+.summary {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.muted {
+  color: var(--text-3);
+}
+
+.truncatedNote {
+  color: var(--text-3);
+  font-size: 12px;
+  font-style: italic;
+}
+
+.footnote {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 16px 0 0;
+  line-height: 1.5;
+}
+
+.footnoteLink {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.footnoteLink:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  padding: 48px 24px;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-md);
+  background: var(--bg-elev-1);
+}
+
+.error {
+  padding: 48px 24px;
+  text-align: center;
+  border: 1px dashed var(--danger);
+  border-radius: var(--r-md);
+  background: var(--danger-soft, var(--bg-elev-1));
+}
+
+.emptyTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0 0 8px;
+}
+
+.emptyBody {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.emptyCta {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.emptyCta:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 24px 16px 64px;
+  }
+
+  .h1 {
+    font-size: 26px;
+  }
+
+  .sub {
+    font-size: 13px;
+  }
+}

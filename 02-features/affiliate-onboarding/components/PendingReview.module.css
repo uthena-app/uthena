@@ -1,0 +1,140 @@
+/* PendingReview — token-only. Oranges + teals per the partner-action
+   design language. No inline colors. */
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-9, 60px) var(--space-5, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 24px);
+  color: var(--text-1);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--warn, var(--accent));
+  margin: 0;
+}
+
+.title {
+  font-size: var(--font-h2, 28px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--heading);
+  margin: 0;
+}
+
+.lede {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-6, 24px);
+}
+
+.cardH2 {
+  font-size: var(--font-h4, 18px);
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 var(--space-4, 16px);
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: flex-start;
+  gap: var(--space-3, 12px);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--warn-soft, rgba(243, 146, 74, 0.12));
+  color: var(--warn, var(--accent));
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 1px;
+}
+
+.stepText {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.toolbar {
+  display: flex;
+  gap: var(--space-3, 12px);
+  padding-top: var(--space-3, 12px);
+  border-top: 1px solid var(--line);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3, 12px) var(--space-5, 20px);
+  border-radius: var(--radius-md, 8px);
+  background: var(--action);
+  color: var(--on-action);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 120ms ease;
+}
+
+.cta:hover {
+  opacity: 0.9;
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: var(--space-7, 32px) var(--space-4, 16px);
+  }
+  .title {
+    font-size: var(--font-h3, 22px);
+  }
+}

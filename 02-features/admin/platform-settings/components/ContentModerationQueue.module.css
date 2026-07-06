@@ -1,0 +1,156 @@
+/* ContentModerationQueue.module.css */
+
+.root {
+  display: grid;
+  gap: var(--space-3, 12px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+  flex-wrap: wrap;
+}
+
+.heading {
+  font-family: var(--font-display, 'Inter Tight', system-ui);
+  font-size: var(--text-lg, 18px);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--text-1);
+  margin: 0;
+}
+
+.counts {
+  display: flex;
+  gap: var(--space-2, 8px);
+}
+
+.countPill {
+  display: inline-block;
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border-radius: var(--radius-sm, 6px);
+  font-size: var(--text-xs, 12px);
+  font-weight: var(--weight-medium, 500);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+}
+
+.countPill[data-kind='review'] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-3, 12px);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-3, 12px);
+  align-items: start;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+}
+
+.item[data-kind='review'] {
+  border-left: 4px solid var(--accent);
+}
+
+.item[data-kind='product'] {
+  border-left: 4px solid #f59e0b;
+}
+
+.body {
+  display: grid;
+  gap: var(--space-2, 8px);
+  min-width: 0;
+}
+
+.kind {
+  margin: 0;
+  font-size: var(--text-xs, 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium, 500);
+  color: var(--text-mute);
+}
+
+.reviewQuote {
+  margin: 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-1);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.productTitle {
+  margin: 0;
+  font-size: var(--text-base, 16px);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--text-1);
+}
+
+.itemMeta {
+  margin: 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.itemMeta code {
+  display: inline-block;
+  padding: 0 var(--space-1, 4px);
+  background: var(--bg-2);
+  border-radius: var(--radius-xs, 4px);
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: var(--text-xs, 12px);
+}
+
+.itemLink {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.itemLink:hover {
+  text-decoration: underline;
+}
+
+.flag {
+  margin: 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-1);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--space-6, 24px) var(--space-4, 16px);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md, 8px);
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: var(--text-base, 16px);
+  color: var(--text-1);
+}
+
+.emptyHint {
+  margin: var(--space-2, 8px) 0 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-mute);
+}
+
+@media (max-width: 640px) {
+  .item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,92 @@
+/* AffiliateFilters.module.css — filter bar above the affiliates table.
+   Stacks on mobile, horizontal on desktop. Mirrors partner filters. */
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 200px 160px 160px auto;
+  gap: var(--space-3, 12px);
+  align-items: end;
+  background: var(--bg-elev-1, #15181b);
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 10px;
+  padding: var(--space-4, 16px);
+  margin-bottom: var(--space-4, 16px);
+}
+
+@media (max-width: 900px) {
+  .form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-soft, #b6bcc4);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.input {
+  background: var(--bg-base, #0e1012);
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 6px;
+  color: var(--text-1, #f4f4f4);
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 10px;
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--accent, #1abc9c);
+  outline-offset: 1px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+}
+
+.submit {
+  background: var(--accent, #1abc9c);
+  border: none;
+  border-radius: 6px;
+  color: var(--on-accent, #0b0c0d);
+  font: inherit;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: color-mix(in srgb, var(--accent, #1abc9c) 90%, white);
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--accent, #1abc9c);
+  outline-offset: 2px;
+}
+
+.reset {
+  color: var(--text-soft, #b6bcc4);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.reset:hover {
+  color: var(--text-1, #f4f4f4);
+  text-decoration: underline;
+}

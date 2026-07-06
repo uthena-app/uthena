@@ -1,0 +1,98 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* P4.3 — banner slot between the page header and the line list. */
+.bannerSlot {
+  margin: -8px 0 24px;
+}
+
+.h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.sub { color: var(--text-3); font-size: 14px; margin: 0; font-variant-numeric: tabular-nums; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  align-items: start;
+}
+
+.lines { min-width: 0; }
+.list { list-style: none; margin: 0; padding: 0; }
+
+.anonCard {
+  max-width: 520px;
+  margin: 64px auto 0;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 32px;
+  text-align: center;
+}
+
+.anonH2 { font-size: 20px; font-weight: 700; color: var(--heading); margin: 0 0 8px; }
+.anonP { color: var(--text-2); font-size: 14px; line-height: 1.5; margin: 0 0 20px; }
+
+.anonActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.primaryCta {
+  display: block;
+  padding: 12px 16px;
+  background: var(--action);
+  color: #1A0E00;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 15px;
+}
+.primaryCta:hover { background: var(--action-hover); }
+
+.secondaryCta {
+  display: block;
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--text-1);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 14px;
+}
+.secondaryCta:hover { border-color: var(--accent); color: var(--accent); }
+
+.tertiaryCta {
+  display: block;
+  padding: 8px 16px;
+  color: var(--text-3);
+  text-decoration: underline;
+  font-size: 13px;
+  text-align: center;
+}
+.tertiaryCta:hover { color: var(--text-1); }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}

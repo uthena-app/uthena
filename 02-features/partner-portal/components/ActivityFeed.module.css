@@ -1,0 +1,140 @@
+/* ActivityFeed — RSC, zero client JS. Token-only styling.
+   Vertical timeline of recent activity entries: glyph on the
+   left, description + product in the middle, amount + relative
+   time on the right. */
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+}
+
+.subtle {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  border-top: 1px solid var(--line);
+}
+
+.row:first-child {
+  border-top: 0;
+}
+
+.rowLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 100ms ease;
+}
+
+.rowLink:hover {
+  background: var(--bg-elev-2);
+}
+
+.rowInner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.tone_credit {
+  color: var(--accent);
+}
+
+.tone_debit {
+  color: var(--danger);
+}
+
+.tone_neutral {
+  color: var(--text-2);
+}
+
+.body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.description {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.amountWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.amount {
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.time {
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.empty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-3);
+  padding: 20px 0 4px;
+}

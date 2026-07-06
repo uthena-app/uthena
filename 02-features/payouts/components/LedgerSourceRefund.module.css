@@ -1,0 +1,96 @@
+/* LedgerSourceRefund — same shape as LedgerSourceOrder with one
+   full-width row for the (optional) free-text notes. Token-only
+   colors. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.id {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+.grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+}
+
+.row {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowFull {
+  grid-column: 1 / -1;
+}
+
+.term {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.def {
+  margin: 0;
+  font-size: 13px;
+  color: var(--heading);
+}
+
+.defNumStrong {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--danger);
+}
+
+.defMono {
+  margin: 0;
+  font-size: 12px;
+  font-family: var(--font-mono, ui-monospace, 'SF Mono', monospace);
+  color: var(--text-2);
+  word-break: break-all;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

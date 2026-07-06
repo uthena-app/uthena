@@ -1,0 +1,168 @@
+/* 02-features/partner-portal/api-tokens/components/ApiTokensList.module.css
+   Token-only CSS. Mirrors the design-system DNA: hairline borders +
+   mono numbers + status pill tones.
+*/
+
+.wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.th {
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.td {
+  padding: 14px 16px;
+  border-top: 1px solid var(--line);
+  vertical-align: top;
+  color: var(--text);
+}
+
+/* The first row shouldn't carry a top border — the th row provides it. */
+.table tbody tr:first-child .td {
+  border-top: 0;
+}
+
+.nameCell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 160px;
+}
+
+.name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.created {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.tokenPrefix {
+  font-family: ui-monospace, 'SF Mono', 'Menlo', 'Cascadia Code', monospace;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--bg-elev-2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.scopeChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.scopeChip {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  white-space: nowrap;
+}
+
+.statusPill {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.statusPill[data-status='active'] {
+  background: var(--success-soft, var(--accent-soft));
+  color: var(--success, var(--accent));
+  border: 1px solid var(--success-line, var(--accent-line));
+}
+
+.statusPill[data-status='revoked'] {
+  background: var(--warn-soft, var(--accent-soft));
+  color: var(--warn, var(--text));
+  border: 1px solid var(--warn-line, var(--line));
+}
+
+.statusPill[data-status='expired'] {
+  background: var(--bg-elev-2);
+  color: var(--text-muted);
+  border: 1px solid var(--line);
+}
+
+.empty {
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  background: var(--bg-elev-1);
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.emptyBody {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .table,
+  .thead,
+  .tbody,
+  .tr,
+  .td,
+  .th {
+    display: block;
+  }
+  .thead {
+    display: none;
+  }
+  .tr {
+    border-top: 1px solid var(--line);
+    padding: 12px 16px;
+  }
+  .td {
+    border: 0;
+    padding: 4px 0;
+  }
+  .td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 2px;
+  }
+}

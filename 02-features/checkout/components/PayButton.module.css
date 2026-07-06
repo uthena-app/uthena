@@ -1,0 +1,53 @@
+/* PayButton — token-only. Replaces the legacy inline-styled version
+   so the wizard step (ReviewStep) and any future surface that needs
+   the same CTA share one source of truth. */
+
+.error {
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-line);
+  color: var(--danger);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.pay {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--action, var(--orange));
+  color: #1A0E00;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: -0.005em;
+  transition: background 120ms ease, transform 80ms ease;
+}
+
+.pay:hover:not(:disabled) {
+  background: var(--action-hover, #FFA862);
+}
+
+.pay:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.pay:disabled {
+  background: var(--bg-elev-3);
+  color: var(--text-3);
+  cursor: not-allowed;
+}
+
+.helper {
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+  margin: 8px 0 0;
+  line-height: 1.4;
+}
+
+.email {
+  color: var(--text-2);
+}

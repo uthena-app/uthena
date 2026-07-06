@@ -1,0 +1,18 @@
+/* /admin/customers — token-only CSS. */
+.header {
+  margin-bottom: var(--gap-6, 24px);
+}
+
+.h1 {
+  font-size: var(--font-size-2xl, 28px);
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: var(--fg, #111);
+}
+
+.sub {
+  font-size: var(--font-size-sm, 13px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.7));
+  margin: 0;
+  max-width: 60ch;
+}

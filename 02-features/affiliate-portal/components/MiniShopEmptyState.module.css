@@ -1,0 +1,42 @@
+/* MiniShopEmptyState — single calm block with an icon, heading,
+   and a short message. No error UI; the spec explicitly
+   rejects that framing (the affiliate may be in the middle
+   of curating). */
+
+.card {
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--bg-elev-1);
+  border: 1px dashed var(--line-strong);
+  border-radius: 12px;
+  margin: 0 0 48px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+  color: var(--teal);
+  margin: 0 auto 16px;
+  display: block;
+}
+
+.heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+.body {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}

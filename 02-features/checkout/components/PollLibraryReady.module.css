@@ -1,0 +1,53 @@
+/* PollLibraryReady.module.css — status pill + mailto / view-details
+ * links for the success page's optimistic library-grants poll.
+ * Token-only. The badge colors come from the design-system state
+ * triad (success / warn / danger / neutral) so the pill reads cleanly
+ * on both dark and light themes.
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  border: 1px solid currentColor;
+}
+
+.badgeSuccess {
+  color: var(--success);
+  background: var(--success-soft);
+  border-color: var(--success-line);
+}
+
+.badgeWarn {
+  color: var(--warn);
+  background: var(--warn-soft);
+  border-color: var(--warn-line, var(--line));
+}
+
+.badgeDanger {
+  color: var(--danger);
+  background: var(--danger-soft);
+  border-color: var(--danger-line, var(--line));
+}
+
+.badgeNeutral {
+  color: var(--text-3);
+  background: var(--bg-elev-2);
+  border-color: var(--line);
+}
+
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link:hover {
+  color: inherit;
+  text-decoration-thickness: 2px;
+}

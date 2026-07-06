@@ -1,0 +1,25 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 760px;
+}
+
+.header {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 13px;
+  margin: 0;
+}

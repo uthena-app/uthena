@@ -1,0 +1,86 @@
+.panel {
+  margin-top: 24px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+.summary {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-1);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary::before {
+  content: '▸';
+  font-size: 12px;
+  color: var(--text-3);
+  transition: transform 120ms ease;
+  display: inline-block;
+}
+
+.panel[open] > .summary::before {
+  transform: rotate(90deg);
+}
+
+.list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 110px 80px 1fr 80px;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  font-size: 12px;
+}
+
+.action {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.target {
+  font-family: var(--font-mono);
+  color: var(--text-2);
+}
+
+.actor {
+  color: var(--text-1);
+  font-weight: 500;
+}
+
+.time {
+  color: var(--text-3);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  padding: 12px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 13px;
+}

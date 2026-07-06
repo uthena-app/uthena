@@ -1,0 +1,132 @@
+/* P1.6 — OAuth button row. Server-rendered, no client JS. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* The "or" divider — a thin hairline on both sides of the word "or".
+   Token-only (uses --line for the stroke + --text-3 for the label). */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 4px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.dividerLabel {
+  color: var(--text-3);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form {
+  display: flex;
+  width: 100%;
+}
+
+.button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 16px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-1);
+  color: var(--text-1);
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease, transform 80ms ease;
+}
+
+.button:hover {
+  border-color: var(--accent);
+  background: var(--bg-elev-1);
+}
+
+.button:active {
+  transform: translateY(0.5px);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Apple button — black background to match the Apple Sign-In brand
+   spec. The white monogram + label preserve contrast (WCAG AA on
+   #000). */
+.buttonApple {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.buttonApple:hover {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+}
+
+.buttonApple:focus-visible {
+  outline-color: var(--accent);
+}
+
+/* The monogram (1-char brand glyph). Inline-SVG would be ideal but
+   adds bundle weight; the monogram keeps the button tiny while
+   still being recognizable. */
+.monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.buttonGoogle .monogram {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1a73e8;
+}
+
+.label {
+  /* No special styles — the parent .button owns typography. Kept
+     as a separate class so future variants (e.g. an icon-only
+     button) can hide it cleanly. */
+  display: inline;
+}

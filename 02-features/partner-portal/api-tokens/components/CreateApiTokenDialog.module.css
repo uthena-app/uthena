@@ -1,0 +1,217 @@
+/* CreateApiTokenDialog.module.css — modal overlay + form
+   Token-only CSS. Mirrors the existing modal surfaces
+   (`RefundForm`, `DeleteAccountModal`). */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.dialog {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 32px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--text);
+}
+
+.lede {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+.input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-2);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.scopeList,
+.expirationList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scopeOption,
+.expirationOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.scopeOption input,
+.expirationOption input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.ackRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--warn-soft, var(--accent-soft));
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--warn-line, var(--accent-line));
+}
+
+.ackRow input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger, var(--accent));
+  background: var(--danger-soft, var(--accent-soft));
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--danger-line, var(--accent-line));
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.tokenBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 20px;
+}
+
+.tokenText {
+  flex: 1;
+  font-family: ui-monospace, 'SF Mono', 'Menlo', 'Cascadia Code', monospace;
+  font-size: 13px;
+  color: var(--text);
+  background: transparent;
+  padding: 4px 8px;
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.copyBtn {
+  flex-shrink: 0;
+  background: var(--accent);
+  color: var(--on-action, var(--bg-elev-1));
+  border: 0;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.copyBtn:hover {
+  opacity: 0.9;
+}
+
+.copyBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.metaLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.metaValue {
+  display: block;
+  font-size: 14px;
+  color: var(--text);
+}

@@ -1,0 +1,52 @@
+/* PartnerStatsCards — token-only CSS. */
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--gap-3, 12px);
+  margin-bottom: var(--gap-6, 24px);
+}
+
+.card {
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  border-radius: var(--radius-md, 8px);
+  padding: 12px 16px;
+  background: var(--bg-elev-1, #fff);
+}
+
+.label {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 0 0 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.value {
+  font-size: var(--font-size-xl, 22px);
+  font-weight: 600;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg, #111);
+}
+
+.card[data-stat='pending'] .value {
+  color: var(--warn-fg, #92400e);
+}
+.card[data-stat='suspended'] .value {
+  color: var(--danger-fg, #991b1b);
+}
+.card[data-stat='approvedThisMonth'] .value {
+  color: var(--success-fg, #166534);
+}
+
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

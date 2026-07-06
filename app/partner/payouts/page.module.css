@@ -1,0 +1,83 @@
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+}
+
+.sub { color: var(--text-3); font-size: 14px; margin: 0; }
+
+.ledgerSection { margin-top: 32px; }
+
+.ledgerHead { margin-bottom: 12px; }
+
+.h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 6px;
+}
+
+.ledgerHint {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.ledgerHint strong { color: var(--text-1); }
+
+.empty { color: var(--text-3); font-size: 14px; padding: 24px 0; margin: 0; }
+
+.filterCount {
+  color: var(--text-2);
+  font-size: 12px;
+  padding: 8px 0;
+  margin: 0;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.requestSection {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.historySection {
+  margin-top: 32px;
+}
+
+.historyHead {
+  margin-bottom: 12px;
+}
+
+.historyHint {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.list { list-style: none; padding: 0; margin: 0; }

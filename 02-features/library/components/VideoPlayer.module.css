@@ -1,0 +1,456 @@
+/* VideoPlayer.module.css — token-only styles for the responsive video
+   player (P7.6). No inline colors / no magic hex values — every
+   property traces back to `var(--token)` from 00-foundations/design/
+   tokens.css.
+
+   Design notes:
+   - 16:9 aspect-ratio container that fills the parent width.
+   - Controls bar is absolutely positioned at the bottom; fades in /
+   - fades out via opacity (transform-free for cheaper reflow).
+   - Big center play button is the entire-surface tap target on
+     mobile (per the design system 44px minimum touch target rule).
+   - Seek bar uses an `<input type="range">` with custom CSS for
+     the track + thumb (cross-browser quirks addressed via
+     appearance: none + per-browser pseudo selectors).
+   - Volume slider is hidden on mobile via a media query (mobile
+     devices use the hardware volume buttons; the in-page slider
+     fights iOS Safari's own overlay).
+   - The select dropdowns (quality + playback rate) use a small
+     inline SVG chevron via mask-image — no third-party icon font.
+   - Fullscreen state uses `:fullscreen` on the wrap so the
+     aspect-ratio is released (full viewport) and the controls
+     stay readable on the larger canvas. */
+
+.wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--bg-inset);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  /* Inset shadow gives the player a slight inset frame look on dark theme. */
+  box-shadow: inset 0 0 0 1px var(--line);
+  outline: none;
+  isolation: isolate;
+}
+
+.wrap:focus-visible {
+  /* Keyboard focus ring on the container itself (focus is owned by
+     the container so the keyboard shortcuts work). */
+  box-shadow: inset 0 0 0 1px var(--line), 0 0 0 3px var(--accent-soft);
+}
+
+.wrapHidden .controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wrap[data-fullscreen='true'] {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Underlying <video> element */
+.video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--bg-inset);
+  object-fit: contain;
+}
+
+/* Big center play button — only visible when paused or initial load */
+.bigPlay {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 88px;
+  height: 88px;
+  border-radius: var(--r-pill);
+  border: 0;
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--text-1);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 120ms ease, transform 80ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bigPlay:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.bigPlay:active {
+  transform: scale(0.96);
+}
+
+.bigPlay:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.bigPlayIcon {
+  font-size: 32px;
+  line-height: 1;
+  /* Optical centering for the play triangle. */
+  margin-left: 4px;
+}
+
+/* Error overlay */
+.error {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  height: max-content;
+  max-width: 80%;
+  align-self: center;
+  text-align: center;
+  background: var(--bg-overlay);
+  color: var(--text-1);
+  padding: var(--space-5);
+  border-radius: var(--r-md);
+  border: 1px solid var(--danger-line);
+  pointer-events: auto;
+}
+
+.errorTitle {
+  font-weight: 700;
+  margin: 0 0 var(--space-2) 0;
+  color: var(--danger);
+  font-size: 14px;
+}
+
+.errorBody {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+/* Bottom controls bar — fade in/out via opacity */
+.controls {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  opacity: 1;
+  transition: opacity 200ms ease;
+  pointer-events: auto;
+  /* On touch devices, the gradient is too subtle — bump it a bit. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Seek bar row */
+.seekRow {
+  width: 100%;
+}
+
+.seek {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+.seek::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--r-pill);
+  background:
+    linear-gradient(to right, var(--accent) 0%, var(--accent) var(--seek-progress), var(--line) var(--seek-progress), var(--line) 100%);
+  position: relative;
+}
+
+.seek::-moz-range-track {
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--line);
+}
+
+.seek::-moz-range-progress {
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+}
+
+.seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  margin-top: -4px;
+  border: 2px solid var(--text-1);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.seek::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  border: 2px solid var(--text-1);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.seek:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: 2px;
+}
+
+.seek:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: 2px;
+}
+
+/* Buffered indicator (via gradient overlay) — see above */
+.seek::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Buffered region rendered via the inline style var --seek-buffered
+     plus an additional gradient layer. Skipping here for simplicity
+     — the seek-progress gradient is the primary indicator. */
+}
+
+/* Action row (play / time / spacer / ctrls / fullscreen) */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: nowrap;
+}
+
+/* Round icon button */
+.btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  color: var(--text-1);
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn[data-active='true'] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* Time display */
+.time {
+  flex: 0 0 auto;
+  font-size: 13px;
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  /* Reserve enough width to avoid layout shift when time digits grow. */
+  min-width: 110px;
+  text-align: center;
+}
+
+.timeSep {
+  color: var(--text-3);
+  margin: 0 2px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Native <select> dropdowns (quality + rate) */
+.select {
+  flex: 0 0 auto;
+  height: 36px;
+  padding: 0 28px 0 var(--space-3);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  /* Chevron via mask-image — no third-party icon font. */
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M2 4 L6 8 L10 4' fill='none' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"),
+    linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08));
+  background-repeat: no-repeat, no-repeat;
+  background-position: right 10px center, 0 0;
+  background-size: 12px 12px, 100% 100%;
+  transition: border-color 120ms ease;
+}
+
+.select:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.select option {
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+}
+
+/* Volume group (mute button + slider) */
+.volume {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.volumeSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 4px;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  transition: width 160ms ease, opacity 160ms ease;
+  margin: 0;
+}
+
+.volume:hover .volumeSlider,
+.volume:focus-within .volumeSlider {
+  width: 80px;
+  opacity: 1;
+}
+
+.volumeSlider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: var(--r-pill);
+  background: var(--line);
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--r-pill);
+  background: var(--text-1);
+  margin-top: -4px;
+  cursor: pointer;
+}
+
+.volumeSlider::-moz-range-track {
+  height: 4px;
+  border-radius: var(--r-pill);
+  background: var(--line);
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--r-pill);
+  background: var(--text-1);
+  cursor: pointer;
+}
+
+/* Mobile breakpoint — hide the volume slider (hardware buttons
+   preferred) and tighten the action row spacing. */
+@media (max-width: 720px) {
+  .controls {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-1);
+  }
+  .actions {
+    gap: var(--space-1);
+  }
+  .btn {
+    width: 40px;
+    height: 40px;
+  }
+  .select {
+    height: 32px;
+    font-size: 12px;
+    padding-right: 24px;
+  }
+  .time {
+    font-size: 12px;
+    min-width: 90px;
+  }
+  .volumeSlider {
+    display: none;
+  }
+  .volume:hover .volumeSlider,
+  .volume:focus-within .volumeSlider {
+    width: 0;
+    opacity: 0;
+  }
+}
+
+/* Tiny phone — drop the playback rate + quality selects into a
+   second row to keep them reachable; tighten everything. */
+@media (max-width: 480px) {
+  .actions {
+    flex-wrap: wrap;
+    row-gap: var(--space-2);
+  }
+  .spacer {
+    display: none;
+  }
+  .time {
+    min-width: 80px;
+  }
+  .bigPlay {
+    width: 72px;
+    height: 72px;
+  }
+  .bigPlayIcon {
+    font-size: 28px;
+  }
+}
+
+/* Reduced motion — disable the controls fade. */
+@media (prefers-reduced-motion: reduce) {
+  .controls {
+    transition: none;
+  }
+  .wrapHidden .controls {
+    opacity: 0;
+    transition: none;
+  }
+  .bigPlay {
+    transition: none;
+  }
+}

@@ -1,0 +1,48 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  max-width: 56ch;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.h2 {
+  margin: 0;
+  font-size: var(--font-h3, 22px);
+  font-weight: 700;
+  color: var(--heading);
+  line-height: 1.2;
+}
+
+.lede {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.blurb {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.note {
+  margin: var(--space-3, 12px) 0 0;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  background: var(--bg-elev-2);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-md, 10px);
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.55;
+}

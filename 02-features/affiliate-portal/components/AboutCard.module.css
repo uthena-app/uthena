@@ -1,0 +1,101 @@
+/* AboutCard — single-column card with eyebrow + headline + bio
+   paragraph + 3 stat rows. Mirrors the partner dashboard's
+   information density (concise + dense) while keeping the
+   public-card visual rhythm (border, no over-styled chrome). */
+
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 0 0 40px;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+
+.h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+
+.bio {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0 0 20px;
+  max-width: 640px;
+}
+
+.bioMuted {
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 1.6;
+  margin: 0 0 20px;
+  font-style: italic;
+}
+
+.stats {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.statRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.statValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.verifiedChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--teal-soft);
+  border: 1px solid var(--teal-line);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.verifiedChipIcon {
+  width: 12px;
+  height: 12px;
+  color: var(--teal);
+}

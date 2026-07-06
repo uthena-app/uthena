@@ -1,0 +1,229 @@
+/* RefundQueueList.module.css — the FIFO refund queue list with the
+   SLA overdue visual flag (data-overdue='true' → amber border + amber
+   left edge + Overdue badge tone). Mirrors OrderTable styles + adds
+   the SLA callout. */
+
+.tableScroll {
+  overflow-x: auto;
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 10px;
+  margin-bottom: var(--space-3, 12px);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-elev-1, #15181b);
+  font-size: 13px;
+}
+
+.table thead {
+  background: var(--bg-elev-2, #1c2024);
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-soft, #b6bcc4);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--line, #2a2f35);
+}
+
+.table th[data-align='right'] {
+  text-align: right;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--line, #2a2f35);
+  transition: background-color 120ms ease;
+}
+
+.table tbody tr:last-child {
+  border-bottom: 0;
+}
+
+.table tbody tr:hover {
+  background: var(--bg-elev-2, #1c2024);
+}
+
+/* SLA overdue — amber border + accent line. Applied to `pending` rows
+   where `requested_at` is > 24h ago. */
+.table tbody tr[data-overdue='true'] {
+  border-left: 3px solid var(--warn, #d4a043);
+  background: color-mix(in srgb, var(--warn-soft, rgba(212, 160, 67, 0.08)) 100%, var(--bg-elev-1, #15181b));
+}
+
+.table tbody tr[data-overdue='true']:hover {
+  background: color-mix(in srgb, var(--warn-soft, rgba(212, 160, 67, 0.12)) 100%, var(--bg-elev-1, #15181b));
+}
+
+.table tbody tr[data-active='true'] {
+  background: var(--accent-soft, rgba(74, 217, 145, 0.12));
+}
+
+.table tbody td {
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  vertical-align: middle;
+}
+
+.table tbody td[data-align='right'] {
+  text-align: right;
+}
+
+.refundLink,
+.orderLink {
+  color: var(--accent, #4ad991);
+  text-decoration: none;
+  font-weight: 600;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+.refundLink:hover,
+.orderLink:hover {
+  text-decoration: underline;
+}
+
+.customerName {
+  display: block;
+  color: var(--text-1, #f4f4f4);
+}
+
+.customerEmail {
+  display: block;
+  font-size: 12px;
+  color: var(--text-soft, #b6bcc4);
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+.numeric {
+  font-feature-settings: 'tnum';
+  font-weight: 500;
+}
+
+.currency {
+  margin-left: 4px;
+  font-size: 11px;
+  color: var(--text-soft, #b6bcc4);
+}
+
+.reason {
+  display: block;
+  color: var(--text-1, #f4f4f4);
+}
+
+.proofTag {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 6px;
+  background: var(--bg-elev-2, #1c2024);
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--text-soft, #b6bcc4);
+}
+
+.requestedAt {
+  color: var(--text-soft, #b6bcc4);
+  font-feature-settings: 'tnum';
+}
+
+.age {
+  color: var(--text-1, #f4f4f4);
+  font-weight: 500;
+  font-feature-settings: 'tnum';
+}
+
+.overdueBadge {
+  display: inline-block;
+  margin-left: var(--space-2, 8px);
+  padding: 1px 6px;
+  background: var(--warn-soft, rgba(212, 160, 67, 0.18));
+  color: var(--warn, #d4a043);
+  border: 1px solid var(--warn, #d4a043);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--bg-elev-2, #1c2024);
+  color: var(--text-1, #f4f4f4);
+  border: 1px solid var(--line, #2a2f35);
+}
+
+.status[data-kind='amber'] {
+  background: color-mix(in srgb, var(--warn-soft, rgba(212, 160, 67, 0.18)) 100%, transparent);
+  color: var(--warn, #d4a043);
+  border-color: var(--warn, #d4a043);
+}
+
+.status[data-kind='blue'] {
+  background: color-mix(in srgb, rgba(74, 144, 226, 0.18) 100%, transparent);
+  color: #4a90e2;
+  border-color: #4a90e2;
+}
+
+.status[data-kind='green'] {
+  background: color-mix(in srgb, var(--success-soft, rgba(74, 217, 145, 0.18)) 100%, transparent);
+  color: var(--success, #4ad991);
+  border-color: var(--success, #4ad991);
+}
+
+.status[data-kind='red'] {
+  background: color-mix(in srgb, var(--danger-soft, rgba(226, 92, 92, 0.18)) 100%, transparent);
+  color: var(--danger, #e25c5c);
+  border-color: var(--danger, #e25c5c);
+}
+
+.status[data-kind='gray'] {
+  background: var(--bg-elev-2, #1c2024);
+  color: var(--text-soft, #b6bcc4);
+}
+
+.summary {
+  margin: 0 0 var(--space-4, 16px);
+  font-size: 12px;
+  color: var(--text-soft, #b6bcc4);
+  font-feature-settings: 'tnum';
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  padding: var(--space-7, 48px) var(--space-4, 16px);
+  background: var(--bg-elev-1, #15181b);
+  border: 1px dashed var(--line, #2a2f35);
+  border-radius: 10px;
+  margin-bottom: var(--space-4, 16px);
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-soft, #b6bcc4);
+}
+
+.emptyLink {
+  color: var(--accent, #4ad991);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.emptyLink:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,59 @@
+/* LinkAnalyticsPanel — P13.7 orchestrator panel.
+   Wraps the 3 analytics sub-components (HourlyClicksChart +
+   GeoBreakdownList + DeviceBreakdownList) in a single section
+   with a shared header. Token-only. */
+
+.panel {
+  margin-bottom: 32px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 0 0 4px;
+}
+
+.h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 6px 0 0;
+  max-width: 56ch;
+}
+
+/* Two-column layout for geo + device on desktop. */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.grid > * {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

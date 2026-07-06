@@ -1,0 +1,188 @@
+/* FeaturedPick — large 2-column card (cover + body) for the
+   single featured product on /[handle]. The body renders title,
+   short description, "Why I picked this" blockquote with
+   attribution, price + CTA, and a small attribution note that
+   names the affiliate's handle + shop path so the buyer
+   understands where the click is being credited.
+
+   Mobile (≤900px): stacks single-column with the cover above
+   the body. */
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 0 0 40px;
+}
+
+@media (max-width: 900px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cover {
+  position: relative;
+  min-height: 240px;
+  background: var(--bg-elev-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .cover {
+    min-height: 200px;
+  }
+}
+
+.thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbPlaceholder {
+  width: 80%;
+  height: 60%;
+  background: var(--bg-inset);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+}
+
+.body {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+}
+
+.titleLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.titleLink:hover,
+.titleLink:focus-visible {
+  color: var(--teal);
+}
+
+.shortDescription {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.note {
+  margin: 0 0 24px;
+  padding: 16px 20px;
+  border-left: 3px solid var(--teal);
+  background: var(--teal-soft);
+  border-radius: 6px;
+}
+
+.noteText {
+  margin: 0 0 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-1);
+  font-style: italic;
+}
+
+.noteAttribution {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--teal);
+  font-style: normal;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+}
+
+.pricePlaceholder {
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: var(--orange);
+  color: #000;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid var(--orange);
+}
+
+.cta:hover,
+.cta:focus-visible {
+  background: var(--orange-hover);
+  border-color: var(--orange-hover);
+}
+
+.ctaArrow {
+  transition: transform 0.15s;
+}
+
+.cta:hover .ctaArrow,
+.cta:focus-visible .ctaArrow {
+  transform: translateX(2px);
+}
+
+.attributionNote {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.handleChip {
+  display: inline-block;
+  padding: 1px 6px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--text-1);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+}

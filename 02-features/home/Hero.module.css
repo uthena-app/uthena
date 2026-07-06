@@ -1,0 +1,253 @@
+/* Hero — token-only, matches mockups/styles/main.css lines 124–139.
+   Dark canvas, two-column desktop layout, single-column stacked mobile. */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--space-8);
+  padding: var(--space-9) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin: 0 0 var(--space-4);
+}
+
+.h1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5.4vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  color: var(--heading);
+  margin: 0 0 var(--space-5);
+  font-weight: 600;
+}
+
+.teal {
+  color: var(--accent);
+}
+
+.lede {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text-1);
+  max-width: 520px;
+  margin: 0 0 var(--space-6);
+}
+
+.monoOrange {
+  font-family: var(--font-mono);
+  color: var(--action);
+}
+
+.ctaRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.btnPrimary,
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 22px;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+  text-decoration: none;
+}
+
+.btnPrimary {
+  background: var(--action);
+  color: var(--on-action);
+}
+.btnPrimary:hover {
+  background: var(--action-hover);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: var(--heading);
+  border: 1px solid var(--line-strong);
+}
+.btnSecondary:hover {
+  border-color: var(--heading);
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 160ms ease;
+}
+.btnPrimary:hover .arrow {
+  transform: translateX(2px);
+}
+
+.meta {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-block: 0;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.metaNum {
+  font-family: var(--font-mono);
+  color: var(--heading);
+  display: block;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.metaLabel {
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: 0.04em;
+}
+
+/* Hero art — 4-cell 2x2 grid */
+.heroArt {
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1px;
+}
+
+.cell {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-elev-2);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-3);
+}
+
+/* Subtle gradient surfaces so the empty cells aren't visually empty.
+   The real product image (Phase 0.13 product_images migration +
+   P0.12 PDP rebuild) will replace these with <img> tags. */
+.cell:nth-child(1) {
+  background: linear-gradient(135deg, var(--bg-elev-2) 0%, var(--bg-elev-3) 100%);
+}
+.cell:nth-child(2) {
+  background: linear-gradient(225deg, var(--bg-elev-2) 0%, var(--bg-elev-3) 100%);
+}
+.cell:nth-child(3) {
+  background: linear-gradient(45deg, var(--bg-elev-2) 0%, var(--bg-elev-3) 100%);
+}
+.cell:nth-child(4) {
+  background: linear-gradient(315deg, var(--bg-elev-2) 0%, var(--bg-elev-3) 100%);
+}
+
+.cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.55) 100%);
+  pointer-events: none;
+}
+
+.cellName {
+  position: relative;
+  z-index: 2;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  max-width: 80%;
+  line-height: 1.3;
+}
+
+.tag,
+.tagMrr {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  background: var(--accent);
+  color: var(--on-accent);
+  letter-spacing: 0.04em;
+}
+
+.tagMrr {
+  background: var(--action);
+  color: var(--on-action);
+}
+
+@media (max-width: 880px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    padding: var(--space-8) 0;
+  }
+  .meta {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .heroArt {
+    aspect-ratio: 5 / 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: var(--space-7) 0;
+    gap: var(--space-6);
+  }
+  .h1 {
+    font-size: clamp(32px, 9vw, 44px);
+  }
+  .lede {
+    font-size: 16px;
+  }
+  .btnPrimary,
+  .btnSecondary {
+    height: 42px;
+    padding: 0 18px;
+    font-size: 13px;
+  }
+  .metaNum {
+    font-size: 18px;
+  }
+}

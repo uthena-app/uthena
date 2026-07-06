@@ -1,0 +1,89 @@
+/* Verify-email page — token-only styles for the body content
+   (icon + h1 + lede + CTA). The card shell (.page + .card) is
+   shared with the other auth routes via the inherited
+   auth.module.css imported at the page level. This module owns
+   only the per-state visual treatment: icon container shape +
+   color, heading rhythm, and the CTA link wrapper. */
+
+/* Stacks the icon, heading, lede, and CTA vertically with the same
+   rhythm the auth forms use. */
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 16px 8px;
+}
+
+/* Circular icon container — shared shape across the three states;
+   the color comes from the icon-success / icon-expired / icon-
+   pending modifier classes below. */
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  color: var(--accent);
+  background: var(--bg-elev-2);
+  margin-bottom: 4px;
+}
+
+/* State-specific icon accents. The success icon is the brand teal
+   (positive state), the expired icon is the warn color (attention
+   without alarm), and the pending icon is the muted teal — same
+   hue as success but on the soft (15% opacity) surface so it reads
+   as "wait, not done" rather than "done". */
+.iconExpired {
+  color: var(--warn);
+  border-color: color-mix(in srgb, var(--warn) 35%, transparent);
+  background: var(--warn-soft);
+}
+
+.iconPending {
+  color: color-mix(in srgb, var(--accent) 70%, var(--text-1));
+  border-color: var(--accent-soft);
+  background: var(--accent-soft);
+}
+
+.h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin: 0;
+  /* Allow long phrases like "This verification link has expired or
+     already been used" to wrap cleanly within the 460px card. */
+  max-width: 380px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 8px;
+  max-width: 380px;
+}
+
+/* CTA link wrapper — extends the Button to full width without
+   nesting a Link inside (the Link is a plain anchor that owns the
+   click target; the Button visual is purely cosmetic). The wrap
+   is `display: block` so the inner Button (already `fullWidth`)
+   stretches across the card width. */
+.cta {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+  margin-top: 4px;
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 8px;
+}

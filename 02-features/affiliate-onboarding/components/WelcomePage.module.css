@@ -1,0 +1,225 @@
+/* WelcomePage — token-only. Uses the success teal accent for the
+   eyebrow + step-number badges (matches the partner WelcomePage's
+   palette + the affiliate PendingReview card). No inline colors. */
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-9, 60px) var(--space-5, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 24px);
+  color: var(--text-1);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--success);
+  margin: 0;
+}
+
+.title {
+  font-size: var(--font-h1, 32px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--heading);
+  margin: 0;
+}
+
+.lede {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-6, 24px);
+}
+
+.cardH2 {
+  font-size: var(--font-h4, 18px);
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 var(--space-4, 16px);
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+  counter-reset: welcome-step;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: flex-start;
+  gap: var(--space-3, 12px);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--success-soft);
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 1px;
+}
+
+.stepText {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.inlineLink {
+  color: var(--action);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.inlineLink:hover {
+  text-decoration: none;
+}
+
+.inlineLink:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.code {
+  background: var(--bg-elev-2);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm, 4px);
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.toolbar {
+  display: flex;
+  gap: var(--space-3, 12px);
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: var(--space-3, 12px);
+  border-top: 1px solid var(--line);
+}
+
+.primary {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3, 12px) var(--space-5, 20px);
+  border-radius: var(--radius-md, 8px);
+  background: var(--action);
+  color: var(--on-action);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 120ms ease;
+}
+
+.primary:hover {
+  opacity: 0.9;
+}
+
+.primary:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.signOutForm {
+  display: inline-flex;
+  margin: 0;
+}
+
+.signOut {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3, 12px) var(--space-5, 20px);
+  border-radius: var(--radius-md, 8px);
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.signOut:hover {
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+}
+
+.signOut:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.footer {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.footerDate {
+  color: var(--text-2);
+}
+
+.footerLink {
+  color: var(--action);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footerLink:hover {
+  text-decoration: none;
+}
+
+.footerLink:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: var(--space-7, 32px) var(--space-4, 16px);
+  }
+  .title {
+    font-size: var(--font-h2, 28px);
+  }
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .primary,
+  .signOut {
+    justify-content: center;
+  }
+}

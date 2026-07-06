@@ -1,0 +1,174 @@
+.page {
+  display: grid;
+  gap: var(--space-8, 32px);
+  padding: var(--space-6, 24px);
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  display: grid;
+  gap: var(--space-3, 12px);
+  padding: var(--space-8, 32px) 0;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: var(--weight-medium, 500);
+}
+
+.h1 {
+  margin: 0;
+  font-family: var(--font-display, 'Inter Tight', system-ui);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: var(--weight-bold, 700);
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+  line-height: 1.1;
+}
+
+.lede {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: var(--text-lg, 18px);
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.ctaRow {
+  display: flex;
+  gap: var(--space-3, 12px);
+  justify-content: center;
+  margin-top: var(--space-3, 12px);
+  flex-wrap: wrap;
+}
+
+.primaryButton,
+.secondaryButton {
+  padding: var(--space-3, 12px) var(--space-5, 20px);
+  border-radius: var(--radius-md, 8px);
+  font-size: var(--text-base, 16px);
+  font-weight: var(--weight-semibold, 600);
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  transition: background-color 80ms ease;
+}
+
+.primaryButton {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.secondaryButton {
+  background: transparent;
+  color: var(--accent);
+}
+
+.primaryButton:hover {
+  background: color-mix(in srgb, var(--accent) 85%, #000);
+}
+
+.sectionH {
+  font-family: var(--font-display, 'Inter Tight', system-ui);
+  font-size: var(--text-2xl, 24px);
+  font-weight: var(--weight-bold, 700);
+  color: var(--text-1);
+  margin: 0 0 var(--space-4, 16px);
+}
+
+.benefits {
+  display: grid;
+}
+
+.benefitGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3, 12px);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.benefitCard {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-4, 16px);
+}
+
+.benefitTitle {
+  margin: 0 0 var(--space-2, 8px);
+  font-size: var(--text-base, 16px);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--text-1);
+}
+
+.benefitBody {
+  margin: 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.faq {
+  display: grid;
+}
+
+.faqList {
+  display: grid;
+  gap: var(--space-3, 12px);
+  margin: 0;
+}
+
+.faqItem {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-4, 16px);
+}
+
+.faqQ {
+  margin: 0 0 var(--space-2, 8px);
+  font-size: var(--text-base, 16px);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--text-1);
+}
+
+.faqA {
+  margin: 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.cta {
+  text-align: center;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg, 14px);
+  padding: var(--space-6, 24px);
+  display: grid;
+  gap: var(--space-3, 12px);
+  justify-items: center;
+}
+
+.ctaH {
+  font-family: var(--font-display, 'Inter Tight', system-ui);
+  font-size: var(--text-2xl, 24px);
+  font-weight: var(--weight-bold, 700);
+  color: var(--text-1);
+  margin: 0;
+}
+
+.ctaBody {
+  margin: 0;
+  max-width: 480px;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-2);
+  line-height: 1.5;
+}

@@ -1,0 +1,87 @@
+/* Library loading fallback — header + 2-col (nav + grouped sections).
+   Token-only. Mirrors library/page.module.css. */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5) var(--space-9);
+}
+
+.header {
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.nav {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) 0;
+  border-right: 1px solid var(--line);
+  padding-right: var(--space-4);
+}
+
+.content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-3) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.rowBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .nav {
+    position: static;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 0 0 var(--space-3);
+  }
+}

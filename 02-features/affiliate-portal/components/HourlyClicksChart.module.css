@@ -1,0 +1,166 @@
+/* HourlyClicksChart — affiliate per-hour click chart.
+   Token-only styling. Mirrors the PerformanceChart rhythm
+   (card + header + inline SVG) but rendered for a 24h bar
+   series rather than a 30d bar series. */
+
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.header {
+  margin-bottom: 12px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 0 0 4px;
+}
+
+.h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.subtle {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 6px 0 0;
+}
+
+/* Headline total — single big number on the right of the header. */
+.headerRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.totalWrap {
+  text-align: right;
+}
+
+.totalLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.totalValue {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 2px 0 0;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Chart container — full width, fixed aspect ratio via SVG. */
+.chartWrap {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gridLine {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.bar {
+  fill: var(--teal);
+}
+
+.bar[data-emphasis='peak'] {
+  fill: var(--accent);
+}
+
+.axisLabel {
+  font-size: 10px;
+  fill: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 12px 0 0;
+  padding: 16px;
+  background: var(--bg-elev-2);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Legend + small inline stat row. */
+.legendRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legendSwatch {
+  display: inline-block;
+  width: 12px;
+  height: 8px;
+  background: var(--teal);
+  border-radius: 2px;
+}
+
+.legendSwatch[data-kind='peak'] {
+  background: var(--accent);
+}
+
+/* Peak hour callout — under the chart when a single bucket dominates. */
+.peak {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  background: var(--teal-soft);
+  border: 1px solid var(--teal-line);
+  border-radius: 8px;
+}
+
+.peakStrong {
+  font-weight: 600;
+  color: var(--heading);
+}
+
+@media (max-width: 640px) {
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .totalWrap {
+    text-align: left;
+  }
+}

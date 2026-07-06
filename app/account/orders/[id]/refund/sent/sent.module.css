@@ -1,0 +1,133 @@
+/* /account/orders/[id]/refund/sent — token-only styles.
+   No inline hex — the checkmark circle uses --on-success (a near-black
+   for the dark theme, white for the light theme — see tokens.css and
+   design-system-light.css). The primary CTA uses --on-action (the
+   canonical "dark text on the orange --action fill" token). */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 640px;
+}
+
+.iconRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.checkmark {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--success);
+  color: var(--on-success);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.lede {
+  font-size: 16px;
+  color: var(--text-1);
+  margin: 0;
+}
+
+.ref {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.body {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.next {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.h2 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.steps {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.steps li {
+  padding-left: 4px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primaryLink {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 8px;
+  background: var(--action);
+  color: var(--on-action);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+.primaryLink:hover {
+  background: var(--action-hover);
+}
+
+.secondaryLink {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  text-decoration: none;
+}
+.secondaryLink:hover {
+  border-color: var(--line-strong);
+  color: var(--text-1);
+}

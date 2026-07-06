@@ -1,0 +1,51 @@
+/* InvoiceDownloadButton — client island styles. Primary CTA styling
+   matches the shared Button primitive's `primary` variant so the
+   visual vocabulary is consistent across the account area. */
+
+.wrap {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease, transform 80ms ease;
+  line-height: 1;
+}
+
+.btnPrimary {
+  background: var(--action);
+  color: #0E1012;
+  border: 1px solid var(--action);
+}
+
+.btnPrimary:hover {
+  background: var(--action-hover);
+  border-color: var(--action-hover);
+}
+
+.btnPrimary:active {
+  transform: translateY(1px);
+}
+
+.btnLoading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.error {
+  font-size: 12px;
+  color: var(--danger);
+  max-width: 320px;
+  line-height: 1.4;
+}

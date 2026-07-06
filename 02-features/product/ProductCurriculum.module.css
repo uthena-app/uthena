@@ -1,0 +1,59 @@
+/* ProductCurriculum — the `.curric` block from
+ * `mockups/styles/main.css` lines 307–311. Token-only.
+ *
+ * Layout: a stacked column of rows. Each row is a 3-column grid
+ * (32 / 1fr / 80 px) — the `.idx` mono number on the left, the
+ * `.nm` module name in the middle (heading color), and the `.dur`
+ * right-aligned mono duration on the right. Hairline `--line`
+ * dividers between rows (the mockup uses `border-top`, so the first
+ * row has no top border — we use `border-top: 0` on `:first-child`
+ * and `border-top: 1px solid var(--line)` on the rest via the
+ * `[role="listitem"]:not(:first-child)` selector).
+ *
+ * Per AGENTS.md: no inline colors, no magic pixels. The 32 px idx
+ * column width and 80 px dur column width are literal mockup
+ * values — they're not design-token concepts (column widths in a
+ * CSS grid aren't a token-able abstraction). */
+
+.curric {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: var(--s-3);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 32px 1fr 80px;
+  gap: var(--s-3);
+  align-items: center;
+  padding: var(--s-3) 0;
+  font-size: 13px;
+  border-top: 1px solid var(--line);
+}
+
+/* Drop the top divider on the first row so the list reads as a
+ * single continuous block. */
+.curric :global([role="listitem"]):first-child {
+  border-top: 0;
+}
+
+.idx {
+  font-family: var(--font-mono);
+  color: var(--text-faint);
+  font-size: 11px;
+}
+
+.nm {
+  color: var(--heading);
+  /* Long module names wrap inside the middle column instead of
+   * pushing the duration off-screen. */
+  overflow-wrap: anywhere;
+}
+
+.dur {
+  font-family: var(--font-mono);
+  color: var(--text-soft);
+  text-align: right;
+  font-size: 11px;
+}

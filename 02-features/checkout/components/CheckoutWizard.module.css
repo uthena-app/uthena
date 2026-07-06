@@ -1,0 +1,23 @@
+/* CheckoutWizard — token-only. The stepper sits at the top of the
+   page; the body holds the active step card. Layout is single-column
+   on mobile, single-column on desktop too — the steps have their own
+   internal layouts (EmailStep single-column, ReviewStep two-column). */
+
+.wizard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5, 20px);
+}
+
+.stepperRow {
+  padding: var(--space-4, 16px) var(--space-5, 20px);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg, 14px);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}

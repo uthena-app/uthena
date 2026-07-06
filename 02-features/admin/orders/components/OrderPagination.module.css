@@ -1,0 +1,60 @@
+/* OrderPagination.module.css — the URL-driven pager at the bottom of
+   /admin/orders. Mirrors the partner + affiliate pagination. */
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  margin-top: var(--space-4, 16px);
+  flex-wrap: wrap;
+}
+
+.link,
+.disabled {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--line, #2a2f35);
+  text-decoration: none;
+  background: var(--bg-elev-1, #15181b);
+  color: var(--text-1, #f4f4f4);
+}
+
+.link:hover {
+  background: var(--bg-elev-2, #1c2025);
+  border-color: var(--accent, #1abc9c);
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  color: var(--text-soft, #b6bcc4);
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pageItem {
+  display: inline-flex;
+  align-items: center;
+}
+
+.gap {
+  color: var(--text-faint, #6f7780);
+  padding: 0 4px;
+}
+
+.current {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--accent, #1abc9c);
+  color: var(--on-accent, #0b0c0d);
+  font-weight: 700;
+}

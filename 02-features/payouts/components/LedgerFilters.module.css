@@ -1,0 +1,111 @@
+/* LedgerFilters — token-only filter bar above the ledger table. */
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: flex-end;
+  margin-bottom: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.group {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.legend {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 6px;
+  padding: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: var(--teal-line);
+  color: var(--text-1);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.chipActive {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.chipClear {
+  font-size: 10px;
+  line-height: 1;
+  color: var(--accent-strong);
+}
+
+.sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.sortLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.sortSelect {
+  font-size: 13px;
+  font-family: inherit;
+  padding: 6px 28px 6px 10px;
+  border-radius: 6px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.sortSelect:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .bar { flex-direction: column; align-items: stretch; gap: 12px; }
+  .sort { margin-left: 0; }
+}

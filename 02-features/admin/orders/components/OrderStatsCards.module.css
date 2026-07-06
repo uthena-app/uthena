@@ -1,0 +1,49 @@
+/* OrderStatsCards.module.css — the 5-card stats row at the top of
+   /admin/orders. Mirrors the affiliate + partner + customer stats row
+   shape. 5 cards on desktop, scroll on mobile. */
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-3, 12px);
+  margin-bottom: var(--space-5, 24px);
+}
+
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  background: var(--bg-elev-1, #15181b);
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 10px;
+  padding: var(--space-4, 16px) var(--space-4, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-soft, #b6bcc4);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.value {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-1, #f4f4f4);
+  font-feature-settings: 'tnum';
+}

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Uthena — Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="b-terminal.css">
+<style>
+  /* ==================== HOMEPAGE — Terminal ==================== */
+  /* Three-column layout: nav | content | inspector.
+     The inspector shows live data (sales, earnings, trending) — this is
+     the operator's command center, not a marketing page. */
+
+  .shell { display: grid; grid-template-columns: 220px 1fr 280px; min-height: calc(100vh - 28px - 48px - 26px); }
+  @media (max-width: 1100px) { .shell { grid-template-columns: 1fr; } .shell-aside { display: none; } .shell-side { display: none; } }
+
+  .shell-side { background: var(--bg-1); border-right: 1px solid var(--border); padding: 16px 0; font-family: var(--font-mono); font-size: 12px; }
+  .shell-side h5 { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); font-weight: 600; padding: 0 16px; margin: 16px 0 8px; }
+  .shell-side h5:first-child { margin-top: 0; }
+  .shell-side ul { list-style: none; }
+  .shell-side li { display: flex; align-items: center; gap: 8px; padding: 4px 16px; color: var(--text-2); cursor: pointer; }
+  .shell-side li:hover { color: var(--text-1); background: var(--bg-2); }
+  .shell-side li.active { color: var(--accent); background: var(--accent-soft); border-left: 2px solid var(--accent); padding-left: 14px; }
+  .shell-side li .ic { width: 12px; color: var(--text-4); font-size: 10px; }
+  .shell-side li .num { margin-left: auto; font-size: 10.5px; color: var(--text-3); }
+  .shell-side li.active .num { color: var(--accent); }
+
+  .shell-main { padding: 32px 40px 64px; overflow: hidden; }
+  .shell-aside { background: var(--bg-1); border-left: 1px solid var(--border); padding: 20px 16px; font-family: var(--font-mono); font-size: 11.5px; }
+
+  /* Hero — terminal style, no marketing fluff */
+  .hero { padding: 32px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+  .hero-meta { display: flex; gap: 16px; align-items: center; margin-bottom: 24px; }
+  .hero-meta .pill { padding: 3px 8px; background: var(--bg-1); border: 1px solid var(--border-2); border-radius: var(--r-sm); font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3); }
+  .hero-meta .pill.live { color: var(--success); border-color: rgba(91, 216, 154, 0.30); background: var(--success-soft); }
+  .hero h1 { font-size: 36px; line-height: 1.1; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 16px; max-width: 720px; }
+  .hero h1 .hl { color: var(--accent); }
+  .hero .desc { color: var(--text-2); font-size: 14.5px; max-width: 640px; line-height: 1.6; margin-bottom: 28px; }
+  .hero-ctas { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .hero-ctas .hint { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-3); margin-left: 8px; }
+  .hero-ctas .hint kbd { font-family: var(--font-mono); font-size: 10.5px; background: var(--bg-1); border: 1px solid var(--border); padding: 1px 5px; border-radius: 3px; }
+
+  /* Stats grid — 4 columns, mono numbers */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-md); margin-bottom: 48px; overflow: hidden; }
+  @media (max-width: 720px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat { background: var(--bg-1); padding: 16px 18px; }
+  .stat .l { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 8px; }
+  .stat .v { font-family: var(--font-mono); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: var(--text-1); }
+  .stat .d { font-family: var(--font-mono); font-size: 10.5px; margin-top: 4px; }
+  .stat .d.up { color: var(--success); }
+  .stat .d.down { color: var(--danger); }
+
+  /* Section header — like a file header */
+  .sec-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .sec-head .left { display: flex; align-items: baseline; gap: 12px; }
+  .sec-head h2 { font-size: 16px; font-weight: 600; }
+  .sec-head .count { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+  .sec-head .actions { display: flex; gap: 4px; }
+
+  /* Product table — like a file list */
+  .ptable { border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .ptable-row {
+    display: grid; grid-template-columns: 1fr 100px 90px 80px 90px;
+    gap: 16px; align-items: center; padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px; transition: background .12s ease;
+  }
+  .ptable-row:last-child { border-bottom: none; }
+  .ptable-row.head { background: var(--bg-1); font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); }
+  .ptable-row:hover { background: var(--bg-1); }
+  .ptable-row .ic { color: var(--text-4); margin-right: 8px; font-family: var(--font-mono); font-size: 11px; }
+  .ptable-row .nm { color: var(--text-1); font-weight: 500; }
+  .ptable-row .cat { color: var(--text-3); font-family: var(--font-mono); font-size: 11.5px; }
+  .ptable-row .num { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-1); }
+  .ptable-row .num.green { color: var(--success); }
+  .ptable-row .trend { font-family: var(--font-mono); font-size: 11.5px; }
+  .ptable-row .trend.up { color: var(--success); }
+  .ptable-row .trend.down { color: var(--danger); }
+  .ptable-row .star { color: var(--warn); font-size: 11px; }
+
+  /* Side panels (the right inspector) */
+  .panel { background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 12px; margin-bottom: 12px; }
+  .panel h6 { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 10px; font-weight: 600; }
+  .panel .row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 11.5px; }
+  .panel .row .k { color: var(--text-3); }
+  .panel .row .v { color: var(--text-1); font-family: var(--font-mono); }
+
+  .live-feed { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .live-feed li { display: flex; gap: 8px; align-items: flex-start; font-size: 11.5px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .live-feed li:last-child { border-bottom: none; padding-bottom: 0; }
+  .live-feed .ts { color: var(--text-3); font-family: var(--font-mono); font-size: 10.5px; flex-shrink: 0; }
+  .live-feed .msg { color: var(--text-2); }
+  .live-feed .msg strong { color: var(--text-1); font-weight: 500; }
+  .live-feed .msg .pos { color: var(--success); }
+
+  /* Two-col section: trending + recent */
+  .split-2 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 32px; margin-top: 48px; }
+  @media (max-width: 1000px) { .split-2 { grid-template-columns: 1fr; } }
+
+  /* Code/CLI block — accent */
+  .cli {
+    background: var(--bg-inset); border: 1px solid var(--border);
+    border-radius: var(--r-md); padding: 20px;
+    font-family: var(--font-mono); font-size: 12.5px;
+    color: var(--text-2); line-height: 1.7; margin-top: 48px;
+  }
+  .cli .prompt { color: var(--accent); margin-right: 8px; }
+  .cli .cmd { color: var(--text-1); }
+  .cli .out { color: var(--text-3); }
+  .cli .ok { color: var(--success); }
+  .cli .warn { color: var(--warn); }
+</style>
+</head>
+<body>
+
+<div class="var-tag">B · TERMINAL</div>
+
+<!-- IDE top bar -->
+<div class="ide-bar">
+  <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+  <div class="tabs">
+    <span class="tab active">uthena — /</span>
+    <span class="tab">marketplace.json</span>
+    <span class="tab">earnings.log</span>
+  </div>
+  <div class="right">
+    <span>v3.2.1</span>
+    <span>main</span>
+    <span>UTC+7 08:14</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="mark">u</span>uthena
+    </a>
+    <div class="nav-crumbs">
+      <span>uthena</span>
+      <span class="sep">/</span>
+      <span class="leaf">home</span>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="search 612 products">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">cart · 0</a>
+      <a class="btn btn-secondary btn-sm" href="#">Sign in</a>
+      <a class="btn btn-primary btn-sm" href="#">Get started</a>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <!-- LEFT: side nav (file tree) -->
+  <aside class="shell-side">
+    <h5>Navigate</h5>
+    <ul>
+      <li class="active"><span class="ic">▶</span> Home</li>
+      <li><span class="ic">▸</span> Marketplace</li>
+      <li><span class="ic">▸</span> Collections</li>
+      <li><span class="ic">▸</span> Bundles</li>
+      <li><span class="ic">▸</span> Tools &amp; Assets</li>
+    </ul>
+    <h5>Earn</h5>
+    <ul>
+      <li><span class="ic">$</span> Affiliate <span class="num">20%</span></li>
+      <li><span class="ic">$</span> Partner <span class="num">60%</span></li>
+      <li><span class="ic">$</span> Reseller <span class="num">100%</span></li>
+    </ul>
+    <h5>Account</h5>
+    <ul>
+      <li><span class="ic">▸</span> Library</li>
+      <li><span class="ic">▸</span> Payouts</li>
+      <li><span class="ic">▸</span> API keys</li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="shell-main">
+    <section class="hero">
+      <div class="hero-meta">
+        <span class="pill">Uthena v3.2.1</span>
+        <span class="pill live">● 612 products live</span>
+        <span class="pill">$0 platform fees</span>
+      </div>
+      <h1>Six hundred and twelve <span class="hl">private-label</span> products. One operator. One hundred percent of the income.</h1>
+      <p class="desc">The wholesale catalogue behind a generation of digital product businesses. Buy a course, rebrand it, sell it as your own. The platform, the storefront, the payouts — all handled.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#">Browse the marketplace →</a>
+        <a class="btn btn-secondary" href="#">How licensing works</a>
+        <span class="hint">or press <kbd>G</kbd> <kbd>M</kbd> to jump to the marketplace</span>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat">
+        <div class="l">Products in catalogue</div>
+        <div class="v">612</div>
+        <div class="d up">↑ 14 this week</div>
+      </div>
+      <div class="stat">
+        <div class="l">Categories</div>
+        <div class="v">15</div>
+        <div class="d">stable</div>
+      </div>
+      <div class="stat">
+        <div class="l">Active partners</div>
+        <div class="v">347</div>
+        <div class="d up">↑ 8 this month</div>
+      </div>
+      <div class="stat">
+        <div class="l">Payouts to date</div>
+        <div class="v">$2.4M</div>
+        <div class="d up">↑ 18% YoY</div>
+      </div>
+    </div>
+
+    <!-- TRENDING TABLE -->
+    <div class="sec-head">
+      <div class="left">
+        <h2>Trending this week</h2>
+        <span class="count">/ top 8 by 7-day sales</span>
+      </div>
+      <div class="actions">
+        <a class="btn btn-ghost btn-sm" href="#">All 612 →</a>
+      </div>
+    </div>
+
+    <div class="ptable">
+      <div class="ptable-row head">
+        <span>Product</span>
+        <span>Category</span>
+        <span style="text-align:right;">Price</span>
+        <span style="text-align:right;">Sales (7d)</span>
+        <span style="text-align:right;">Trend</span>
+      </div>
+      <a class="ptable-row" href="#">
+        <span><span class="ic">📄</span><span class="nm">AI for Personal Branding</span></span>
+        <span class="cat">AI · video</span>
+        <span class="num" style="text-align:right;">$5,700</span>
+        <span class="num" style="text-align:right;">38</span>
+        <span class="trend up" style="text-align:right;">↑ 24%</span>
+      </a>
+      <a class="ptable-row" href="#">
+        <span><span class="ic">📄</span><span class="nm">Python Pro — Complete Bootcamp</span></span>
+        <span class="cat">DEV · video</span>
+        <span class="num" style="text-align:right;">$9,781</span>
+        <span class="num" style="text-align:right;">31</span>
+        <span class="trend up" style="text-align:right;">↑ 12%</span>
+      </a>
+      <a class="ptable-row" href="#">
+        <span><span class="ic">📄</span><span class="nm">Network Hacking 2025</span></span>
+        <span class="cat">SEC · video</span>
+        <span class="num" style="text-align:right;">$9,781</span>
+        <span class="num" style="text-align:right;">24</span>
+        <span class="trend up" style="text-align:right;">↑ 8%</span>
+      </a>
+      <a class="ptable-row" href="#">
+        <span><span class="ic">📦</span><span class="nm">B2B Sales Skills — Cold to Closed</span></span>
+        <span class="cat">BIZ · bundle</span>
+        <span class="num green" style="text-align:right;">$79</span>
+        <span class="num" style="text-align:right;">58</span>
+        <span class="trend up" style="text-align:right;">↑ 41%</span>
+      </a>
+      <a class="ptable-row" href="#">
+        <span><span class="ic">📄</span><span class="nm">AI Explained for Beginners</span></span>
+        <span class="cat">AI · video</span>
+        <span class="num" style="text-align:right;">$6,781</span>
+        <span class="num" style="text-align:right;">22</span>
+        <span class="trend down" style="text-align:right;">↓ 3%</span>
+      </a>
+      <a class="ptable-row" href="#">
+        <span><span class="ic">📄</span><span class="nm">SQLite Databases From Scratch</span></span>
+        <span class="cat">DEV · video</span>
+        <span class="num" style="text-align:right;">$6,781</span>
+        <span class="num" style="text-align:right;">19</span>
+        <span class="trend up" style="text-align:right;">↑ 6%</span>
+      </a>
+      <a class="ptable-row" href="#">
+        <span><span class="ic">📄</span><span class="nm">Smartphone Videography Masterclass</span></span>
+        <span class="cat">MED · video</span>
+        <span class="num" style="text-align:right;">$3,200</span>
+        <span class="num" style="text-align:right;">16</span>
+        <span class="trend up" style="text-align:right;">↑ 11%</span>
+      </a>
+      <a class="ptable-row" href="#">
+        <span><span class="ic">📦</span><span class="nm">Canva Content &amp; Graphic Design</span></span>
+        <span class="cat">DES · bundle</span>
+        <span class="num" style="text-align:right;">$4,500</span>
+        <span class="num" style="text-align:right;">14</span>
+        <span class="trend up" style="text-align:right;">↑ 9%</span>
+      </a>
+    </div>
+
+    <!-- TWO-COL: latest + partner offer -->
+    <div class="split-2">
+      <div>
+        <div class="sec-head" style="margin-top: 0;">
+          <div class="left">
+            <h2>Newest in the catalogue</h2>
+            <span class="count">/ last 7 days</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-ghost btn-sm" href="#">Subscribe to feed</a>
+          </div>
+        </div>
+
+        <div class="ptable">
+          <a class="ptable-row" href="#">
+            <span><span class="ic">✦</span><span class="nm">Generative AI for Leaders</span></span>
+            <span class="cat">AI · video</span>
+            <span class="num" style="text-align:right;">$7,200</span>
+            <span class="num" style="text-align:right;">4</span>
+            <span class="trend" style="color:var(--text-3);text-align:right;">new</span>
+          </a>
+          <a class="ptable-row" href="#">
+            <span><span class="ic">✦</span><span class="nm">Customer Support Scripts for Course Sellers</span></span>
+            <span class="cat">BIZ · template</span>
+            <span class="num" style="text-align:right;">$890</span>
+            <span class="num" style="text-align:right;">3</span>
+            <span class="trend" style="color:var(--text-3);text-align:right;">new</span>
+          </a>
+          <a class="ptable-row" href="#">
+            <span><span class="ic">✦</span><span class="nm">Assertiveness Training — PLR</span></span>
+            <span class="cat">PRO · video</span>
+            <span class="num" style="text-align:right;">$2,400</span>
+            <span class="num" style="text-align:right;">2</span>
+            <span class="trend" style="color:var(--text-3);text-align:right;">new</span>
+          </a>
+          <a class="ptable-row" href="#">
+            <span><span class="ic">✦</span><span class="nm">Cold Outreach for Course Licenses</span></span>
+            <span class="cat">MKT · template</span>
+            <span class="num" style="text-align:right;">$1,200</span>
+            <span class="num" style="text-align:right;">2</span>
+            <span class="trend" style="color:var(--text-3);text-align:right;">new</span>
+          </a>
+          <a class="ptable-row" href="#">
+            <span><span class="ic">✦</span><span class="nm">Career Transition Strategies</span></span>
+            <span class="cat">PRO · video</span>
+            <span class="num" style="text-align:right;">$3,800</span>
+            <span class="num" style="text-align:right;">1</span>
+            <span class="trend" style="color:var(--text-3);text-align:right;">new</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-head" style="margin-top: 0;">
+          <div class="left">
+            <h2>Earn with Uthena</h2>
+          </div>
+        </div>
+
+        <div style="border:1px solid var(--border);border-radius:var(--r-md);padding:20px;background:var(--bg-1);">
+          <div class="label-mono" style="color:var(--accent);margin-bottom:12px;">PARTNER · 60% REVENUE SHARE</div>
+          <h3 style="font-size:16px;margin-bottom:8px;">List your own courses with PLR rights</h3>
+          <p class="t-sm t-mute" style="margin-bottom:16px;">Upload your course, set your price, earn sixty percent of every sale. Uthena handles the storefront, payments, and PLR distribution.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:16px;">
+            <div>
+              <div class="label-mono">Avg. partner/mo</div>
+              <div class="t-num" style="font-size:18px;font-weight:600;">$3,420</div>
+            </div>
+            <div>
+              <div class="label-mono">Top earner/mo</div>
+              <div class="t-num" style="font-size:18px;font-weight:600;color:var(--accent);">$28,900</div>
+            </div>
+          </div>
+          <a class="btn btn-primary btn-sm" href="#">Apply to partner →</a>
+        </div>
+
+        <div class="cli" style="margin-top: 16px;">
+          <div><span class="prompt">$</span> <span class="cmd">uthena partner apply --tier=plr</span></div>
+          <div class="out" style="margin-top:6px;">→ Reviewing your application</div>
+          <div class="out" style="margin-top:2px;">→ Sample course accepted</div>
+          <div class="out" style="margin-top:2px;">→ 60/40 revenue split confirmed</div>
+          <div><span class="ok">✓</span> <span class="cmd">Approved. Welcome to Uthena.</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT: inspector (live data) -->
+  <aside class="shell-aside">
+    <div class="panel">
+      <h6>Live · last 24h</h6>
+      <div class="row"><span class="k">Sales</span><span class="v">142</span></div>
+      <div class="row"><span class="k">Revenue</span><span class="v" style="color:var(--success);">$87,420</span></div>
+      <div class="row"><span class="k">New sign-ups</span><span class="v">38</span></div>
+      <div class="row"><span class="k">Payouts</span><span class="v">$12,800</span></div>
+      <div class="row"><span class="k">Uptime</span><span class="v" style="color:var(--success);">99.99%</span></div>
+    </div>
+
+    <div class="panel">
+      <h6>Activity feed</h6>
+      <ul class="live-feed">
+        <li>
+          <span class="ts">08:14</span>
+          <span class="msg"><strong>craig_b</strong> bought <span class="pos">AI for Personal Branding</span></span>
+        </li>
+        <li>
+          <span class="ts">08:11</span>
+          <span class="msg">New payout: <strong>$4,200</strong> to <strong>joe_h</strong></span>
+        </li>
+        <li>
+          <span class="ts">08:07</span>
+          <span class="msg"><strong>digital_crest</strong> uploaded <span class="pos">Generative AI for Leaders</span></span>
+        </li>
+        <li>
+          <span class="ts">07:58</span>
+          <span class="msg"><strong>aff_4291</strong> hit $1k in referral earnings</span>
+        </li>
+        <li>
+          <span class="ts">07:42</span>
+          <span class="msg">Refund processed: <strong>$79</strong> · auto-approved</span>
+        </li>
+        <li>
+          <span class="ts">07:31</span>
+          <span class="msg">New review: <span class="pos">★★★★★</span> on Python Pro</span>
+        </li>
+        <li>
+          <span class="ts">07:14</span>
+          <span class="msg"><strong>14</strong> new affiliate clicks in 5m</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h6>Top earner · 30d</h6>
+      <div class="row"><span class="k">digital_crest</span><span class="v" style="color:var(--accent);">$28,940</span></div>
+      <div class="row"><span class="k">craig_b</span><span class="v">$21,300</span></div>
+      <div class="row"><span class="k">joe_h</span><span class="v">$18,720</span></div>
+      <div class="row"><span class="k">lambros</span><span class="v">$14,580</span></div>
+    </div>
+  </aside>
+</div>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="seg"><span class="dot live"></span><span>All systems normal</span></div>
+  <div class="seg"><span>main</span></div>
+  <div class="seg"><span>UTF-8</span></div>
+  <div class="seg"><span>Uthena v3.2.1</span></div>
+  <div class="right">
+    <span>612 products</span>
+    <span>347 partners</span>
+    <span>p95 · 184ms</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h5>Uthena</h5>
+        <p class="t-sm t-mute" style="max-width:300px;">The wholesale catalogue behind a generation of digital product businesses. Six hundred and twelve private-label products, one platform, one operator.</p>
+      </div>
+      <div><h5>Marketplace</h5><ul><li><a href="#">All products</a></li><li><a href="#">Newest</a></li><li><a href="#">On sale</a></li><li><a href="#">Bundles</a></li></ul></div>
+      <div><h5>Earn</h5><ul><li><a href="#">Affiliate program</a></li><li><a href="#">Become a partner</a></li><li><a href="#">Reseller storefronts</a></li><li><a href="#">Payouts</a></li></ul></div>
+      <div><h5>Developers</h5><ul><li><a href="#">API reference</a></li><li><a href="#">CLI</a></li><li><a href="#">Webhooks</a></li><li><a href="#">Changelog</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Status</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Uthena, Inc. · v3.2.1 · build 4f2a</span>
+      <span>main · UTC+7 · 99.99% uptime</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

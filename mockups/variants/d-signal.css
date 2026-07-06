@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Uthena — Variant D: SIGNAL
+   Thesis: this is a brand, not a tool. The tri-color is the UI structure.
+   High-contrast dark canvas, oversized type, sharp 0px corners,
+   conic-gradient dividers, color-coded sections.
+   Closer to an indie zine / Vercel launch / a Notion rebrand.
+   Stands out from every other course marketplace.
+   ========================================================================== */
+
+:root {
+  /* Surfaces — near black, slight cool cast */
+  --bg-base:    #08090B;
+  --bg-1:       #101115;
+  --bg-2:       #18191F;
+  --bg-3:       #20222A;
+  --bg-inset:   #0C0D11;
+
+  /* Borders — sharp, hairline, NEVER rounded */
+  --border:     #23252C;
+  --border-2:   #2E3038;
+  --border-3:   #40434D;
+
+  --text-1: #F2F2F4;
+  --text-2: #989BA3;
+  --text-3: #5F626B;
+  --text-4: #3D3F47;
+
+  /* The brand DNA, used as STRUCTURE not decoration */
+  --teal:       #14A89A;
+  --yellow:     #F5C842;
+  --orange:     #FF580D;
+
+  /* Single primary accent */
+  --accent:        #14A89A;
+  --accent-hover:  #1AB9AB;
+  --accent-soft:   rgba(20, 168, 154, 0.10);
+  --accent-line:   rgba(20, 168, 154, 0.30);
+
+  --success: #4DB282;
+  --success-soft: rgba(77, 178, 130, 0.12);
+  --warn:    #F5C842;
+  --warn-soft: rgba(245, 200, 66, 0.12);
+  --danger:  #FF580D;
+  --danger-soft: rgba(255, 88, 13, 0.12);
+  --info:    #6B8AF0;
+
+  /* Shape — SHARP. 0px corners on the main blocks. Pills only on chips. */
+  --r-xs: 0px;
+  --r-sm: 0px;
+  --r-md: 0px;
+  --r-lg: 0px;
+  --r-xl: 0px;
+  --r-pill: 999px;
+
+  /* Shadow — almost none, hairlines do the work */
+  --shadow-sm: 0 0 0 1px var(--border);
+  --shadow-md: 0 0 0 1px var(--border-2);
+  --shadow-glow: 0 0 0 1px var(--accent);
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg-base);
+  color: var(--text-1);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body { min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, select, textarea { font: inherit; }
+::selection { background: var(--teal); color: #08090B; }
+
+/* ---------- Typography — type does the heavy lifting ---------- */
+.h-display { font-size: clamp(56px, 10vw, 144px); line-height: 0.88; font-weight: 800; letter-spacing: -0.05em; }
+.h-1 { font-size: 56px; line-height: 0.95; font-weight: 800; letter-spacing: -0.035em; }
+.h-2 { font-size: 32px; line-height: 1.05; font-weight: 800; letter-spacing: -0.025em; }
+.h-3 { font-size: 19px; line-height: 1.2; font-weight: 700; letter-spacing: -0.015em; }
+.t-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.t-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3); }
+.t-sm { font-size: 13px; }
+.t-xs { font-size: 12px; }
+.t-mute { color: var(--text-2); }
+.t-faint { color: var(--text-3); }
+.t-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- Tri-color bar — the brand DNA at the top of every page ---------- */
+.tri-bar { height: 3px; background: linear-gradient(90deg, var(--teal) 0%, var(--teal) 33.33%, var(--yellow) 33.33%, var(--yellow) 66.66%, var(--orange) 66.66%, var(--orange) 100%); }
+
+/* ---------- Layout ---------- */
+.container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+.container-narrow { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Buttons — sharp, strong, bordered ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 0;
+  font-weight: 600; font-size: 13.5px;
+  border: 1px solid transparent;
+  transition: background .12s ease, color .12s ease, border-color .12s ease;
+  white-space: nowrap; user-select: none;
+  letter-spacing: 0.005em;
+}
+.btn-primary { background: var(--text-1); color: #08090B; }
+.btn-primary:hover { background: var(--teal); color: #08090B; }
+.btn-secondary { background: transparent; color: var(--text-1); border-color: var(--border-3); }
+.btn-secondary:hover { border-color: var(--text-1); }
+.btn-accent { background: var(--teal); color: #08090B; }
+.btn-accent:hover { background: var(--text-1); }
+.btn-ghost { color: var(--text-1); }
+.btn-ghost:hover { color: var(--teal); }
+.btn-sm { padding: 7px 12px; font-size: 12.5px; }
+.btn-lg { padding: 14px 24px; font-size: 15px; }
+
+/* ---------- Badges — sharp pills ---------- */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: 0;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  background: var(--bg-2); color: var(--text-2);
+  border: 1px solid var(--border-2);
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.badge-accent  { background: var(--accent-soft); color: var(--teal); border-color: var(--accent-line); }
+.badge-teal    { color: var(--teal); border-color: var(--accent-line); }
+.badge-yellow  { color: var(--yellow); border-color: rgba(245, 200, 66, 0.30); }
+.badge-orange  { color: var(--orange); border-color: rgba(255, 88, 13, 0.30); }
+
+/* ---------- Nav — sharp, no border-radius, full wordmark ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(8, 9, 11, 0.85);
+  backdrop-filter: saturate(150%) blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner { display: flex; align-items: center; gap: 32px; height: 60px; }
+.nav-logo { display: flex; align-items: baseline; gap: 0; font-weight: 800; font-size: 22px; letter-spacing: -0.025em; }
+.nav-logo .u { color: var(--teal); }
+.nav-logo .t { color: var(--yellow); }
+.nav-logo .h { color: var(--orange); }
+.nav-logo .ena { color: var(--text-1); }
+.nav-links { display: flex; gap: 0; }
+.nav-link { padding: 8px 14px; font-size: 13.5px; color: var(--text-2); }
+.nav-link:hover { color: var(--text-1); }
+.nav-link.active { color: var(--text-1); }
+.nav-link.active::after { content: ""; display: block; height: 2px; background: var(--teal); margin-top: 4px; }
+.nav-spacer { flex: 1; }
+.nav-search { display: flex; align-items: center; gap: 10px; background: transparent; border: 1px solid var(--border-2); padding: 7px 12px; width: 260px; color: var(--text-3); }
+.nav-search input { background: none; border: none; outline: none; color: var(--text-1); flex: 1; font-size: 13px; }
+.nav-search kbd { font-family: var(--font-mono); font-size: 10.5px; }
+.nav-actions { display: flex; gap: 6px; align-items: center; }
+
+/* ---------- Footer ---------- */
+.footer { background: var(--bg-1); border-top: 3px solid; border-image: linear-gradient(90deg, var(--teal) 0%, var(--teal) 33.33%, var(--yellow) 33.33%, var(--yellow) 66.66%, var(--orange) 66.66%, var(--orange) 100%) 1; padding: 72px 0 32px; margin-top: 0; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+.footer h5 { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-3); font-weight: 500; margin-bottom: 18px; }
+.footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer a { font-size: 13.5px; color: var(--text-2); }
+.footer a:hover { color: var(--text-1); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border); font-family: var(--font-mono); font-size: 11.5px; color: var(--text-3); }
+.footer-mark { font-weight: 800; font-size: 28px; letter-spacing: -0.02em; }
+.footer-mark .u { color: var(--teal); } .footer-mark .t { color: var(--yellow); } .footer-mark .h { color: var(--orange); }
+
+.var-tag { position: fixed; top: 78px; right: 16px; z-index: 60; font-family: var(--font-mono); font-size: 10.5px; background: var(--bg-1); border: 1px solid var(--border-2); color: var(--text-2); padding: 4px 10px; letter-spacing: 0.04em; }

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI for Personal Branding — uthena · Signal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="d-signal.css">
+<style>
+  /* ==================== PRODUCT — Signal ==================== */
+  /* Big cover left (with a colored side rule), title block right,
+     numbered tabs, spec-sheet style curriculum, hairline-bordered buy box. */
+
+  .pdp { padding: 56px 0 32px; }
+  .crumbs { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 32px; display: flex; gap: 8px; align-items: center; }
+  .crumbs a { color: var(--text-2); }
+  .crumbs a:hover { color: var(--text-1); }
+  .crumbs .sep { color: var(--text-4); }
+
+  .pdp-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; }
+  @media (max-width: 1080px) { .pdp-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+  /* Cover — with colored side rule */
+  .pdp-cover { position: relative; aspect-ratio: 4/5; background: linear-gradient(135deg, #1a4744 0%, #0d2a28 100%); overflow: hidden; }
+  .pdp-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(8,9,11,0.7)); }
+  .pdp-cover .ribbon { position: absolute; top: 20px; left: 20px; z-index: 2; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-1); background: rgba(8,9,11,0.85); padding: 5px 11px; letter-spacing: 0.08em; }
+  .pdp-cover .cover-num { position: absolute; top: 20px; right: 20px; z-index: 2; font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+  .pdp-cover .cover-title { position: absolute; left: 24px; right: 24px; bottom: 24px; z-index: 2; font-size: 32px; line-height: 1.05; font-weight: 800; letter-spacing: -0.025em; color: #fff; }
+
+  .thumb-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); margin-top: 1px; }
+  .thumb { aspect-ratio: 4/5; background: var(--bg-2); cursor: pointer; overflow: hidden; position: relative; }
+  .thumb.active { background: var(--teal); }
+  .thumb.active::before { content: "▶"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #08090B; font-size: 18px; }
+  .thumb .dur { position: absolute; bottom: 6px; right: 6px; z-index: 2; font-family: var(--font-mono); font-size: 10px; color: var(--text-1); background: rgba(8,9,11,0.7); padding: 2px 5px; }
+  .thumb:hover { background: var(--bg-3); }
+  .thumb:hover.active { background: var(--teal); }
+
+  /* Right — title + buy box */
+  .pdp-right { padding-top: 8px; }
+  .pdp-eyebrow { display: flex; gap: 12px; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.16em; font-weight: 500; margin-bottom: 24px; }
+  .pdp-eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--teal); }
+  .pdp-title { font-size: clamp(32px, 4vw, 52px); line-height: 0.98; font-weight: 800; letter-spacing: -0.035em; margin-bottom: 24px; }
+  .pdp-sub { color: var(--text-2); font-size: 16.5px; line-height: 1.6; margin-bottom: 32px; }
+
+  /* Spec block — like a technical datasheet */
+  .spec { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+  .spec .cell { padding: 16px 20px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .spec .cell .l { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-3); margin-bottom: 6px; }
+  .spec .cell .v { font-size: 16px; font-weight: 600; letter-spacing: -0.005em; }
+  .spec .cell .v.mono { font-family: var(--font-mono); }
+  .spec .cell .v.teal { color: var(--teal); }
+
+  .instructor { display: flex; align-items: center; gap: 14px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .instructor .av { width: 40px; height: 40px; background: var(--bg-2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .instructor .nm { font-weight: 600; font-size: 14px; }
+  .instructor .role { color: var(--text-3); font-size: 12px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; }
+
+  /* Buy box — sharp, with a colored top border */
+  .buy-box { background: var(--bg-1); border: 1px solid var(--border); border-top: 3px solid var(--teal); padding: 28px; margin-top: 32px; }
+  .price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .price-now { font-family: var(--font-mono); font-size: 56px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+  .price-was { font-family: var(--font-mono); font-size: 18px; color: var(--text-3); text-decoration: line-through; }
+  .price-save { margin-left: auto; background: var(--orange); color: #08090B; padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; }
+  .price-note { color: var(--text-3); font-size: 12.5px; margin-bottom: 24px; font-family: var(--font-mono); }
+
+  .license-picker { display: flex; flex-direction: column; gap: 1px; margin: 20px 0 24px; background: var(--border); border: 1px solid var(--border); }
+  .license-opt { background: var(--bg-1); padding: 14px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background .12s ease; }
+  .license-opt:hover { background: var(--bg-2); }
+  .license-opt.selected { background: var(--bg-2); box-shadow: inset 3px 0 0 var(--teal); }
+  .license-opt .info .lname { font-weight: 600; font-size: 14px; }
+  .license-opt .info .ldesc { color: var(--text-3); font-size: 12px; margin-top: 2px; }
+  .license-opt .lprice { font-family: var(--font-mono); font-weight: 600; font-size: 16px; }
+
+  .buy-trust { display: flex; justify-content: space-between; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-3); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; }
+  .buy-trust-item { display: flex; gap: 6px; align-items: center; }
+  .buy-trust-item .ok { color: var(--teal); }
+
+  /* Tabs — number-prefixed, sharp */
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-top: 80px; }
+  .tab { padding: 14px 24px; font-weight: 600; font-size: 13px; color: var(--text-3); border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; }
+  .tab:hover { color: var(--text-1); }
+  .tab.active { color: var(--text-1); border-color: var(--teal); }
+  .tab .num { display: inline-block; width: 24px; color: var(--text-4); font-weight: 700; }
+  .tab.active .num { color: var(--teal); }
+
+  .tab-content { padding: 48px 0 80px; }
+  .tab-content h3 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 32px 0 16px; }
+  .tab-content h3:first-child { margin-top: 0; }
+  .tab-content p { color: var(--text-2); margin-bottom: 16px; font-size: 15.5px; line-height: 1.7; max-width: 720px; }
+  .tab-content ul { color: var(--text-2); padding-left: 0; margin-bottom: 16px; font-size: 15.5px; line-height: 1.9; list-style: none; max-width: 720px; }
+  .tab-content li { padding-left: 32px; position: relative; }
+  .tab-content li::before { content: "→"; position: absolute; left: 0; color: var(--teal); font-family: var(--font-mono); }
+
+  /* Curriculum — sharp rows */
+  .curr { border: 1px solid var(--border); margin-top: 24px; }
+  .mod { border-bottom: 1px solid var(--border); }
+  .mod:last-child { border-bottom: none; }
+  .mod-head { display: grid; grid-template-columns: 60px 1fr 200px; gap: 16px; align-items: center; padding: 18px 20px; background: var(--bg-1); cursor: pointer; }
+  .mod-head .num { font-family: var(--font-mono); font-size: 12px; color: var(--teal); font-weight: 700; }
+  .mod-head .nm { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+  .mod-head .meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; text-align: right; }
+  .lesson { display: grid; grid-template-columns: 60px 1fr 100px; gap: 16px; align-items: center; padding: 10px 20px; font-size: 13.5px; color: var(--text-2); border-top: 1px solid var(--border); background: var(--bg-base); }
+  .lesson .ic { color: var(--text-4); font-family: var(--font-mono); font-size: 12px; }
+  .lesson.preview .nm { color: var(--text-1); }
+  .lesson .lic { color: var(--teal); font-family: var(--font-mono); font-size: 11px; }
+  .lesson .ldur { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-3); text-align: right; }
+
+  /* Reviews */
+  .reviews { display: grid; grid-template-columns: 240px 1fr; gap: 48px; margin-top: 24px; }
+  @media (max-width: 768px) { .reviews { grid-template-columns: 1fr; gap: 32px; } }
+  .rating-summary { border: 1px solid var(--border); padding: 24px; }
+  .rating-big { font-family: var(--font-mono); font-size: 64px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+  .rating-stars { color: var(--yellow); font-size: 14px; letter-spacing: 2px; margin: 12px 0; }
+  .rating-count { color: var(--text-3); font-size: 11.5px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; }
+  .rating-bar { display: grid; grid-template-columns: 24px 1fr 30px; align-items: center; gap: 10px; margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+  .rating-bar .bar { height: 4px; background: var(--bg-2); }
+  .rating-bar .fill { height: 100%; background: var(--teal); }
+  .rating-bar .num { text-align: right; color: var(--text-3); }
+
+  .review { padding: 28px 0; border-top: 1px solid var(--border); }
+  .review-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .review .stars { color: var(--yellow); letter-spacing: 1px; font-size: 12px; }
+  .review .date { color: var(--text-3); font-size: 11.5px; margin-top: 4px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; }
+  .review .author { font-weight: 700; font-size: 14px; }
+  .review .verified { color: var(--teal); font-size: 11px; margin-top: 2px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; }
+  .review p { color: var(--text-2); font-size: 15.5px; line-height: 1.7; }
+
+  .related { padding: 80px 0; background: var(--bg-1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-top: 80px; }
+  .related-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
+  .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  @media (max-width: 768px) { .related-grid { grid-template-columns: repeat(2, 1fr); } }
+  .rc .art { aspect-ratio: 4/5; background: var(--bg-2); border: 1px solid var(--border); }
+  .rc .nm { font-size: 15px; font-weight: 700; margin-top: 12px; letter-spacing: -0.01em; }
+  .rc .cat { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 4px; }
+  .rc .price { font-family: var(--font-mono); font-size: 14px; font-weight: 600; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<div class="tri-bar"></div>
+<div class="var-tag">D · SIGNAL · PRODUCT</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="u">u</span><span class="t">t</span><span class="h">h</span><span class="ena">ena</span>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link" href="#">Index</a>
+      <a class="nav-link active" href="#">Marketplace</a>
+      <a class="nav-link" href="#">Collections</a>
+      <a class="nav-link" href="#">For partners</a>
+      <a class="nav-link" href="#">Journal</a>
+    </nav>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="612 products">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">Sign in</a>
+      <a class="btn btn-accent btn-sm" href="#">Open account</a>
+    </div>
+  </div>
+</header>
+
+<section class="pdp">
+  <div class="container">
+    <div class="crumbs">
+      <a href="#">MARKETPLACE</a><span class="sep">/</span>
+      <a href="#">AI &amp; CHATGPT</a><span class="sep">/</span>
+      <span style="color:var(--text-1);">AI FOR PERSONAL BRANDING</span>
+    </div>
+
+    <div class="pdp-grid">
+      <!-- LEFT -->
+      <div>
+        <div class="pdp-cover">
+          <span class="ribbon">AI · 47 LESSONS</span>
+          <span class="cover-num">№ 0421</span>
+          <div class="cover-title">Using AI to build a profitable personal brand</div>
+        </div>
+        <div class="thumb-strip">
+          <div class="thumb active" style="background:linear-gradient(135deg,#1a4744 0%,#0d2a28 100%);"><span class="dur">0:32</span></div>
+          <div class="thumb" style="background:linear-gradient(135deg,#0d2a28 0%,#1a4744 100%);"></div>
+          <div class="thumb" style="background:linear-gradient(135deg,#163832 0%,#0a1f1d 100%);"></div>
+          <div class="thumb" style="background:linear-gradient(135deg,#103530 0%,#081c1a 100%);"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="pdp-right">
+        <div class="pdp-eyebrow">AI · COURSE · 47 LESSONS</div>
+        <h1 class="pdp-title">Using AI to Build a Profitable Personal Brand on Social Media</h1>
+        <p class="pdp-sub">A complete forty-seven-lesson course on building, scaling, and monetising a personal brand with AI tools. Comes with private label rights — edit, rebrand, and resell as your own.</p>
+
+        <div class="spec">
+          <div class="cell"><div class="l">Total length</div><div class="v mono">4h 12m</div></div>
+          <div class="cell"><div class="l">Lessons</div><div class="v mono teal">47</div></div>
+          <div class="cell"><div class="l">Modules</div><div class="v mono">8</div></div>
+          <div class="cell"><div class="l">Subtitles</div><div class="v mono">EN</div></div>
+          <div class="cell"><div class="l">License</div><div class="v">PLR</div></div>
+          <div class="cell"><div class="l">Updated</div><div class="v mono">2026-05-12</div></div>
+        </div>
+
+        <div class="instructor">
+          <div class="av">DC</div>
+          <div>
+            <div class="nm">Digital Crest Institute</div>
+            <div class="role">12 COURSES · 8,400+ STUDENTS</div>
+          </div>
+        </div>
+
+        <div class="buy-box">
+          <div class="price-row">
+            <div class="price-now">$5,700</div>
+            <div class="price-was">$11,400</div>
+            <div class="price-save">SAVE 50%</div>
+          </div>
+          <div class="price-note">One-time payment. Lifetime access. All future updates included.</div>
+
+          <div class="license-picker">
+            <div class="license-opt selected">
+              <div class="info">
+                <div class="lname">Private Label Rights</div>
+                <div class="ldesc">Edit, rebrand, and resell as your own. Keep 100% of revenue.</div>
+              </div>
+              <div class="lprice">$5,700</div>
+            </div>
+            <div class="license-opt">
+              <div class="info">
+                <div class="lname">Master Resell Rights</div>
+                <div class="ldesc">Includes the right to sell resell rights to others.</div>
+              </div>
+              <div class="lprice">$8,200</div>
+            </div>
+          </div>
+
+          <a class="btn btn-primary btn-lg btn-block" href="#">Add to cart →</a>
+
+          <div class="buy-trust">
+            <div class="buy-trust-item"><span class="ok">✓</span> 7-DAY REFUND</div>
+            <div class="buy-trust-item"><span class="ok">✓</span> INSTANT ACCESS</div>
+            <div class="buy-trust-item"><span class="ok">✓</span> LIFETIME UPDATES</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <a class="tab active"><span class="num">01</span> OVERVIEW</a>
+      <a class="tab"><span class="num">02</span> CURRICULUM</a>
+      <a class="tab"><span class="num">03</span> LICENSE</a>
+      <a class="tab"><span class="num">04</span> REVIEWS · 3</a>
+    </div>
+
+    <div class="tab-content">
+      <h3>What this course is</h3>
+      <p>A complete, end-to-end playbook for building a personal brand on social media using AI tools. The course covers positioning, content production, audience growth, monetisation, and the day-to-day operations of running a one-person media business.</p>
+
+      <h3>What you'll get</h3>
+      <ul>
+        <li>47 video lessons across 8 modules</li>
+        <li>The full transcript and slide decks</li>
+        <li>The content calendar template and prompt library</li>
+        <li>Private label rights — your name, your brand, your revenue</li>
+      </ul>
+
+      <h3>Who this is for</h3>
+      <p>Digital entrepreneurs, course creators, affiliate marketers, and agencies who want to add personal-brand services or products to their offering. The course is structured so it can be sold as-is or repackaged into a higher-ticket offer with consulting.</p>
+
+      <h3>Curriculum</h3>
+      <div class="curr">
+        <div class="mod">
+          <div class="mod-head">
+            <span class="num">01</span>
+            <span class="nm">Foundations of an AI-first personal brand</span>
+            <span class="meta">6 LESSONS · 28 MIN</span>
+          </div>
+          <div class="lesson preview">
+            <span class="ic">▶</span>
+            <div>
+              <div class="nm">Why a personal brand, and why now</div>
+              <div class="lic">FREE PREVIEW</div>
+            </div>
+            <div class="ldur">4:12</div>
+          </div>
+          <div class="lesson">
+            <span class="ic">·</span>
+            <div class="nm">The AI brand stack in 2026</div>
+            <div class="ldur">5:48</div>
+          </div>
+          <div class="lesson">
+            <span class="ic">·</span>
+            <div class="nm">Positioning without a niche</div>
+            <div class="ldur">6:21</div>
+          </div>
+        </div>
+        <div class="mod">
+          <div class="mod-head">
+            <span class="num">02</span>
+            <span class="nm">Content production with AI</span>
+            <span class="meta">8 LESSONS · 42 MIN</span>
+          </div>
+          <div class="lesson preview">
+            <span class="ic">▶</span>
+            <div>
+              <div class="nm">The content engine</div>
+              <div class="lic">FREE PREVIEW</div>
+            </div>
+            <div class="ldur">6:18</div>
+          </div>
+          <div class="lesson">
+            <span class="ic">·</span>
+            <div class="nm">Writing hooks that stop the scroll</div>
+            <div class="ldur">5:32</div>
+          </div>
+        </div>
+        <div class="mod">
+          <div class="mod-head">
+            <span class="num">03</span>
+            <span class="nm">Distribution and growth</span>
+            <span class="meta">7 LESSONS · 38 MIN</span>
+          </div>
+          <div class="lesson">
+            <span class="ic">·</span>
+            <div class="nm">Cross-platform repurposing</div>
+            <div class="ldur">4:55</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Reviews</h3>
+      <div class="reviews">
+        <div class="rating-summary">
+          <div class="rating-big">4.7</div>
+          <div class="rating-stars">★★★★★</div>
+          <div class="rating-count">3 verified reviews</div>
+          <div class="rating-bar"><span>5★</span><div class="bar"><div class="fill" style="width:66%"></div></div><span class="num">2</span></div>
+          <div class="rating-bar"><span>4★</span><div class="bar"><div class="fill" style="width:33%"></div></div><span class="num">1</span></div>
+          <div class="rating-bar"><span>3★</span><div class="bar"><div class="fill" style="width:0%"></div></div><span class="num">0</span></div>
+          <div class="rating-bar"><span>2★</span><div class="bar"><div class="fill" style="width:0%"></div></div><span class="num">0</span></div>
+          <div class="rating-bar"><span>1★</span><div class="bar"><div class="fill" style="width:0%"></div></div><span class="num">0</span></div>
+        </div>
+        <div>
+          <div class="review">
+            <div class="review-head">
+              <div>
+                <div class="author">Craig Ballantyne</div>
+                <div class="verified">✓ VERIFIED BUYER</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="stars">★★★★★</div>
+                <div class="date">FEB 3, 2026</div>
+              </div>
+            </div>
+            <p>I bought the courses to resell and am very happy with the quality. The structure is solid, the modules build on each other, and the templates save me days of work.</p>
+          </div>
+          <div class="review">
+            <div class="review-head">
+              <div>
+                <div class="author">Joe Holbrook</div>
+                <div class="verified">✓ VERIFIED BUYER</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="stars">★★★★★</div>
+                <div class="date">JAN 8, 2026</div>
+              </div>
+            </div>
+            <p>Course is well organized and flows well. Engaging for anyone looking to build a personal brand with AI tools. The PLR license means I can rebrand and resell it as my own.</p>
+          </div>
+          <div class="review">
+            <div class="review-head">
+              <div>
+                <div class="author">Anonymous</div>
+                <div class="verified">✓ VERIFIED BUYER</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="stars">★★★★☆</div>
+                <div class="date">MAR 16, 2026</div>
+              </div>
+            </div>
+            <p>Very satisfied. The course is clear and the templates work out of the box. Would love a module on LinkedIn.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="related">
+  <div class="container">
+    <div class="related-head">
+      <h2 class="h-1" style="font-size:36px;">More from the catalogue</h2>
+      <a class="btn btn-secondary" href="#">All 612 products →</a>
+    </div>
+    <div class="related-grid">
+      <a href="#" class="rc">
+        <div class="art" style="background:linear-gradient(135deg,#4a3018,#2a1a0d);"></div>
+        <div class="cat">PROGRAMMING</div>
+        <div class="nm">Python Pro — Complete Bootcamp</div>
+        <div class="price">$9,781</div>
+      </a>
+      <a href="#" class="rc">
+        <div class="art" style="background:linear-gradient(135deg,#2a1f4a,#16102a);"></div>
+        <div class="cat">SECURITY</div>
+        <div class="nm">Network Hacking 2025</div>
+        <div class="price">$9,781</div>
+      </a>
+      <a href="#" class="rc">
+        <div class="art" style="background:linear-gradient(135deg,#3a2030,#1f1018);"></div>
+        <div class="cat">BUSINESS</div>
+        <div class="nm">B2B Sales — Cold to Closed</div>
+        <div class="price" style="color:var(--orange);">$79</div>
+      </a>
+      <a href="#" class="rc">
+        <div class="art" style="background:linear-gradient(135deg,#4a2a10,#2a1808);"></div>
+        <div class="cat">AI</div>
+        <div class="nm">AI Explained for Beginners</div>
+        <div class="price">$6,781</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-mark"><span class="u">u</span><span class="t">t</span><span class="h">h</span>ena</div>
+        <p style="color:var(--text-2);font-size:14px;line-height:1.6;margin-top:20px;max-width:340px;">The home for digital product entrepreneurs. Six hundred and twelve private-label products, one platform, one operator.</p>
+      </div>
+      <div><h5>Marketplace</h5><ul><li><a href="#">All products</a></li><li><a href="#">Newest</a></li><li><a href="#">On sale</a></li><li><a href="#">Bundles</a></li></ul></div>
+      <div><h5>For partners</h5><ul><li><a href="#">Become a partner</a></li><li><a href="#">Affiliate program</a></li><li><a href="#">Reseller storefronts</a></li><li><a href="#">Payouts</a></li></ul></div>
+      <div><h5>Resources</h5><ul><li><a href="#">Licensing guide</a></li><li><a href="#">Journal</a></li><li><a href="#">Help center</a></li><li><a href="#">API</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Refunds</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 uthena, inc.</span>
+      <span>612 products · 15 categories · $0 platform fees</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

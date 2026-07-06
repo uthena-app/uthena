@@ -1,0 +1,52 @@
+/* RefundPolicyPage — CTA row under the prose. */
+.ctaRow {
+  max-width: 720px;
+  margin: 24px auto 0;
+  padding: 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 8px;
+  background: var(--action);
+  color: var(--on-action);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 120ms ease, box-shadow 120ms ease;
+}
+
+.cta:hover {
+  background: var(--action-hover);
+  box-shadow: var(--shadow-glow);
+}
+
+.linkBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.linkBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--bg-elev-2);
+}

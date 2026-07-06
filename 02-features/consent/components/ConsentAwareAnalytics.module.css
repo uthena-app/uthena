@@ -1,0 +1,6 @@
+/* ConsentAwareAnalytics — the island renders null; no styles needed.
+   The file exists so the directory composition is consistent with
+   the other consent components (which all carry a sibling .module.css
+   for token-only styling). The empty rule block is the explicit
+   "nothing to style" marker — visible to any reviewer wondering
+   where the styles live. */

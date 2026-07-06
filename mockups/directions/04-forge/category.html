@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Courses — Uthena Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0F10; --card:#151618; --raised:#1B1D1F; --inset:#101113;
+  --line:#232527; --line2:#303336;
+  --txt:#E9E9E7; --mut:#9A9DA1; --dim:#63666B;
+  --acc:#F25C26; --acc-h:#FF6E38; --tint:rgba(242,92,38,0.10);
+  --mono:'IBM Plex Mono',monospace; --head:'Archivo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font:400 14px/1.6 'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+ul{list-style:none}
+::selection{background:var(--acc);color:#0B0B0C}
+:focus-visible{outline:1px solid var(--acc);outline-offset:2px}
+
+.band{border-bottom:1px solid var(--line)}
+.wrap{max-width:1280px;margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}
+.xt::before,.xt::after{content:"";position:absolute;top:-6px;width:11px;height:11px;z-index:3;pointer-events:none;
+  background:linear-gradient(var(--line2),var(--line2)) center/11px 1px no-repeat,
+             linear-gradient(var(--line2),var(--line2)) center/1px 11px no-repeat}
+.xt::before{left:-6px}.xt::after{right:-6px}
+
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:10px}
+.eyebrow b{color:var(--acc);font-weight:500}
+.slink{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:color .15s}
+.slink:hover{color:var(--acc)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;height:44px;padding:0 24px;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;white-space:nowrap;cursor:pointer}
+.btn.solid{background:var(--acc);color:#0B0B0C}
+.btn.solid:hover{background:var(--acc-h)}
+.btn.ghost{border-color:var(--line2);color:var(--txt)}
+.btn.ghost:hover{border-color:var(--acc);color:var(--acc)}
+.btn.sm{height:38px;padding:0 16px}
+
+/* nav */
+.nav{display:flex;align-items:center;gap:20px;min-height:64px;padding:0 24px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font:800 17px/1 var(--head);letter-spacing:.07em;padding:10px 0}
+.logo i{width:11px;height:11px;background:var(--acc);display:inline-block}
+.links{display:flex;gap:2px}
+.links a{padding:23px 13px;font:500 13px 'Inter';color:var(--mut);transition:color .15s;white-space:nowrap}
+.links a:hover{color:var(--txt)}
+.links a.active{color:var(--txt);box-shadow:inset 0 -2px 0 var(--acc)}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.search{display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:var(--inset);height:38px;padding:0 12px;width:220px;color:var(--dim);transition:border-color .15s}
+.search:focus-within{border-color:var(--acc)}
+.search input{background:none;border:0;outline:0;color:var(--txt);font:400 11px var(--mono);letter-spacing:.06em;width:100%}
+.search input::placeholder{color:var(--dim)}
+
+/* page header */
+.crumb{font:500 10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:18px 40px;border-bottom:1px solid var(--line)}
+.crumb a{color:var(--mut);transition:color .15s}
+.crumb a:hover{color:var(--acc)}
+.crumb .sep{color:var(--line2)}
+.phead{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:40px 40px 36px;flex-wrap:wrap}
+.phead h1{font:800 clamp(36px,5vw,58px)/.95 var(--head);letter-spacing:-.02em;text-transform:uppercase}
+.phead .desc{color:var(--mut);max-width:520px;margin-top:14px;font-size:13.5px}
+.pcount{font:500 13px var(--mono);letter-spacing:.14em;color:var(--acc);white-space:nowrap;padding-bottom:6px}
+
+/* category tabs */
+.cattabs{display:flex;overflow-x:auto;scrollbar-width:none}
+.cattabs::-webkit-scrollbar{display:none}
+.cattabs a{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mut);padding:15px 20px;border-right:1px solid var(--line);white-space:nowrap;transition:color .15s,background .15s;position:relative}
+.cattabs a:hover{color:var(--txt);background:var(--card)}
+.cattabs a.active{color:var(--acc);background:var(--tint);box-shadow:inset 0 -2px 0 var(--acc)}
+
+/* layout */
+.main{display:grid;grid-template-columns:264px 1fr}
+.sidebar{border-right:1px solid var(--line)}
+.fgroup{border-bottom:1px solid var(--line);padding:22px 24px 24px}
+.fgroup h3{font:500 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.frow{display:flex;align-items:center;gap:10px;padding:5px 0;cursor:pointer;color:var(--mut);font-size:13px;transition:color .15s;user-select:none}
+.frow:hover{color:var(--txt)}
+.frow input{position:absolute;opacity:0;width:0;height:0}
+.box{width:14px;height:14px;border:1px solid var(--line2);background:var(--inset);flex:none;display:inline-flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s}
+.box svg{opacity:0;color:#0B0B0C}
+.frow input:checked ~ .box{background:var(--acc);border-color:var(--acc)}
+.frow input:checked ~ .box svg{opacity:1}
+.frow input:focus-visible ~ .box{outline:1px solid var(--acc);outline-offset:2px}
+.frow .n{margin-left:auto;font:500 10px var(--mono);color:var(--dim)}
+.fnote{padding:20px 24px;font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+
+/* chips + toolbar */
+.chipsbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:16px 28px;border-bottom:1px solid var(--line);min-height:54px}
+.chipsbar .lbl{font:500 10px var(--mono);letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
+.chip{display:inline-flex;align-items:center;gap:8px;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--acc);background:var(--tint);border:1px solid rgba(242,92,38,.35);padding:6px 8px 6px 11px}
+.chip button{display:inline-flex;color:var(--acc);opacity:.7;transition:opacity .15s}
+.chip button:hover{opacity:1}
+.clearall{font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);transition:color .15s;margin-left:2px}
+.clearall:hover{color:var(--txt)}
+.toolbar{display:flex;align-items:center;gap:14px;padding:14px 28px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.results{font:500 11px var(--mono);letter-spacing:.14em;color:var(--txt)}
+.results b{color:var(--acc);font-weight:500}
+.toolbar .right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.selwrap{position:relative}
+.selwrap select{appearance:none;-webkit-appearance:none;background:var(--inset);border:1px solid var(--line2);color:var(--txt);font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;height:36px;padding:0 34px 0 12px;cursor:pointer;transition:border-color .15s}
+.selwrap select:hover,.selwrap select:focus{border-color:var(--acc);outline:none}
+.selwrap svg{position:absolute;right:11px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--dim)}
+.vtoggle{display:flex;border:1px solid var(--line2)}
+.vtoggle button{width:36px;height:34px;display:inline-flex;align-items:center;justify-content:center;color:var(--dim);transition:color .15s,background .15s}
+.vtoggle button:first-child{border-right:1px solid var(--line2)}
+.vtoggle button:hover{color:var(--txt)}
+.vtoggle button.on{background:var(--tint);color:var(--acc)}
+
+/* product grid */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.card{background:var(--bg);display:flex;flex-direction:column;position:relative;transition:background .15s}
+.card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--acc);transform:scaleY(0);transform-origin:top;transition:transform .18s;z-index:2}
+.card:hover{background:var(--card)}
+.card:hover::after{transform:scaleY(1)}
+.thumb{position:relative;aspect-ratio:16/10;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none}
+.thumb::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 7px,rgba(255,255,255,.025) 7px 8px)}
+.thumb svg{position:relative;z-index:1}
+.t1{background:linear-gradient(135deg,#2B1B11,#15100D)}
+.t2{background:linear-gradient(135deg,#1B2026,#121417)}
+.t3{background:linear-gradient(135deg,#23262B,#131517)}
+.t4{background:linear-gradient(135deg,#262219,#141311)}
+.t5{background:linear-gradient(135deg,#1E2322,#121514)}
+.t6{background:linear-gradient(135deg,#28201E,#141212)}
+.t7{background:linear-gradient(135deg,#1D1E27,#121316)}
+.t8{background:linear-gradient(135deg,#212620,#131512)}
+.t9{background:linear-gradient(135deg,#27191B,#141112)}
+.idx{position:absolute;top:10px;left:12px;font:500 10px var(--mono);letter-spacing:.14em;color:var(--dim);z-index:2}
+.badge{position:absolute;top:10px;right:10px;font:600 9px var(--mono);letter-spacing:.14em;padding:4px 8px;background:var(--acc);color:#0B0B0C;z-index:2}
+.badge.tintb{background:var(--tint);color:var(--acc);border:1px solid rgba(242,92,38,.35)}
+.cbody{padding:16px 20px 18px;display:flex;flex-direction:column;gap:9px;flex:1}
+.cat{font:500 10px var(--mono);letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
+.card h3{font:700 15px/1.4 var(--head);letter-spacing:.005em}
+.cdesc{color:var(--mut);font-size:12.5px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cstats{display:flex;gap:14px;font:500 10.5px var(--mono);letter-spacing:.06em;color:var(--dim);text-transform:uppercase;flex-wrap:wrap}
+.cstats .rate{display:inline-flex;gap:5px;align-items:center;color:var(--mut)}
+.cstats .rate svg{color:var(--acc)}
+.cmeta{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:12px;border-top:1px solid var(--line);font:500 11.5px var(--mono)}
+.price{color:var(--txt);letter-spacing:.08em;white-space:nowrap}
+.price s{color:var(--dim);margin-right:7px;font-weight:400}
+.goarr{color:var(--dim);display:inline-flex;transition:color .15s,transform .15s}
+.card:hover .goarr{color:var(--acc);transform:translateX(3px)}
+
+/* list view */
+.pgrid.list{grid-template-columns:1fr}
+.pgrid.list .card{flex-direction:row}
+.pgrid.list .thumb{width:250px;aspect-ratio:auto;border-bottom:0;border-right:1px solid var(--line)}
+.pgrid.list .cdesc{-webkit-line-clamp:3}
+
+/* pagination */
+.pager{display:flex;justify-content:center;padding:32px 28px}
+.pager .cells{display:flex;border:1px solid var(--line2)}
+.pager a{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;font:500 11px var(--mono);letter-spacing:.08em;color:var(--mut);border-right:1px solid var(--line2);transition:color .15s,background .15s}
+.pager a:last-child{border-right:0}
+.pager a:hover{color:var(--txt);background:var(--card)}
+.pager a.on{background:var(--acc);color:#0B0B0C}
+
+/* footer */
+.foot{display:grid;grid-template-columns:2.1fr 1fr 1fr 1fr 1fr;gap:1px;background:var(--line)}
+.fcell{background:var(--bg);padding:38px 32px}
+.fcell h4{font:500 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+.fcell ul{display:flex;flex-direction:column;gap:10px}
+.fcell ul a{font-size:13px;color:var(--mut);transition:color .15s}
+.fcell ul a:hover{color:var(--txt)}
+.fbrand p{color:var(--mut);font-size:13px;max-width:300px;margin:16px 0 22px}
+.nl{display:flex;border:1px solid var(--line2);height:42px;max-width:320px}
+.nl input{flex:1;min-width:0;background:var(--inset);border:0;outline:0;padding:0 13px;color:var(--txt);font:400 11px var(--mono);letter-spacing:.06em}
+.nl input::placeholder{color:var(--dim)}
+.nl button{background:var(--acc);color:#0B0B0C;font:600 10px var(--mono);letter-spacing:.12em;padding:0 16px;transition:background .15s}
+.nl button:hover{background:var(--acc-h)}
+.nl:focus-within{border-color:var(--acc)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 24px;font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.foot-bottom .dot{display:inline-block;width:7px;height:7px;background:var(--acc);margin-right:8px;vertical-align:1px}
+
+/* responsive */
+@media(max-width:1080px){.search{display:none}}
+@media(max-width:1024px){.pgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1000px){.foot{grid-template-columns:1fr 1fr}.fbrand{grid-column:1/-1}}
+@media(max-width:920px){
+  .links{order:4;width:calc(100% + 48px);margin:0 -24px;overflow-x:auto;border-top:1px solid var(--line);padding:0 12px}
+  .links a{padding:13px 12px}
+  .main{grid-template-columns:1fr}
+  .sidebar{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr}
+  .fgroup{border-right:1px solid var(--line)}
+  .fnote{display:none}
+}
+@media(max-width:860px){
+  .crumb,.phead{padding-left:28px;padding-right:28px}
+}
+@media(max-width:640px){
+  .pgrid{grid-template-columns:1fr}
+  .sidebar{grid-template-columns:1fr}
+  .fgroup{border-right:0}
+  .pgrid.list .thumb{width:128px}
+  .foot{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="band">
+  <div class="wrap nav">
+    <a class="logo" href="home.html"><i></i>UTHENA</a>
+    <nav class="links" aria-label="Primary">
+      <a href="category.html" class="active">Marketplace</a>
+      <a href="#">Bundles</a>
+      <a href="home.html#earn">Earn with Uthena</a>
+      <a href="#">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <label class="search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+        <input type="search" placeholder="SEARCH 612 PRODUCTS" aria-label="Search products">
+      </label>
+      <a class="btn ghost sm" href="#">Sign in</a>
+      <a class="btn solid sm" href="#">Get started</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PAGE HEADER ============ -->
+<section class="band">
+  <div class="wrap">
+    <div class="crumb">
+      <a href="category.html">Marketplace</a><span class="sep">/</span><span>AI Courses</span>
+    </div>
+    <div class="phead">
+      <div>
+        <h1>AI Courses</h1>
+        <p class="desc">Rebrandable, resellable video courses on AI tools, agents, and workflows — every license includes source files and sales assets.</p>
+      </div>
+      <span class="pcount">84 PRODUCTS</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATEGORY TABS ============ -->
+<section class="band">
+  <div class="wrap xt">
+    <nav class="cattabs" aria-label="Categories">
+      <a href="category.html">All</a>
+      <a href="category.html" class="active">AI</a>
+      <a href="category.html">Business</a>
+      <a href="category.html">Crypto</a>
+      <a href="category.html">Design</a>
+      <a href="category.html">Finance</a>
+      <a href="category.html">Marketing</a>
+      <a href="category.html">Productivity</a>
+      <a href="category.html">Programming</a>
+      <a href="category.html">Technology</a>
+    </nav>
+  </div>
+</section>
+
+<!-- ============ MAIN ============ -->
+<section class="band">
+  <div class="wrap xt main">
+
+    <!-- sidebar -->
+    <aside class="sidebar">
+      <div class="fgroup">
+        <h3>License type</h3>
+        <label class="frow"><input type="checkbox" data-chip="Whitelabel"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>Whitelabel<span class="n">62</span></label>
+        <label class="frow"><input type="checkbox" data-chip="PLR"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>PLR<span class="n">84</span></label>
+        <label class="frow"><input type="checkbox" data-chip="PLR + MRR" checked><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>PLR + MRR<span class="n">41</span></label>
+      </div>
+      <div class="fgroup">
+        <h3>Price</h3>
+        <label class="frow"><input type="checkbox" data-chip="Under $50"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>Under $50<span class="n">9</span></label>
+        <label class="frow"><input type="checkbox" data-chip="$50–100" checked><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>$50–100<span class="n">48</span></label>
+        <label class="frow"><input type="checkbox" data-chip="$100–200"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>$100–200<span class="n">21</span></label>
+        <label class="frow"><input type="checkbox" data-chip="$200+"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>$200+<span class="n">6</span></label>
+      </div>
+      <div class="fgroup">
+        <h3>Rating</h3>
+        <label class="frow"><input type="checkbox" data-chip="4.5 &amp; up"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>4.5 &amp; up<span class="n">57</span></label>
+        <label class="frow"><input type="checkbox" data-chip="4.0 &amp; up"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>4.0 &amp; up<span class="n">79</span></label>
+      </div>
+      <div class="fgroup">
+        <h3>Course length</h3>
+        <label class="frow"><input type="checkbox" data-chip="Under 2h"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>Under 2h<span class="n">14</span></label>
+        <label class="frow"><input type="checkbox" data-chip="2–6h"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>2–6h<span class="n">52</span></label>
+        <label class="frow"><input type="checkbox" data-chip="6h+"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></span>6h+<span class="n">18</span></label>
+      </div>
+      <p class="fnote">/ FILTERS APPLY INSTANTLY</p>
+    </aside>
+
+    <!-- content -->
+    <div>
+      <div class="chipsbar">
+        <span class="lbl">Active filters</span>
+        <span id="chips" style="display:contents"></span>
+        <button class="clearall" id="clearall" type="button">Clear all</button>
+      </div>
+
+      <div class="toolbar">
+        <span class="results"><b>84</b> RESULTS</span>
+        <div class="right">
+          <div class="selwrap">
+            <select aria-label="Sort by">
+              <option>Most popular</option>
+              <option>Newest</option>
+              <option>Price low→high</option>
+              <option>Rating</option>
+            </select>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="vtoggle" role="group" aria-label="View">
+            <button id="vgrid" class="on" type="button" aria-label="Grid view">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7.5" height="7.5"/><rect x="13.5" y="3" width="7.5" height="7.5"/><rect x="3" y="13.5" width="7.5" height="7.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5"/></svg>
+            </button>
+            <button id="vlist" type="button" aria-label="List view">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pgrid" id="grid">
+
+        <a class="card" href="product.html">
+          <div class="thumb t1">
+            <span class="idx">001</span><span class="badge">FEATURED</span>
+            <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><circle cx="32" cy="32" r="19"/><path d="M32 5v10M32 49v10M5 32h10M49 32h10"/><circle cx="32" cy="32" r="6.5" fill="#F25C26" stroke="none"/></svg>
+          </div>
+          <div class="cbody">
+            <span class="cat">AI · Personal Brand</span>
+            <h3>Using AI to Create and Scale a Profitable Personal Brand on Social Media</h3>
+            <p class="cdesc">A complete, rebrandable system for building a profitable personal brand with AI tools — positioning, content engine, and monetization.</p>
+            <div class="cstats">
+              <span class="rate"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.9 · 1,240 SOLD</span>
+              <span>42 LESSONS · 6H 30M</span>
+            </div>
+            <div class="cmeta">
+              <span class="price">FROM $57</span>
+              <span class="goarr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="product.html">
+          <div class="thumb t4">
+            <span class="idx">002</span>
+            <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><rect x="14" y="14" width="28" height="28"/><circle cx="40" cy="40" r="13"/><circle cx="40" cy="40" r="3.5" fill="#F25C26" stroke="none"/></svg>
+          </div>
+          <div class="cbody">
+            <span class="cat">AI · Fundamentals</span>
+            <h3>Artificial Intelligence Explained for Beginners</h3>
+            <p class="cdesc">Plain-language introduction to AI concepts your students can actually use — models, prompts, and practical workflows.</p>
+            <div class="cstats">
+              <span class="rate"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>5.0 · 318 SOLD</span>
+              <span>28 LESSONS · 3H 10M</span>
+            </div>
+            <div class="cmeta">
+              <span class="price">$67</span>
+              <span class="goarr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="product.html">
+          <div class="thumb t7">
+            <span class="idx">003</span>
+            <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><path d="M32 8l21 12v24L32 56 11 44V20z"/><path d="M32 8v48M11 20l42 24M53 20L11 44" opacity=".5"/><circle cx="32" cy="32" r="4.5" fill="#F25C26" stroke="none"/></svg>
+          </div>
+          <div class="cbody">
+            <span class="cat">AI · Strategy</span>
+            <h3>Generative AI for Leaders</h3>
+            <p class="cdesc">Executive-level course on deploying generative AI across teams — strategy, governance, and ROI measurement.</p>
+            <div class="cstats">
+              <span class="rate"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.8 · 472 SOLD</span>
+              <span>35 LESSONS · 4H 45M</span>
+            </div>
+            <div class="cmeta">
+              <span class="price">$127</span>
+              <span class="goarr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="product.html">
+          <div class="thumb t2">
+            <span class="idx">004</span>
+            <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><rect x="12" y="14" width="40" height="28"/><path d="M22 42l-4 10 12-10"/><path d="M20 24h24M20 32h16" stroke="#53565B"/><rect x="42" y="28" width="6" height="6" fill="#F25C26" stroke="none"/></svg>
+          </div>
+          <div class="cbody">
+            <span class="cat">AI · Automation</span>
+            <h3>ChatGPT for Business Automation</h3>
+            <p class="cdesc">Turn repetitive business workflows into automated systems with ChatGPT, custom GPTs, and API integrations.</p>
+            <div class="cstats">
+              <span class="rate"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.7 · 655 SOLD</span>
+              <span>31 LESSONS · 4H 02M</span>
+            </div>
+            <div class="cmeta">
+              <span class="price">FROM $77</span>
+              <span class="goarr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="product.html">
+          <div class="thumb t3">
+            <span class="idx">005</span>
+            <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><path d="M8 48l16-24 10 14 8-10 14 20z"/><circle cx="44" cy="16" r="5" stroke="#F25C26"/></svg>
+          </div>
+          <div class="cbody">
+            <span class="cat">AI · Image Generation</span>
+            <h3>Midjourney Mastery</h3>
+            <p class="cdesc">From first prompt to client-ready visuals — styles, consistency, upscaling, and commercial workflows in Midjourney.</p>
+            <div class="cstats">
+              <span class="rate"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.8 · 540 SOLD</span>
+              <span>24 LESSONS · 2H 50M</span>
+            </div>
+            <div class="cmeta">
+              <span class="price">FROM $67</span>
+              <span class="goarr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="product.html">
+          <div class="thumb t8">
+            <span class="idx">006</span><span class="badge tintb">NEW</span>
+            <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><circle cx="32" cy="14" r="6"/><circle cx="14" cy="46" r="6"/><circle cx="50" cy="46" r="6" stroke="#F25C26"/><path d="M29 19L16 40M35 19l13 21M20 46h24"/></svg>
+          </div>
+          <div class="cbody">
+            <span class="cat">AI · Agents</span>
+            <h3>AI Agents for Lead Generation</h3>
+            <p class="cdesc">Build autonomous agents that research prospects, write outreach, and book calls — no engineering background required.</p>
+            <div class="cstats">
+              <span class="rate"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.9 · 188 SOLD</span>
+              <span>38 LESSONS · 5H 20M</span>
+            </div>
+            <div class="cmeta">
+              <span class="price">FROM $97</span>
+              <span class="goarr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="product.html">
+          <div class="thumb t5">
+            <span class="idx">007</span>
+            <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><rect x="10" y="12" width="44" height="34"/><path d="M18 22l8 7-8 7" stroke="#F25C26"/><path d="M30 36h14"/></svg>
+          </div>
+          <div class="cbody">
+            <span class="cat">AI · Prompting</span>
+            <h3>Prompt Engineering for Professionals</h3>
+            <p class="cdesc">Repeatable prompting frameworks for research, writing, analysis, and code — with a 120-prompt swipe file included.</p>
+            <div class="cstats">
+              <span class="rate"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.7 · 402 SOLD</span>
+              <span>26 LESSONS · 3H 40M</span>
+            </div>
+            <div class="cmeta">
+              <span class="price">FROM $57</span>
+              <span class="goarr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="product.html">
+          <div class="thumb t6">
+            <span class="idx">008</span>
+            <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><rect x="10" y="14" width="44" height="30"/><path d="M10 22h44M16 14v8M24 14v8M32 14v8M40 14v8M48 14v8"/><path d="M28 30l10 5-10 5z" fill="#F25C26" stroke="none"/></svg>
+          </div>
+          <div class="cbody">
+            <span class="cat">AI · Video</span>
+            <h3>AI Video Production Pipeline</h3>
+            <p class="cdesc">Script, voice, edit, and publish video at scale using AI tools — a full production pipeline you can teach and resell.</p>
+            <div class="cstats">
+              <span class="rate"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.6 · 240 SOLD</span>
+              <span>33 LESSONS · 4H 18M</span>
+            </div>
+            <div class="cmeta">
+              <span class="price">FROM $87</span>
+              <span class="goarr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="product.html">
+          <div class="thumb t9">
+            <span class="idx">009</span>
+            <svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke="#53565B" stroke-width="1.5"><circle cx="32" cy="32" r="20"/><path d="M26 24l14 8-14 8z" fill="#F25C26" stroke="none"/></svg>
+          </div>
+          <div class="cbody">
+            <span class="cat">AI · Content</span>
+            <h3>Build a Faceless YouTube Channel with AI</h3>
+            <p class="cdesc">Niche selection, AI scripting, voiceover, and editing systems for channels that earn without showing your face.</p>
+            <div class="cstats">
+              <span class="rate"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>4.8 · 366 SOLD</span>
+              <span>29 LESSONS · 3H 55M</span>
+            </div>
+            <div class="cmeta">
+              <span class="price">FROM $77</span>
+              <span class="goarr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+      <nav class="pager" aria-label="Pagination">
+        <div class="cells">
+          <a href="#" aria-label="Previous page"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <a href="#" class="on">01</a>
+          <a href="#">02</a>
+          <a href="#">03</a>
+          <a href="#">04</a>
+          <a href="#" aria-label="Next page"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg></a>
+        </div>
+      </nav>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="band">
+  <div class="wrap xt">
+    <div class="foot">
+      <div class="fcell fbrand">
+        <a class="logo" href="home.html"><i></i>UTHENA</a>
+        <p>The home for digital product entrepreneurs — courses, tools, and assets you can rebrand, resell, and run your business on.</p>
+        <h4>Dispatch — new PLR drops, monthly</h4>
+        <form class="nl" onsubmit="return false">
+          <input type="email" placeholder="YOUR@EMAIL.COM" aria-label="Email address">
+          <button type="submit">JOIN</button>
+        </form>
+      </div>
+      <div class="fcell">
+        <h4>Marketplace</h4>
+        <ul>
+          <li><a href="category.html">All products</a></li>
+          <li><a href="category.html">AI courses</a></li>
+          <li><a href="#">Bundles</a></li>
+          <li><a href="#">New releases</a></li>
+        </ul>
+      </div>
+      <div class="fcell">
+        <h4>Earn</h4>
+        <ul>
+          <li><a href="home.html#earn">Sell your courses</a></li>
+          <li><a href="home.html#earn">Affiliate program</a></li>
+          <li><a href="#">Partner shops</a></li>
+          <li><a href="#">Payouts</a></li>
+        </ul>
+      </div>
+      <div class="fcell">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="fcell">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">License terms</a></li>
+          <li><a href="#">Refund policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom" style="border-top:1px solid var(--line)">
+      <span>© 2026 UTHENA</span>
+      <span>BUY IT. BRAND IT. SELL IT.</span>
+      <span><i class="dot"></i>612 PRODUCTS IN CATALOG</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.frow input[data-chip]'));
+  var chipsHost = document.getElementById('chips');
+  var clearBtn = document.getElementById('clearall');
+
+  function render(){
+    chipsHost.innerHTML = '';
+    var any = false;
+    boxes.forEach(function(box){
+      if(!box.checked) return;
+      any = true;
+      var chip = document.createElement('span');
+      chip.className = 'chip';
+      var label = document.createElement('span');
+      label.textContent = box.getAttribute('data-chip');
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.setAttribute('aria-label','Remove filter ' + box.getAttribute('data-chip'));
+      x.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14M19 5L5 19"/></svg>';
+      x.addEventListener('click', function(){ box.checked = false; render(); });
+      chip.appendChild(label);
+      chip.appendChild(x);
+      chipsHost.appendChild(chip);
+    });
+    clearBtn.style.display = any ? '' : 'none';
+    if(!any){
+      var none = document.createElement('span');
+      none.className = 'lbl';
+      none.style.color = 'var(--line2)';
+      none.textContent = 'NONE';
+      chipsHost.appendChild(none);
+    }
+  }
+
+  boxes.forEach(function(box){ box.addEventListener('change', render); });
+  clearBtn.addEventListener('click', function(){
+    boxes.forEach(function(box){ box.checked = false; });
+    render();
+  });
+  render();
+
+  // view toggle
+  var grid = document.getElementById('grid');
+  var bGrid = document.getElementById('vgrid');
+  var bList = document.getElementById('vlist');
+  bGrid.addEventListener('click', function(){
+    grid.classList.remove('list'); bGrid.classList.add('on'); bList.classList.remove('on');
+  });
+  bList.addEventListener('click', function(){
+    grid.classList.add('list'); bList.classList.add('on'); bGrid.classList.remove('on');
+  });
+})();
+</script>
+
+</body>
+</html>

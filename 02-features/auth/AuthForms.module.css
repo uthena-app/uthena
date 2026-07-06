@@ -1,0 +1,279 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.serverError {
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.serverMessage {
+  color: var(--success);
+  background: var(--success-soft);
+  border: 1px solid color-mix(in srgb, var(--success) 40%, transparent);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.serverMessageHint {
+  color: color-mix(in srgb, var(--success) 80%, var(--text-1));
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* --- P1.3 additions: reset-password confirmation panel --- */
+
+/* The echoed email in the "Check your email" panel. A subtle highlight
+   so the user can scan the page and confirm they submitted the right
+   address. Token-only — uses --bg-elev-2 as the chip background +
+   mono font for the email itself (so an address like
+   "jane.doe+test@example.com" doesn't get re-flowed by kerning). */
+.emailEcho {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 13px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  padding: 1px 6px;
+  border-radius: 4px;
+  word-break: break-all;
+  color: var(--text-1);
+}
+
+/* The "Try again" button on the confirmation panel. Visually distinct
+   from the primary CTA (no orange fill) — it's a secondary action
+   that should never be confused with a "go to next step" button. */
+.tryAgainButton {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text-1);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.tryAgainButton:hover {
+  border-color: var(--accent);
+  background: var(--bg-elev-2);
+}
+
+.tryAgainButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.forgotRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -8px;
+}
+
+/* --- P1.2 additions: remember-me row + rate-limit cooldown notice --- */
+
+.rememberRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: -4px 0 0;
+  /* Wrap on narrow screens so the checkbox doesn't crush the link. */
+  flex-wrap: wrap;
+}
+
+/* When the row wraps, the link falls onto its own line — push it
+   right-aligned on its own row to match the desktop "Forgot
+   password?" position. */
+@media (max-width: 380px) {
+  .rememberRow {
+    justify-content: flex-end;
+  }
+}
+
+.cooldownNotice {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: var(--warn);
+  background: var(--warn-soft);
+  border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.cooldownLabel {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: color-mix(in srgb, var(--warn) 90%, var(--text-1));
+}
+
+.cooldownCount {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--warn);
+  /* Tabular numbers so the countdown digits don't shift width as they
+     count down (e.g. "1m 9s" → "1m 10s" → "59s"). */
+}
+
+.cooldownHint {
+  color: var(--text-2);
+  font-size: 12px;
+}
+
+.link {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+.foot {
+  color: var(--text-3);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.terms {
+  color: var(--text-3);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: -4px 0 0;
+}
+
+/* --- P1.1 additions: terms checkbox + password strength meter --- */
+
+.checkboxRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: -4px 0 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox {
+  margin-top: 2px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.checkbox:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.checkboxLabel {
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.fieldError {
+  color: var(--danger);
+  font-size: 12px;
+  margin: -8px 0 0;
+  line-height: 1.4;
+}
+
+.strengthMeter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: -10px 0 0;
+  /* Same vertical rhythm as the hint under the password input —
+     keeps the meter visually attached to the field without
+     expanding the form. */
+}
+
+.strengthBarRow {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+}
+
+.strengthBar {
+  height: 4px;
+  flex: 1;
+  border-radius: 2px;
+  background: var(--line);
+  transition: background 120ms ease;
+}
+
+/* Score → color mapping. Token names are reused (not invented) so
+   the meter stays consistent with the rest of the form chrome. */
+.strengthBarOn_0 {
+  background: var(--line); /* gray — "too short" */
+}
+.strengthBarOn_1 {
+  background: var(--danger); /* red — "weak" */
+}
+.strengthBarOn_2 {
+  background: var(--warn); /* amber — "ok" */
+}
+.strengthBarOn_3 {
+  background: var(--accent); /* teal — "good" */
+}
+.strengthBarOn_4 {
+  background: var(--success); /* green — "strong" */
+}
+
+.strengthLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  min-width: 64px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

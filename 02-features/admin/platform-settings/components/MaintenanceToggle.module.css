@@ -1,0 +1,312 @@
+/* MaintenanceToggle.module.css — token-only CSS for the P14.15
+ * maintenance-mode editor. Mirrors the spacing of DmcaAgentForm +
+ * GeneralSettingsForm so the admin area reads as one design system.
+ *
+ * Color tokens only — no inline colors per AGENTS.md.
+ * The on/off pill flips state via a data-attribute selector so the
+ * CSS can be static (no JS-driven class swaps). The toggle switch
+ * is a custom button (not the native checkbox) so the visual
+ * matches the mockup rhythm. */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 640px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+}
+
+.pillOff {
+  background: var(--bg-elev-2);
+  color: var(--text-3);
+}
+
+.pillOn {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+.intro {
+  font-size: 13.5px;
+  color: var(--text-3);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.intro code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--bg-elev-2);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggleSwitch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px 0 38px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-2);
+  color: var(--text-2);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+.toggleSwitch:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  background: var(--bg-elev-3);
+}
+
+.toggleSwitch:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.toggleSwitch:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.toggleSwitch[data-active='true'] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line-strong);
+  transition: transform 160ms ease, background 120ms ease;
+}
+
+.toggleSwitch[data-active='true'] .toggleKnob {
+  transform: translateX(28px);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.toggleText {
+  font-variant-numeric: tabular-nums;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 13.5px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.textarea:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--bg-elev-2);
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.charCount {
+  font-variant-numeric: tabular-nums;
+  margin-left: 4px;
+}
+
+.alertError {
+  font-size: 13px;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0;
+}
+
+.success {
+  font-size: 13px;
+  color: var(--success);
+  background: var(--success-soft);
+  border: 1px solid var(--success-line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-left: auto;
+}
+
+/* ----- Confirmation modal ----- */
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.modal {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.modalTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0;
+}
+
+.modalBody {
+  font-size: 13.5px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.modalLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+.modalLabel code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+}
+
+.modalInput {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.modalInput:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.modalHint {
+  font-size: 11.5px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.modalActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}

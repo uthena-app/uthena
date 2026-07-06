@@ -1,0 +1,179 @@
+/* /affiliate placeholder page — header + coming-soon callout.
+   Mirrors the visual rhythm of the home / browse / bundles pages
+   (eyebrow + h1 + lede + section). */
+
+.header {
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  font-size: 15px;
+  color: var(--text-2);
+  margin: 0;
+  max-width: 640px;
+}
+
+/* Coming-soon callout -------------------------------------------- */
+
+.placeholder {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 720px;
+}
+
+.placeholderEyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warn);
+  margin-bottom: 12px;
+}
+
+.placeholderH {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0 0 12px;
+}
+
+.placeholderBody {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin: 0 0 20px;
+}
+
+.placeholderList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.placeholderList li {
+  font-size: 14px;
+  color: var(--text-1);
+  padding-left: 22px;
+  position: relative;
+}
+
+.placeholderList li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--teal);
+  font-weight: 700;
+}
+
+.placeholderTail {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.placeholderLink {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.placeholderLink:hover {
+  color: var(--teal-hover);
+}
+
+/* "Setup incomplete" placeholder (no affiliates row case) ----------
+   Re-uses the placeholder chrome but uses no underline so the
+   re-apply link looks like a regular call-to-action. */
+
+.placeholderLink {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  border: 1px solid var(--teal-line);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.placeholderLink:hover {
+  background: var(--teal);
+  color: var(--on-teal, var(--bg));
+}
+
+/* Upcoming slices callout ---------------------------------------- */
+
+.upcoming {
+  background: var(--bg-elev-1);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  max-width: 720px;
+}
+
+.upcomingEyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 12px;
+}
+
+.upcomingList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upcomingList li {
+  font-size: 13px;
+  color: var(--text-2);
+  padding-left: 18px;
+  position: relative;
+}
+
+.upcomingList li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .placeholder {
+    padding: 24px 20px;
+  }
+  .h1 {
+    font-size: 24px;
+  }
+}

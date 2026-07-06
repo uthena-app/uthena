@@ -1,0 +1,78 @@
+/* CustomerFilters — token-only CSS. */
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--gap-3, 12px);
+  padding: 16px;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-elev-1, #fff);
+  margin-bottom: var(--gap-4, 16px);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--font-size-xs, 11px);
+  font-weight: 600;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.7));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.input {
+  padding: 6px 10px;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg, #fff);
+  color: var(--fg, #111);
+  font-size: var(--font-size-sm, 13px);
+  font-family: inherit;
+  min-width: 0;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent, #1a73e8);
+  box-shadow: 0 0 0 2px var(--accent-soft, rgba(26, 115, 232, 0.18));
+}
+
+.actions {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--gap-2, 8px);
+  grid-column: 1 / -1;
+}
+
+.submit {
+  padding: 8px 16px;
+  background: var(--accent, #1a73e8);
+  color: var(--on-accent, #fff);
+  border: none;
+  border-radius: var(--radius-sm, 6px);
+  font-size: var(--font-size-sm, 13px);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: var(--accent-strong, #1666c1);
+}
+
+.reset {
+  padding: 8px 12px;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.7));
+  text-decoration: none;
+  font-size: var(--font-size-sm, 13px);
+  border-radius: var(--radius-sm, 6px);
+}
+
+.reset:hover {
+  color: var(--fg, #111);
+  text-decoration: underline;
+}

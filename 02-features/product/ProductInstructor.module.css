@@ -1,0 +1,112 @@
+/* ProductInstructor — the `.instructor` card from
+ * `mockups/styles/main.css` lines 196–211. Token-only.
+ *
+ * Layout: flex row (gap 24) with a 64×64 circular avatar on the
+ * left (image or initials fallback) and the body on the right
+ * (name → @slug → bio). The whole card sits on `--bg-elev-1` with
+ * a hairline border + soft radius — same treatment as the mockup's
+ * instructor card. On mobile (≤ 768 px) the row stacks vertically
+ * so the avatar sits above the body. */
+
+.card {
+  display: flex;
+  gap: var(--s-5);
+  align-items: flex-start;
+  max-width: 720px;
+  padding: var(--s-5);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin: 0 0 var(--s-2);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-pill);
+  background: var(--teal-soft);
+  border: 1px solid var(--teal-line);
+  display: grid;
+  place-items: center;
+  color: var(--teal);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  /* Cover the circle without distortion; partners upload square-ish
+   * avatars but a partner with a 3:4 headshot shouldn't blow up the
+   * circle. */
+  object-fit: cover;
+}
+
+.avatarInitials {
+  /* Vertically centered by the grid; font-size + weight come from the
+   * parent. */
+  line-height: 1;
+}
+
+.body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--heading);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.slug {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--accent);
+  margin: 0;
+}
+
+.slugLink {
+  color: inherit;
+  text-decoration: none;
+}
+.slugLink:hover {
+  text-decoration: underline;
+}
+
+.bio {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin: var(--s-2) 0 0;
+}
+
+.placeholder {
+  font-size: 13px;
+  color: var(--text-3);
+  font-style: italic;
+  margin: var(--s-2) 0 0;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+  }
+}

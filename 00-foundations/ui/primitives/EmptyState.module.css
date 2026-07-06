@@ -1,0 +1,75 @@
+/* EmptyState — token-only. No magic values. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+}
+
+/* ---- card variant (default): the dashed-border surface used on
+   list pages and full-page empties. ---- */
+.v_card {
+  padding: var(--space-7) var(--space-5);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-lg);
+  background: var(--bg-elev-1);
+}
+
+/* ---- plain variant: no surface — for inside-modal + inside-row
+   empties where the parent already provides chrome. ---- */
+.v_plain {
+  padding: var(--space-6) var(--space-5);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-pill);
+  background: var(--bg-elev-2);
+  color: var(--text-2);
+  margin-bottom: var(--space-2);
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heading);
+  line-height: 1.35;
+  max-width: 32ch;
+}
+
+.body {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  max-width: 44ch;
+}
+
+.action {
+  margin-top: var(--space-3);
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .v_card {
+    padding: var(--space-6) var(--space-4);
+  }
+  .title {
+    font-size: 15px;
+  }
+}

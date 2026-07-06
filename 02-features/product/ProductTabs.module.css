@@ -1,0 +1,98 @@
+/* ProductTabs — the tabs row + panel wrapper from
+ * `mockups/styles/main.css` line 298 (`.tabs` rule).
+ *
+ * The tabs row is a flex line with a 1 px `--line` bottom border
+ * that runs the full width of the row. Each tab is a 0-border
+ * `<button>` with `--text-soft` color, 0 padding top/bottom, and
+ * a transparent bottom border. The active tab gets the heading
+ * color + a 2 px `--teal` bottom border that overlaps the row's
+ * `--line` border (the 2 px lifts the active tab visually above
+ * the line). The `.ct` mono count badge sits next to the label.
+ *
+ * The panel sits below the tabs row with the standard section
+ * vertical rhythm (`var(--s-5)` top margin so the prose has
+ * breathing room).
+ *
+ * Mobile: tabs scroll horizontally on narrow viewports — the
+ * row keeps all 4 tabs on one line, the user scrolls to see
+ * the off-screen ones. `scrollbar-width: none` hides the scrollbar
+ * on Firefox; the WebKit selector hides it on Safari. The
+ * convention matches the browse page's category strip. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  gap: var(--s-5);
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  background: transparent;
+  border: 0;
+  color: var(--text-soft);
+  padding: var(--s-3) 0;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: color 120ms ease;
+}
+
+.tab:hover {
+  color: var(--heading);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+.tabOn {
+  color: var(--heading);
+  border-bottom-color: var(--teal);
+}
+
+.tabLabel {
+  /* The label is its own span so the badge can sit on the same line
+   * with a small gap. */
+}
+
+.ct {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+  /* The badge is purely decorative; the count is in the label's
+   * accessible name via the tab's `aria-label` (or, for SR users,
+   * the visible text). */
+}
+
+.panel {
+  padding-top: var(--s-5);
+}
+
+/* The hidden attribute hides the panel from sighted users; we
+ * still want it in the DOM for the screen reader when the tab is
+ * focused. No extra styles needed — the browser default does the
+ * right thing. */
+
+@media (max-width: 640px) {
+  .tab {
+    padding: var(--s-2) 0;
+    font-size: 12.5px;
+  }
+}

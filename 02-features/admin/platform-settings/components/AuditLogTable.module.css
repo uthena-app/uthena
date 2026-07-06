@@ -1,0 +1,145 @@
+/* AuditLogTable.module.css */
+
+.root {
+  display: grid;
+  gap: var(--space-3, 12px);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm, 14px);
+  min-width: 880px;
+}
+
+.table thead {
+  background: var(--bg-2);
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  font-size: var(--text-xs, 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: var(--weight-medium, 500);
+  color: var(--text-mute);
+  border-bottom: 1px solid var(--line);
+}
+
+.table td {
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-bottom: 1px solid var(--line);
+  color: var(--text-2);
+  vertical-align: top;
+}
+
+.when {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.actor {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: var(--text-xs, 12px);
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: var(--text-xs, 12px);
+  background: var(--bg-2);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs, 4px);
+  color: var(--text-1);
+}
+
+.actionCode {
+  display: inline-block;
+  padding: 2px 8px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg-2));
+  color: var(--accent);
+  border-radius: var(--radius-sm, 6px);
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: var(--text-xs, 12px);
+  font-weight: var(--weight-medium, 500);
+}
+
+.targetKind {
+  display: inline-block;
+  padding: 2px 6px;
+  background: var(--bg-2);
+  border-radius: var(--radius-xs, 4px);
+  font-size: var(--text-xs, 12px);
+  margin-right: var(--space-1, 4px);
+}
+
+.targetId {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: var(--text-xs, 12px);
+  color: var(--text-mute);
+}
+
+.metaCell {
+  max-width: 320px;
+}
+
+.metaCode {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: var(--text-xs, 12px);
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+.muted {
+  color: var(--text-mute);
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: var(--space-2, 8px) 0;
+}
+
+.nextButton {
+  font-size: var(--text-sm, 14px);
+  color: var(--accent);
+  text-decoration: none;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--space-6, 24px) var(--space-4, 16px);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md, 8px);
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: var(--text-base, 16px);
+  color: var(--text-1);
+}
+
+.emptyHint {
+  margin: var(--space-2, 8px) 0 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-mute);
+}
+
+.clearLink {
+  color: var(--accent);
+}

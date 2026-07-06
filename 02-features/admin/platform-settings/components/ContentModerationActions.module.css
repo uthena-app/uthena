@@ -1,0 +1,61 @@
+/* ContentModerationActions.module.css */
+
+.rail {
+  display: grid;
+  gap: var(--space-2, 8px);
+}
+
+.buttonGroup {
+  display: grid;
+  gap: var(--space-1, 4px);
+}
+
+.approve,
+.reject,
+.clear,
+.publish,
+.draft,
+.archive {
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--weight-medium, 500);
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.approve,
+.publish {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+
+.reject {
+  background: var(--danger, #dc2626);
+  color: white;
+  border-color: var(--danger, #dc2626);
+}
+
+.clear,
+.draft {
+  background: var(--bg-2);
+  color: var(--text-1);
+  border-color: var(--line);
+}
+
+.archive {
+  background: #f59e0b;
+  color: #1a1a1a;
+  border-color: #f59e0b;
+}
+
+.error {
+  margin: 0;
+  font-size: var(--text-xs, 12px);
+  color: var(--danger, #dc2626);
+  background: color-mix(in srgb, #dc2626 10%, var(--bg-1));
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border-radius: var(--radius-sm, 6px);
+}

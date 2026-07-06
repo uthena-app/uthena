@@ -1,0 +1,72 @@
+/* DataSharingOptOutPage — form section + CTA row under the prose. */
+
+.formSection {
+  /* The form lives above the markdown body (via ProsePage's
+     beforeBody slot). It sits inside the 720px prose column, so we
+     use a slimmer max-width and let the form's own card handle its
+     background. */
+  max-width: 640px;
+  margin: 0 auto 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formHeading {
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--heading);
+  margin: 0;
+}
+
+.formIntro {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.formLink {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.formLink:hover {
+  color: var(--accent-hover);
+  border-bottom-color: var(--accent-line);
+}
+
+.ctaRow {
+  max-width: 720px;
+  margin: 24px auto 0;
+  padding: 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.linkBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.linkBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--bg-elev-2);
+}

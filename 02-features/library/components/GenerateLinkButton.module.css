@@ -1,0 +1,54 @@
+.wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+
+.btn {
+  padding: 6px 12px;
+  background: var(--accent);
+  color: #0E1012;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn:hover { background: var(--accent-hover); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.error { color: var(--danger); font-size: 11px; margin: 0; }
+
+.urlBox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: stretch;
+  min-width: 320px;
+  max-width: 100%;
+}
+
+.urlInput {
+  font-family: 'SF Mono', 'Menlo', monospace;
+  font-size: 11px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  width: 100%;
+}
+
+.urlActions { display: flex; gap: 6px; }
+
+.copyBtn, .openBtn {
+  flex: 1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-1);
+  font-size: 11px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.copyBtn:hover, .openBtn:hover { border-color: var(--accent); color: var(--accent); }
+
+.expiry { font-size: 10px; color: var(--text-3); margin: 0; }

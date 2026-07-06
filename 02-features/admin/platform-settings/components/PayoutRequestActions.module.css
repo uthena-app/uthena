@@ -1,0 +1,159 @@
+/* PayoutRequestActions.module.css */
+
+.rail {
+  display: grid;
+  gap: var(--space-3, 12px);
+  padding: var(--space-4, 16px);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+  position: sticky;
+  top: var(--space-4, 16px);
+}
+
+.heading {
+  font-size: var(--text-sm, 14px);
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium, 500);
+  margin: 0;
+}
+
+.actions {
+  display: grid;
+  gap: var(--space-2, 8px);
+}
+
+.primaryButton,
+.dangerButton,
+.successButton,
+.subtleButton {
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--weight-medium, 500);
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.primaryButton {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 85%, #000);
+}
+
+.dangerButton {
+  background: var(--danger, #dc2626);
+  color: white;
+  border-color: var(--danger, #dc2626);
+}
+
+.successButton {
+  background: var(--success, #16a34a);
+  color: white;
+  border-color: var(--success, #16a34a);
+}
+
+.subtleButton {
+  background: var(--bg-2);
+  color: var(--text-1);
+  border-color: var(--line);
+}
+
+.primaryButton:disabled,
+.dangerButton:disabled,
+.successButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.noActions {
+  margin: 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-mute);
+}
+
+.error {
+  margin: 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--danger, #dc2626);
+  background: color-mix(in srgb, #dc2626 10%, var(--bg-1));
+  padding: var(--space-2, 8px);
+  border-radius: var(--radius-sm, 6px);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg-1) 70%, transparent);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+}
+
+.modal {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg, 14px);
+  padding: var(--space-5, 20px);
+  max-width: 480px;
+  width: 100%;
+  display: grid;
+  gap: var(--space-3, 12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.modalTitle {
+  font-size: var(--text-lg, 18px);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--text-1);
+  margin: 0;
+}
+
+.modalBody {
+  margin: 0;
+  font-size: var(--text-sm, 14px);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.code {
+  display: inline-block;
+  padding: 0 var(--space-1, 4px);
+  background: var(--bg-2);
+  border-radius: var(--radius-xs, 4px);
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: var(--text-xs, 12px);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--accent);
+  margin: 0 var(--space-1, 4px);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm, 6px);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: var(--text-sm, 14px);
+  resize: vertical;
+}
+
+.textarea {
+  font-family: inherit;
+}
+
+.modalActions {
+  display: flex;
+  gap: var(--space-2, 8px);
+  justify-content: flex-end;
+}

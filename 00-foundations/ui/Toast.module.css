@@ -1,0 +1,110 @@
+/* Toast — token-only. Bottom-right stack. Glassy surface that
+   reads as transient (not a modal) without competing with the
+   primary content. */
+
+.stack {
+  position: fixed;
+  right: var(--space-5, 20px);
+  bottom: var(--space-5, 20px);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  max-width: min(92vw, 420px);
+  pointer-events: none; /* the parent lets clicks pass through; each toast re-enables */
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3, 12px);
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--r-md, 10px);
+  box-shadow: var(--shadow-md);
+  font-size: 14px;
+  line-height: 1.4;
+  pointer-events: auto;
+  animation: toastSlideIn 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}
+
+@keyframes toastSlideIn {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.msg {
+  flex: 1 1 auto;
+  min-width: 0;
+  word-wrap: break-word;
+}
+
+.dismiss {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  margin: -2px -4px 0 0;
+  background: transparent;
+  color: var(--text-3);
+  border: 0;
+  border-radius: var(--r-xs, 6px);
+  cursor: pointer;
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.dismiss:hover {
+  color: var(--text-1);
+  background: var(--bg-elev-3);
+}
+
+.dismiss:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Kind-tinted left border + soft background wash so success / info /
+   error are distinguishable at a glance without icons. The wash is
+   intentionally low-alpha to keep the toast from feeling heavy. */
+
+.k_success {
+  background: color-mix(in srgb, var(--success-soft) 60%, var(--bg-elev-2));
+  border-left-color: var(--success);
+}
+
+.k_info {
+  background: color-mix(in srgb, var(--info-soft) 60%, var(--bg-elev-2));
+  border-left-color: var(--info);
+}
+
+.k_error {
+  background: color-mix(in srgb, var(--danger-soft) 60%, var(--bg-elev-2));
+  border-left-color: var(--danger);
+}
+
+@media (max-width: 640px) {
+  .stack {
+    right: var(--space-3, 12px);
+    left: var(--space-3, 12px);
+    bottom: var(--space-3, 12px);
+    max-width: none;
+  }
+}

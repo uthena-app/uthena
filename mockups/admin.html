@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Review queue — Uthena Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  /* Admin review queue — internal moderator tool */
+
+  .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  @media (max-width: 960px) { .app { grid-template-columns: 1fr; } .sb-app { display: none; } }
+
+  .sb-app { background: var(--bg-base); border-right: 1px solid var(--border); padding: 16px 12px; display: flex; flex-direction: column; gap: 2px; }
+  .sb-logo { padding: 8px 12px 16px; }
+  .sb-section { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); padding: 12px 12px 6px; font-weight: 500; }
+  .sb-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: var(--r-sm); color: var(--text-2); font-size: 13px; cursor: pointer; }
+  .sb-item:hover { background: var(--bg-1); color: var(--text-1); }
+  .sb-item.active { background: var(--bg-1); color: var(--text-1); }
+  .sb-item .num { margin-left: auto; background: var(--bg-1); color: var(--text-3); padding: 1px 5px; border-radius: 3px; font-size: 10.5px; font-family: var(--font-mono); }
+  .sb-item .num.alert { background: var(--warn-soft); color: var(--warn); }
+  .sb-item svg { color: var(--text-3); }
+  .sb-item.active svg { color: var(--accent); }
+  .sb-bottom { margin-top: auto; padding: 12px; border-top: 1px solid var(--border); }
+  .sb-user { display: flex; gap: 10px; align-items: center; padding: 6px; border-radius: var(--r-sm); cursor: pointer; }
+  .sb-user:hover { background: var(--bg-1); }
+  .sb-user .av { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--text-1); border: 1px solid var(--border-2); }
+  .sb-user .uname { font-size: 12.5px; font-weight: 500; }
+  .sb-user .uemail { font-size: 11px; color: var(--text-3); }
+
+  .topbar { height: 52px; padding: 0 24px; border-bottom: 1px solid var(--border); background: var(--bg-base); display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+  .tb-title { font-size: 14px; font-weight: 500; }
+  .tb-actions { margin-left: auto; display: flex; gap: 6px; }
+
+  .main { padding: 24px 32px 80px; max-width: 1600px; }
+  @media (max-width: 640px) { .main { padding: 16px; } }
+
+  .page-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
+  .page-head h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.015em; }
+  .page-head .sub { color: var(--text-2); font-size: 13px; margin-top: 4px; }
+
+  /* Stat row */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+  @media (max-width: 1100px) { .stats { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 600px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px 16px; }
+  .stat .l { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .stat .v { font-family: var(--font-mono); font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+  .stat .delta { font-size: 11px; color: var(--text-3); margin-top: 4px; font-family: var(--font-mono); }
+  .stat.alert { border-color: rgba(232, 179, 65, 0.3); }
+  .stat.alert .v { color: var(--warn); }
+
+  /* Two-column layout: list + detail */
+  .review-body { display: grid; grid-template-columns: 480px 1fr; gap: 20px; }
+  @media (max-width: 1200px) { .review-body { grid-template-columns: 1fr; } }
+
+  /* List panel */
+  .list-panel { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); display: flex; flex-direction: column; height: calc(100vh - 220px); position: sticky; top: 76px; }
+  .list-toolbar { padding: 12px 14px; border-bottom: 1px solid var(--border); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .list-toolbar .seg { display: inline-flex; background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 2px; }
+  .list-toolbar .seg button { padding: 4px 8px; border-radius: 4px; font-size: 11.5px; color: var(--text-2); }
+  .list-toolbar .seg button.active { background: var(--bg-2); color: var(--text-1); }
+  .list-toolbar .search-mini { flex: 1; min-width: 140px; background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 4px 8px; font-size: 12px; color: var(--text-1); }
+
+  .list-items { overflow-y: auto; flex: 1; }
+  .list-item { padding: 12px 14px; border-bottom: 1px solid var(--border); cursor: pointer; }
+  .list-item:hover { background: var(--bg-2); }
+  .list-item.active { background: var(--bg-2); border-left: 2px solid var(--accent); padding-left: 12px; }
+  .list-item .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+  .list-item .title { font-size: 13.5px; font-weight: 500; line-height: 1.35; }
+  .list-item .meta { display: flex; gap: 10px; font-size: 11.5px; color: var(--text-3); }
+  .list-item .meta .partner { color: var(--text-2); }
+  .list-item .flags { display: flex; gap: 4px; margin-top: 8px; }
+
+  /* Detail panel */
+  .detail-panel { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); }
+  .detail-head { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .detail-head .left { flex: 1; min-width: 0; }
+  .detail-head h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .detail-head .meta-row { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--text-3); }
+  .detail-head .meta-row strong { color: var(--text-1); font-weight: 500; }
+  .detail-head .right { display: flex; gap: 6px; flex-shrink: 0; }
+
+  .detail-tabs { display: flex; gap: 0; padding: 0 20px; border-bottom: 1px solid var(--border); }
+  .detail-tab { padding: 10px 14px; font-size: 12.5px; font-weight: 500; color: var(--text-2); border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+  .detail-tab.active { color: var(--text-1); border-color: var(--accent); }
+  .detail-tab:hover { color: var(--text-1); }
+
+  .detail-body { padding: 20px; }
+  .detail-body h3 { font-size: 13px; font-weight: 600; margin: 20px 0 8px; }
+  .detail-body h3:first-child { margin-top: 0; }
+  .detail-body p { color: var(--text-2); font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
+
+  /* Quality checks grid */
+  .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .check { display: grid; grid-template-columns: 16px 1fr auto; gap: 8px; align-items: center; padding: 8px 12px; background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-sm); font-size: 12.5px; }
+  .check.pass .ic { color: var(--success); }
+  .check.fail .ic { color: var(--danger); }
+  .check.warn .ic { color: var(--warn); }
+  .check .v { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+
+  /* Preview video */
+  .preview-video { aspect-ratio: 16/9; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--r-md); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--text-3); font-size: 12px; margin-bottom: 12px; }
+  .preview-video .play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 48px; height: 48px; border-radius: 50%; background: rgba(236, 236, 238, 0.95); display: flex; align-items: center; justify-content: center; }
+  .preview-video .play::after { content: ""; width: 0; height: 0; border-left: 12px solid #0B0C0E; border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 3px; }
+
+  /* Curriculum list (preview) */
+  .curr-preview { background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; margin-bottom: 12px; }
+  .curr-mod { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 12.5px; font-weight: 500; }
+  .curr-mod:last-child { border-bottom: none; }
+  .curr-mod .nm { color: var(--text-1); }
+  .curr-mod .meta { font-size: 11px; color: var(--text-3); font-family: var(--font-mono); margin-top: 2px; }
+
+  /* Decision panel */
+  .decision { background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; margin-top: 16px; }
+  .decision h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-2); margin-bottom: 12px; font-weight: 500; }
+  .decision textarea { width: 100%; min-height: 80px; background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 8px 10px; font-size: 12.5px; color: var(--text-1); font-family: inherit; resize: vertical; }
+  .decision .actions { display: flex; gap: 6px; margin-top: 12px; justify-content: flex-end; }
+  .btn-success { background: var(--success); color: #0B0C0E; font-weight: 600; }
+  .btn-success:hover { background: #5dc78f; }
+  .btn-reject { background: transparent; color: var(--danger); border-color: var(--border-2); }
+  .btn-reject:hover { background: var(--danger-soft); border-color: var(--danger); }
+
+  /* Two-col inside detail */
+  .grid-2-1 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+  @media (max-width: 900px) { .grid-2-1 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sb-app">
+    <div class="sb-logo">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-word">uthena</span><span class="logo-mark-dot"></span>
+        <span class="badge badge-mute" style="margin-left: 8px; font-size: 9px; padding: 1px 5px;">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="sb-section">Moderation</div>
+    <a class="sb-item active" href="admin.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Review queue
+      <span class="num alert">23</span>
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Reports
+      <span class="num">7</span>
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
+      Categories
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Refunds
+      <span class="num">4</span>
+    </a>
+
+    <div class="sb-section">Users</div>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+      Partners
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Affiliates
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/></svg>
+      Customers
+    </a>
+
+    <div class="sb-section">System</div>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      Analytics
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4"/></svg>
+      Settings
+    </a>
+
+    <div class="sb-bottom">
+      <div class="sb-user">
+        <div class="av">AD</div>
+        <div>
+          <div class="uname">Admin · Lina</div>
+          <div class="uemail">lina@uthena.com</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+    <div class="topbar">
+      <div class="tb-title">Review queue</div>
+      <div class="tb-actions">
+        <span class="badge badge-mute">SLA: 48h · avg 12h</span>
+        <button class="btn btn-ghost btn-sm">Bulk actions</button>
+        <button class="btn btn-secondary btn-sm">Export log</button>
+      </div>
+    </div>
+
+    <div class="main">
+
+      <!-- Page head -->
+      <div class="page-head">
+        <div>
+          <h1>Review queue</h1>
+          <div class="sub">Approve, reject, or send back partner submissions. Quality and rights checks run automatically before you see them here.</div>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-secondary btn-sm">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat">
+          <div class="l">Pending</div>
+          <div class="v">23</div>
+          <div class="delta">7 awaiting first review</div>
+        </div>
+        <div class="stat alert">
+          <div class="l">SLA at risk</div>
+          <div class="v">3</div>
+          <div class="delta">&gt; 36h old</div>
+        </div>
+        <div class="stat">
+          <div class="l">Approved today</div>
+          <div class="v">14</div>
+          <div class="delta">+4 vs yesterday</div>
+        </div>
+        <div class="stat">
+          <div class="l">Rejected today</div>
+          <div class="v">6</div>
+          <div class="delta">Quality: 4 · Rights: 2</div>
+        </div>
+        <div class="stat">
+          <div class="l">Avg review time</div>
+          <div class="v">11h</div>
+          <div class="delta">-2h vs last week</div>
+        </div>
+      </div>
+
+      <!-- Review body -->
+      <div class="review-body">
+
+        <!-- List panel -->
+        <div class="list-panel">
+          <div class="list-toolbar">
+            <div class="seg">
+              <button class="active">All · 23</button>
+              <button>New · 7</button>
+              <button>In review · 4</button>
+              <button>Returned · 3</button>
+            </div>
+            <input class="search-mini" placeholder="Search title or partner...">
+          </div>
+          <div class="list-items">
+            <div class="list-item active">
+              <div class="top">
+                <div class="title">Using AI to Create and Scale a Profitable Personal Brand</div>
+                <span class="badge badge-warn">In review</span>
+              </div>
+              <div class="meta">
+                <span class="partner">TJ Walker</span>
+                <span>·</span>
+                <span>AI &amp; Marketing</span>
+                <span>·</span>
+                <span>Submitted 4h ago</span>
+              </div>
+              <div class="flags">
+                <span class="badge badge-success badge-dot">Auto-checks passed</span>
+                <span class="badge badge-mute">42 GB</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="top">
+                <div class="title">Crypto Day Trading — Complete System</div>
+                <span class="badge badge-warn">In review</span>
+              </div>
+              <div class="meta">
+                <span class="partner">Mike Chen</span>
+                <span>·</span>
+                <span>Crypto</span>
+                <span>·</span>
+                <span>Submitted 6h ago</span>
+              </div>
+              <div class="flags">
+                <span class="badge badge-warn badge-dot">Rights: needs check</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="top">
+                <div class="title">TikTok Ads for E-commerce Brands</div>
+                <span class="badge badge-info">New</span>
+              </div>
+              <div class="meta">
+                <span class="partner">Sara Lin</span>
+                <span>·</span>
+                <span>Marketing</span>
+                <span>·</span>
+                <span>Submitted 8h ago</span>
+              </div>
+              <div class="flags">
+                <span class="badge badge-success badge-dot">Auto-checks passed</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="top">
+                <div class="title">Real Estate Investing Masterclass</div>
+                <span class="badge badge-info">New</span>
+              </div>
+              <div class="meta">
+                <span class="partner">James Park</span>
+                <span>·</span>
+                <span>Finance</span>
+                <span>·</span>
+                <span>Submitted 12h ago</span>
+              </div>
+              <div class="flags">
+                <span class="badge badge-success badge-dot">Auto-checks passed</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="top">
+                <div class="title">Notion for Solopreneurs — Build Your OS</div>
+                <span class="badge badge-warn">Returned</span>
+              </div>
+              <div class="meta">
+                <span class="partner">Anya Volkov</span>
+                <span>·</span>
+                <span>Productivity</span>
+                <span>·</span>
+                <span>Resubmitted 14h ago</span>
+              </div>
+              <div class="flags">
+                <span class="badge badge-info badge-dot">Resubmission</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="top">
+                <div class="title">Mastering LinkedIn Outreach in 2026</div>
+                <span class="badge badge-info">New</span>
+              </div>
+              <div class="meta">
+                <span class="partner">Daniel Costa</span>
+                <span>·</span>
+                <span>Sales</span>
+                <span>·</span>
+                <span>Submitted 18h ago</span>
+              </div>
+              <div class="flags">
+                <span class="badge badge-danger badge-dot">Rights: video matches existing course</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="top">
+                <div class="title">Cold Email That Converts</div>
+                <span class="badge badge-info">New</span>
+              </div>
+              <div class="meta">
+                <span class="partner">Priya Shah</span>
+                <span>·</span>
+                <span>Marketing</span>
+                <span>·</span>
+                <span>Submitted 22h ago</span>
+              </div>
+              <div class="flags">
+                <span class="badge badge-success badge-dot">Auto-checks passed</span>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="top">
+                <div class="title">Personal Branding Photography</div>
+                <span class="badge badge-warn">SLA at risk</span>
+              </div>
+              <div class="meta">
+                <span class="partner">Tomás Reis</span>
+                <span>·</span>
+                <span>Photography</span>
+                <span>·</span>
+                <span>Submitted 38h ago</span>
+              </div>
+              <div class="flags">
+                <span class="badge badge-warn badge-dot">Awaiting second reviewer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail panel -->
+        <div class="detail-panel">
+          <div class="detail-head">
+            <div class="left">
+              <h2>Using AI to Create and Scale a Profitable Personal Brand</h2>
+              <div class="meta-row">
+                <span><strong>TJ Walker</strong> · verified partner since 2024</span>
+                <span>·</span>
+                <span>AI &amp; Marketing</span>
+                <span>·</span>
+                <span>Submitted <strong>4h ago</strong></span>
+                <span>·</span>
+                <span>42.1 GB · 47 files</span>
+                <span>·</span>
+                <span>Submission <strong class="t-num">#UT-SUB-2024</strong></span>
+              </div>
+            </div>
+            <div class="right">
+              <button class="btn btn-ghost btn-sm">View partner</button>
+              <button class="btn btn-secondary btn-sm">History</button>
+            </div>
+          </div>
+
+          <div class="detail-tabs">
+            <button class="detail-tab active">Overview</button>
+            <button class="detail-tab">Curriculum <span class="t-faint">· 12 modules</span></button>
+            <button class="detail-tab">Files <span class="t-faint">· 47</span></button>
+            <button class="detail-tab">Quality checks</button>
+            <button class="detail-tab">Rights check</button>
+            <button class="detail-tab">Pricing</button>
+            <button class="detail-tab">Activity</button>
+          </div>
+
+          <div class="detail-body">
+            <div class="grid-2-1">
+              <div>
+                <h3>Description</h3>
+                <p>A complete private-label course on building an audience and monetizing it with AI tools. 12 modules, 47 video lessons, full source files, sales page templates, and email swipes included. Designed for solopreneurs and agencies who want to package the course as their own.</p>
+
+                <h3>Preview</h3>
+                <div class="preview-video">
+                  <div class="play"></div>
+                  <span style="position: absolute; bottom: 8px; left: 8px; font-family: var(--font-mono);">module-01-01-welcome.mp4 · 0:00 / 3:12</span>
+                </div>
+
+                <h3>Curriculum</h3>
+                <div class="curr-preview">
+                  <div class="curr-mod"><div class="nm">Module 1 — AI-Powered Audience Research</div><div class="meta">5 lessons · 38m</div></div>
+                  <div class="curr-mod"><div class="nm">Module 2 — Brand Foundation &amp; Positioning</div><div class="meta">4 lessons · 42m</div></div>
+                  <div class="curr-mod"><div class="nm">Module 3 — Content Engine: 30 Posts/Week on Autopilot</div><div class="meta">6 lessons · 58m</div></div>
+                  <div class="curr-mod"><div class="nm">Module 4 — Visual Content &amp; AI Design</div><div class="meta">5 lessons · 51m</div></div>
+                  <div class="curr-mod"><div class="nm">Modules 5–12 — Monetization, Email, Ads, Scale</div><div class="meta">27 lessons · 3h 15m</div></div>
+                </div>
+              </div>
+
+              <div>
+                <h3>Quality checks</h3>
+                <div class="checks">
+                  <div class="check pass">
+                    <div class="ic">✓</div>
+                    <div>Video resolution (1080p min)</div>
+                    <div class="v">PASS</div>
+                  </div>
+                  <div class="check pass">
+                    <div class="ic">✓</div>
+                    <div>Audio levels normalized</div>
+                    <div class="v">PASS</div>
+                  </div>
+                  <div class="check pass">
+                    <div class="ic">✓</div>
+                    <div>No copyrighted music detected</div>
+                    <div class="v">PASS</div>
+                  </div>
+                  <div class="check pass">
+                    <div class="ic">✓</div>
+                    <div>No malware in source files</div>
+                    <div class="v">PASS</div>
+                  </div>
+                  <div class="check pass">
+                    <div class="ic">✓</div>
+                    <div>Plagiarism check (vs. catalog)</div>
+                    <div class="v">98% unique</div>
+                  </div>
+                  <div class="check warn">
+                    <div class="ic">!</div>
+                    <div>Slide consistency</div>
+                    <div class="v">2 outliers</div>
+                  </div>
+                  <div class="check pass">
+                    <div class="ic">✓</div>
+                    <div>Source files editable</div>
+                    <div class="v">PASS</div>
+                  </div>
+                  <div class="check pass">
+                    <div class="ic">✓</div>
+                    <div>Sales page loads &amp; renders</div>
+                    <div class="v">PASS</div>
+                  </div>
+                </div>
+
+                <h3 style="margin-top: 20px;">Pricing</h3>
+                <div class="rail-row" style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid var(--border);">
+                  <span class="t-faint">Whitelabel</span><span class="t-num t-faint">Off</span>
+                </div>
+                <div class="rail-row" style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid var(--border);">
+                  <span class="t-faint">PLR</span><span class="t-num">$397</span>
+                </div>
+                <div class="rail-row" style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 12.5px;">
+                  <span class="t-faint">PLR + MRR</span><span class="t-num">$497</span>
+                </div>
+                <div class="t-xs t-faint mt-2" style="font-size: 11px;">Uthena's share: $199–$298 · Partner's share: $238–$298</div>
+              </div>
+            </div>
+
+            <!-- Decision -->
+            <div class="decision">
+              <h3>Review decision</h3>
+              <textarea placeholder="Add a review note (visible to partner if you return or reject). Approval notes are internal only."></textarea>
+              <div class="actions">
+                <button class="btn btn-reject">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  Reject
+                </button>
+                <button class="btn btn-secondary">Return for changes</button>
+                <button class="btn btn-success">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Approve &amp; publish
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>marketplace — uthena · Signal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="d-signal.css">
+<style>
+  /* ==================== CATALOG — Signal ==================== */
+  /* Big type header, no sidebar, full-bleed horizontal filter strip,
+     a stack of full-width rows (like a band listing). */
+
+  .cat-head { padding: 80px 0 48px; border-bottom: 1px solid var(--border); }
+  .cat-head .crumb { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 32px; }
+  .cat-head .crumb a { color: var(--text-2); }
+  .cat-head .crumb a:hover { color: var(--text-1); }
+  .cat-head .crumb .sep { color: var(--text-4); margin: 0 8px; }
+  .cat-head .meta { display: flex; gap: 24px; align-items: center; margin-bottom: 24px; font-family: var(--font-mono); font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.16em; flex-wrap: wrap; }
+  .cat-head .meta .dot { width: 6px; height: 6px; background: var(--teal); }
+  .cat-head h1 { font-size: clamp(48px, 8vw, 112px); line-height: 0.95; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 24px; }
+  .cat-head h1 .y { color: var(--yellow); }
+  .cat-head h1 .o { color: var(--orange); }
+  .cat-head .lede { color: var(--text-2); font-size: 17px; max-width: 720px; line-height: 1.55; }
+
+  /* Filter bar — sticky, full-bleed, color block */
+  .filter-bar { position: sticky; top: 60px; z-index: 40; background: var(--bg-1); border-bottom: 1px solid var(--border); }
+  .filter-row { display: flex; gap: 0; overflow-x: auto; padding: 0; }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 18px; font-size: 12.5px; color: var(--text-2);
+    background: transparent; border: none; border-right: 1px solid var(--border);
+    white-space: nowrap; cursor: pointer;
+    font-family: var(--font-mono); letter-spacing: 0.04em;
+    transition: color .12s ease, background .12s ease;
+  }
+  .pill:hover { color: var(--text-1); background: var(--bg-2); }
+  .pill.active { color: var(--teal); background: var(--bg-2); border-top: 2px solid var(--teal); padding-top: 12px; }
+  .pill .num { font-size: 10.5px; color: var(--text-4); }
+  .pill.active .num { color: var(--teal); }
+
+  /* Active filter row */
+  .active-row { display: flex; gap: 8px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .active-row .lbl { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-3); }
+  .active-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-2); border: 1px solid var(--teal); color: var(--teal); font-size: 12px; padding: 4px 10px; font-family: var(--font-mono); letter-spacing: 0.04em; }
+  .active-chip button { color: var(--teal); opacity: 0.6; line-height: 1; }
+  .active-row .clear { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-3); text-decoration: underline; margin-left: auto; }
+
+  /* Catalog body */
+  .catalog-body { padding: 32px 0 96px; }
+  .cat-meta { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; }
+  .cat-meta .count { font-family: var(--font-mono); font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; }
+  .cat-meta .count strong { color: var(--text-1); font-weight: 600; }
+  .cat-meta .sort { display: flex; gap: 12px; align-items: center; font-family: var(--font-mono); font-size: 12px; color: var(--text-3); }
+  .cat-meta .sort select { background: var(--bg-1); border: 1px solid var(--border-2); padding: 6px 10px; color: var(--text-1); font-family: var(--font-mono); font-size: 12px; }
+
+  /* Strip — full-width rows */
+  .strip { display: flex; flex-direction: column; }
+  .strip .row { display: grid; grid-template-columns: 60px 100px 1.6fr 1fr 1fr 100px 120px; gap: 24px; align-items: center; padding: 20px 0; border-top: 1px solid var(--border); transition: padding-left .15s ease, background .15s ease; }
+  .strip .row:last-child { border-bottom: 1px solid var(--border); }
+  .strip .row:hover { background: var(--bg-1); padding-left: 16px; padding-right: 16px; }
+  .strip .row.head { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-3); }
+  .strip .row .idx { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+  .strip .row .cover { aspect-ratio: 16/9; background: var(--bg-2); border: 1px solid var(--border); }
+  .strip .row .nm { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .strip .row .nm .cat { display: block; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; margin-top: 4px; }
+  .strip .row .num { font-family: var(--font-mono); font-size: 13px; }
+  .strip .row .price { font-family: var(--font-mono); font-size: 16px; font-weight: 600; text-align: right; }
+  .strip .row .price small { display: block; font-size: 11px; color: var(--text-3); text-decoration: line-through; font-weight: 400; }
+  .strip .row .badge { justify-content: center; }
+  .strip .row .star { color: var(--warn); font-size: 11px; }
+  @media (max-width: 980px) { .strip .row { grid-template-columns: 60px 80px 1fr 100px; gap: 12px; } .strip .row .cat-col, .strip .row .lic-col, .strip .row .rate-col { display: none; } }
+
+  /* Pagination */
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 0; margin-top: 48px; }
+  .pg { min-width: 44px; height: 44px; padding: 0 16px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border-2); color: var(--text-2); font-size: 13px; font-family: var(--font-mono); }
+  .pg:hover { color: var(--text-1); border-color: var(--border-3); }
+  .pg.active { background: var(--teal); color: #08090B; border-color: var(--teal); font-weight: 600; }
+  .pg.dots { border: none; background: none; color: var(--text-3); }
+</style>
+</head>
+<body>
+
+<div class="tri-bar"></div>
+<div class="var-tag">D · SIGNAL · CATEGORY</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="u">u</span><span class="t">t</span><span class="h">h</span><span class="ena">ena</span>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link" href="#">Index</a>
+      <a class="nav-link active" href="#">Marketplace</a>
+      <a class="nav-link" href="#">Collections</a>
+      <a class="nav-link" href="#">For partners</a>
+      <a class="nav-link" href="#">Journal</a>
+    </nav>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="612 products">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">Sign in</a>
+      <a class="btn btn-accent btn-sm" href="#">Open account</a>
+    </div>
+  </div>
+</header>
+
+<section class="cat-head">
+  <div class="container">
+    <div class="crumb">
+      <a href="#">INDEX</a>
+      <span class="sep">/</span>
+      <span style="color:var(--text-1);">MARKETPLACE</span>
+    </div>
+    <div class="meta">
+      <span><span class="dot"></span> 612 products live</span>
+      <span>15 categories</span>
+      <span>Updated daily</span>
+    </div>
+    <h1>The <span class="y">market</span><span class="o">place</span>.</h1>
+    <p class="lede">Six hundred and twelve private-label products across fifteen categories. Filter by license, length, price, and rating. Every product comes with the rights to edit, rebrand, and resell.</p>
+  </div>
+</section>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <div class="filter-row">
+    <button class="pill active">ALL <span class="num">· 612</span></button>
+    <button class="pill">AI &amp; CHATGPT <span class="num">· 64</span></button>
+    <button class="pill">BUSINESS <span class="num">· 92</span></button>
+    <button class="pill">MARKETING <span class="num">· 87</span></button>
+    <button class="pill">PROGRAMMING <span class="num">· 54</span></button>
+    <button class="pill">DESIGN <span class="num">· 41</span></button>
+    <button class="pill">FINANCE <span class="num">· 38</span></button>
+    <button class="pill">HEALTH <span class="num">· 29</span></button>
+    <button class="pill">+ 8 MORE</button>
+  </div>
+</div>
+
+<section class="catalog-body">
+  <div class="container">
+    <div class="active-row">
+      <span class="lbl">Active</span>
+      <span class="active-chip">LICENSE: PLR <button>×</button></span>
+      <span class="active-chip">LENGTH: 1–3H <button>×</button></span>
+      <span class="active-chip">PRICE: $0–$200 <button>×</button></span>
+      <a class="clear">CLEAR ALL</a>
+    </div>
+
+    <div class="cat-meta">
+      <div class="count">Showing <strong>187</strong> of 612 products</div>
+      <div class="sort">
+        <span>SORT</span>
+        <select>
+          <option>NEWEST FIRST</option>
+          <option>BEST SELLING</option>
+          <option>PRICE: LOW → HIGH</option>
+          <option>PRICE: HIGH → LOW</option>
+          <option>HIGHEST RATED</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="strip">
+      <div class="row head">
+        <span>#</span>
+        <span></span>
+        <span>Product</span>
+        <span class="cat-col">Category</span>
+        <span class="lic-col">License</span>
+        <span class="rate-col">Rating</span>
+        <span style="text-align:right;">Price</span>
+      </div>
+
+      <a href="#" class="row">
+        <span class="idx">001</span>
+        <div class="cover" style="background:linear-gradient(135deg,#1a4744 0%,#0d2a28 100%);"></div>
+        <span class="nm">AI for Personal Branding<span class="cat">Artificial Intelligence</span></span>
+        <span class="num cat-col">AI · VIDEO</span>
+        <span class="lic-col"><span class="badge badge-teal">PLR</span></span>
+        <span class="num rate-col"><span class="star">★★★★★</span> 3</span>
+        <span class="price">$5,700</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">002</span>
+        <div class="cover" style="background:linear-gradient(135deg,#4a3018 0%,#2a1a0d 100%);"></div>
+        <span class="nm">Python Pro — Complete Bootcamp<span class="cat">Programming</span></span>
+        <span class="num cat-col">DEV · VIDEO</span>
+        <span class="lic-col"><span class="badge badge-teal">PLR</span></span>
+        <span class="num rate-col"><span class="star">★★★★★</span> 12</span>
+        <span class="price"><small>$9,781</small>$79</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">003</span>
+        <div class="cover" style="background:linear-gradient(135deg,#2a1f4a 0%,#16102a 100%);"></div>
+        <span class="nm">Network Hacking 2025<span class="cat">Network Security</span></span>
+        <span class="num cat-col">SEC · VIDEO</span>
+        <span class="lic-col"><span class="badge badge-teal">PLR</span></span>
+        <span class="num rate-col"><span class="star">★★★★☆</span> 8</span>
+        <span class="price">$9,781</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">004</span>
+        <div class="cover" style="background:linear-gradient(135deg,#3a2030 0%,#1f1018 100%);"></div>
+        <span class="nm">B2B Sales — Cold to Closed<span class="cat">Business</span></span>
+        <span class="num cat-col">BIZ · BUNDLE</span>
+        <span class="lic-col"><span class="badge badge-teal">PLR</span></span>
+        <span class="num rate-col"><span class="star">★★★★★</span> 27</span>
+        <span class="price" style="color:var(--orange);">$79</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">005</span>
+        <div class="cover" style="background:linear-gradient(135deg,#103a30 0%,#081f1a 100%);"></div>
+        <span class="nm">AI Explained for Beginners<span class="cat">Artificial Intelligence</span></span>
+        <span class="num cat-col">AI · VIDEO</span>
+        <span class="lic-col"><span class="badge badge-teal">PLR</span></span>
+        <span class="num rate-col"><span class="star">★★★★★</span> 1</span>
+        <span class="price">$6,781</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">006</span>
+        <div class="cover" style="background:linear-gradient(135deg,#4a2a10 0%,#2a1808 100%);"></div>
+        <span class="nm">SQLite Databases — From Scratch<span class="cat">Finance</span></span>
+        <span class="num cat-col">FIN · VIDEO</span>
+        <span class="lic-col"><span class="badge badge-teal">PLR</span></span>
+        <span class="num rate-col"><span class="star">★★★★★</span> 19</span>
+        <span class="price">$6,781</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">007</span>
+        <div class="cover" style="background:linear-gradient(135deg,#1a2a4a 0%,#0d161f 100%);"></div>
+        <span class="nm">Smartphone Videography Masterclass<span class="cat">Productivity</span></span>
+        <span class="num cat-col">MED · VIDEO</span>
+        <span class="lic-col"><span class="badge badge-teal">PLR</span></span>
+        <span class="num rate-col"><span class="star">★★★★★</span> 14</span>
+        <span class="price">$3,200</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">008</span>
+        <div class="cover" style="background:linear-gradient(135deg,#2a3a2a 0%,#161f16 100%);"></div>
+        <span class="nm">Balance: Unity Between Work &amp; Life<span class="cat">Health &amp; Fitness</span></span>
+        <span class="num cat-col">HEA · VIDEO</span>
+        <span class="lic-col"><span class="badge badge-teal">PLR</span></span>
+        <span class="num rate-col"><span class="star">★★★★☆</span> 6</span>
+        <span class="price">$1,890</span>
+      </a>
+      <a href="#" class="row">
+        <span class="idx">009</span>
+        <div class="cover" style="background:linear-gradient(135deg,#3a1f3a 0%,#1f101f 100%);"></div>
+        <span class="nm">Canva Content &amp; Graphic Design<span class="cat">Design</span></span>
+        <span class="num cat-col">DES · BUNDLE</span>
+        <span class="lic-col"><span class="badge badge-teal">PLR</span></span>
+        <span class="num rate-col"><span class="star">★★★★★</span> 32</span>
+        <span class="price">$4,500</span>
+      </a>
+    </div>
+
+    <div class="pagination">
+      <button class="pg">← PREV</button>
+      <button class="pg active">01</button>
+      <button class="pg">02</button>
+      <button class="pg">03</button>
+      <button class="pg">04</button>
+      <span class="pg dots">…</span>
+      <button class="pg">19</button>
+      <button class="pg">NEXT →</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-mark"><span class="u">u</span><span class="t">t</span><span class="h">h</span>ena</div>
+        <p style="color:var(--text-2);font-size:14px;line-height:1.6;margin-top:20px;max-width:340px;">The home for digital product entrepreneurs. Six hundred and twelve private-label products, one platform, one operator.</p>
+      </div>
+      <div><h5>Marketplace</h5><ul><li><a href="#">All products</a></li><li><a href="#">Newest</a></li><li><a href="#">On sale</a></li><li><a href="#">Bundles</a></li></ul></div>
+      <div><h5>For partners</h5><ul><li><a href="#">Become a partner</a></li><li><a href="#">Affiliate program</a></li><li><a href="#">Reseller storefronts</a></li><li><a href="#">Payouts</a></li></ul></div>
+      <div><h5>Resources</h5><ul><li><a href="#">Licensing guide</a></li><li><a href="#">Journal</a></li><li><a href="#">Help center</a></li><li><a href="#">API</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Refunds</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 uthena, inc.</span>
+      <span>612 products · 15 categories · $0 platform fees</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

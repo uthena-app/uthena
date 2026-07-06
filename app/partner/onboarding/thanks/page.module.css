@@ -1,0 +1,44 @@
+/* /partner/onboarding/thanks — token-only page wrapper.
+   Mirrors the cadence of /partner/onboarding/welcome/page.module.css
+   so both routes feel like siblings. The ThanksPage component owns
+   its own layout; this is the vertical-rhythm wrapper. */
+
+.page {
+  min-height: calc(100vh - 64px);
+  background: var(--bg);
+  color: var(--text-1);
+}
+
+.rateLimited {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-9, 60px) var(--space-5, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+  align-items: flex-start;
+}
+
+.rateLimitedEyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--warn);
+  margin: 0;
+}
+
+.rateLimitedTitle {
+  font-size: var(--font-h3, 22px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--heading);
+  margin: 0;
+}
+
+.rateLimitedLede {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-2);
+  margin: 0;
+}

@@ -1,0 +1,73 @@
+/* CopyLinkButton — small button primitive used in the DefaultLinkHero
+   + the AllLinksTable row actions.
+
+   Matches the platform Button "secondary" variant feel but rendered
+   inline as an anchor (because some clicks are <a>nchor-style
+   bookmarks, not <button> actions). Has a visible focus ring,
+   disabled state, and a "Copied" momentary state via the
+   [data-just-copied] attribute driven by the client island. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev-1);
+  color: var(--heading);
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--bg-elev-2);
+  border-color: var(--line-strong);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--border-3, var(--accent));
+  outline-offset: 2px;
+}
+
+.btn:active:not(:disabled) {
+  background: var(--bg-elev-3);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* The "just copied" state — driven by [data-just-copied="true"] set
+   for ~1.6s after a successful copy. Mirrors the platform Toast
+   success tone. */
+.btn[data-just-copied='true'] {
+  background: var(--success-soft);
+  border-color: var(--success-line);
+  color: var(--success);
+}
+
+.btnLabel {
+  display: inline-block;
+  line-height: 1;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+}
+
+/* Full-width modifier — used inside the hero card (single dominant
+   CTA). Same component, just a different layout preference. */
+.fullWidth {
+  width: 100%;
+  justify-content: center;
+}

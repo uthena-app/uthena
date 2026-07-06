@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>p/ai-personal-branding — Uthena · Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="b-terminal.css">
+<style>
+  /* ==================== PRODUCT — Terminal ==================== */
+  /* Product page reads like a package README.
+     Two-col: cover/video on the left, "manifest" metadata on the right. */
+
+  .shell { display: grid; grid-template-columns: 1fr 320px; min-height: calc(100vh - 28px - 48px - 26px); }
+  @media (max-width: 1000px) { .shell { grid-template-columns: 1fr; } }
+
+  .shell-main { padding: 0; }
+  .shell-side { background: var(--bg-1); border-left: 1px solid var(--border); padding: 24px 20px; font-family: var(--font-mono); font-size: 11.5px; }
+
+  /* Page head */
+  .page-head { padding: 24px 32px; border-bottom: 1px solid var(--border); }
+  .page-head .path { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-3); margin-bottom: 8px; }
+  .page-head .path a { color: var(--text-2); }
+  .page-head .path .sep { color: var(--text-4); margin: 0 6px; }
+  .page-head .path .leaf { color: var(--text-1); }
+
+  /* Main grid: video + manifest */
+  .pdp { padding: 32px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; }
+  @media (max-width: 800px) { .pdp { grid-template-columns: 1fr; } }
+
+  /* Video */
+  .video { aspect-ratio: 16/9; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--r-md); position: relative; overflow: hidden; cursor: pointer; }
+  .video .art { position: absolute; inset: 0; background: linear-gradient(135deg, #1a2540 0%, #0d1322 100%); }
+  .video .art::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 50%, transparent 0%, rgba(7,9,12,0.6) 100%); }
+  .video .play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(123, 145, 255, 0.95);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+  }
+  .video .play::after { content: ""; width: 0; height: 0; border-left: 18px solid #07090C; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+  .video .chrome {
+    position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 2;
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(7, 9, 12, 0.7); backdrop-filter: blur(10px);
+    border: 1px solid var(--border); border-radius: var(--r-sm);
+    padding: 6px 10px;
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-2);
+  }
+  .video .chrome .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .video .chrome .spacer { flex: 1; }
+  .video .chrome .ctrl { color: var(--text-3); }
+
+  .video-meta { display: flex; gap: 16px; margin-top: 12px; font-family: var(--font-mono); font-size: 11.5px; color: var(--text-3); }
+  .video-meta .v { color: var(--text-1); }
+
+  /* Right — manifest (the buy box as a package.json) */
+  .manifest { border: 1px solid var(--border); border-radius: var(--r-md); background: var(--bg-1); overflow: hidden; }
+  .manifest-head { background: var(--bg-2); padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+  .manifest-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .manifest-head .nm { color: var(--text-1); }
+  .manifest-body { padding: 20px; }
+
+  .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .price-now { font-family: var(--font-mono); font-size: 36px; font-weight: 600; letter-spacing: -0.02em; }
+  .price-was { font-family: var(--font-mono); font-size: 14px; color: var(--text-3); text-decoration: line-through; }
+  .price-save { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--success); background: var(--success-soft); padding: 3px 8px; border-radius: var(--r-sm); }
+
+  .manifest-rows { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+  .mrow { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 4px 0; font-family: var(--font-mono); font-size: 12px; }
+  .mrow .k { color: var(--text-3); }
+  .mrow .v { color: var(--text-1); }
+  .mrow .v.accent { color: var(--accent); }
+  .mrow .v.success { color: var(--success); }
+
+  .license-picker { display: flex; flex-direction: column; gap: 6px; margin: 16px 0; }
+  .license-opt {
+    border: 1px solid var(--border); border-radius: var(--r-sm);
+    padding: 10px 12px; cursor: pointer;
+    display: grid; grid-template-columns: 16px 1fr auto; gap: 10px; align-items: center;
+    transition: border-color .12s ease, background .12s ease;
+    font-family: var(--font-mono); font-size: 12px;
+  }
+  .license-opt .radio { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--border-3); }
+  .license-opt.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .license-opt.selected .radio { border-color: var(--accent); background: var(--accent); box-shadow: inset 0 0 0 2px var(--bg-1); }
+  .license-opt .info .lname { color: var(--text-1); font-weight: 500; font-size: 12.5px; }
+  .license-opt .info .ldesc { color: var(--text-3); font-size: 11px; margin-top: 1px; }
+  .license-opt .lprice { font-family: var(--font-mono); font-weight: 600; }
+
+  .buy-trust { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); font-family: var(--font-mono); font-size: 11px; color: var(--text-3); }
+  .buy-trust-item { display: flex; gap: 8px; align-items: center; }
+  .buy-trust-item .ok { color: var(--success); }
+
+  /* Right inspector — like a properties panel */
+  .insp h5 { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); font-weight: 600; margin-bottom: 10px; }
+  .insp .group { background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-sm); margin-bottom: 16px; }
+  .insp .row { display: grid; grid-template-columns: 1fr auto; padding: 6px 10px; font-size: 11.5px; border-bottom: 1px solid var(--border); }
+  .insp .row:last-child { border-bottom: none; }
+  .insp .row .k { color: var(--text-3); }
+  .insp .row .v { color: var(--text-1); font-weight: 500; }
+  .insp .row .v.accent { color: var(--accent); }
+  .insp .row .v.success { color: var(--success); }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--bg-1); padding: 0 32px; }
+  .tab { padding: 12px 18px; font-family: var(--font-mono); font-size: 12px; color: var(--text-3); border-right: 1px solid var(--border); cursor: pointer; }
+  .tab:hover { color: var(--text-1); background: var(--bg-2); }
+  .tab.active { color: var(--accent); background: var(--bg-base); border-bottom: 1px solid var(--bg-base); margin-bottom: -1px; }
+
+  .tab-content { padding: 32px; }
+  .tab-content h3 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); margin: 32px 0 12px; font-family: var(--font-mono); }
+  .tab-content h3:first-child { margin-top: 0; }
+  .tab-content p { color: var(--text-2); margin-bottom: 12px; font-size: 14px; line-height: 1.65; }
+  .tab-content ul { color: var(--text-2); padding-left: 18px; margin-bottom: 12px; font-size: 14px; line-height: 1.8; }
+  .tab-content li::marker { color: var(--accent); }
+
+  /* Curriculum — file tree */
+  .curr { font-family: var(--font-mono); font-size: 12.5px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .curr .mod { background: var(--bg-1); border-bottom: 1px solid var(--border); }
+  .curr .mod-head { padding: 10px 14px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; cursor: pointer; }
+  .curr .mod-head:hover { background: var(--bg-2); }
+  .curr .mod-head .nm { color: var(--text-1); }
+  .curr .mod-head .nm::before { content: "▾ "; color: var(--accent); }
+  .curr .mod-head .meta { color: var(--text-3); font-size: 11px; }
+  .curr .lesson { display: grid; grid-template-columns: 24px 1fr 60px; gap: 10px; align-items: center; padding: 6px 14px 6px 32px; font-size: 12px; color: var(--text-2); border-top: 1px solid var(--border); }
+  .curr .lesson .ic { color: var(--text-4); }
+  .curr .lesson.preview { color: var(--text-1); }
+  .curr .lesson.preview .lic { color: var(--accent); }
+  .curr .lesson .ldur { text-align: right; color: var(--text-3); font-size: 11px; }
+
+  /* Reviews */
+  .reviews { display: grid; grid-template-columns: 240px 1fr; gap: 32px; }
+  @media (max-width: 768px) { .reviews { grid-template-columns: 1fr; } }
+  .rating-summary { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); padding: 20px; }
+  .rating-big { font-family: var(--font-mono); font-size: 48px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
+  .rating-stars { color: var(--warn); font-size: 13px; letter-spacing: 2px; margin: 8px 0; }
+  .rating-count { color: var(--text-3); font-size: 11.5px; font-family: var(--font-mono); }
+  .rating-bar { display: grid; grid-template-columns: 24px 1fr 30px; align-items: center; gap: 8px; margin-top: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+  .rating-bar .bar { height: 4px; background: var(--bg-2); border-radius: 99px; overflow: hidden; }
+  .rating-bar .fill { height: 100%; background: var(--accent); }
+  .rating-bar .num { text-align: right; color: var(--text-3); }
+
+  .review { padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .review:last-child { border-bottom: none; }
+  .review-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .review .stars { color: var(--warn); letter-spacing: 1px; font-size: 11px; }
+  .review .date { color: var(--text-3); font-size: 11px; font-family: var(--font-mono); margin-top: 4px; }
+  .review .author { font-weight: 500; font-size: 13px; }
+  .review .verified { color: var(--success); font-size: 10.5px; font-family: var(--font-mono); margin-top: 2px; }
+  .review p { color: var(--text-2); font-size: 13.5px; line-height: 1.65; }
+
+  .related { padding: 32px; border-top: 1px solid var(--border); background: var(--bg-1); }
+  .related h3 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); margin-bottom: 16px; font-family: var(--font-mono); }
+  .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 768px) { .related-grid { grid-template-columns: repeat(2, 1fr); } }
+  .rc { background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 12px; transition: border-color .12s ease; }
+  .rc:hover { border-color: var(--border-2); }
+  .rc .nm { font-size: 12.5px; color: var(--text-1); font-weight: 500; margin-bottom: 4px; line-height: 1.35; }
+  .rc .meta { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3); display: flex; justify-content: space-between; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<div class="var-tag">B · TERMINAL · PRODUCT</div>
+
+<div class="ide-bar">
+  <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+  <div class="tabs">
+    <span class="tab active">uthena — /products/ai-personal-branding</span>
+    <span class="tab">course.json</span>
+    <span class="tab">reviews.json</span>
+  </div>
+  <div class="right">
+    <span>v3.2.1</span>
+    <span>main</span>
+    <span>UTC+7 08:14</span>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo"><span class="mark">u</span>uthena</a>
+    <div class="nav-crumbs">
+      <span>uthena</span><span class="sep">/</span>
+      <span>marketplace</span><span class="sep">/</span>
+      <span>ai-courses</span><span class="sep">/</span>
+      <span class="leaf">ai-personal-branding</span>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-search">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="search 612 products">
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="#">cart · 0</a>
+      <a class="btn btn-secondary btn-sm" href="#">Sign in</a>
+      <a class="btn btn-primary btn-sm" href="#">Get started</a>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="path">
+    <a href="#">marketplace</a><span class="sep">/</span>
+    <a href="#">ai-courses</a><span class="sep">/</span>
+    <span class="leaf">ai-personal-branding</span>
+  </div>
+</div>
+
+<div class="shell">
+  <main class="shell-main">
+    <div class="pdp">
+      <!-- Video -->
+      <div>
+        <div class="video">
+          <div class="art"></div>
+          <div class="play"></div>
+          <div class="chrome">
+            <span class="dot"></span>
+            <span>preview · lesson 01</span>
+            <span class="spacer"></span>
+            <span class="ctrl">0:32 / 4:12</span>
+            <span class="ctrl">↗ fullscreen</span>
+          </div>
+        </div>
+        <div class="video-meta">
+          <span>lesson <span class="v">01</span> / 47</span>
+          <span>length <span class="v">4:12</span></span>
+          <span>module <span class="v">01</span> · Foundations</span>
+          <span>subtitles <span class="v">EN</span></span>
+        </div>
+      </div>
+
+      <!-- Manifest / Buy box -->
+      <div class="manifest">
+        <div class="manifest-head">
+          <span class="dot"></span>
+          <span>course.json</span>
+          <span style="margin-left:auto;">read-only</span>
+        </div>
+        <div class="manifest-body">
+          <div class="price-row">
+            <div class="price-now">$5,700</div>
+            <div class="price-was">$11,400</div>
+            <div class="price-save">-50%</div>
+          </div>
+
+          <div class="manifest-rows">
+            <div class="mrow"><span class="k">name</span><span class="v">"AI for Personal Branding"</span></div>
+            <div class="mrow"><span class="k">category</span><span class="v">"ai-courses"</span></div>
+            <div class="mrow"><span class="k">type</span><span class="v">"video-course"</span></div>
+            <div class="mrow"><span class="k">lessons</span><span class="v">47</span></div>
+            <div class="mrow"><span class="k">duration</span><span class="v">"4h 12m"</span></div>
+            <div class="mrow"><span class="k">modules</span><span class="v">8</span></div>
+            <div class="mrow"><span class="k">instructor</span><span class="v accent">"digital_crest"</span></div>
+            <div class="mrow"><span class="k">rating</span><span class="v">★★★★☆ 4.7 / 5</span></div>
+            <div class="mrow"><span class="k">students</span><span class="v">8,420+</span></div>
+            <div class="mrow"><span class="k">updated</span><span class="v">"2026-05-12"</span></div>
+            <div class="mrow"><span class="k">scan</span><span class="v success">✓ clean</span></div>
+          </div>
+
+          <div class="label-mono" style="color:var(--text-3);margin-bottom:8px;">license</div>
+          <div class="license-picker">
+            <div class="license-opt selected">
+              <div class="radio"></div>
+              <div class="info">
+                <div class="lname">PLR</div>
+                <div class="ldesc">edit, rebrand, resell · 100% revenue</div>
+              </div>
+              <div class="lprice">$5,700</div>
+            </div>
+            <div class="license-opt">
+              <div class="radio"></div>
+              <div class="info">
+                <div class="lname">MRR</div>
+                <div class="ldesc">sell resell rights · 100% revenue</div>
+              </div>
+              <div class="lprice">$8,200</div>
+            </div>
+          </div>
+
+          <a class="btn btn-primary" style="width:100%;justify-content:center;padding:10px;" href="#">$ uthena cart add ai-personal-branding</a>
+
+          <div class="buy-trust">
+            <div class="buy-trust-item"><span class="ok">✓</span> 14-day return rights</div>
+            <div class="buy-trust-item"><span class="ok">✓</span> Instant download</div>
+            <div class="buy-trust-item"><span class="ok">✓</span> Lifetime updates</div>
+            <div class="buy-trust-item"><span class="ok">✓</span> Malware scanned (clean)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <a class="tab active">README.md</a>
+      <a class="tab">curriculum/</a>
+      <a class="tab">LICENSE</a>
+      <a class="tab">reviews.json · 3</a>
+    </div>
+
+    <div class="tab-content">
+      <h3>// description</h3>
+      <p>A complete, end-to-end playbook for building a personal brand on social media using AI tools. The course covers positioning, content production, audience growth, monetisation, and the day-to-day operations of running a one-person media business.</p>
+
+      <h3>// what's-included</h3>
+      <ul>
+        <li>47 video lessons across 8 modules</li>
+        <li>Full transcript and slide decks</li>
+        <li>Content calendar template and prompt library</li>
+        <li>Private label rights — your name, your brand, your revenue</li>
+      </ul>
+
+      <h3>// who-this-is-for</h3>
+      <p>Digital entrepreneurs, course creators, affiliate marketers, and agencies who want to add personal-brand services or products to their offering.</p>
+    </div>
+
+    <div class="tab-content">
+      <h3>// curriculum.tree</h3>
+      <div class="curr">
+        <div class="mod">
+          <div class="mod-head">
+            <span class="nm">module-01-foundations/</span>
+            <span class="meta">6 lessons · 28 min</span>
+          </div>
+          <div class="lesson preview">
+            <span class="ic">▶</span>
+            <div>
+              <div>01-why-a-personal-brand.md</div>
+              <div class="lic">preview</div>
+            </div>
+            <div class="ldur">4:12</div>
+          </div>
+          <div class="lesson"><span class="ic">·</span><div>02-the-ai-stack-2026.md</div><div class="ldur">5:48</div></div>
+          <div class="lesson"><span class="ic">·</span><div>03-positioning-without-a-niche.md</div><div class="ldur">6:21</div></div>
+          <div class="lesson"><span class="ic">·</span><div>04-the-first-90-days.md</div><div class="ldur">5:04</div></div>
+        </div>
+
+        <div class="mod">
+          <div class="mod-head">
+            <span class="nm">module-02-content-production/</span>
+            <span class="meta">8 lessons · 42 min</span>
+          </div>
+          <div class="lesson preview">
+            <span class="ic">▶</span>
+            <div>
+              <div>01-the-content-engine.md</div>
+              <div class="lic">preview</div>
+            </div>
+            <div class="ldur">6:18</div>
+          </div>
+          <div class="lesson"><span class="ic">·</span><div>02-hooks-that-stop-the-scroll.md</div><div class="ldur">5:32</div></div>
+          <div class="lesson"><span class="ic">·</span><div>03-short-form-scripts.md</div><div class="ldur">7:04</div></div>
+        </div>
+
+        <div class="mod">
+          <div class="mod-head">
+            <span class="nm">module-03-distribution/</span>
+            <span class="meta">7 lessons · 38 min</span>
+          </div>
+          <div class="lesson"><span class="ic">·</span><div>01-cross-platform-repurposing.md</div><div class="ldur">4:55</div></div>
+          <div class="lesson"><span class="ic">·</span><div>02-algorithm-factors.md</div><div class="ldur">5:48</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <h3>// reviews.summary</h3>
+      <div class="reviews">
+        <div class="rating-summary">
+          <div class="rating-big">4.7</div>
+          <div class="rating-stars">★★★★★</div>
+          <div class="rating-count">3 verified reviews</div>
+          <div class="rating-bar"><span>5★</span><div class="bar"><div class="fill" style="width:66%"></div></div><span class="num">2</span></div>
+          <div class="rating-bar"><span>4★</span><div class="bar"><div class="fill" style="width:33%"></div></div><span class="num">1</span></div>
+          <div class="rating-bar"><span>3★</span><div class="bar"><div class="fill" style="width:0%"></div></div><span class="num">0</span></div>
+          <div class="rating-bar"><span>2★</span><div class="bar"><div class="fill" style="width:0%"></div></div><span class="num">0</span></div>
+          <div class="rating-bar"><span>1★</span><div class="bar"><div class="fill" style="width:0%"></div></div><span class="num">0</span></div>
+        </div>
+
+        <div>
+          <div class="review">
+            <div class="review-head">
+              <div>
+                <div class="author">Craig Ballantyne</div>
+                <div class="verified">✓ verified</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="stars">★★★★★</div>
+                <div class="date">2026-02-03</div>
+              </div>
+            </div>
+            <p>I bought the courses to resell and am very happy with the quality. The structure is solid, the modules build on each other, and the templates save me days of work.</p>
+          </div>
+          <div class="review">
+            <div class="review-head">
+              <div>
+                <div class="author">Joe Holbrook</div>
+                <div class="verified">✓ verified</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="stars">★★★★★</div>
+                <div class="date">2026-01-08</div>
+              </div>
+            </div>
+            <p>Course is well organized and flows well. Engaging for anyone looking to build a personal brand with AI tools. The PLR license means I can rebrand and resell it as my own.</p>
+          </div>
+          <div class="review">
+            <div class="review-head">
+              <div>
+                <div class="author">Anonymous</div>
+                <div class="verified">✓ verified</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="stars">★★★★☆</div>
+                <div class="date">2026-03-16</div>
+              </div>
+            </div>
+            <p>Very satisfied. The course is clear and the templates work out of the box. Would love a module on LinkedIn.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>// related.json</h3>
+      <div class="related-grid">
+        <a href="#" class="rc">
+          <div class="nm">Python Pro — Complete Bootcamp</div>
+          <div class="meta"><span>PLR</span><span>$9,781</span></div>
+        </a>
+        <a href="#" class="rc">
+          <div class="nm">Network Hacking 2025</div>
+          <div class="meta"><span>PLR</span><span>$9,781</span></div>
+        </a>
+        <a href="#" class="rc">
+          <div class="nm">B2B Sales Skills</div>
+          <div class="meta"><span>PLR</span><span style="color:var(--success);">$79</span></div>
+        </a>
+        <a href="#" class="rc">
+          <div class="nm">AI Explained for Beginners</div>
+          <div class="meta"><span>PLR</span><span>$6,781</span></div>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Inspector -->
+  <aside class="shell-side insp">
+    <h5>// properties</h5>
+    <div class="group">
+      <div class="row"><span class="k">id</span><span class="v">PRD-0421</span></div>
+      <div class="row"><span class="k">slug</span><span class="v">ai-personal-branding</span></div>
+      <div class="row"><span class="k">version</span><span class="v">3.2.0</span></div>
+      <div class="row"><span class="k">size</span><span class="v">12.4 GB</span></div>
+      <div class="row"><span class="k">checksum</span><span class="v" style="font-size:10px;color:var(--text-3);">9f4a·2b1c·7d8e</span></div>
+    </div>
+
+    <h5>// sales.last-30d</h5>
+    <div class="group">
+      <div class="row"><span class="k">Total</span><span class="v">142</span></div>
+      <div class="row"><span class="k">Revenue</span><span class="v success">$80,940</span></div>
+      <div class="row"><span class="k">Avg. price</span><span class="v">$5,700</span></div>
+      <div class="row"><span class="k">Refund rate</span><span class="v">0.7%</span></div>
+    </div>
+
+    <h5>// instructor</h5>
+    <div class="group">
+      <div class="row"><span class="k">name</span><span class="v">digital_crest</span></div>
+      <div class="row"><span class="k">courses</span><span class="v">12</span></div>
+      <div class="row"><span class="k">rating</span><span class="v">4.8 / 5</span></div>
+      <div class="row"><span class="k">lifetime</span><span class="v">$324k</span></div>
+      <div class="row"><span class="k">joined</span><span class="v">2024-03</span></div>
+    </div>
+
+    <h5>// trust</h5>
+    <div class="group">
+      <div class="row"><span class="k">virus scan</span><span class="v success">✓ clean</span></div>
+      <div class="row"><span class="k">plr check</span><span class="v success">✓ verified</span></div>
+      <div class="row"><span class="k">quality</span><span class="v success">✓ reviewed</span></div>
+      <div class="row"><span class="k">dispute rate</span><span class="v">0.1%</span></div>
+    </div>
+  </aside>
+</div>
+
+<div class="status-bar">
+  <div class="seg"><span class="dot live"></span><span>All systems normal</span></div>
+  <div class="seg"><span>course.json · 47 lessons</span></div>
+  <div class="seg"><span>12.4 GB</span></div>
+  <div class="right">
+    <span>142 sales · 30d</span>
+    <span>p95 · 184ms</span>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><h5>Uthena</h5><p class="t-sm t-mute" style="max-width:300px;">The wholesale catalogue behind a generation of digital product businesses.</p></div>
+      <div><h5>Marketplace</h5><ul><li><a href="#">All products</a></li><li><a href="#">Newest</a></li><li><a href="#">On sale</a></li><li><a href="#">Bundles</a></li></ul></div>
+      <div><h5>Earn</h5><ul><li><a href="#">Affiliate</a></li><li><a href="#">Partner</a></li><li><a href="#">Reseller</a></li><li><a href="#">Payouts</a></li></ul></div>
+      <div><h5>Developers</h5><ul><li><a href="#">API</a></li><li><a href="#">CLI</a></li><li><a href="#">Webhooks</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Status</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Uthena, Inc. · v3.2.1</span>
+      <span>main · UTC+7</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+/* OnboardingBanner — callouts that surface missing-but-actionable
+   setup steps. Tones:
+     - info    (pending review)
+     - warn    (payout method missing — actionable)
+     - danger  (suspended — non-actionable) */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+}
+
+.banner[data-tone='info'] {
+  border-color: var(--line);
+  background: var(--bg-elev-1);
+}
+
+.banner[data-tone='warn'] {
+  border-color: var(--warn-line, var(--line));
+  background: var(--bg-elev-1);
+}
+
+.banner[data-tone='danger'] {
+  border-color: var(--danger-line, var(--danger));
+  background: var(--bg-elev-1);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0 0 4px;
+}
+
+.banner[data-tone='danger'] .title {
+  color: var(--danger);
+}
+
+.banner[data-tone='warn'] .title {
+  color: var(--warn);
+}
+
+.copy {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.cta {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--teal);
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.cta:hover {
+  background: var(--teal);
+  color: var(--on-teal, var(--bg));
+}
+
+@media (max-width: 640px) {
+  .banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

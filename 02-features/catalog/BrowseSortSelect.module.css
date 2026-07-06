@@ -1,0 +1,59 @@
+/* BrowseSortSelect — native <select> styled to match the mockup
+   results head. The caret is a pure-CSS chevron (no inline SVG);
+   the "appearance: none" hides the platform's default chrome so we
+   can use the same shape across desktop + mobile. */
+
+.wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.label {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text-soft);
+  text-transform: none;
+}
+
+.select {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  color: var(--heading);
+  height: 32px;
+  padding: 0 32px 0 10px;
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  /* Two-color chevron built from two linear-gradients positioned
+     to the right edge. Matches the mockup's triangle picker shape. */
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--text-soft) 50%),
+    linear-gradient(135deg, var(--text-soft) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+}
+
+.select:hover {
+  border-color: var(--line-strong);
+}
+
+.select:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.select option {
+  background: var(--bg-elev-1);
+  color: var(--heading);
+}

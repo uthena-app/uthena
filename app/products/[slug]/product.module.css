@@ -1,0 +1,209 @@
+/* Product detail page. P0.12 Slices 1+2+3 — top section (gallery +
+ * rating row + price block + license radio + perks) is mockup-
+ * faithful. P0.12 Slice 4 — below-the-fold tabs (Description /
+ * Curriculum / Instructor / Reviews). P0.12 Slice 5 — the "At a
+ * glance" sidebar (`.brief` mockup block) sits to the right of
+ * the tabs as a sticky 320 px rail.
+ *
+ * The top section (`.pdpTop`) matches `mockups/styles/main.css`
+ * line 256 (`.pdp-top { grid-template-columns: 1.15fr 0.85fr; }`).
+ * The 1.15/0.85 split keeps the gallery visually dominant while
+ * the pinfo column holds the rating row, price block, license
+ * radio, and CTA.
+ *
+ * The below-the-fold (`.pdpBelow`) matches `.pdp-below` on
+ * `mockups/styles/main.css` line 297 (`grid-template-columns:
+ * 1fr 320px;`). On tablet / mobile (< 1024 px) the two columns
+ * stack into a single column (the sidebar's `position: sticky` is
+ * also disabled at that breakpoint so it scrolls naturally). */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-3);
+  margin-bottom: 24px;
+}
+
+.breadcrumb a {
+  color: var(--text-2);
+  text-decoration: none;
+}
+.breadcrumb a:hover {
+  color: var(--accent);
+}
+
+.bcSep {
+  color: var(--text-4);
+}
+
+.bcCurrent {
+  color: var(--text-1);
+  font-weight: 500;
+}
+
+/* ===== P0.12 Slice 1+2 — Top section (pdpTop) ===== */
+
+.pdpTop {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--s-7);
+  align-items: start;
+}
+
+.pinfo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.header {
+  margin-bottom: 0;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.55;
+  margin-top: 16px;
+}
+
+.noPricing {
+  color: var(--text-3);
+  font-size: 14px;
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* ===== P8.2 — "Included with Personal Access" callout (PDP) =====
+ * Rendered in the `.pinfo` column when the current user has an
+ * active Personal Access subscription that includes this product.
+ * Full-width teal-soft card so it visually interrupts the "buy"
+ * flow with a "you already have access" signal. Sits between the
+ * rating row + lede and the price block so the user's eye lands
+ * on it just before they look at the price.
+ *
+ * Companion to the small inline pill on `ProductCard.tsx` (catalog
+ * grid) — same color DNA, same icon, different layout (full-width
+ * vs inline-pill) because the PDP can afford the real estate. */
+.includedBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  background: var(--teal-soft);
+  border: 1px solid var(--teal-line);
+  border-radius: var(--r-md);
+  color: var(--teal);
+}
+
+.includedBannerIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-pill);
+  background: var(--teal);
+  color: var(--on-accent);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.includedBannerBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.includedBannerTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--teal);
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+
+.includedBannerText {
+  font-size: 13px;
+  color: var(--text-1);
+  line-height: 1.45;
+}
+
+.includedBannerLink {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.includedBannerLink:hover {
+  color: var(--accent-hover);
+}
+
+/* ===== P0.12 Slice 4+5 — Below-the-fold (pdpBelow) =====
+ *
+ * `.pdpBelow` sits below `.pdpTop` with a comfortable top margin
+ * (`var(--s-8)`) so the eye registers the shift from product card
+ * to product details. The 2-column grid mirrors the mockup's
+ * `.pdp-below` rule (line 297 of main.css): tabs (`1fr`) on the
+ * left, the `.brief` sidebar (`320px`) on the right. The tabs
+ * wrap in `.pdpTabs` so the right rail can stretch to its full
+ * 320 px regardless of how long the tab content is. */
+
+.pdpBelow {
+  margin-top: var(--s-8);
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--s-7);
+  align-items: start;
+}
+
+.pdpTabs {
+  min-width: 0;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 1024px) {
+  .pdpTop {
+    grid-template-columns: 1fr;
+  }
+  .pdpBelow {
+    grid-template-columns: 1fr;
+  }
+  .h1 {
+    font-size: 28px;
+  }
+}

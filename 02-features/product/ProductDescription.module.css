@@ -1,0 +1,116 @@
+/* ProductDescription — `.prose` block from
+ * `mockups/styles/main.css` lines 302–306. Token-only.
+ *
+ * The styles mirror the mockup's `.prose` rules:
+ *   - h2 (and h3, if the partner uses them) → display font, 20px,
+ *     teal-tinted headings, tight letter-spacing.
+ *   - p, li → 14px body, comfortable 1.6 line-height, soft text color.
+ *   - ul / ol → 1.2em left padding, teal marker.
+ *   - a → teal, underline-on-hover.
+ *   - blockquote → left teal border + soft text.
+ *   - code (inline) → mono, soft background.
+ *   - pre code → mono, soft elevated background, small radius.
+ *
+ * No magic literals. The only literal is the line-height (1.6) and
+ * letter-spacing (-0.01em) — both come from the mockup's prose
+ * rhythm and have no clean token equivalent. */
+
+.prose {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.prose :global(h2),
+.prose :global(h3) {
+  font-family: var(--font-display);
+  color: var(--heading);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: var(--s-6);
+  margin-bottom: var(--s-3);
+}
+
+.prose :global(h2) {
+  font-size: 20px;
+}
+
+.prose :global(h3) {
+  font-size: 17px;
+}
+
+.prose :global(p) {
+  margin: 0 0 var(--s-3);
+  color: var(--text);
+}
+
+.prose :global(ul),
+.prose :global(ol) {
+  padding-left: 1.2em;
+  margin: 0 0 var(--s-3);
+}
+
+.prose :global(li) {
+  margin: 4px 0;
+  color: var(--text);
+}
+
+.prose :global(li::marker) {
+  color: var(--teal);
+}
+
+.prose :global(strong) {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.prose :global(em) {
+  font-style: italic;
+}
+
+.prose :global(a) {
+  color: var(--teal);
+  text-decoration: none;
+}
+.prose :global(a:hover) {
+  text-decoration: underline;
+}
+
+.prose :global(blockquote) {
+  margin: var(--s-3) 0;
+  padding: var(--s-2) var(--s-4);
+  border-left: 3px solid var(--teal);
+  color: var(--text-2);
+  background: var(--teal-soft);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+
+.prose :global(code) {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: var(--bg-elev-2);
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  color: var(--heading);
+}
+
+.prose :global(pre) {
+  margin: var(--s-3) 0;
+  padding: var(--s-3);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow-x: auto;
+}
+
+.prose :global(pre code) {
+  background: transparent;
+  padding: 0;
+  font-size: 12px;
+}
+
+.prose :global(hr) {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: var(--s-5) 0;
+}

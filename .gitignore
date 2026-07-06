@@ -1,0 +1,38 @@
+# deps
+node_modules
+
+# build output
+.next
+dist
+coverage
+playwright-report
+test-results
+output
+*.tsbuildinfo
+next-env.d.ts
+
+# secrets
+.env
+.env.local
+.env.*.local
+
+# logs
+*.log
+
+# os / editor
+.DS_Store
+.idea
+.vscode
+.swc
+.turbo
+.vercel
+
+# agent tooling + scratch
+.harness
+.mavis
+.opencode
+
+# manual backups + archives (use git history instead)
+*.bak
+*.bak.*
+*.zip

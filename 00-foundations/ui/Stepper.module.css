@@ -1,0 +1,181 @@
+/* Stepper — token-only. Mirrors mockup's progress-indicator rhythm:
+   numbered bubbles connected by hairline lines, with a current-step
+   accent (--action) and a dim "upcoming" state. */
+
+.shell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5, 20px);
+  flex-wrap: wrap;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Horizontal layout (default): items in a row, connector line
+   extends from each item's right edge into the next. */
+.o_horizontal {
+  flex-direction: row;
+}
+
+/* Vertical layout: stacked, no connectors, more breathing room.
+   Intended for narrow sidebar use cases. */
+.o_vertical {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-3, 12px);
+}
+
+.o_vertical .connector {
+  display: none;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 0;
+}
+
+.o_horizontal .item:last-child {
+  flex: 0 0 auto;
+}
+
+.bubble {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--text-3);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.bubbleNum {
+  line-height: 1;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.desc {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The connector between items. Sits at the right edge of the bubble's
+   slot, extends to the next item. Token-only hairline. */
+.connector {
+  flex: 1 1 auto;
+  height: 1px;
+  margin: 0 12px;
+  background: var(--line);
+  align-self: center;
+  min-width: 16px;
+}
+
+/* ---- State: current step. ---- */
+.itemCurrent {
+  color: var(--heading);
+}
+.itemCurrent .bubble {
+  background: var(--action-soft, rgba(243, 146, 74, 0.12));
+  border-color: var(--action, var(--orange));
+  color: var(--action, var(--orange));
+}
+
+/* ---- State: completed step. ---- */
+.itemDone .bubble {
+  background: var(--success-soft, var(--teal-soft, rgba(46, 196, 182, 0.12)));
+  border-color: var(--success-line, var(--teal-line, rgba(46, 196, 182, 0.30)));
+  color: var(--success, var(--teal));
+}
+.itemDone .label {
+  color: var(--text-2);
+}
+
+/* Past-step connectors turn green-teal to show progress. The next
+   "current" connector stays neutral so the eye is drawn forward. */
+.itemDone + .item .connector,
+.itemDone .connector {
+  background: var(--success-line, var(--teal-line, rgba(46, 196, 182, 0.30)));
+}
+
+/* ---- State: upcoming step. ---- */
+.itemUpcoming {
+  color: var(--text-3);
+}
+
+.trailing {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Screen-reader-only state suffix. Matches the pattern used by other
+   primitives (e.g. ProductCard's stars label). */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mobile breakpoint: hide the description under the label so the
+   bar still fits in a 360px column. The label itself stays. */
+@media (max-width: 640px) {
+  .desc {
+    display: none;
+  }
+  .connector {
+    margin: 0 6px;
+    min-width: 8px;
+  }
+  .label {
+    font-size: 12px;
+  }
+}

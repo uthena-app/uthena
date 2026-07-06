@@ -1,0 +1,304 @@
+/* BundleCard — token-only styles. Matches the ProductCard dimensions
+   so bundle cards and product cards can sit in the same grid without
+   the layout reflowing. The differences are:
+   1. A "Bundle" pill on the cover (top-left, in the teal identity).
+   2. A 3-thumb preview strip at the bottom of the body (the "N courses
+      included" affordance).
+   3. The license pill on the cover is moved down to make room for
+      the Bundle pill (no overlap). */
+
+/* ===== Card shell (mirrors ProductCard) ===== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+
+.card:hover {
+  border-color: var(--teal-line);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+/* ===== Cover (16:9) ===== */
+
+.cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--bg-elev-2);
+  overflow: hidden;
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--bg-elev-2) 0%, var(--bg-elev-3) 100%);
+}
+
+/* "Bundle" pill — top-left, teal identity treatment. Mirrors the
+   PLR/Personal license pill color so bundle cards and PLR cards
+   share the same identity palette. */
+.bundlePill {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  background: var(--teal);
+  color: var(--on-accent);
+  border: 1px solid var(--teal);
+  backdrop-filter: blur(8px);
+  text-transform: uppercase;
+}
+
+/* License pill (PLR / MRR / RR / Personal) — bottom-right, moved
+   from the standard ProductCard position because the Bundle pill
+   now occupies the top-left corner. PLR / Personal use the teal
+   identity; MRR uses the orange action (matches the design DNA
+   + the PLR/MRR differentiation in the existing ProductCard). */
+.lic {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  background: var(--teal);
+  color: var(--on-accent);
+  border: 1px solid var(--teal);
+  backdrop-filter: blur(8px);
+  text-transform: uppercase;
+}
+
+.licMrr {
+  background: var(--orange);
+  color: var(--on-action);
+  border-color: var(--orange);
+}
+
+/* ===== Body (padded content) ===== */
+
+.body {
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+/* ===== Meta row (category · course count) ===== */
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+.metaRow > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metaRow > span:last-child {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ===== "Included with Personal Access" badge (P8.2) =====
+ * Same color DNA as ProductCard.includedBadge — teal identity claim
+ * for the active Personal Access subscription. Pill sits between
+ * the meta row and the title so it catches the eye without competing
+ * with the cover-overlay "Bundle" pill or the license pill. */
+.includedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  background: var(--teal-soft);
+  color: var(--teal);
+  border: 1px solid var(--teal-line);
+  line-height: 1;
+  max-width: 100%;
+}
+
+.includedCheck {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  transform: translateY(-0.5px);
+}
+
+/* ===== Title (two-line clamp) ===== */
+
+.title {
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--heading);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== Stars + count ===== */
+
+.stars {
+  font-size: 11px;
+  color: var(--star);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.starsCt {
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== Included-courses preview strip =====
+   3 small thumbs in a row + a "+N more" pill when there are more
+   than 3 included courses. The strip is the visual signature of a
+   bundle card — it's what tells the buyer at a glance "this is a
+   curated set, not a single course". */
+
+.preview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  gap: 6px;
+  margin-top: 6px;
+  align-items: stretch;
+}
+
+.previewItem {
+  aspect-ratio: 1 / 1;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.previewThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.previewPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--bg-elev-2) 0%, var(--bg-elev-3) 100%);
+}
+
+.previewMore {
+  /* Square pill matching the thumbs' height. The "+N" text is the
+     inclusion count beyond the 3 visible thumbs. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  background: var(--bg-elev-2);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-soft);
+  min-width: 36px;
+  letter-spacing: 0.02em;
+}
+
+/* ===== Price row (now · was · save%) ===== */
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.priceNow {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--heading);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.priceWas {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-left: -2px;
+  text-decoration: line-through;
+}
+
+.save {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--orange);
+  border: 1px solid var(--orange-line);
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  margin-left: auto;
+  letter-spacing: 0.02em;
+}

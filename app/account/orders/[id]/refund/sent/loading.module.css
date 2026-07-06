@@ -1,0 +1,49 @@
+/* /account/orders/[id]/refund/sent loading fallback — mirrors the
+   confirmation page shape: checkmark + title + reference + body +
+   "What happens next" card + 2 action buttons. Token-only. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 640px;
+}
+
+.iconRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.refLine {
+  display: flex;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.next {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}

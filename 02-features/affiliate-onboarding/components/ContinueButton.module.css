@@ -1,0 +1,12 @@
+/* ContinueButton — client-island CTA styles. The Button primitive
+   owns its own visual treatment; this module is reserved for any
+   wrapper spacing the toolbar needs. */
+
+.continueBtn {
+  /* The Button primitive is fully styled; this class is here so the
+     shell's toolbar layout can target the button without reaching
+     into the primitive's internals. */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+}

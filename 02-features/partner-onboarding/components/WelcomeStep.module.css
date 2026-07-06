@@ -1,0 +1,105 @@
+/* WelcomeStep — token-only. No inline colors. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5, 20px);
+  max-width: 640px;
+}
+
+.h2 {
+  font-size: var(--font-h3, 22px);
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+}
+
+.lede {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-1);
+  margin: 0;
+}
+
+.callout {
+  font-weight: 700;
+  color: var(--success);
+}
+
+.what {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-5, 20px);
+}
+
+.h3 {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+  margin: 0 0 var(--space-3, 12px);
+}
+
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+.check {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: flex-start;
+  gap: var(--space-3, 12px);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--success-soft, rgba(46, 196, 182, 0.12));
+  color: var(--success, var(--teal));
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.inlineLink {
+  color: var(--action);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.inlineLink:hover {
+  text-decoration: none;
+}
+
+.inlineLink:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.note {
+  background: var(--accent-soft, rgba(243, 146, 74, 0.10));
+  border: 1px solid var(--accent-line, rgba(243, 146, 74, 0.30));
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-4, 16px);
+}
+
+.noteText {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-1);
+  margin: 0;
+}

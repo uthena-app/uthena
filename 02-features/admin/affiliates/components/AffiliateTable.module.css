@@ -1,0 +1,148 @@
+/* AffiliateTable.module.css — main data table on /admin/affiliates.
+   Mirrors partner table styles. */
+
+.tableScroll {
+  overflow-x: auto;
+  background: var(--bg-elev-1, #15181b);
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 10px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-elev-2, #1a1d20);
+  border-bottom: 1px solid var(--line, #2a2f35);
+  color: var(--text-soft, #b6bcc4);
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 14px;
+  white-space: nowrap;
+}
+
+.table thead th[data-align='right'] {
+  text-align: right;
+}
+
+.table tbody td {
+  border-bottom: 1px solid var(--line, #2a2f35);
+  padding: 12px 14px;
+  color: var(--text-1, #f4f4f4);
+  vertical-align: middle;
+}
+
+.table tbody td[data-align='right'] {
+  text-align: right;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: color-mix(in srgb, var(--bg-elev-2, #1a1d20) 50%, transparent);
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-num, ui-monospace, SFMono-Regular, monospace);
+}
+
+.nameLink {
+  color: var(--text-1, #f4f4f4);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nameLink:hover {
+  color: var(--accent, #1abc9c);
+  text-decoration: underline;
+}
+
+.handleCell {
+  color: var(--text-soft, #b6bcc4);
+  font-family: var(--font-num, ui-monospace, SFMono-Regular, monospace);
+  font-size: 13px;
+}
+
+.emailCell {
+  color: var(--text-soft, #b6bcc4);
+  font-size: 13px;
+}
+
+.status {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid currentColor;
+}
+
+.status[data-status='pending'] {
+  color: var(--warn, #f3924a);
+}
+
+.status[data-status='approved'] {
+  color: var(--success, #2ecc71);
+}
+
+.status[data-status='suspended'] {
+  color: var(--danger, #e74c3c);
+}
+
+.sortLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.sortLink:hover {
+  color: var(--text-1, #f4f4f4);
+}
+
+.sortLink[data-active='true'] {
+  color: var(--accent, #1abc9c);
+}
+
+.arrow {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.summary {
+  margin: var(--space-3, 12px) 0 0 0;
+  color: var(--text-soft, #b6bcc4);
+  font-size: 13px;
+}
+
+.empty {
+  background: var(--bg-elev-1, #15181b);
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 10px;
+  padding: var(--space-6, 32px);
+  text-align: center;
+}
+
+.emptyText {
+  margin: 0 0 var(--space-3, 12px) 0;
+  color: var(--text-soft, #b6bcc4);
+}
+
+.emptyLink {
+  color: var(--accent, #1abc9c);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.emptyLink:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,76 @@
+/* RefundPagination.module.css — the URL-driven pager below the refund
+   queue list. Mirrors OrderPagination's module shape. */
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+  margin-bottom: var(--space-5, 24px);
+  flex-wrap: wrap;
+}
+
+.pages {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.pageItem {
+  display: inline-flex;
+  align-items: center;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 var(--space-3, 12px);
+  background: var(--bg-elev-2, #1c2024);
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 8px;
+  color: var(--text-1, #f4f4f4);
+  text-decoration: none;
+  font-size: 13px;
+  font-feature-settings: 'tnum';
+}
+
+.link:hover {
+  border-color: var(--accent, #4ad991);
+  color: var(--accent, #4ad991);
+}
+
+.current {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 var(--space-3, 12px);
+  background: var(--accent, #4ad991);
+  color: var(--on-action, #1a0e00);
+  border: 1px solid var(--accent, #4ad991);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  font-feature-settings: 'tnum';
+}
+
+.gap {
+  padding: 0 var(--space-2, 8px);
+  color: var(--text-soft, #b6bcc4);
+}
+
+.disabled {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 var(--space-3, 12px);
+  background: var(--bg-elev-1, #15181b);
+  border: 1px solid var(--line, #2a2f35);
+  border-radius: 8px;
+  color: var(--text-soft, #b6bcc4);
+  font-size: 13px;
+  opacity: 0.6;
+}

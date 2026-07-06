@@ -1,0 +1,149 @@
+/* PartnerOnboardingShell — token-only layout for the wizard page.
+   No inline colors, no magic values. Mirrors the rhythm used by
+   /checkout (P4.7) so the wizard feels native to the platform. */
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-7, 32px) var(--space-5, 20px) var(--space-9, 60px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7, 32px);
+  color: var(--text-1);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.title {
+  font-size: var(--font-h2, 28px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--heading);
+  margin: 0;
+}
+
+.lede {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-2);
+  margin: 0;
+  max-width: 640px;
+}
+
+.resume {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: var(--space-2, 8px) 0 0;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+  width: fit-content;
+}
+
+.stepper {
+  /* The Stepper primitive already ships its own CSS — this wrapper
+     just guarantees the bar sits on its own row. */
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-4, 16px) var(--space-5, 20px);
+  overflow-x: auto;
+}
+
+.body {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-7, 32px);
+  min-height: 360px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4, 16px);
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3, 12px);
+  border-top: 1px solid var(--line);
+}
+
+.saveExit {
+  font-size: 14px;
+  color: var(--text-2);
+  text-decoration: none;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-radius: var(--radius-md, 8px);
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.saveExit:hover {
+  color: var(--text-1);
+  background: var(--bg-elev-1);
+}
+
+.saveExit:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4, 16px);
+  margin-left: auto;
+}
+
+.backLink {
+  font-size: 14px;
+  color: var(--text-2);
+  text-decoration: none;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-radius: var(--radius-md, 8px);
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.backLink:hover {
+  color: var(--text-1);
+  background: var(--bg-elev-1);
+}
+
+.backLink:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: var(--space-5, 20px) var(--space-4, 16px) var(--space-7, 32px);
+    gap: var(--space-5, 20px);
+  }
+  .title {
+    font-size: var(--font-h3, 22px);
+  }
+  .body {
+    padding: var(--space-5, 20px);
+  }
+  .toolbar {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

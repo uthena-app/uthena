@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Courses — Uthena Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* ============ LEDGER — core system ============ */
+:root{
+  --bg:#0A0D12; --card:#10141B; --raised:#151A23; --inset:#0C0F15;
+  --line:#1C222D; --line2:#29303D; --line3:#3A4250;
+  --acc:#2BD48D; --acc-h:#45E3A1; --acc-tint:rgba(43,212,141,.10); --acc-dim:rgba(43,212,141,.35);
+  --amber:#E2B33C; --amber-tint:rgba(226,179,60,.12);
+  --red:#E0606B; --red-tint:rgba(224,96,107,.10);
+  --t1:#E9EDF3; --t2:#98A2B3; --t3:#5C6675;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;
+  --r:8px; --r-s:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t1);font:400 14px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit;background:none;border:none}
+button{cursor:pointer}
+::placeholder{color:var(--t3)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 24px}
+.lbl{font:500 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+h1,h2,h3{letter-spacing:-.02em;font-weight:650}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:650 14px/1 var(--sans);letter-spacing:-.01em;padding:11px 18px;border-radius:var(--r-s);border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;white-space:nowrap}
+.btn-primary{background:var(--acc);color:#06231A;box-shadow:0 1px 2px rgba(0,0,0,.45)}
+.btn-primary:hover{background:var(--acc-h)}
+.btn-ghost{background:transparent;border-color:var(--line2);color:var(--t1)}
+.btn-ghost:hover{border-color:var(--line3);background:var(--raised)}
+.btn-sm{padding:8px 14px;font-size:13px}
+
+.badge{display:inline-flex;align-items:center;gap:5px;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:4px;border:1px solid transparent}
+.badge-acc{background:var(--acc-tint);color:var(--acc);border-color:rgba(43,212,141,.25)}
+.badge-amber{background:var(--amber-tint);color:var(--amber);border-color:rgba(226,179,60,.25)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(10,13,18,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{height:64px;display:flex;align-items:center;gap:26px}
+.logo{font:650 19px/1 var(--sans);letter-spacing:-.02em;color:var(--t1);display:inline-flex;align-items:baseline}
+.logo i{width:6px;height:6px;background:var(--acc);border-radius:50%;margin-left:3px;display:inline-block}
+.nav-links{display:flex;gap:22px}
+.nav-links a{color:var(--t2);font-weight:500;font-size:13.5px;transition:color .15s;padding:4px 0}
+.nav-links a:hover{color:var(--t1)}
+.nav-links a.on{color:var(--acc)}
+.nav-search{flex:1;max-width:260px;margin-left:auto;position:relative}
+.nav-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--t3);pointer-events:none}
+.nav-search input{width:100%;background:var(--inset);border:1px solid var(--line);border-radius:var(--r-s);padding:8px 12px 8px 32px;font-size:13px;color:var(--t1);transition:border-color .15s}
+.nav-search input:hover{border-color:var(--line2)}
+.nav-search input:focus{border-color:var(--acc-dim);outline:none}
+.nav-cta{display:flex;gap:10px;align-items:center}
+
+/* breadcrumb + page head */
+.crumbs{display:flex;align-items:center;gap:8px;font:400 12px var(--mono);color:var(--t3);padding:22px 0 0}
+.crumbs a:hover{color:var(--t1)}
+.crumbs .sep{color:var(--line3)}
+.crumbs b{color:var(--t2);font-weight:500}
+.page-head{padding:14px 0 22px;border-bottom:1px solid var(--line)}
+.page-head .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.page-head h1{font-size:28px}
+.count-chip{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--acc);background:var(--acc-tint);border:1px solid rgba(43,212,141,.25);border-radius:4px;padding:5px 9px}
+.page-head p{color:var(--t2);margin-top:8px;max-width:640px}
+
+/* chip strip */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:18px 0;scrollbar-width:none;border-bottom:1px solid var(--line)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:500 13px var(--sans);color:var(--t2);border:1px solid var(--line2);border-radius:var(--r-s);padding:7px 14px;background:var(--card);transition:border-color .15s,color .15s,background .15s}
+.chip:hover{border-color:var(--line3);color:var(--t1)}
+.chip.on{background:var(--acc-tint);border-color:rgba(43,212,141,.4);color:var(--acc)}
+
+/* layout */
+.cat-layout{display:grid;grid-template-columns:232px 1fr;gap:36px;padding:32px 0 0;align-items:start}
+
+/* sidebar */
+.filters{display:flex;flex-direction:column;gap:26px;position:sticky;top:88px}
+.fgroup h4{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t3);padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.frow{display:flex;align-items:center;gap:9px;padding:5px 0;cursor:pointer;color:var(--t2);font-size:13px;transition:color .12s}
+.frow:hover{color:var(--t1)}
+.frow .cnt{margin-left:auto;font:400 11.5px var(--mono);color:var(--t3)}
+.frow input{appearance:none;-webkit-appearance:none;width:15px;height:15px;border:1px solid var(--line3);border-radius:4px;background:var(--inset);flex:none;cursor:pointer;transition:background .12s,border-color .12s;display:grid;place-content:center}
+.frow input:hover{border-color:var(--acc-dim)}
+.frow input:checked{background:var(--acc);border-color:var(--acc)}
+.frow input:checked::before{content:"";width:9px;height:9px;background:#06231A;clip-path:polygon(14% 46%,0 62%,40% 100%,100% 18%,84% 4%,38% 68%)}
+.frow .stars{display:inline-flex;align-items:center;gap:2px;color:var(--acc)}
+
+/* active filter chips */
+.active-filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.afchip{display:inline-flex;align-items:center;gap:7px;font:400 12px var(--mono);color:var(--t1);background:var(--raised);border:1px solid var(--line2);border-radius:var(--r-s);padding:5px 7px 5px 10px}
+.afchip button{display:inline-flex;color:var(--t3);padding:2px;border-radius:3px;transition:color .12s,background .12s}
+.afchip button:hover{color:var(--red);background:var(--red-tint)}
+.clear-all{font:500 12px var(--sans);color:var(--acc);background:none;padding:4px 6px}
+.clear-all:hover{color:var(--acc-h)}
+
+/* toolbar */
+.toolbar{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.results{font:400 12.5px var(--mono);color:var(--t2)}
+.toolbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.sort{position:relative}
+.sort select{appearance:none;-webkit-appearance:none;background:var(--card);border:1px solid var(--line2);border-radius:var(--r-s);color:var(--t1);font-size:13px;padding:8px 32px 8px 12px;cursor:pointer;transition:border-color .15s}
+.sort select:hover{border-color:var(--line3)}
+.sort::after{content:"";position:absolute;right:12px;top:50%;width:7px;height:7px;border-right:1.5px solid var(--t3);border-bottom:1.5px solid var(--t3);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.viewtog{display:flex;border:1px solid var(--line2);border-radius:var(--r-s);overflow:hidden}
+.viewtog button{display:flex;align-items:center;justify-content:center;width:34px;height:34px;color:var(--t3);transition:color .12s,background .12s}
+.viewtog button + button{border-left:1px solid var(--line2)}
+.viewtog button:hover{color:var(--t1)}
+.viewtog button.on{background:var(--acc-tint);color:var(--acc)}
+
+/* product cards */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .15s,background .15s}
+.pcard:hover{border-color:var(--line3);background:var(--raised)}
+.thumb{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,var(--g1),var(--g2));overflow:hidden;flex:none}
+.thumb::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 1px,transparent 1px 22px)}
+.thumb svg{position:absolute;inset:0;margin:auto;color:rgba(255,255,255,.55)}
+.thumb .badge{position:absolute;top:10px;left:10px;z-index:2;backdrop-filter:blur(4px)}
+.pbody{display:flex;flex-direction:column;gap:8px;padding:15px;flex:1}
+.pcat{font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.ptitle{font:650 14px/1.42 var(--sans);letter-spacing:-.01em;color:var(--t1)}
+.pdesc{font-size:12.5px;line-height:1.5;color:var(--t2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pmeta{display:flex;align-items:center;gap:10px;font:400 12px var(--mono);color:var(--t2);flex-wrap:wrap}
+.pmeta .star{color:var(--acc);display:inline-flex;align-items:center;gap:4px}
+.pmeta .dim{color:var(--t3)}
+.pfoot{margin-top:auto;display:flex;align-items:baseline;justify-content:space-between;gap:8px;border-top:1px dashed var(--line2);padding-top:11px}
+.price{font:600 15px var(--mono);color:var(--t1)}
+.price .from{font:400 11px var(--mono);color:var(--t3);margin-right:4px;text-transform:uppercase;letter-spacing:.06em}
+.was{font:400 12px var(--mono);color:var(--t3);text-decoration:line-through}
+
+/* list view */
+.pgrid.listview{grid-template-columns:1fr}
+.pgrid.listview .pcard{flex-direction:row}
+.pgrid.listview .thumb{width:240px;aspect-ratio:auto;min-height:140px}
+.pgrid.listview .pbody{padding:16px 18px}
+.pgrid.listview .pdesc{-webkit-line-clamp:2}
+
+/* pagination */
+.pager{display:flex;justify-content:center;align-items:center;gap:6px;padding:40px 0 8px}
+.pager button{min-width:36px;height:36px;padding:0 10px;border:1px solid var(--line2);border-radius:var(--r-s);font:500 13px var(--mono);color:var(--t2);background:var(--card);transition:border-color .12s,color .12s,background .12s}
+.pager button:hover{border-color:var(--line3);color:var(--t1)}
+.pager button.on{background:var(--acc-tint);border-color:rgba(43,212,141,.4);color:var(--acc)}
+.pager button:disabled{opacity:.4;cursor:default}
+
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:72px;background:var(--inset)}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:32px;padding:52px 0 40px}
+.foot-brand p{color:var(--t2);font-size:13px;margin:12px 0 20px;max-width:280px}
+.foot-col h4{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:14px}
+.foot-col a{display:block;color:var(--t2);font-size:13px;padding:4px 0;transition:color .15s}
+.foot-col a:hover{color:var(--t1)}
+.newsletter{display:flex;gap:8px;max-width:300px}
+.newsletter input{flex:1;background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);padding:9px 12px;font-size:13px;min-width:0}
+.newsletter input:focus{border-color:var(--acc-dim);outline:none}
+.foot-bottom{border-top:1px solid var(--line);padding:18px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.foot-bottom span{font:400 12px var(--mono);color:var(--t3)}
+.status{display:inline-flex;align-items:center;gap:7px;font:400 12px var(--mono);color:var(--t2)}
+.status i{width:6px;height:6px;border-radius:50%;background:var(--acc);display:inline-block}
+
+/* responsive */
+@media (max-width:1024px){
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:2fr 1fr 1fr 1fr}
+}
+@media (max-width:900px){
+  .nav-links,.nav-search{display:none}
+  .nav-cta{margin-left:auto}
+  .cat-layout{grid-template-columns:1fr;gap:28px}
+  .filters{position:static;display:grid;grid-template-columns:repeat(2,1fr);gap:22px 28px}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .foot-brand{grid-column:1/-1}
+  .pgrid.listview .thumb{width:180px}
+}
+@media (max-width:540px){
+  .wrap{padding:0 16px}
+  .pgrid{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr}
+  .toolbar{flex-wrap:wrap}
+  .toolbar-right{margin-left:0;width:100%;justify-content:space-between}
+  .page-head h1{font-size:23px}
+  .pgrid.listview .pcard{flex-direction:column}
+  .pgrid.listview .thumb{width:100%;aspect-ratio:16/9}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="home.html">uthena<i></i></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="category.html" class="on">Marketplace</a>
+      <a href="#">Bundles</a>
+      <a href="#">Earn with Uthena</a>
+      <a href="#">FAQ</a>
+    </nav>
+    <div class="nav-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Search 612 products" aria-label="Search products">
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost btn-sm" href="#">Sign in</a>
+      <a class="btn btn-primary btn-sm" href="#">Get started</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PAGE HEAD ============ -->
+<div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="category.html">Marketplace</a>
+    <span class="sep">/</span>
+    <b>AI Courses</b>
+  </nav>
+  <div class="page-head">
+    <div class="row">
+      <h1>AI Courses</h1>
+      <span class="count-chip">84 products</span>
+    </div>
+    <p>Rebrandable, ready-to-sell courses on AI tools, automation, and machine learning. Every license includes source files and sales assets.</p>
+  </div>
+
+  <!-- category chips -->
+  <div class="chips" role="tablist" aria-label="Categories">
+    <button class="chip">All</button>
+    <button class="chip on">AI</button>
+    <button class="chip">Business</button>
+    <button class="chip">Crypto</button>
+    <button class="chip">Design</button>
+    <button class="chip">Finance</button>
+    <button class="chip">Marketing</button>
+    <button class="chip">Productivity</button>
+    <button class="chip">Programming</button>
+    <button class="chip">Technology</button>
+  </div>
+
+  <div class="cat-layout">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="filters" aria-label="Filters">
+      <div class="fgroup">
+        <h4>License type</h4>
+        <label class="frow"><input type="checkbox" data-chip="Whitelabel">Whitelabel<span class="cnt">84</span></label>
+        <label class="frow"><input type="checkbox" data-chip="PLR">PLR<span class="cnt">61</span></label>
+        <label class="frow"><input type="checkbox" data-chip="PLR + MRR" checked>PLR + MRR<span class="cnt">27</span></label>
+      </div>
+      <div class="fgroup">
+        <h4>Price</h4>
+        <label class="frow"><input type="checkbox" data-chip="Under $50">Under $50<span class="cnt">12</span></label>
+        <label class="frow"><input type="checkbox" data-chip="$50–100" checked>$50–100<span class="cnt">46</span></label>
+        <label class="frow"><input type="checkbox" data-chip="$100–200">$100–200<span class="cnt">21</span></label>
+        <label class="frow"><input type="checkbox" data-chip="$200+">$200+<span class="cnt">5</span></label>
+      </div>
+      <div class="fgroup">
+        <h4>Rating</h4>
+        <label class="frow"><input type="checkbox" data-chip="4.5 &amp; up"><span class="stars"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.5 &amp; up</span><span class="cnt">58</span></label>
+        <label class="frow"><input type="checkbox" data-chip="4 &amp; up"><span class="stars"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4 &amp; up</span><span class="cnt">79</span></label>
+        <label class="frow"><input type="checkbox" data-chip="3 &amp; up"><span class="stars"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>3 &amp; up</span><span class="cnt">84</span></label>
+      </div>
+      <div class="fgroup">
+        <h4>Course length</h4>
+        <label class="frow"><input type="checkbox" data-chip="Under 2h">Under 2h<span class="cnt">9</span></label>
+        <label class="frow"><input type="checkbox" data-chip="2–6h">2–6h<span class="cnt">52</span></label>
+        <label class="frow"><input type="checkbox" data-chip="6h+">6h+<span class="cnt">23</span></label>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main>
+      <div class="active-filters" id="afRow">
+        <span class="lbl" style="margin-right:2px">Filters</span>
+        <!-- chips injected by JS -->
+        <button class="clear-all" id="clearAll" type="button">Clear all</button>
+      </div>
+
+      <div class="toolbar">
+        <span class="results">84 results · sorted by popularity</span>
+        <div class="toolbar-right">
+          <div class="sort">
+            <select aria-label="Sort products">
+              <option>Most popular</option>
+              <option>Newest</option>
+              <option>Price low→high</option>
+              <option>Rating</option>
+            </select>
+          </div>
+          <div class="viewtog" role="group" aria-label="View">
+            <button class="on" id="gridBtn" aria-label="Grid view" type="button">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>
+            </button>
+            <button id="listBtn" aria-label="List view" type="button">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pgrid" id="grid">
+
+        <a class="pcard" href="product.html">
+          <div class="thumb" style="--g1:#0E4A3A;--g2:#0B2238">
+            <span class="badge badge-acc">Featured</span>
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="20" cy="20" r="11"/><path d="M20 9v22M9 20h22" opacity=".6"/><circle cx="20" cy="20" r="3.5"/></svg>
+          </div>
+          <div class="pbody">
+            <span class="pcat">AI · PLR + MRR</span>
+            <span class="ptitle">Using AI to Create and Scale a Profitable Personal Brand on Social Media</span>
+            <p class="pdesc">A complete, rebrandable system for building a profitable personal brand with AI tools — positioning, content engine, monetization.</p>
+            <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.9</span><span>1,240 resold</span><span class="dim">42 lessons · 6h 30m</span></div>
+            <div class="pfoot"><span class="price"><span class="from">From</span>$57</span></div>
+          </div>
+        </a>
+
+        <a class="pcard" href="product.html">
+          <div class="thumb" style="--g1:#133A5E;--g2:#0A1830">
+            <span class="badge badge-acc">New</span>
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="20" cy="20" r="8"/><path d="M20 5v4M20 31v4M5 20h4M31 20h4M9.4 9.4l2.8 2.8M27.8 27.8l2.8 2.8M30.6 9.4l-2.8 2.8M12.2 27.8l-2.8 2.8"/></svg>
+          </div>
+          <div class="pbody">
+            <span class="pcat">AI · PLR</span>
+            <span class="ptitle">ChatGPT for Business Automation</span>
+            <p class="pdesc">Automate support, sales ops, and reporting with custom GPT workflows your buyers can deploy in a day.</p>
+            <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.8</span><span>96 resold</span><span class="dim">31 lessons · 4h 10m</span></div>
+            <div class="pfoot"><span class="price"><span class="from">From</span>$77</span></div>
+          </div>
+        </a>
+
+        <a class="pcard" href="product.html">
+          <div class="thumb" style="--g1:#0E3C52;--g2:#0A1A2C">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="20" cy="20" r="14"/><circle cx="20" cy="20" r="8" opacity=".7"/><circle cx="20" cy="20" r="2.5"/></svg>
+          </div>
+          <div class="pbody">
+            <span class="pcat">AI · Whitelabel</span>
+            <span class="ptitle">Artificial Intelligence Explained for Beginners</span>
+            <p class="pdesc">A plain-language foundation course covering models, prompts, and practical use cases for non-technical audiences.</p>
+            <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>5.0</span><span>420 resold</span><span class="dim">24 lessons · 3h 05m</span></div>
+            <div class="pfoot"><span class="price">$67</span></div>
+          </div>
+        </a>
+
+        <a class="pcard" href="product.html">
+          <div class="thumb" style="--g1:#14424A;--g2:#081E26">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6 12 6-12 6L8 12l12-6Z"/><path d="m8 20 12 6 12-6" opacity=".7"/><path d="m8 28 12 6 12-6" opacity=".4"/></svg>
+          </div>
+          <div class="pbody">
+            <span class="pcat">AI · PLR</span>
+            <span class="ptitle">Generative AI for Leaders</span>
+            <p class="pdesc">Strategy-level training for executives adopting generative AI across teams, vendors, and workflows.</p>
+            <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.8</span><span>340 resold</span><span class="dim">28 lessons · 4h 45m</span></div>
+            <div class="pfoot"><span class="price">$127</span></div>
+          </div>
+        </a>
+
+        <a class="pcard" href="product.html">
+          <div class="thumb" style="--g1:#3C2A66;--g2:#170F33">
+            <span class="badge badge-amber">Hot</span>
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><circle cx="20" cy="20" r="14"/><path d="M20 6v14l9.9 9.9M20 20 10.1 29.9" opacity=".7"/></svg>
+          </div>
+          <div class="pbody">
+            <span class="pcat">AI · PLR + MRR</span>
+            <span class="ptitle">Midjourney Mastery</span>
+            <p class="pdesc">From first prompt to client-ready art direction — covers the current Midjourney workflow end to end.</p>
+            <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.9</span><span>510 resold</span><span class="dim">36 lessons · 5h 20m</span></div>
+            <div class="pfoot"><span class="price"><span class="from">From</span>$87</span></div>
+          </div>
+        </a>
+
+        <a class="pcard" href="product.html">
+          <div class="thumb" style="--g1:#0F4A44;--g2:#07211F">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="4"/><circle cx="30" cy="14" r="4"/><circle cx="14" cy="30" r="4"/><circle cx="31" cy="30" r="3"/><path d="m13 13 14 0M12 14l3 12M18 30h10M28 17l2 10" opacity=".6"/></svg>
+          </div>
+          <div class="pbody">
+            <span class="pcat">AI · PLR</span>
+            <span class="ptitle">AI Agents for Lead Generation</span>
+            <p class="pdesc">Build autonomous outbound agents that research prospects, qualify leads, and book calls on autopilot.</p>
+            <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.7</span><span>230 resold</span><span class="dim">26 lessons · 3h 50m</span></div>
+            <div class="pfoot"><span class="price"><span class="from">From</span>$97</span></div>
+          </div>
+        </a>
+
+        <a class="pcard" href="product.html">
+          <div class="thumb" style="--g1:#4A3A14;--g2:#211806">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8" width="28" height="24" rx="2"/><path d="m12 16 5 5-5 5M21 26h8"/></svg>
+          </div>
+          <div class="pbody">
+            <span class="pcat">AI · Whitelabel</span>
+            <span class="ptitle">Prompt Engineering for Professionals</span>
+            <p class="pdesc">A practical prompt library and methodology for consultants, marketers, and analysts who bill for output.</p>
+            <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.8</span><span>390 resold</span><span class="dim">22 lessons · 2h 55m</span></div>
+            <div class="pfoot"><span class="price">$57</span></div>
+          </div>
+        </a>
+
+        <a class="pcard" href="product.html">
+          <div class="thumb" style="--g1:#4A1430;--g2:#1F0716">
+            <span class="badge badge-acc">New</span>
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="6" y="9" width="28" height="22" rx="3"/><path d="m17 15 8 5-8 5v-10Z"/></svg>
+          </div>
+          <div class="pbody">
+            <span class="pcat">AI · PLR</span>
+            <span class="ptitle">AI Video Creation: Sora, Runway &amp; Beyond</span>
+            <p class="pdesc">Script, generate, and edit short-form video with the current generation of AI video tools.</p>
+            <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.6</span><span>88 resold</span><span class="dim">30 lessons · 4h 30m</span></div>
+            <div class="pfoot"><span class="price"><span class="from">From</span>$107</span></div>
+          </div>
+        </a>
+
+        <a class="pcard" href="product.html">
+          <div class="thumb" style="--g1:#14304A;--g2:#081320">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><circle cx="20" cy="20" r="14"/><path d="m17 14 9 6-9 6V14Z"/></svg>
+          </div>
+          <div class="pbody">
+            <span class="pcat">AI · PLR + MRR</span>
+            <span class="ptitle">Build a Faceless YouTube Channel with AI</span>
+            <p class="pdesc">A repeatable channel system: niche research, AI scripts, voiceover, editing, and monetization.</p>
+            <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.7</span><span>175 resold</span><span class="dim">34 lessons · 5h 05m</span></div>
+            <div class="pfoot"><span class="price"><span class="from">From</span>$87</span></div>
+          </div>
+        </a>
+
+      </div>
+
+      <div class="pager" aria-label="Pagination">
+        <button disabled aria-label="Previous page">&lsaquo;</button>
+        <button class="on">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button aria-label="Next page">&rsaquo;</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="home.html">uthena<i></i></a>
+        <p>The home for digital product entrepreneurs. Courses, tools, and assets you can rebrand, resell, and run your business on.</p>
+        <form class="newsletter" onsubmit="return false">
+          <input type="email" placeholder="Email for product drops" aria-label="Email address">
+          <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div class="foot-col">
+        <h4>Marketplace</h4>
+        <a href="category.html">All products</a>
+        <a href="category.html">AI courses</a>
+        <a href="#">Bundles</a>
+        <a href="#">New releases</a>
+      </div>
+      <div class="foot-col">
+        <h4>Earn</h4>
+        <a href="#">Sell your course</a>
+        <a href="#">Affiliate program</a>
+        <a href="#">Partner stories</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="#">License terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms of service</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Uthena</span>
+      <span class="status"><i></i>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// category chips — single-select active state
+document.querySelectorAll('.chips .chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    document.querySelectorAll('.chips .chip').forEach(function(c){c.classList.remove('on')});
+    chip.classList.add('on');
+  });
+});
+
+// filter checkboxes <-> active filter chips
+var afRow=document.getElementById('afRow');
+var clearAll=document.getElementById('clearAll');
+function syncChips(){
+  afRow.querySelectorAll('.afchip').forEach(function(c){c.remove()});
+  var any=false;
+  document.querySelectorAll('.frow input[type=checkbox]').forEach(function(box){
+    if(!box.checked)return;
+    any=true;
+    var chip=document.createElement('span');
+    chip.className='afchip';
+    chip.innerHTML=box.dataset.chip+' <button type="button" aria-label="Remove filter"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>';
+    chip.querySelector('button').addEventListener('click',function(){
+      box.checked=false;syncChips();
+    });
+    afRow.insertBefore(chip,clearAll);
+  });
+  afRow.style.display=any?'flex':'none';
+}
+document.querySelectorAll('.frow input[type=checkbox]').forEach(function(box){
+  box.addEventListener('change',syncChips);
+});
+clearAll.addEventListener('click',function(){
+  document.querySelectorAll('.frow input[type=checkbox]').forEach(function(b){b.checked=false});
+  syncChips();
+});
+syncChips();
+
+// grid / list toggle
+var grid=document.getElementById('grid');
+var gridBtn=document.getElementById('gridBtn');
+var listBtn=document.getElementById('listBtn');
+gridBtn.addEventListener('click',function(){
+  grid.classList.remove('listview');gridBtn.classList.add('on');listBtn.classList.remove('on');
+});
+listBtn.addEventListener('click',function(){
+  grid.classList.add('listview');listBtn.classList.add('on');gridBtn.classList.remove('on');
+});
+
+// pagination active state
+document.querySelectorAll('.pager button').forEach(function(b){
+  if(b.disabled||b.hasAttribute('aria-label'))return;
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.pager button').forEach(function(x){x.classList.remove('on')});
+    b.classList.add('on');
+  });
+});
+</script>
+
+</body>
+</html>

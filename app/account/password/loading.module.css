@@ -1,0 +1,73 @@
+/*
+  Loading skeleton for /account/password — P1.4. Token-only CSS
+  that mirrors the layout of the actual page (max-width 460px,
+  stacked header + 3 input fields + button) using the shared
+  Skeleton primitive's color via the --bg-elev-2 token.
+*/
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 460px;
+  padding: 8px 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.title {
+  height: 32px;
+  width: 60%;
+  background: var(--bg-elev-2);
+  border-radius: 6px;
+  opacity: 0.85;
+  /* Subtle pulse so the user sees something happening. Honors
+     prefers-reduced-motion via the @media block below. */
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.lede {
+  height: 14px;
+  width: 80%;
+  background: var(--bg-elev-2);
+  border-radius: 4px;
+  opacity: 0.65;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.field {
+  height: 44px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.button {
+  height: 44px;
+  width: 100%;
+  background: var(--bg-elev-2);
+  border-radius: 8px;
+  opacity: 0.85;
+  margin-top: 8px;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .lede,
+  .field,
+  .button {
+    animation: none;
+  }
+}

@@ -1,0 +1,245 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+}
+
+.lede {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 0;
+  margin-top: -8px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.textarea {
+  min-height: 88px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.textarea:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.select {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-size: 14px;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.select:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Mirror of .select for the timezone <input list=…> so the searchable
+   picker matches the other form fields exactly. Native browser styling
+   on a bare <input> is overridden here. */
+.textInput {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.textInput:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.counter {
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hint text under inputs (vs. the right-aligned char counter). */
+.hint {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.counterErr {
+  color: var(--danger);
+}
+
+.fieldError {
+  font-size: 12px;
+  color: var(--danger);
+  margin: 0;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.avatarRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarInitials {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.avatarActions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.avatarLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0;
+}
+
+.avatarHelp {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.linkBtn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--accent);
+  cursor: pointer;
+  text-align: left;
+  text-decoration: underline;
+}
+.linkBtn:hover {
+  color: var(--accent-hover);
+}
+
+.emailRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.email {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin: 0;
+  word-break: break-all;
+}
+
+.emailHelp {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 4px 0 0;
+}
+
+.changePwRow {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.submitError {
+  font-size: 13px;
+  color: var(--danger);
+  margin: 0;
+  flex: 1 0 100%;
+}
+
+/* Note: success-state "Saved." feedback is now delivered via the
+   global Toast primitive (success variant). The inline `.submitOk`
+   paragraph is gone — see `02-features/account/profile/components/
+   ProfileForm.tsx` `onSubmit` for the `toast.success()` call. */

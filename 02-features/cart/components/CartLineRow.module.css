@@ -1,0 +1,92 @@
+.row {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+.row:last-child { border-bottom: none; }
+
+.thumbLink { display: block; }
+
+.thumb,
+.thumbPlaceholder {
+  width: 96px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+}
+
+.thumbPlaceholder { background: var(--bg-elev-2); }
+
+.body { min-width: 0; }
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heading);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 4px;
+}
+.title:hover { color: var(--accent); }
+
+.licenseDesc {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.priceCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+}
+
+.unit {
+  font-size: 14px;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.unitEach { color: var(--text-3); }
+
+.compare {
+  font-size: 12px;
+  color: var(--text-3);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.lineTotal {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 640px) {
+  .row { grid-template-columns: 64px 1fr; }
+  .thumb, .thumbPlaceholder { width: 64px; height: 48px; }
+  .priceCol {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-left: 84px;
+  }
+}

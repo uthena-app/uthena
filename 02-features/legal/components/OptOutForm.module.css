@@ -1,0 +1,209 @@
+/* OptOutForm — token-only styles for the data-subject-request form
+   on /data-sharing-opt-out. Mirrors the ContactForm.module.css shape
+   so the two legal surfaces feel like one design family. */
+
+.form {
+  max-width: 640px;
+  margin: 0 auto 24px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.banner {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--bg-inset);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.banner strong {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.bannerLink {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.bannerLink:hover {
+  color: var(--accent-hover);
+  border-bottom-color: var(--accent-line);
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 560px) {
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.optional {
+  color: var(--text-3);
+  font-weight: 400;
+}
+
+.input,
+.textarea {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-1);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-line);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 88px;
+  line-height: 1.5;
+}
+
+.hint {
+  font-size: 12.5px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.radioList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radioItem {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.radioItem:has(.radio:focus-visible) {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-line);
+}
+
+.radioLabel {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  align-items: flex-start;
+}
+
+.radio {
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+
+.radioTitle {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.radioHint {
+  display: block;
+  font-size: 12.5px;
+  color: var(--text-3);
+  margin-top: 2px;
+  line-height: 1.45;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.submit {
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-3);
+  background: var(--bg-elev-2);
+  border: 1px dashed var(--line-strong);
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: not-allowed;
+}
+
+.submit[disabled] {
+  /* Tokens only — no inline colors. */
+  opacity: 0.85;
+}
+
+.actionsHint {
+  font-size: 12.5px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.toast {
+  font-size: 13px;
+  color: var(--text-2);
+  background: var(--bg-inset);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger);
+  background: var(--bg-inset);
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0;
+}

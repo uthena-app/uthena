@@ -1,0 +1,361 @@
+/* OrderDetailOverview — token-only CSS. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-6, 24px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-5, 20px);
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Fraud callout (conditional) ---------- */
+
+.fraudCallout {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 20px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--danger-soft, rgba(220, 38, 38, 0.08));
+  border: 1px solid var(--danger-line, rgba(220, 38, 38, 0.30));
+  color: var(--danger-fg, #991b1b);
+}
+
+.fraudHeading {
+  font-size: var(--font-size-md, 15px);
+  font-weight: 600;
+  margin: 0;
+}
+
+.fraudBody {
+  font-size: var(--font-size-sm, 13px);
+  line-height: 1.5;
+  margin: 4px 0 0 0;
+  color: inherit;
+}
+
+.fraudBody code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--bg-elev-2, #fafafa);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+}
+
+/* ---------- Section card ---------- */
+
+.section {
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  border-radius: var(--radius-md, 8px);
+  padding: 16px 20px;
+  background: var(--bg-elev-1, #fff);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.h2 {
+  font-size: var(--font-size-lg, 18px);
+  font-weight: 600;
+  margin: 0;
+  color: var(--fg, #111);
+}
+
+.counter {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.emptyHint {
+  font-size: var(--font-size-sm, 13px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  line-height: 1.5;
+  margin: 8px 0 0 0;
+}
+
+.maskHint {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 12px 0 0 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg-elev-2, #fafafa);
+  border-left: 3px solid var(--accent, #ea580c);
+}
+
+/* ---------- Status pill ---------- */
+
+.statusPill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--font-size-xs, 12px);
+  font-weight: 600;
+  border: 1px solid transparent;
+  text-transform: capitalize;
+}
+
+.statusPill[data-kind='green'],
+.statusPill[data-kind='success'] {
+  background: var(--success-soft, rgba(22, 163, 74, 0.08));
+  border-color: var(--success-line, rgba(22, 163, 74, 0.25));
+  color: var(--success-fg, #166534);
+}
+
+.statusPill[data-kind='amber'] {
+  background: var(--warn-soft, rgba(217, 119, 6, 0.08));
+  border-color: var(--warn-line, rgba(217, 119, 6, 0.25));
+  color: var(--warn-fg, #92400e);
+}
+
+.statusPill[data-kind='red'] {
+  background: var(--danger-soft, rgba(220, 38, 38, 0.08));
+  border-color: var(--danger-line, rgba(220, 38, 38, 0.30));
+  color: var(--danger-fg, #991b1b);
+}
+
+.statusPill[data-kind='gray'],
+.statusPill[data-kind='blue'] {
+  background: var(--bg-elev-2, #fafafa);
+  border-color: var(--line, rgba(0, 0, 0, 0.08));
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+}
+
+/* ---------- Definition list ---------- */
+
+.dl {
+  display: grid;
+  grid-template-columns: minmax(120px, max-content) 1fr;
+  gap: 8px 24px;
+  margin: 0;
+}
+
+.dlRow {
+  display: contents;
+}
+
+.dt {
+  font-size: var(--font-size-sm, 13px);
+  font-weight: 500;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.04));
+}
+
+.dd {
+  font-size: var(--font-size-sm, 13px);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg, #111);
+  margin: 0;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.04));
+}
+
+.dd[data-pii='masked'] {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 0.02em;
+}
+
+.dd[data-mono='true'] {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+}
+
+.dd[data-strong='true'] {
+  font-weight: 600;
+}
+
+.dd[data-pii='amount-refund'] {
+  color: var(--warn-fg, #92400e);
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .dl {
+    grid-template-columns: minmax(100px, max-content) 1fr;
+  }
+}
+
+/* ---------- Inline link ---------- */
+
+.link {
+  color: var(--accent, #ea580c);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--accent-line, rgba(234, 88, 12, 0.45));
+}
+
+.link:hover {
+  color: var(--accent-fg, #9a3412);
+}
+
+.linkInline {
+  color: var(--accent, #ea580c);
+  text-decoration: underline;
+}
+
+/* ---------- Billing address ---------- */
+
+.billList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.billItem {
+  font-size: var(--font-size-sm, 13px);
+  line-height: 1.5;
+}
+
+.billKey {
+  font-weight: 500;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+}
+
+.billVal {
+  color: var(--fg, #111);
+}
+
+/* ---------- Tables ---------- */
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--font-size-sm, 13px);
+}
+
+.table th {
+  text-align: left;
+  padding: 8px 12px;
+  font-weight: 500;
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+}
+
+.table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.04));
+}
+
+.table td[data-mono='true'] {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+}
+
+.table td[data-strong='true'] {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 700px) {
+  .table {
+    font-size: 12px;
+  }
+  .table th,
+  .table td {
+    padding: 6px 8px;
+  }
+}
+
+/* ---------- Events list ---------- */
+
+.eventsList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 2px solid var(--line, rgba(0, 0, 0, 0.10));
+}
+
+.eventsItem {
+  position: relative;
+  padding: 10px 14px;
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+}
+
+.eventsItem[data-kind='stripe_webhook'] {
+  border-left-color: var(--accent, #ea580c);
+}
+
+.eventsItem[data-kind='audit_log'] {
+  border-left-color: var(--teal, #0d9488);
+}
+
+.eventsHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.eventsKind {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--bg-elev-2, #fafafa);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+}
+
+.eventsKind[data-kind='stripe_webhook'] {
+  background: var(--accent-soft, rgba(234, 88, 12, 0.08));
+  border-color: var(--accent-line, rgba(234, 88, 12, 0.25));
+  color: var(--accent-fg, #9a3412);
+}
+
+.eventsKind[data-kind='audit_log'] {
+  background: var(--teal-soft, rgba(13, 148, 136, 0.08));
+  border-color: var(--teal-line, rgba(13, 148, 136, 0.25));
+  color: var(--teal-fg, #115e59);
+}
+
+.eventsTime {
+  font-size: 11px;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+}
+
+.eventsBody {
+  margin: 0;
+  font-size: var(--font-size-sm, 13px);
+  line-height: 1.5;
+  color: var(--fg, #111);
+}
+
+.eventsAction {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--bg-elev-2, #fafafa);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+}
+
+.eventsActor {
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+}

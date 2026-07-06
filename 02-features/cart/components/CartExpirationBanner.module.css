@@ -1,0 +1,75 @@
+/* CartExpirationBanner — token-only styles. Warn palette matches
+   the ResendVerificationForm cooldownNotice and the AdminShell
+   warn banner (the canonical "limited time" treatment). */
+
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--warn-soft);
+  border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent);
+  color: color-mix(in srgb, var(--warn) 90%, var(--text-1));
+}
+
+/* Compact variant — used inside the CartDrawer where vertical
+   space is at a premium. Tighter padding, smaller type. */
+.compact {
+  padding: 10px 12px;
+  border-radius: 8px;
+  gap: 10px;
+}
+
+.icon {
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--warn);
+  flex-shrink: 0;
+}
+
+.compact .icon {
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.message {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--warn) 95%, var(--text-1));
+}
+
+.compact .message {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.hint {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.compact .hint {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.link:hover {
+  color: var(--accent-hover);
+}

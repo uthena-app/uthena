@@ -1,0 +1,77 @@
+/* EarningsChart — inline SVG bar chart. Token-only styling.
+   Renders inside a dashboard card with the headline total +
+   a density-aware X axis (first / mid / last). */
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+}
+
+.subtle {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 4px 0 0;
+}
+
+.totalValue {
+  color: var(--heading);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.chartWrap {
+  /* Cap the chart height at ~240px on wide viewports so the
+     bars stay readable without dominating the dashboard. */
+  width: 100%;
+  max-width: 720px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+}
+
+.bar {
+  fill: var(--accent);
+  transition: fill 100ms ease;
+}
+
+.bar:hover {
+  fill: var(--accent-strong, var(--accent));
+}
+
+.gridLine {
+  stroke: var(--line);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.axisLabel {
+  font-size: 10px;
+  fill: var(--text-3);
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.empty {
+  margin: 16px 0 4px;
+  font-size: 13px;
+  color: var(--text-3);
+}

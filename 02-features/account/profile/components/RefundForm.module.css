@@ -1,0 +1,229 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 640px;
+}
+
+.banner {
+  background: var(--success-soft);
+  border: 1px solid var(--success-line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--success);
+  font-size: 13px;
+}
+
+.bannerAmber {
+  background: var(--warn-soft);
+  border-color: var(--warn-line);
+  color: var(--warn);
+}
+
+.bannerText {
+  margin: 0;
+}
+
+.section {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.h2 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+}
+.summaryRow:first-child {
+  border-top: none;
+}
+
+.totalRow {
+  font-weight: 600;
+  color: var(--text-1);
+}
+.totalRow:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.numCol {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-1);
+}
+
+.muted {
+  color: var(--text-3);
+}
+
+.items {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-1);
+}
+
+.itemLicense {
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+.select,
+.input {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-size: 14px;
+}
+.select:focus-visible,
+.input:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.textarea {
+  min-height: 96px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+}
+.textarea:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.counter {
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: right;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  font-size: 12px;
+  color: var(--danger);
+  margin: 0;
+}
+
+.help {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-1);
+  background: var(--bg-elev-2);
+  transition: border-color 120ms ease;
+}
+.radioLabel:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.radioLabel input {
+  accent-color: var(--accent);
+}
+
+.submitError {
+  font-size: 13px;
+  color: var(--danger);
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-line);
+  border-radius: 8px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cancelLink {
+  font-size: 13px;
+  color: var(--text-3);
+  text-decoration: none;
+}
+.cancelLink:hover {
+  color: var(--text-1);
+}

@@ -1,0 +1,431 @@
+/* FeatureFlagsTab — styles for the admin Feature flags tab.
+ * Token-only CSS. Mirrors the spacing + density of GeneralSettingsForm
+ * + DmcaAgentForm so the admin area reads as one design system. */
+
+/* ------------------------------------------------------------------ */
+/*  Tab header                                                         */
+/* ------------------------------------------------------------------ */
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tabHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tabTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tabLede {
+  font-size: 13.5px;
+  color: var(--text-3);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 560px;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Banners (error / success)                                          */
+/* ------------------------------------------------------------------ */
+
+.alertError {
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid var(--danger-line);
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.success {
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid var(--success-line);
+  background: var(--success-soft);
+  color: var(--success);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Empty state                                                        */
+/* ------------------------------------------------------------------ */
+
+.emptyState {
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 36px 20px;
+  text-align: center;
+  background: var(--bg-elev-1);
+}
+
+.emptyText {
+  font-size: 14px;
+  color: var(--text-3);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Flag list                                                          */
+/* ------------------------------------------------------------------ */
+
+.flagList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flagRow {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-elev-1);
+  padding: 14px 16px;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.flagRow[data-pending='true'] {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.flagMain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.flagKeyBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 220px;
+  flex: 1 1 220px;
+}
+
+.flagKey {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  color: var(--text-1);
+  background: var(--bg-elev-2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.flagDescription {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.flagDescriptionMuted {
+  font-size: 12.5px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.flagControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Toggle switch                                                      */
+/* ------------------------------------------------------------------ */
+
+.toggleLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-2);
+}
+
+.toggleLabelText {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+.toggleInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.toggleInput:disabled {
+  cursor: not-allowed;
+}
+
+.toggleTrack {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: var(--text-3);
+  border-radius: 50%;
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.toggleInput:checked + .toggleTrack {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.toggleInput:checked + .toggleTrack .toggleThumb {
+  transform: translateX(16px);
+  background: var(--on-action);
+}
+
+.toggleInput:focus-visible + .toggleTrack {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Rollout input                                                      */
+/* ------------------------------------------------------------------ */
+
+.rolloutLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-2);
+}
+
+.rolloutLabelText {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.rolloutInput {
+  width: 72px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 120ms ease;
+}
+
+.rolloutInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.rolloutInput:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Saving badge                                                       */
+/* ------------------------------------------------------------------ */
+
+.savingBadge {
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Modal                                                              */
+/* ------------------------------------------------------------------ */
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 520px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+.modalTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0;
+}
+
+.modalBody {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.modalRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modalLabel {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.modalHint {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+.required {
+  color: var(--danger);
+}
+
+.modalInput,
+.modalTextarea {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-elev-1);
+  color: var(--text-1);
+  font-size: 13.5px;
+  font-family: inherit;
+  transition: border-color 120ms ease;
+}
+
+.modalTextarea {
+  height: auto;
+  padding: 8px 10px;
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+}
+
+.modalInput:focus,
+.modalTextarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.modalToggleLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.fieldError {
+  font-size: 12px;
+  color: var(--danger);
+  line-height: 1.4;
+}
+
+.fieldErrorWarn {
+  font-size: 12px;
+  color: var(--warn);
+  line-height: 1.4;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Mobile                                                             */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 640px) {
+  .flagMain {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .flagControls {
+    justify-content: space-between;
+  }
+}

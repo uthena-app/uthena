@@ -1,0 +1,151 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+}
+
+.sub { color: var(--text-3); font-size: 14px; margin: 0; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.statCard {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+.statLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 6px;
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--heading);
+}
+
+.statCard[data-accent='success'] .statValue {
+  color: var(--success);
+}
+
+.statCard[data-accent='warn'] .statValue {
+  color: var(--warn);
+}
+
+.statCard[data-accent='mute'] .statValue {
+  color: var(--heading);
+}
+
+.byPartner { margin-bottom: 32px; }
+.list { list-style: none; padding: 0; margin: 0; }
+.listRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 12px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.partnerName { color: var(--text-1); }
+.partnerAmount { color: var(--success); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.ledgerSection {}
+.h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.empty { color: var(--text-3); font-size: 14px; padding: 24px 0; }
+
+.entries { list-style: none; padding: 0; margin: 0; }
+.entry {
+  display: grid;
+  grid-template-columns: 1fr 100px 140px 100px;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  align-items: center;
+}
+.entry:last-child { border-bottom: none; }
+
+.entryMain { min-width: 0; }
+.entryKind {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0 0 2px;
+}
+.entryDesc { font-size: 12px; color: var(--text-3); margin: 0; line-height: 1.4; }
+.entryDate { color: var(--text-3); font-size: 12px; font-variant-numeric: tabular-nums; margin: 0; }
+.entryStatus {
+  font-size: 11px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: var(--text-2);
+  text-align: center;
+  margin: 0;
+}
+.entryAmount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  color: var(--success);
+}
+
+.entry[data-direction='debit'] .entryAmount {
+  color: var(--danger);
+}
+
+.entry[data-direction='credit'] .entryAmount {
+  color: var(--success);
+}
+
+@media (max-width: 720px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .entry { grid-template-columns: 1fr; }
+  .entryAmount { text-align: left; }
+}

@@ -1,0 +1,45 @@
+/* affiliates.module.css — page-level styles for /admin/affiliates.
+   Mirrors partner list page styles. */
+
+.header {
+  margin-bottom: var(--space-5, 24px);
+}
+
+.h1 {
+  margin: 0 0 var(--space-2, 8px) 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-1, #f4f4f4);
+}
+
+.sub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-soft, #b6bcc4);
+  max-width: 720px;
+  line-height: 1.5;
+}
+
+.placeholder {
+  margin-top: var(--space-5, 24px);
+  padding: var(--space-4, 16px) var(--space-5, 24px);
+  background: var(--bg-elev-1, #15181b);
+  border: 1px dashed var(--line, #2a2f35);
+  border-radius: 10px;
+}
+
+.placeholderTitle {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-soft, #b6bcc4);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.placeholderText {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-faint, #6f7780);
+  line-height: 1.5;
+}

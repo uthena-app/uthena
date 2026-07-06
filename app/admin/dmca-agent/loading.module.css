@@ -1,0 +1,15 @@
+/* Loading skeleton for /admin/dmca-agent. Token-only; mirrors the
+ * form + preview + actions layout so the loading state is recognisable
+ * while the service-role read lands. */
+
+.section {
+  padding: 24px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  max-width: 640px;
+}
+
+.gap {
+  height: 16px;
+}

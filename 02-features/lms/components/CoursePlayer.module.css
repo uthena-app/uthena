@@ -1,0 +1,88 @@
+/* CoursePlayer.module.css — token-only styles for the lesson player shell. */
+
+.root {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: var(--space-6);
+}
+
+.playerWrapper {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg, 14px);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.playerPlaceholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-2);
+  color: var(--text-mute);
+  font-size: var(--text-sm, 14px);
+}
+
+.meta {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.title {
+  font-family: var(--font-display, 'Inter Tight', system-ui);
+  font-size: var(--text-2xl, 24px);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--text-1);
+  margin: 0;
+}
+
+.summary {
+  font-size: var(--text-sm, 14px);
+  line-height: 1.6;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.pendingBadge {
+  font-size: var(--text-xs, 12px);
+  color: var(--text-mute);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  background: var(--bg-elev-1);
+  border-radius: var(--radius-md, 8px);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-4, 16px);
+  border-top: 1px solid var(--line);
+}
+
+.navPrev,
+.navNext {
+  font-size: var(--text-sm, 14px);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.navDisabled {
+  font-size: var(--text-sm, 14px);
+  color: var(--text-faint);
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .nav {
+    flex-direction: column;
+    gap: var(--space-2, 8px);
+  }
+}

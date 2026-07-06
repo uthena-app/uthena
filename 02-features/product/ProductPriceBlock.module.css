@@ -1,0 +1,84 @@
+/* ProductPriceBlock — the `.pinfo .price-row` from
+ * `mockups/styles/main.css` lines 280–284. Token-only.
+ *
+ * Layout: a single horizontal row with the price (large mono), the
+ * compare-at (small strikethrough), the SAVE % chip (orange-on-
+ * orange-line), and the installments text pushed to the right edge.
+ * The whole row is wrapped by hairline borders above + below so it
+ * visually separates the lede from the license radio group. The row
+ * wraps naturally on narrow viewports (price + chip on one line,
+ * installments on the next).
+ *
+ * Colors:
+ *   - price:           var(--heading) (large mono)
+ *   - compare-at:      var(--text-faint) (strikethrough)
+ *   - SAVE %:          var(--orange) text on var(--orange-line) border
+ *   - installments:    var(--text-soft) (mono)
+ *
+ * Per AGENTS.md: no inline values, no magic pixels. All sizes are
+ * tokens; the only literal is the small chip padding (2px 6px),
+ * which matches the mockup's `.save` chip exactly. */
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  color: var(--heading);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.compare {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-faint);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.save {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--orange);
+  border: 1px solid var(--orange-line);
+  background: transparent;
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  letter-spacing: 0.04em;
+  /* The chip needs a slight baseline align with the price's text line */
+  align-self: center;
+}
+
+.installments {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 640px) {
+  .price {
+    font-size: 28px;
+  }
+  .installments {
+    margin-left: 0;
+    width: 100%;
+    /* When it wraps, push it to its own line so the price / compare / save
+     * stay tight on the first line. */
+  }
+}

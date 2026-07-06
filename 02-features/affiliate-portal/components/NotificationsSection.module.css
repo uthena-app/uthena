@@ -1,0 +1,139 @@
+/* NotificationsSection — /affiliate/settings Notifications section. */
+
+.section {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.header {
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: var(--text-1);
+}
+
+.subheading {
+  font-size: 0.875rem;
+  margin: 0;
+  color: var(--text-2);
+}
+
+.toggleList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.toggleRow:last-child {
+  border-bottom: none;
+}
+
+.toggleLabel {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  cursor: pointer;
+}
+
+.toggleTitle {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-1);
+}
+
+.toggleDescription {
+  font-size: 0.8125rem;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+/* The role="switch" checkbox is rendered as a true native input
+   but visually styled as a pill + thumb. The input itself is
+   hidden behind the visual; the visible state comes from a
+   sibling span styled via :checked + general-sibling combinator.
+   Native focus rings + label-for wiring give us a11y for free. */
+.toggleInput {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-inset);
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.toggleInput:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.toggleInput::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0.1875rem;
+  transform: translateY(-50%);
+  width: 1.0625rem;
+  height: 1.0625rem;
+  border-radius: 50%;
+  background: var(--text-1);
+  transition: left 160ms ease;
+}
+
+.toggleInput:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.toggleInput:checked::after {
+  left: calc(100% - 1.25rem);
+}
+
+.toggleInput:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.toastOk {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--success);
+  background: var(--success-soft);
+  border: 1px solid var(--success-line);
+  border-radius: 6px;
+}
+
+.toastErr {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-line);
+  border-radius: 6px;
+}

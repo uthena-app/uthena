@@ -1,0 +1,424 @@
+/* ==========================================================================
+   SearchOverlay.module.css — global ⌘K instant-search modal (P0.4).
+
+   Visual language:
+   - Backdrop: --bg-overlay (translucent black) + 6px blur so the page
+     underneath reads as "behind glass" without losing context.
+   - Modal: --bg-elev-1 (sits one notch above page) + --r-lg + --line
+     border + --shadow-lg. No animation beyond opacity on open —
+     the mockup spec doesn't call for movement and a smooth fade
+     keeps keyboard focus predictable.
+   - Input: same pill shape as the SiteHeader search so the overlay
+     feels like a "zoomed-in" version of the header search, not a
+     different surface.
+   - Results: 56-64px row, thumbnail + (eyebrow / title / desc) +
+     right-aligned price. Active row gets --accent-soft fill + a
+     2px --accent left border (matches the catalog tile pattern).
+   - Footer: dim hint strip with kbd chips. Visually a continuation
+     of the modal, not a separate footer.
+   ========================================================================== */
+
+/* ---- Backdrop ---- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10vh var(--space-4) var(--space-4);
+  animation: so-fade-in 100ms ease-out;
+}
+
+@keyframes so-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop { animation: none; }
+}
+
+/* ---- Modal shell ---- */
+.modal {
+  width: min(640px, 100%);
+  max-height: min(72vh, 720px);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---- Visually-hidden (a11y) ---- */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Input row ---- */
+.inputWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-elev-1);
+}
+
+.inputIcon {
+  font-family: var(--font-mono);
+  color: var(--text-3);
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--heading);
+  font-size: 15px;
+  font-family: inherit;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.input::placeholder {
+  color: var(--text-faint);
+}
+
+.input::-webkit-search-cancel-button { display: none; }
+
+.closeBtn {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 7px;
+  background: transparent;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+
+.closeBtn:hover,
+.closeBtn:focus-visible {
+  color: var(--text-1);
+  border-color: var(--line-strong);
+}
+
+/* ---- Body (the part that scrolls) ---- */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---- Idle body ---- */
+.idle {
+  padding: var(--space-5) var(--space-4) var(--space-4);
+}
+
+.idleHint {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0 0 var(--space-4);
+}
+
+.idleEyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 var(--space-2);
+}
+
+.catList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.catLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--text-1);
+  font-size: 13px;
+  text-decoration: none;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.catLink:hover,
+.catLink:focus-visible {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+/* ---- Loading body (skeleton rows) ---- */
+.resultsList {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2) 0;
+}
+
+.skelRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid transparent;
+}
+
+.skelThumb {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-sm);
+  background: var(--bg-elev-2);
+  flex-shrink: 0;
+  animation: so-pulse 1.4s ease-in-out infinite;
+}
+
+.skelLines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.skelLineLg,
+.skelLineSm {
+  display: block;
+  height: 12px;
+  border-radius: 4px;
+  background: var(--bg-elev-2);
+  animation: so-pulse 1.4s ease-in-out infinite;
+}
+
+.skelLineLg { width: 70%; }
+.skelLineSm { width: 40%; height: 10px; }
+
+@keyframes so-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skelThumb, .skelLineLg, .skelLineSm { animation: none; }
+}
+
+/* ---- Empty body ---- */
+.empty {
+  padding: var(--space-6) var(--space-5);
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0 0 var(--space-2);
+}
+
+.emptyHint {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.emptyLink {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.emptyLink:hover {
+  color: var(--accent-hover);
+}
+
+/* ---- Result rows ---- */
+.result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: 0;
+  border-left: 2px solid transparent;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  transition: background 90ms ease, border-color 90ms ease;
+}
+
+.result:hover,
+.resultActive {
+  background: var(--bg-elev-2);
+  border-left-color: var(--accent);
+}
+
+.resultThumb {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--bg-elev-2);
+}
+
+.resultThumbPlaceholder {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-sm);
+  background: var(--bg-elev-2);
+  flex-shrink: 0;
+}
+
+.resultBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resultEyebrow {
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.resultTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resultDesc {
+  font-size: 12px;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resultPrice {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  color: var(--action);
+  flex-shrink: 0;
+}
+
+/* ---- "See all results" link ---- */
+.submitAll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: calc(100% - 2 * var(--space-3));
+  margin: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.submitAll:hover,
+.submitAll:focus-visible {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+
+/* ---- Footer hint strip ---- */
+.footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--line);
+  background: var(--bg-inset);
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.kbdHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+  background: var(--bg-elev-2);
+  min-width: 16px;
+  text-align: center;
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 640px) {
+  .backdrop {
+    padding: 6vh var(--space-3) var(--space-3);
+  }
+  .modal {
+    max-height: 88vh;
+  }
+  .inputWrap { padding: var(--space-3); }
+  .input { font-size: 14px; }
+  .result {
+    padding: var(--space-3);
+  }
+  .resultThumb,
+  .resultThumbPlaceholder {
+    width: 40px;
+    height: 40px;
+  }
+  .footer {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+}

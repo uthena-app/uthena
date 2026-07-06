@@ -1,0 +1,80 @@
+.row {
+  display: grid;
+  /* P7.4 — added the bulk-select column at the left. The grid stays
+     at 4 columns: select / badge / body / generate-link. The select
+     column is intentionally narrow (28px) so it doesn't crowd the
+     file name. */
+  grid-template-columns: 28px 80px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.row:last-child { border-bottom: none; }
+
+.kindBadge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.body { min-width: 0; }
+.name { font-size: 14px; color: var(--text-1); margin: 0 0 2px; font-weight: 500; }
+.meta { font-size: 12px; color: var(--text-3); margin: 0; }
+
+/* P7.3 — "Last accessed" line. Sits below the meta line; the value
+   inherits the muted text color so the label + value read as a
+   single phrase. The font-size matches meta so the two lines stack
+   without a visible jump. */
+.lastAccessed {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 2px 0 0;
+}
+.lastAccessedValue {
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* P7.4 — bulk-select checkbox cell. The `<label>` wraps the input
+   so clicking anywhere in the cell toggles the box (large click
+   target on touch devices). The visible part is just the native
+   checkbox; the "Select" text is screen-reader-only. */
+.selectCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
+  padding: 4px;
+}
+.selectInput {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--action);
+  margin: 0;
+}
+.selectInput:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

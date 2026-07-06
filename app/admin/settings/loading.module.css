@@ -1,0 +1,35 @@
+/* loading.module.css — token-only Skeleton layout. */
+
+.lede {
+  margin: 0 0 20px;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 640px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}

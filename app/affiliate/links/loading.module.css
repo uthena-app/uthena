@@ -1,0 +1,168 @@
+/* /affiliate/links loading skeleton. Token-only. Mirrors the
+   page's real layout so the loading transition doesn't shift
+   the chrome around. */
+
+.wrap {
+  max-width: 960px;
+}
+
+.eyebrow,
+.h1,
+.lede,
+.statCell,
+.heroHeader,
+.heroUrl,
+.heroStat,
+.tableHeader,
+.tableRow {
+  background: var(--bg-elev-2);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.eyebrow {
+  width: 96px;
+  height: 11px;
+  margin-bottom: 12px;
+}
+
+.h1 {
+  width: 260px;
+  height: 28px;
+  margin-bottom: 12px;
+}
+
+.lede {
+  width: 520px;
+  height: 16px;
+  margin-bottom: 32px;
+}
+
+/* Stats row */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.statCell {
+  height: 96px;
+  border-radius: 12px;
+}
+
+/* Hero */
+.hero {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.heroHeader {
+  width: 60%;
+  height: 60px;
+  border-radius: 10px;
+}
+
+.heroUrl {
+  width: 100%;
+  height: 56px;
+  border-radius: 10px;
+}
+
+.heroStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.heroStat {
+  height: 60px;
+  border-radius: 8px;
+}
+
+/* Table */
+.tableCard {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  width: 30%;
+  height: 22px;
+  margin: 24px 28px 16px;
+  border-radius: 6px;
+}
+
+.tableRow {
+  width: calc(100% - 56px);
+  height: 56px;
+  margin: 0 28px 12px;
+  border-radius: 6px;
+}
+
+.tableRow:last-child {
+  margin-bottom: 24px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .h1,
+  .lede,
+  .statCell,
+  .heroHeader,
+  .heroUrl,
+  .heroStat,
+  .tableHeader,
+  .tableRow {
+    animation: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .statsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .heroStrip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .statsRow {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .heroStrip {
+    grid-template-columns: 1fr;
+  }
+  .lede {
+    width: 320px;
+  }
+  .hero {
+    padding: 22px;
+  }
+}

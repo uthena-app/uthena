@@ -1,0 +1,21 @@
+/* Home page shell — keeps the seven sections within the design-system
+   container width. Each section owns its own padding + borders so
+   removing or reordering them doesn't require touching this file.
+   The Phase 1 scaffold's hero/catStrip/featured CSS classes were
+   removed in favor of per-section modules in 02-features/home. */
+
+.page {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-body);
+}
+
+/* The home page's seven sections share the design-system container
+   width (var(--max) = 1280px). The sections themselves own their
+   vertical padding + horizontal margin so this file stays minimal. */
+
+@media (max-width: 768px) {
+  .page {
+    /* tighter mobile rhythm is owned by each section's breakpoint. */
+  }
+}

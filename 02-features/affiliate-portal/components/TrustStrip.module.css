@@ -1,0 +1,40 @@
+/* TrustStrip — 4-cell horizontal strip of trust signals.
+   Mobile (≤640px): wraps to 2x2. */
+
+.strip {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+@media (max-width: 640px) {
+  .strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.glyph {
+  width: 18px;
+  height: 18px;
+  color: var(--teal);
+  flex-shrink: 0;
+}
+
+.label {
+  line-height: 1.2;
+}

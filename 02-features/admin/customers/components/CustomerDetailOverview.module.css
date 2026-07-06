@@ -1,0 +1,207 @@
+/* CustomerDetailOverview — token-only CSS. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-6, 24px);
+  max-width: 960px;
+}
+
+.section {
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  border-radius: var(--radius-md, 8px);
+  padding: 16px 20px;
+  background: var(--bg-elev-1, #fff);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.h2 {
+  font-size: var(--font-size-lg, 18px);
+  font-weight: 600;
+  margin: 0;
+  color: var(--fg, #111);
+}
+
+/* Status badge — matches the list-page CustomerTable tones. */
+.status {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--font-size-xs, 12px);
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.status[data-status='active'] {
+  background: var(--success-soft, rgba(22, 163, 74, 0.08));
+  border-color: var(--success-line, rgba(22, 163, 74, 0.25));
+  color: var(--success-fg, #166534);
+}
+.status[data-status='suspended'] {
+  background: var(--warn-soft, rgba(217, 119, 6, 0.08));
+  border-color: var(--warn-line, rgba(217, 119, 6, 0.25));
+  color: var(--warn-fg, #92400e);
+}
+.status[data-status='banned'] {
+  background: var(--danger-soft, rgba(220, 38, 38, 0.08));
+  border-color: var(--danger-line, rgba(220, 38, 38, 0.30));
+  color: var(--danger-fg, #991b1b);
+}
+
+/* State banner — only renders when status is suspended / banned. */
+.stateBanner {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm, 6px);
+  font-size: var(--font-size-sm, 13px);
+  margin-bottom: 12px;
+}
+
+.stateBanner[data-status='suspended'] {
+  background: var(--warn-soft, rgba(217, 119, 6, 0.08));
+  border: 1px solid var(--warn-line, rgba(217, 119, 6, 0.25));
+  color: var(--warn-fg, #92400e);
+}
+
+.stateBanner[data-status='banned'] {
+  background: var(--danger-soft, rgba(220, 38, 38, 0.08));
+  border: 1px solid var(--danger-line, rgba(220, 38, 38, 0.30));
+  color: var(--danger-fg, #991b1b);
+}
+
+.warnings {
+  font-size: var(--font-size-sm, 13px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 0;
+}
+
+/* 4-card stats grid */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-3, 12px);
+}
+
+.statCard {
+  padding: 12px 14px;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.06));
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-elev-2, #fafafa);
+}
+
+.statLabel {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 6px 0;
+}
+
+.statValue {
+  font-size: var(--font-size-lg, 18px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  color: var(--fg, #111);
+}
+
+/* Risk section */
+.riskHint {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 8px 0 0 0;
+}
+
+/* Contact section — definition list */
+.dl {
+  display: grid;
+  grid-template-columns: minmax(140px, max-content) 1fr;
+  gap: 8px 24px;
+  margin: 0;
+}
+
+.dlRow {
+  display: contents;
+}
+
+.dt {
+  font-size: var(--font-size-sm, 13px);
+  font-weight: 500;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.04));
+}
+
+.dd {
+  font-size: var(--font-size-sm, 13px);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg, #111);
+  margin: 0;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.04));
+}
+
+.dd[data-pii='masked'] {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 0.02em;
+}
+
+.maskHint {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 12px 0 0 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg-elev-2, #fafafa);
+  border-left: 3px solid var(--accent, #ea580c);
+}
+
+.role {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-size: var(--font-size-xs, 12px);
+  font-weight: 500;
+  background: var(--bg-elev-2, #fafafa);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+}
+
+.role[data-role='admin'],
+.role[data-role='super_admin'] {
+  background: var(--accent-soft, rgba(234, 88, 12, 0.08));
+  border-color: var(--accent-line, rgba(234, 88, 12, 0.25));
+  color: var(--accent-fg, #9a3412);
+}
+
+.role[data-role='partner'] {
+  background: var(--teal-soft, rgba(13, 148, 136, 0.08));
+  border-color: var(--teal-line, rgba(13, 148, 136, 0.25));
+  color: var(--teal-fg, #115e59);
+}
+
+.role[data-role='affiliate'] {
+  background: var(--success-soft, rgba(22, 163, 74, 0.08));
+  border-color: var(--success-line, rgba(22, 163, 74, 0.25));
+  color: var(--success-fg, #166534);
+}
+
+@media (max-width: 900px) {
+  .statsRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dl {
+    grid-template-columns: minmax(120px, max-content) 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsRow {
+    grid-template-columns: 1fr;
+  }
+}

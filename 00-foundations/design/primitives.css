@@ -1,0 +1,224 @@
+/* ==========================================================================
+   Uthena v4 — Primitives
+   Base reset + element styles + shared component classes. This file is
+   imported once, globally, after tokens.css. It contains NO color values
+   — only token references. Adding a new component? Add it here.
+   ========================================================================== */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+}
+
+body { min-height: 100vh; }
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, select, textarea { font: inherit; }
+
+::selection { background: var(--action); color: #1A0E00; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---------- Typography ---------- */
+.h-display { font-size: 52px; line-height: 1.05; font-weight: 700; letter-spacing: -0.025em; color: var(--heading); }
+.h-1 { font-size: 34px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; color: var(--heading); }
+.h-2 { font-size: 24px; line-height: 1.2; font-weight: 600; letter-spacing: -0.015em; color: var(--heading); }
+.h-3 { font-size: 17px; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; color: var(--heading); }
+.h-4 { font-size: 14px; line-height: 1.3; font-weight: 600; letter-spacing: -0.005em; color: var(--heading); }
+.t-eyebrow {
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-3);
+}
+.t-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.t-sm { font-size: 13px; }
+.t-xs { font-size: 12px; }
+.t-mute { color: var(--text-2); }
+.t-faint { color: var(--text-3); }
+
+/* ---------- Containers ---------- */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+.container-narrow { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+.container-wide { max-width: 1440px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Surfaces ---------- */
+.surface { background: var(--bg-elev-1); border: 1px solid var(--line); border-radius: var(--r-md); }
+.surface-2 { background: var(--bg-elev-2); border: 1px solid var(--line); border-radius: var(--r-md); }
+.surface-brand { background: var(--bg-brand); border: 1px solid var(--accent-line); border-radius: var(--r-md); }
+
+/* ==========================================================================
+   Buttons — TWO-SIGNAL: primary = orange (action), ghost = teal (identity).
+   ========================================================================== */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: var(--r-sm);
+  font-weight: 500; font-size: 13.5px;
+  border: 1px solid transparent;
+  transition: background .12s ease, border-color .12s ease, color .12s ease, transform .08s ease, box-shadow .12s ease;
+  white-space: nowrap; user-select: none;
+}
+.btn:active { transform: translateY(0.5px); }
+
+/* PRIMARY — orange. Use for: Buy, Add to cart, Subscribe, Apply, Submit, Save. */
+.btn-primary {
+  background: var(--action);
+  color: #1A0E00;
+  font-weight: 600;
+}
+.btn-primary:hover { background: var(--action-hover); box-shadow: var(--shadow-glow); }
+
+/* SECONDARY — neutral. Use for: Cancel, Back, Skip. Never orange. */
+.btn-secondary {
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  border-color: var(--line);
+}
+.btn-secondary:hover { background: var(--bg-elev-3); border-color: var(--line-strong); }
+
+/* GHOST — teal text. Use for: "go somewhere" cues, inline link-buttons. */
+.btn-ghost { color: var(--accent); }
+.btn-ghost:hover { color: var(--accent-hover); background: var(--bg-elev-2); }
+
+/* DESTRUCTIVE — semantic red, not brand. */
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border-color: var(--line);
+}
+.btn-danger:hover { background: var(--danger-soft); border-color: var(--danger); }
+
+.btn-sm { padding: 5px 10px; font-size: 12.5px; }
+.btn-lg { padding: 11px 20px; font-size: 14.5px; }
+.btn-block { display: flex; width: 100%; justify-content: center; }
+
+/* ==========================================================================
+   Badges — semantic + brand-coherent variants. New variants:
+     .badge-plr (teal pill, PLR license)
+     .badge-mrr (orange pill, MRR license)
+     .badge-sale (orange sale tag)
+     .badge-new  (teal "NEW" tag)
+   ========================================================================== */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 8px; border-radius: var(--r-xs);
+  font-size: 11.5px; font-weight: 500;
+  background: var(--bg-elev-2); color: var(--text-2);
+  border: 1px solid var(--line);
+  letter-spacing: 0.01em;
+}
+.badge-accent  { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+.badge-sale    { background: var(--action-soft); color: var(--action); border-color: var(--action-line); }
+.badge-plr     { background: var(--accent); color: #001A14; border-color: var(--accent); }
+.badge-mrr     { background: var(--action); color: #1A0E00; border-color: var(--action); }
+.badge-new     { background: var(--accent); color: #001A14; border-color: var(--accent); }
+.badge-success { background: var(--success-soft); color: var(--success); border-color: var(--success-line); }
+.badge-warn    { background: var(--warn-soft); color: var(--warn); border-color: var(--warn-line); }
+.badge-danger  { background: var(--danger-soft); color: var(--danger); border-color: var(--danger-line); }
+.badge-info    { background: var(--info-soft); color: var(--info); border-color: var(--info-line); }
+.badge-mute    { background: transparent; color: var(--text-3); border-color: var(--line); }
+.badge-dot::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+/* ---------- Cards ---------- */
+.card { background: var(--bg-elev-1); border: 1px solid var(--line); border-radius: var(--r-md); }
+.card-body { padding: 18px; }
+
+/* ---------- Top nav ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(150%) blur(14px);
+  -webkit-backdrop-filter: saturate(150%) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { display: flex; align-items: center; gap: 24px; height: 56px; }
+.nav-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: 17px; letter-spacing: -0.015em;
+  color: var(--heading);
+}
+.nav-logo .logo-word { font-weight: 600; letter-spacing: -0.015em; color: var(--heading); }
+.nav-logo .logo-mark-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+  margin-left: 2px;
+}
+.nav-links { display: flex; gap: 2px; align-items: center; }
+.nav-link {
+  padding: 6px 12px; border-radius: var(--r-sm);
+  color: var(--text-2); font-size: 13.5px; font-weight: 500;
+  transition: color .12s ease, background .12s ease;
+}
+.nav-link:hover { color: var(--text-1); background: var(--bg-elev-1); }
+.nav-link.active { color: var(--accent); background: transparent; }
+.nav-spacer { flex: 1; }
+.nav-search {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg-elev-1); border: 1px solid var(--line);
+  border-radius: var(--r-sm); padding: 6px 10px; min-width: 280px;
+  color: var(--text-3);
+}
+.nav-search:focus-within { border-color: var(--accent); }
+.nav-search input { background: none; border: none; outline: none; color: var(--text-1); width: 100%; font-size: 13px; }
+.nav-search kbd {
+  font-family: var(--font-mono); font-size: 10px;
+  background: var(--bg-elev-2); border: 1px solid var(--line);
+  padding: 1px 5px; border-radius: 3px; color: var(--text-3);
+}
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+
+/* ---------- Footer (light, brand continuity — see --footer-bg) ---------- */
+.footer {
+  margin-top: 80px;
+  background: var(--footer-bg);
+  color: var(--footer-fg);
+  border-top: 1px solid var(--footer-line);
+  padding: 48px 0 28px;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; }
+.footer h4 { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 14px; font-weight: 600; }
+.footer ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer ul a { color: var(--footer-fg); font-size: 13.5px; opacity: 0.8; }
+.footer ul a:hover { color: var(--accent); opacity: 1; }
+.footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--footer-line); display: flex; justify-content: space-between; color: var(--text-3); font-size: 12.5px; }
+
+/* ---------- Grids ---------- */
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 1100px) { .grid-4, .grid-5 { grid-template-columns: repeat(3, 1fr); } .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+@media (max-width: 800px)  { .grid-3, .grid-4, .grid-5 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px)  { .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } .nav-search { display: none; } }
+
+/* ---------- Utility ---------- */
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-baseline { align-items: baseline; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+.gap-1 { gap: 4px; } .gap-2 { gap: 8px; } .gap-3 { gap: 12px; } .gap-4 { gap: 16px; } .gap-6 { gap: 24px; } .gap-8 { gap: 32px; }
+.mt-2 { margin-top: 8px; } .mt-4 { margin-top: 16px; } .mt-6 { margin-top: 24px; } .mt-8 { margin-top: 32px; } .mt-12 { margin-top: 48px; }
+.mb-2 { margin-bottom: 8px; } .mb-4 { margin-bottom: 16px; } .mb-6 { margin-bottom: 24px; } .mb-8 { margin-bottom: 32px; }
+.text-center { text-align: center; }
+.w-full { width: 100%; }
+.divider { height: 1px; background: var(--line); margin: 24px 0; }
+.divider-y { width: 1px; background: var(--line); align-self: stretch; }
+.hr-soft { border: 0; border-top: 1px solid var(--line); margin: 16px 0; }

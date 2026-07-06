@@ -1,0 +1,26 @@
+.page {
+  display: block;
+  padding: var(--space-5, 20px);
+  background: var(--bg-1);
+  min-height: 100vh;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--space-6, 24px);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.main {
+  display: grid;
+  gap: var(--space-6, 24px);
+  min-width: 0;
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

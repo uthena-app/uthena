@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marcus Reyes Media — Uthena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  /* Mini-shop — what a visitor sees at uthena.com/[handle].
+     Stays inside the same professional system but uses the affiliate's brand identity. */
+
+  .ms-topbar { background: var(--bg-base); border-bottom: 1px solid var(--border); padding: 12px 0; }
+  .ms-topbar-inner { display: flex; align-items: center; gap: 16px; }
+  .ms-brand { display: flex; align-items: center; gap: 10px; }
+  .ms-brand-mark { width: 32px; height: 32px; border-radius: var(--r-sm); background: var(--bg-2); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--text-1); border: 1px solid var(--border-2); font-size: 12px; }
+  .ms-brand-name { font-weight: 600; font-size: 14px; }
+  .ms-brand-handle { font-size: 11px; color: var(--text-3); font-family: var(--font-mono); }
+  .ms-powered { margin-left: auto; font-size: 11px; color: var(--text-3); display: flex; gap: 6px; align-items: center; }
+  .ms-powered a { color: var(--text-2); }
+  .ms-powered a:hover { color: var(--text-1); }
+
+  .ms-hero { padding: 64px 0 48px; }
+  .ms-hero-inner { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; }
+  @media (max-width: 768px) { .ms-hero-inner { grid-template-columns: 1fr; text-align: center; } }
+  .ms-hero-mark { width: 96px; height: 96px; border-radius: var(--r-lg); background: var(--bg-2); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--text-1); border: 1px solid var(--border-2); font-size: 32px; }
+  @media (max-width: 768px) { .ms-hero-mark { margin: 0 auto; } }
+  .ms-hero h1 { font-size: 36px; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; }
+  .ms-hero .bio { color: var(--text-2); font-size: 15px; max-width: 600px; margin-top: 12px; }
+  .ms-hero .stats { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+  @media (max-width: 768px) { .ms-hero .stats { justify-content: center; } }
+  .ms-hero .stats .s { display: flex; flex-direction: column; }
+  .ms-hero .stats .s .v { font-family: var(--font-mono); font-size: 20px; font-weight: 600; }
+  .ms-hero .stats .s .l { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
+  .ms-hero .ctas { display: flex; gap: 8px; margin-top: 20px; }
+  @media (max-width: 768px) { .ms-hero .ctas { justify-content: center; } }
+
+  .trust-strip { background: var(--bg-1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; }
+  .trust-inner { display: flex; justify-content: space-around; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .trust-item { display: flex; gap: 8px; align-items: center; color: var(--text-2); font-size: 12.5px; }
+  .trust-item svg { color: var(--success); }
+
+  .ms-section { padding: 56px 0; }
+  .ms-section h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.015em; }
+  .ms-section .sub { color: var(--text-2); margin-top: 6px; font-size: 13.5px; }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; gap: 24px; flex-wrap: wrap; }
+
+  /* Featured pick — list-style, professional */
+  .featured { display: grid; grid-template-columns: 280px 1fr; gap: 0; background: var(--bg-1); border: 1px solid var(--border-2); border-radius: var(--r-md); overflow: hidden; margin-bottom: 28px; }
+  @media (max-width: 768px) { .featured { grid-template-columns: 1fr; } }
+  .featured-thumb { aspect-ratio: 16/9; background: var(--bg-2); position: relative; }
+  .featured-thumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(11,12,14,0.5)); }
+  .featured-body { padding: 24px; display: flex; flex-direction: column; }
+  .featured-body .tag { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; margin-bottom: 8px; }
+  .featured-body h3 { font-size: 18px; line-height: 1.3; font-weight: 600; margin-bottom: 8px; }
+  .featured-body .meta { font-size: 12px; color: var(--text-3); margin-bottom: 12px; font-family: var(--font-mono); }
+  .featured-body .pick { background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 12px; margin: 8px 0 16px; font-size: 12.5px; color: var(--text-2); line-height: 1.5; }
+  .featured-body .pick .who { font-weight: 500; color: var(--text-1); margin-bottom: 4px; font-size: 12px; }
+  .featured-body .pick-q { color: var(--text-2); }
+  .featured-body .row { display: flex; align-items: center; gap: 16px; margin-top: auto; }
+  .featured-body .row .price { font-family: var(--font-mono); font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+  .featured-body .row .price .was { font-size: 13px; color: var(--text-3); text-decoration: line-through; margin-left: 6px; }
+  .featured-body .row .go { margin-left: auto; }
+
+  /* Product grid — same as catalog */
+  .pc { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; transition: border-color .12s ease; display: block; }
+  .pc:hover { border-color: var(--border-3); }
+  .pc-thumb { aspect-ratio: 16/9; position: relative; overflow: hidden; background: var(--bg-2); }
+  .pc-thumb-art { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .pc-thumb-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(11,12,14,0.4)); }
+  .pc-thumb-tag { position: absolute; top: 8px; left: 8px; z-index: 2; }
+  .pc-body { padding: 12px 14px 14px; }
+  .pc-cat { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; margin-bottom: 6px; }
+  .pc-ttl { font-size: 13.5px; font-weight: 500; line-height: 1.4; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.8em; }
+  .pc-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border); }
+  .pc-price { font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+  .pc-meta { font-size: 11.5px; color: var(--text-3); }
+
+  /* About the curator */
+  .about { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); padding: 32px; display: grid; grid-template-columns: 200px 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 768px) { .about { grid-template-columns: 1fr; } }
+  .about-avatar { width: 120px; height: 120px; border-radius: var(--r-lg); background: var(--bg-2); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 600; color: var(--text-1); border: 1px solid var(--border-2); }
+  .about h3 { font-size: 18px; margin-bottom: 8px; }
+  .about p { color: var(--text-2); font-size: 13.5px; line-height: 1.6; margin-bottom: 8px; }
+  .about .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+
+  .ms-footer { background: var(--bg-1); border-top: 1px solid var(--border); padding: 28px 0; text-align: center; }
+  .ms-footer .copy { color: var(--text-3); font-size: 12px; }
+  .ms-footer .copy a { color: var(--text-2); }
+  .ms-footer .copy a:hover { color: var(--text-1); }
+</style>
+</head>
+<body>
+
+<!-- ============== MINI-SHOP TOP BAR (affiliate brand) ============== -->
+<div class="ms-topbar">
+  <div class="container ms-topbar-inner">
+    <a href="minishop.html" class="ms-brand">
+      <div class="ms-brand-mark">MR</div>
+      <div>
+        <div class="ms-brand-name">Marcus Reyes Media</div>
+        <div class="ms-brand-handle">uthena.com/marcus-reyes</div>
+      </div>
+    </a>
+    <div class="ms-powered">
+      Powered by <a href="index.html"><span class="logo-word" style="font-size: 13px;">uthena</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============== HERO ============== -->
+<section class="ms-hero">
+  <div class="container ms-hero-inner">
+    <div class="ms-hero-mark">MR</div>
+    <div>
+      <h1>Whitelabel courses, hand-picked.</h1>
+      <p class="bio">I test every course in this shop. If it's here, I sold it (or used it) in my own business first. These are the ones worth your time and money.</p>
+      <div class="stats">
+        <div class="s"><span class="v">24</span><span class="l">Products</span></div>
+        <div class="s"><span class="v">12,400+</span><span class="l">Buyers</span></div>
+        <div class="s"><span class="v">4.8</span><span class="l">Avg rating</span></div>
+        <div class="s"><span class="v">2,341</span><span class="l">Followers</span></div>
+      </div>
+      <div class="ctas">
+        <a href="#shop" class="btn btn-primary">Browse the shop</a>
+        <a href="#about" class="btn btn-secondary">About Marcus</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TRUST STRIP ============== -->
+<div class="trust-strip">
+  <div class="container trust-inner">
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      14-day return rights
+    </div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Instant download
+    </div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Secure checkout
+    </div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+      PLR license included
+    </div>
+  </div>
+</div>
+
+<!-- ============== FEATURED PICK ============== -->
+<section class="ms-section" id="shop">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="t-eyebrow mb-2">Marcus's pick</div>
+        <h2>This week's top recommendation</h2>
+      </div>
+    </div>
+
+    <div class="featured">
+      <div class="featured-thumb"></div>
+      <div class="featured-body">
+        <div class="tag">Top pick · week 13</div>
+        <h3>AI for Personal Branding</h3>
+        <div class="meta">12 modules · 47 lessons · 6h 24m · PLR + MRR license</div>
+        <div class="pick">
+          <div class="who">Why I picked this</div>
+          <div class="pick-q">"I bought this 4 months ago, rebranded it as 'BrandAI Accelerator', and sold 31 copies at $997 each. The frameworks are solid and the source files are clean. The instructor is legit — not some random PLR rehash."</div>
+        </div>
+        <div class="row">
+          <div class="price">$497 <span class="was">$1,997</span></div>
+          <a href="product.html" class="btn btn-primary go">View course →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div>
+        <div class="t-eyebrow mb-2">Marcus's shop</div>
+        <h2>24 hand-picked products</h2>
+        <p class="sub">All whitelabel. All tested. All vetted for quality.</p>
+      </div>
+      <div class="seg" style="display: inline-flex; background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 2px;">
+        <button class="active" style="padding: 5px 10px; border-radius: 4px; font-size: 12px; color: var(--text-1); background: var(--bg-2);">All</button>
+        <button style="padding: 5px 10px; border-radius: 4px; font-size: 12px; color: var(--text-2);">AI</button>
+        <button style="padding: 5px 10px; border-radius: 4px; font-size: 12px; color: var(--text-2);">Business</button>
+        <button style="padding: 5px 10px; border-radius: 4px; font-size: 12px; color: var(--text-2);">Marketing</button>
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <a href="product.html" class="pc">
+        <div class="pc-thumb">
+          <div class="pc-thumb-art" style="background: var(--bg-2);"></div>
+          <span class="pc-thumb-tag"><span class="badge badge-accent">Marcus's pick</span></span>
+        </div>
+        <div class="pc-body">
+          <div class="pc-cat">AI &amp; Marketing</div>
+          <div class="pc-ttl">Using AI to Create and Scale a Profitable Personal Brand</div>
+          <div class="pc-foot"><span class="pc-price">$497</span><span class="pc-meta">★ 4.9 · 2,341 sold</span></div>
+        </div>
+      </a>
+      <a href="product.html" class="pc">
+        <div class="pc-thumb"><div class="pc-thumb-art" style="background: var(--bg-2);"></div></div>
+        <div class="pc-body">
+          <div class="pc-cat">Sales</div>
+          <div class="pc-ttl">B2B Sales: From Cold Lead Generation to Closing Sales</div>
+          <div class="pc-foot"><span class="pc-price">$399</span><span class="pc-meta">★ 4.8 · 2,341 sold</span></div>
+        </div>
+      </a>
+      <a href="product.html" class="pc">
+        <div class="pc-thumb"><div class="pc-thumb-art" style="background: var(--bg-2);"></div></div>
+        <div class="pc-body">
+          <div class="pc-cat">Programming</div>
+          <div class="pc-ttl">Python Pro — The Complete Python Bootcamp for Noobs</div>
+          <div class="pc-foot"><span class="pc-price">$697</span><span class="pc-meta">★ 4.9 · 1,892 sold</span></div>
+        </div>
+      </a>
+      <a href="product.html" class="pc">
+        <div class="pc-thumb"><div class="pc-thumb-art" style="background: var(--bg-2);"></div><span class="pc-thumb-tag"><span class="badge badge-mute">New</span></span></div>
+        <div class="pc-body">
+          <div class="pc-cat">Network Security</div>
+          <div class="pc-ttl">Complete Network Hacking Course 2025: Beginner to Advanced</div>
+          <div class="pc-foot"><span class="pc-price">$497</span><span class="pc-meta">★ 4.7 · 128 sold</span></div>
+        </div>
+      </a>
+      <a href="product.html" class="pc">
+        <div class="pc-thumb"><div class="pc-thumb-art" style="background: var(--bg-2);"></div></div>
+        <div class="pc-body">
+          <div class="pc-cat">AI &amp; Beginners</div>
+          <div class="pc-ttl">Artificial Intelligence Explained for Beginners</div>
+          <div class="pc-foot"><span class="pc-price">$397</span><span class="pc-meta">★ 4.6 · 1,020 sold</span></div>
+        </div>
+      </a>
+      <a href="product.html" class="pc">
+        <div class="pc-thumb"><div class="pc-thumb-art" style="background: var(--bg-2);"></div></div>
+        <div class="pc-body">
+          <div class="pc-cat">Canva &amp; Design</div>
+          <div class="pc-ttl">Canva Content Creation and Graphic Design Masterclass 2025</div>
+          <div class="pc-foot"><span class="pc-price">$297</span><span class="pc-meta">★ 4.9 · 567 sold</span></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="text-center mt-8">
+      <a href="#" class="btn btn-secondary btn-lg">View all 24 products →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ABOUT THE CURATOR ============== -->
+<section class="ms-section" id="about" style="background: var(--bg-1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="about">
+      <div class="about-avatar">MR</div>
+      <div>
+        <div class="t-eyebrow mb-2">About the curator</div>
+        <h3>Marcus Reyes</h3>
+        <p>Digital agency owner in Miami. I run a 6-person shop packaging whitelabel courses as client deliverables — and reselling a few to my own list.</p>
+        <p>Every course in this shop is one I personally bought, used, and either resold or gave to a client. If it didn't work for me, it's not here.</p>
+        <p>I've made <strong style="color: var(--text-1);">$87,000</strong> in the last 12 months from products in this shop. The first three are still my top sellers.</p>
+        <div class="badges">
+          <span class="badge badge-success badge-dot">Verified affiliate</span>
+          <span class="badge badge-mute">$87K earned</span>
+          <span class="badge badge-mute">2,341 followers</span>
+          <span class="badge badge-mute">Joined Mar 2024</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="ms-footer">
+  <div class="container">
+    <div class="copy">
+      © 2026 Marcus Reyes Media · Powered by <a href="index.html">Uthena</a> ·
+      <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">DMCA</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

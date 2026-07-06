@@ -1,0 +1,50 @@
+/* Light theme override — applied when <html data-theme="light"> or <body data-theme="light">
+   The dark default is in main.css. This file re-maps every color token.
+   Orange + teal stay the same hex; their soft/line variants get bumped
+   in opacity because they need to read on a light canvas.
+*/
+
+[data-theme="light"] {
+  /* Canvas — warm off-white, layered depth inverts:
+     page is the LIGHTEST, cards are slightly deeper (warmer/darker) */
+  --bg:           #FAF9F5;   /* page (warm cream) */
+  --bg-elev-1:    #FFFFFF;   /* card (brightest, pops off page) */
+  --bg-elev-2:    #F2EFE8;   /* raised / hover (warmer) */
+  --bg-elev-3:    #EAE6DC;   /* input fill, chip */
+  --bg-inset:     #F2EFE8;   /* code, table stripe */
+  --bg-brand:     rgba(26, 188, 156, 0.06);  /* section brand-tint */
+
+  --line:         #E5E1D6;   /* hairline (warmer than dark theme) */
+  --line-strong:  #D5D0C2;   /* emphasized border */
+
+  /* Text — near-black on cream */
+  --heading:      #0B0C0D;
+  --text:         #2A2D32;
+  --text-soft:    #6B6F7A;
+  --text-faint:   #A0A4AC;
+
+  /* Brand — same hex, bumped soft/line opacity for legibility on light */
+  --orange:       #F3924A;
+  --orange-hover: #E57A2A;
+  --orange-soft:  rgba(243, 146, 74, 0.16);
+  --orange-line:  rgba(243, 146, 74, 0.40);
+  --teal:         #1ABC9C;
+  --teal-hover:   #159A82;
+  --teal-soft:    rgba(26, 188, 156, 0.14);
+  --teal-line:    rgba(26, 188, 156, 0.40);
+
+  /* Badges */
+  --badge-sale:   #F3924A;
+  --badge-new:    #1ABC9C;
+  --star:         #F3924A;
+
+  /* Footer in light theme: DARKER than the page (not lighter, as on dark theme)
+     — because the page is already light, a light footer would vanish.
+     Use a deep warm gray that echoes the dark-theme footer color. */
+  --footer-bg:    #15181B;
+  --footer-fg:    #ECECEE;
+  --footer-line:  #2A2F35;
+}
+
+/* Selection color inverts */
+[data-theme="light"] ::selection { background: var(--orange); color: #FFFFFF; }

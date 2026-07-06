@@ -1,0 +1,37 @@
+/* OrderDetailTabs — token-only CSS. Horizontal scroll on mobile. */
+
+.tablist {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  margin-bottom: var(--gap-6, 24px);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.tab {
+  padding: 10px 16px;
+  font-size: var(--font-size-sm, 13px);
+  font-weight: 500;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab:hover {
+  color: var(--fg, #111);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent, #ea580c);
+  outline-offset: -2px;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.tab[data-active='true'] {
+  color: var(--fg, #111);
+  border-bottom-color: var(--accent, #ea580c);
+  font-weight: 600;
+}

@@ -1,0 +1,12 @@
+/* Loading skeleton for /admin/account-switcher. Token-only. */
+
+.section {
+  padding: 20px 24px;
+  background: var(--bg-elev-1, var(--bg-1));
+  border: 1px solid var(--line, var(--border));
+  border-radius: var(--r-lg, 12px);
+}
+
+.gap {
+  height: 16px;
+}

@@ -1,0 +1,163 @@
+/* Contact page — option rows + form section. */
+
+.page {
+  min-height: 70vh;
+  padding: 48px 16px 96px;
+  background: var(--bg);
+  color: var(--text-1);
+}
+
+.header {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  text-align: left;
+}
+
+.h1 {
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--heading);
+  margin: 0 0 12px;
+}
+
+.lede {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.section {
+  max-width: 880px;
+  margin: 0 auto 48px;
+}
+
+.sectionH {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--text-3);
+  margin: 0 0 16px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.rowMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rowLabel {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+}
+
+.rowDesc {
+  font-size: 13.5px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.rowMeta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 4px 0 0;
+}
+
+.rowMetaKey {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.rowCta {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 120ms ease;
+}
+
+.rowCta:hover {
+  border-bottom-color: var(--accent-line);
+}
+
+.rowCtaEmail {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  color: var(--accent);
+}
+
+.rowCta:hover .rowCtaEmail {
+  color: var(--accent-hover);
+}
+
+.rowCtaLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.formIntro {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 0 0 16px;
+  max-width: 560px;
+}
+
+.company {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  border-top: 1px solid var(--line);
+}
+
+.companyLine {
+  font-size: 13.5px;
+  color: var(--text-2);
+  margin: 0 0 8px;
+}
+
+.companyKey {
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-right: 6px;
+}

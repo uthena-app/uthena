@@ -1,0 +1,48 @@
+/* StepPlaceholder — token-only body for not-yet-implemented steps. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  max-width: 640px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.h2 {
+  font-size: var(--font-h3, 22px);
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+}
+
+.lede {
+  font-size: 14px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.blurb {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-1);
+  margin: var(--space-3, 12px) 0 0;
+}
+
+.note {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-3);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  margin: var(--space-4, 16px) 0 0;
+}

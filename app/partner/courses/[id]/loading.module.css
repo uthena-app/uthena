@@ -1,0 +1,40 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 980px;
+}
+
+.header {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tabBar {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  overflow-x: auto;
+}
+
+.panel {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

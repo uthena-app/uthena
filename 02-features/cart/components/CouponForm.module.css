@@ -1,0 +1,103 @@
+/* CouponForm.module.css — token-only styles for the coupon code entry
+ * form on /checkout. Replaces the inline-style implementation that
+ * shipped with P4.1 (per AGENTS.md "All UI must use design tokens").
+ *
+ * Visual rhythm matches the cart's per-line section: 11px eyebrow +
+ * dense form row + small inline message. The "applied" view (coupon
+ * badge + Remove) uses the success-soft palette for visual continuity
+ * with the rest of the checkout summary. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2, 6px);
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  gap: var(--s-2, 6px);
+  align-items: stretch;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: var(--s-2, 6px) var(--s-3, 8px);
+  border-radius: var(--r-sm, 6px);
+  border: 1px solid var(--line);
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.input::placeholder {
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+}
+
+.input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.message {
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.messageOk {
+  color: var(--success);
+}
+
+.messageErr {
+  color: var(--danger);
+}
+
+/* Applied-coupon view — coupon code as a mono badge + label + Remove.
+ * Sits inside the same outline treatment as the input row above so the
+ * user perceives the "apply" → "applied" transition as the same surface
+ * swapping state, not a different control appearing. */
+
+.applied {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3, 8px);
+  padding: var(--s-2, 6px) var(--s-3, 8px);
+  border-radius: var(--r-sm, 6px);
+  border: 1px solid var(--success-line, var(--teal-line));
+  background: var(--success-soft, var(--teal-soft));
+}
+
+.appliedCode {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.appliedLabel {
+  font-size: 12px;
+  color: var(--text-2);
+  flex: 1;
+  min-width: 0;
+}

@@ -1,0 +1,87 @@
+/* Featured section — uses the existing ProductCard from
+   @features/catalog. Layout is a 3-column grid on desktop, 2 on
+   tablet, 1 on small mobile. The card itself owns its own styles. */
+
+.sec {
+  padding: var(--space-9) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.tintBase {
+  background: var(--bg);
+}
+
+.secHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: var(--space-1);
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+  line-height: 1.05;
+}
+
+.teal {
+  color: var(--accent);
+}
+
+.right {
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.viewAll {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 120ms ease;
+}
+
+.viewAll:hover {
+  color: var(--accent-hover);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .sec {
+    padding: var(--space-7) 0;
+  }
+  .secHead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}

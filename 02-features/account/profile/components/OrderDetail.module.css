@@ -1,0 +1,370 @@
+/* OrderDetail — RSC single-order view styles.
+   Token-only; no inline colors / px magic numbers. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 760px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.crumb {
+  margin: 0 0 8px;
+}
+
+.crumbLink {
+  color: var(--text-3);
+  font-size: 12px;
+  text-decoration: none;
+}
+.crumbLink:hover {
+  color: var(--accent);
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* Refund-window banner — three tones:
+     - info  (default, > 2 days remaining)
+     - amber (≤ 2 days remaining, gentle urgency)
+     - muted (window closed) */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+}
+
+.bannerInfo {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+
+.bannerAmber {
+  background: var(--warn-soft);
+  border-color: var(--warn-line);
+}
+
+.bannerMuted {
+  background: var(--bg-elev-1);
+  border-color: var(--line);
+}
+
+.bannerText {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.bannerText strong {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.section {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.h2 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0;
+}
+
+/* Items list */
+.itemList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.item:last-child {
+  padding-bottom: 0;
+}
+
+.itemThumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-elev-3);
+  flex-shrink: 0;
+}
+
+.itemThumbImg {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  display: block;
+}
+
+.itemThumbPlaceholder {
+  width: 64px;
+  height: 64px;
+  background: var(--bg-elev-3);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.itemBody {
+  min-width: 0;
+}
+
+.itemTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin: 0;
+}
+
+.itemLink {
+  color: var(--text-1);
+  text-decoration: none;
+}
+.itemLink:hover {
+  color: var(--accent);
+}
+
+.itemMeta {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 4px 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.itemDiscount {
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 400;
+  margin: 4px 0 0;
+}
+
+.itemTotals {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--text-1);
+  align-self: center;
+}
+
+/* Summary block */
+.summary {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+  gap: 16px;
+}
+.summaryRow:first-child {
+  border-top: none;
+}
+
+.summaryRow dt {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.summaryRow dd {
+  font-size: 13px;
+  color: var(--text-1);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.couponCode {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--font-mono, ui-monospace, 'SF Mono', monospace);
+  letter-spacing: 0;
+}
+
+.totalRow {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.totalRow dt {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.totalRow dd {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+/* Payment block */
+.mono {
+  font-family: var(--font-mono, ui-monospace, 'SF Mono', monospace);
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.addressBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-align: right;
+  font-variant-numeric: normal;
+}
+
+.addressLine {
+  font-size: 13px;
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.paymentHelp {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Action row */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.actionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+  line-height: 1;
+  border: 1px solid var(--line);
+}
+
+.actionBtnSecondary {
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  border-color: var(--line-strong);
+}
+
+.actionBtnSecondary:hover {
+  background: var(--bg-elev-3);
+  color: var(--heading);
+}
+
+.actionBtnDisabled {
+  background: var(--bg-elev-1);
+  color: var(--text-4);
+  cursor: not-allowed;
+  border-color: var(--line);
+}
+
+.helpBody {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.helpLink {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.helpLink:hover {
+  color: var(--accent-hover);
+}
+
+/* Mobile — collapse the 3-col item grid to a 2-col when narrow */
+@media (max-width: 540px) {
+  .item {
+    grid-template-columns: 56px 1fr auto;
+    gap: 12px;
+  }
+  .itemThumb,
+  .itemThumbImg,
+  .itemThumbPlaceholder {
+    width: 56px;
+    height: 56px;
+  }
+  .addressBlock {
+    align-items: flex-start;
+    text-align: left;
+  }
+}

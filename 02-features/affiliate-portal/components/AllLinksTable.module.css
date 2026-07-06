@@ -1,0 +1,402 @@
+/* AllLinksTable — P13.5 link-generator table.
+   Token-only. The action column holds 4 buttons:
+     - Copy URL (CopyLinkButton — Slice 1)
+     - Copy as QR (disabled, "Coming in v2" tooltip — Slice 3)
+     - Disable (disabled, "Coming in v2" tooltip — Slice 2)
+     - Delete (disabled, "Coming in v2" tooltip — Slice 2)
+
+   The action-disabled state mirrors the hero card's disabled
+   "Create link" CTA so the page reads as a coherent v1 slice.
+
+   360px / 768px / 1280px breakpoints:
+   - default: full table grid
+   - ≤1024px: collapses the utm_* columns (medium / source /
+     campaign) into one combined cell so the table fits in a
+     tablet viewport
+   - ≤768px: the per-row actions collapse into a single
+     "Actions" popover-style row (rendered via a flex column;
+     spec criterion #13)
+*/
+
+.shell {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.shellHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 28px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.shellHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.shellEyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0;
+}
+
+.shellTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.shellSub {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+  max-width: 60ch;
+  line-height: 1.5;
+}
+
+/* ------- table ------- */
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.table th {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  background: transparent;
+  white-space: nowrap;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr:hover {
+  background: var(--bg-elev-2);
+}
+
+.code {
+  font-family: var(--font-mono, ui-monospace, 'Menlo', monospace);
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.target {
+  font-size: 13px;
+  color: var(--heading);
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 120ms ease;
+}
+
+.target:hover {
+  border-color: var(--text-3);
+}
+
+.targetDim {
+  color: var(--text-3);
+}
+
+.utmGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--font-mono, ui-monospace, 'Menlo', monospace);
+  letter-spacing: -0.01em;
+}
+
+.utmKey {
+  font-weight: 700;
+  color: var(--text-2);
+  margin-right: 4px;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.utmNone {
+  font-style: italic;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+.numCell {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--heading);
+}
+
+.numCellLabel {
+  font-size: 10px;
+  color: var(--text-3);
+  margin-left: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.numRate {
+  font-weight: 700;
+}
+
+.dateCell {
+  font-size: 12px;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.statusPill[data-status='active'] {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.statusPill[data-status='disabled'] {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+/* ------- per-row actions ------- */
+
+.actionsCell {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 220px;
+  justify-content: flex-end;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev-2);
+  color: var(--heading);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 120ms ease, border-color 120ms ease;
+  white-space: nowrap;
+}
+
+.actionBtn:hover:not(:disabled) {
+  background: var(--bg-elev-3);
+}
+
+.actionBtn:focus-visible {
+  outline: 2px solid var(--border-3, var(--accent));
+  outline-offset: 2px;
+}
+
+.actionBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.actionBtnDanger {
+  color: var(--text-2);
+}
+
+/* ------- empty state inside the table body ------- */
+
+.tableEmpty {
+  padding: 36px 24px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+/* ------- status filter (P13.6) ------- */
+
+/* Fieldset wrapping the 3 chips on the right side of the section
+   header. The native fieldset border is suppressed (we render our
+   own layout via .shellHeader's flex); legend is sized to match
+   the eyebrow + title rhythm of .shellHeading. */
+.statusFieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.statusLegend {
+  /* Visually a label, not a legend box. The accessible name stays
+     available to assistive tech via the fieldset's aria-label. */
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 0;
+  margin: 0;
+}
+
+.statusChips {
+  display: inline-flex;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+
+/* Native <button> — tokens-only, matches the v1 hero + dashboard
+   rhythm. data-active = the selected chip. Focus ring via the
+   keyboard-nav rule (--border-3 fallback to --accent). */
+.statusChip {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+  white-space: nowrap;
+}
+
+.statusChip:hover:not(:disabled) {
+  color: var(--heading);
+}
+
+.statusChip:focus-visible {
+  outline: 2px solid var(--border-3, var(--accent));
+  outline-offset: 2px;
+}
+
+.statusChip[data-active='true'] {
+  background: var(--bg-elev-1);
+  color: var(--heading);
+  box-shadow: 0 0 0 1px var(--line-strong);
+  cursor: pointer;
+}
+
+/* ------- filter summary strip ------- */
+
+.filterSummary {
+  margin: 0;
+  padding: 12px 28px;
+  font-size: 12px;
+  color: var(--text-2);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-elev-2);
+}
+
+.filterClear {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.filterClear:hover {
+  color: var(--heading);
+}
+
+.filterClear:focus-visible {
+  outline: 2px solid var(--border-3, var(--accent));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ------- responsive ------- */
+
+@media (max-width: 1280px) {
+  .hideBelow1280 {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hideBelow1024 {
+    display: none;
+  }
+  .shellHeader {
+    padding: 20px 22px 14px;
+  }
+  .table th,
+  .table td {
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table th,
+  .table td {
+    padding: 12px 14px;
+    font-size: 12px;
+  }
+  .actionsCell {
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 140px;
+  }
+  .actionBtn {
+    justify-content: center;
+  }
+  .numRate {
+    font-size: 13px;
+  }
+}

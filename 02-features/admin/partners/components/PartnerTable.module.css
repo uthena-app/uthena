@@ -1,0 +1,180 @@
+/* PartnerTable — token-only CSS. */
+.tableScroll {
+  overflow-x: auto;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-elev-1, #fff);
+  margin-bottom: var(--gap-4, 16px);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm, 14px);
+}
+
+.table th,
+.table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.04));
+}
+
+.table thead th {
+  background: var(--bg-elev-2, #fafafa);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  font-weight: 600;
+  font-size: var(--font-size-xs, 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.table th[data-align='right'],
+.table td[data-align='right'] {
+  text-align: right;
+}
+
+.sortLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.sortLink:hover {
+  color: var(--accent, #2563eb);
+}
+
+.sortLink[data-active='true'] {
+  color: var(--accent, #2563eb);
+}
+
+.arrow {
+  font-size: 10px;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+}
+
+.sortLink[data-active='true'] .arrow {
+  color: var(--accent, #2563eb);
+}
+
+.nameLink {
+  color: var(--accent, #2563eb);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nameLink:hover {
+  text-decoration: underline;
+}
+
+.emailCell {
+  font-variant-numeric: tabular-nums;
+  color: var(--fg, #111);
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+.status,
+.kyc,
+.taxForm {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm, 4px);
+  font-size: var(--font-size-xs, 12px);
+  font-weight: 500;
+  text-transform: capitalize;
+  border: 1px solid transparent;
+}
+
+.status[data-status='pending'] {
+  background: var(--warn-soft, #fef3c7);
+  color: var(--warn-fg, #92400e);
+  border-color: var(--warn-line, #fde68a);
+}
+.status[data-status='approved'] {
+  background: var(--success-soft, #dcfce7);
+  color: var(--success-fg, #166534);
+  border-color: var(--success-line, #bbf7d0);
+}
+.status[data-status='suspended'] {
+  background: var(--danger-soft, #fee2e2);
+  color: var(--danger-fg, #991b1b);
+  border-color: var(--danger-line, #fecaca);
+}
+
+.kyc[data-kyc='approved'] {
+  background: var(--success-soft, #dcfce7);
+  color: var(--success-fg, #166534);
+  border-color: var(--success-line, #bbf7d0);
+}
+.kyc[data-kyc='pending'] {
+  background: var(--warn-soft, #fef3c7);
+  color: var(--warn-fg, #92400e);
+  border-color: var(--warn-line, #fde68a);
+}
+.kyc[data-kyc='rejected'] {
+  background: var(--danger-soft, #fee2e2);
+  color: var(--danger-fg, #991b1b);
+  border-color: var(--danger-line, #fecaca);
+}
+.kyc[data-kyc='none'] {
+  background: var(--bg-elev-2, #fafafa);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  border-color: var(--line, rgba(0, 0, 0, 0.08));
+}
+
+.taxForm[data-tax='approved'] {
+  background: var(--success-soft, #dcfce7);
+  color: var(--success-fg, #166534);
+  border-color: var(--success-line, #bbf7d0);
+}
+.taxForm[data-tax='submitted'] {
+  background: var(--info-soft, #dbeafe);
+  color: var(--info-fg, #1e40af);
+  border-color: var(--info-line, #bfdbfe);
+}
+.taxForm[data-tax='pending'] {
+  background: var(--warn-soft, #fef3c7);
+  color: var(--warn-fg, #92400e);
+  border-color: var(--warn-line, #fde68a);
+}
+.taxForm[data-tax='none'] {
+  background: var(--bg-elev-2, #fafafa);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  border-color: var(--line, rgba(0, 0, 0, 0.08));
+}
+
+.empty {
+  padding: 48px 16px;
+  border: 1px dashed var(--line, rgba(0, 0, 0, 0.12));
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-elev-1, #fff);
+  text-align: center;
+  margin-bottom: var(--gap-4, 16px);
+}
+
+.emptyText {
+  font-size: var(--font-size-md, 16px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 0 0 12px 0;
+}
+
+.emptyLink {
+  color: var(--accent, #2563eb);
+  text-decoration: none;
+  font-size: var(--font-size-sm, 14px);
+}
+
+.emptyLink:hover {
+  text-decoration: underline;
+}
+
+.summary {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 0 0 var(--gap-4, 16px) 0;
+}

@@ -1,0 +1,88 @@
+@import '../00-foundations/design/tokens.css';
+@import '../00-foundations/design/primitives.css';
+
+/* Global app shell styles — keep these few; everything else lives in
+   components or in 00-foundations/design/primitives.css. */
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  min-height: 100vh;
+}
+
+main {
+  min-height: calc(100vh - 200px);
+}
+
+/* Skip-to-content link — keyboard accessibility.
+   Hidden by default; revealed on :focus-visible (keyboard only) so
+   mouse clicks don't surface a stray link in the top-left corner. */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 8px;
+  background: var(--bg-elev-3);
+  color: var(--heading);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  z-index: 9999;
+  transition: top 120ms ease;
+}
+.skip-link:focus-visible {
+  top: 8px;
+}
+
+/* Focus ring — visible on every interactive element that receives
+   keyboard focus. Mouse clicks do NOT show the ring (that's
+   `:focus:not(:focus-visible)` below). */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Suppress the ring for mouse clicks so the design doesn't get
+   noisy. `:focus-visible` already handles the keyboard case above. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Windows High-Contrast Mode (forced-colors) — preserve the focus
+   indicator as a system color so users with WCAG high-contrast
+   themes always see where they are. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: 2px;
+  }
+}
+
+/* Visually hidden — accessible to screen readers, invisible to sight.
+   Used by <label htmlFor> patterns where the visible label is
+   already implicit (e.g. a labeled input next to its placeholder),
+   and by <h2> screen-reader-only headings that label a section
+   without adding visual weight. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reduced motion respect. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

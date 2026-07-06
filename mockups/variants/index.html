@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Uthena — 4 Design Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  /* INDEX — uses the d-signal tokens (the most expressive of the four)
+     so the index itself has character. The actual 4 variants live in
+     their own files. */
+  :root {
+    --bg-base: #08090B;
+    --bg-1: #101115;
+    --bg-2: #18191F;
+    --border: #23252C;
+    --border-2: #2E3038;
+    --text-1: #F2F2F4;
+    --text-2: #989BA3;
+    --text-3: #5F626B;
+    --teal: #14A89A;
+    --yellow: #F5C842;
+    --orange: #FF580D;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-base); color: var(--text-1); font-family: 'Inter', -apple-system, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  .tri-bar { height: 3px; background: linear-gradient(90deg, var(--teal) 0%, var(--teal) 33.33%, var(--yellow) 33.33%, var(--yellow) 66.66%, var(--orange) 66.66%, var(--orange) 100%); }
+
+  .nav { border-bottom: 1px solid var(--border); padding: 24px 0; position: sticky; top: 0; background: rgba(8,9,11,0.9); backdrop-filter: blur(12px); z-index: 50; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-weight: 800; font-size: 22px; letter-spacing: -0.025em; }
+  .nav-logo .u { color: var(--teal); } .nav-logo .t { color: var(--yellow); } .nav-logo .h { color: var(--orange); }
+  .nav-meta { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; }
+
+  .hero { padding: 96px 0 64px; }
+  .hero .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 32px; }
+  .hero h1 { font-size: clamp(40px, 6vw, 72px); font-weight: 800; line-height: 1.02; letter-spacing: -0.035em; max-width: 1000px; margin-bottom: 24px; }
+  .hero h1 .y { color: var(--yellow); } .hero h1 .o { color: var(--orange); }
+  .hero .sub { font-size: 19px; color: var(--text-2); max-width: 760px; line-height: 1.55; }
+
+  /* RECOMMENDATION — at the top, not buried */
+  .rec { padding: 56px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-1); }
+  .rec-inner { display: grid; grid-template-columns: 280px 1fr; gap: 64px; align-items: start; }
+  @media (max-width: 880px) { .rec-inner { grid-template-columns: 1fr; } }
+  .rec-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.18em; padding-top: 8px; }
+  .rec-label .y { color: var(--yellow); } .rec-label .o { color: var(--orange); }
+  .rec h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 16px; }
+  .rec .pick { display: inline-flex; gap: 8px; align-items: center; padding: 6px 14px; background: var(--teal); color: #08090B; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 24px; }
+  .rec p { color: var(--text-2); font-size: 16px; line-height: 1.7; margin-bottom: 16px; }
+  .rec p strong { color: var(--text-1); font-weight: 600; }
+  .rec ul { list-style: none; margin-top: 16px; }
+  .rec li { padding: 8px 0 8px 28px; position: relative; color: var(--text-2); font-size: 14.5px; line-height: 1.6; border-top: 1px solid var(--border); }
+  .rec li::before { content: "→"; position: absolute; left: 0; color: var(--teal); font-family: 'JetBrains Mono', monospace; }
+  .rec li strong { color: var(--text-1); }
+
+  /* 4 DIRECTIONS GRID */
+  .directions { padding: 80px 0; }
+  .dir-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; gap: 32px; flex-wrap: wrap; }
+  .dir-head h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; }
+  .dir-head .sub { color: var(--text-2); font-size: 15px; max-width: 520px; }
+
+  .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  @media (max-width: 880px) { .grid-4 { grid-template-columns: 1fr; } }
+  .dir { background: var(--bg-base); padding: 32px; transition: background .15s ease; }
+  .dir:hover { background: var(--bg-1); }
+  .dir-tag { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-3); margin-bottom: 24px; }
+  .dir-tag .swatch { width: 10px; height: 10px; }
+  .dir h3 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+  .dir .thesis { color: var(--text-2); font-size: 14px; line-height: 1.6; margin-bottom: 20px; min-height: 70px; }
+  .dir .attrs { display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 20px; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .dir .attrs .a { display: flex; flex-direction: column; gap: 2px; }
+  .dir .attrs .l { color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; font-size: 9.5px; }
+  .dir .attrs .v { color: var(--text-1); font-weight: 600; }
+  .dir .pages { display: flex; gap: 8px; margin-bottom: 20px; }
+  .dir .pages a { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; background: var(--bg-2); border: 1px solid var(--border-2); color: var(--text-2); font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; transition: color .12s ease, border-color .12s ease; }
+  .dir .pages a:hover { color: var(--text-1); border-color: var(--teal); }
+  .dir .verdict { font-size: 14px; line-height: 1.6; color: var(--text-2); padding-top: 20px; border-top: 1px solid var(--border); }
+  .dir .verdict strong { color: var(--text-1); font-weight: 600; }
+
+  .a-dir { border-left: 3px solid #0E8C82; }
+  .a-dir .swatch { background: #0E8C82; }
+  .b-dir { border-left: 3px solid #7B91FF; }
+  .b-dir .swatch { background: #7B91FF; }
+  .c-dir { border-left: 3px solid #14A89A; }
+  .c-dir .swatch { background: #14A89A; }
+  .d-dir { border-left: 3px solid #FF580D; }
+  .d-dir .swatch { background: linear-gradient(90deg, var(--teal) 33%, var(--yellow) 33% 66%, var(--orange) 66%); }
+
+  /* SCORING TABLE */
+  .scoring { padding: 80px 0; border-top: 1px solid var(--border); background: var(--bg-1); }
+  .scoring h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 8px; }
+  .scoring .sub { color: var(--text-2); font-size: 15px; margin-bottom: 40px; max-width: 600px; }
+  .scoretable { width: 100%; border-collapse: collapse; }
+  .scoretable th, .scoretable td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+  .scoretable th { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-3); font-weight: 600; background: var(--bg-2); }
+  .scoretable td:first-child { font-weight: 500; color: var(--text-1); width: 28%; }
+  .scoretable .score { font-family: 'JetBrains Mono', monospace; font-weight: 600; text-align: center; }
+  .scoretable .winner { background: rgba(20, 168, 154, 0.06); }
+  .scoretable .winner td { color: var(--teal); }
+  .scoretable .winner td:first-child { color: var(--text-1); }
+  .scoretable tfoot td { background: var(--bg-2); font-weight: 700; }
+
+  /* THUMBNAIL PREVIEW — actual mini-iframes */
+  .thumbs { padding: 80px 0; border-top: 1px solid var(--border); }
+  .thumbs-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
+  .thumbs-head h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; }
+  .thumb-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  @media (max-width: 880px) { .thumb-grid { grid-template-columns: 1fr; } }
+  .thumb { border: 1px solid var(--border); }
+  .thumb-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg-2); border-bottom: 1px solid var(--border); }
+  .thumb-head .nm { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.12em; }
+  .thumb-head .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-3); }
+  .thumb-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+
+  .footer { padding: 48px 0; border-top: 1px solid var(--border); margin-top: 80px; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; }
+</style>
+</head>
+<body>
+
+<div class="tri-bar"></div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="u">u</span><span class="t">t</span><span class="h">h</span>ena
+    </a>
+    <span class="nav-meta">4 directions · 12 pages · 2026-06-13</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Internal · Design exploration · v1</div>
+    <h1>Four design directions for <span class="y">uthena</span><span class="o">.com</span></h1>
+    <p class="sub">Four pages each: home, category, product. Same content, four different bets. Each pushes past the existing brand guide in a different direction. Pick one, mix two, or keep exploring.</p>
+  </div>
+</section>
+
+<!-- RECOMMENDATION -->
+<section class="rec">
+  <div class="container">
+    <div class="rec-inner">
+      <div>
+        <div class="rec-label"><span class="y">§</span>RECOMMENDATION<span class="o"> · 2026-06-13</span></div>
+      </div>
+      <div>
+        <span class="pick">→ Pick: A · Editorial</span>
+        <h2>Ship the magazine, not the spreadsheet.</h2>
+        <p>Uthena's catalogue is a <strong>curated inventory</strong>, not a file dump. Every existing course marketplace on the internet (Udemy, Skillshare, AppSumo-style) renders the same way: a 4-up grid of course thumbnails, identical, undifferentiated. The brand guide's v3 baseline (your <strong>Variant C</strong>) is the safe, correct choice — but it looks like every other SaaS dashboard on the internet.</p>
+        <p><strong>Variant A — Editorial</strong> is the bet that says: this catalogue is a library, not a list. Fraunces serif at 88px. Magazine-grade covers. The exact feeling of Stripe Press or a curated zine. The brand gets a real visual signature on day one.</p>
+        <ul>
+          <li><strong>Why A wins:</strong> the serif display type is the single highest-leverage design move. It signals "premium" and "curated" without being precious. Every page gets a clear identity.</li>
+          <li><strong>The trade-off:</strong> editorial type means slower page reads at scale. The catalog can be slower than a grid if you go full-bleed covers (mitigated by 3-col grid on /browse). Test with 5 users before committing.</li>
+          <li><strong>Best for:</strong> positioning Uthena as the "premium PLR operator's tool" rather than a budget content dump. Supports the new one-liner: "the home for digital product entrepreneurs."</li>
+          <li><strong>If you want safer:</strong> ship <strong>C — Control</strong>. It's a strict refinement of your v3 dark mockups. Zero design risk, polished, ships in 2 weeks. Just know it'll look like every other Linear/Resend clone in the space.</li>
+          <li><strong>My honest second pick:</strong> <strong>D — Signal</strong>. It's a louder, more distinctive bet. If Uthena's marketing posture is "stand out" rather than "fit in," D wins. But D requires a confident content team to write the all-caps mono copy well — bad content will make it look gimmicky.</li>
+          <li><strong>What I'd skip:</strong> <strong>B — Terminal</strong> is the most creative of the four but also the most niche. It says "Uthena is for developers" when your buyer is actually digital entrepreneurs. Beautiful for a partner dashboard; wrong for a public marketplace.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 DIRECTIONS -->
+<section class="directions">
+  <div class="container">
+    <div class="dir-head">
+      <h2>The four directions.</h2>
+      <p class="sub">Each is internally consistent across home, category, and product. Click through the pages to see them in context.</p>
+    </div>
+
+    <div class="grid-4">
+      <!-- A — EDITORIAL -->
+      <div class="dir a-dir">
+        <div class="dir-tag"><span class="swatch"></span> A · EDITORIAL</div>
+        <h3>Magazine, not marketplace.</h3>
+        <p class="thesis">Stripe Press / Things 3 / Are.na. Fraunces serif display at 88px. The catalogue as a curated library, not a file dump. Image-led, generous whitespace, magazine-grade covers.</p>
+        <div class="attrs">
+          <div class="a"><div class="l">Accent</div><div class="v">#0E8C82 deep teal</div></div>
+          <div class="a"><div class="l">Type</div><div class="v">Fraunces + Inter</div></div>
+          <div class="a"><div class="l">Shape</div><div class="v">10/14/18 px</div></div>
+        </div>
+        <div class="pages">
+          <a href="a-home.html" target="_blank">Home →</a>
+          <a href="a-category.html" target="_blank">Category →</a>
+          <a href="a-product.html" target="_blank">Product →</a>
+        </div>
+        <div class="verdict"><strong>Best for:</strong> positioning Uthena as premium, not commodity. <strong>Risk:</strong> slower content reads. <strong>My pick.</strong></div>
+      </div>
+
+      <!-- B — TERMINAL -->
+      <div class="dir b-dir">
+        <div class="dir-tag"><span class="swatch"></span> B · TERMINAL</div>
+        <h3>Power tool, not marketplace.</h3>
+        <p class="thesis">Linear / Raycast / Vercel energy, pushed hard. IDE window chrome, persistent file-tree sidebar, mono-led UI, status bar everywhere. The buyer is an operator, not a shopper.</p>
+        <div class="attrs">
+          <div class="a"><div class="l">Accent</div><div class="v">#7B91FF electric</div></div>
+          <div class="a"><div class="l">Type</div><div class="v">Inter + Mono</div></div>
+          <div class="a"><div class="l">Shape</div><div class="v">4/8 px sharp</div></div>
+        </div>
+        <div class="pages">
+          <a href="b-home.html" target="_blank">Home →</a>
+          <a href="b-category.html" target="_blank">Category →</a>
+          <a href="b-product.html" target="_blank">Product →</a>
+        </div>
+        <div class="verdict"><strong>Best for:</strong> if you want Uthena to feel like an operator's command center. <strong>Risk:</strong> most niche of the four, signals "dev tool" when buyers are digital entrepreneurs.</div>
+      </div>
+
+      <!-- C — CONTROL -->
+      <div class="dir c-dir">
+        <div class="dir-tag"><span class="swatch"></span> C · CONTROL</div>
+        <h3>The polished baseline.</h3>
+        <p class="thesis">Linear / Resend / Coolify restraint. One teal accent, hairline borders, modest type, breathing room. The "if in doubt, pick this" option. A strict refinement of your existing v3 mockups.</p>
+        <div class="attrs">
+          <div class="a"><div class="l">Accent</div><div class="v">#14A89A logo teal</div></div>
+          <div class="a"><div class="l">Type</div><div class="v">Inter + Mono</div></div>
+          <div class="a"><div class="l">Shape</div><div class="v">10/14/18 px</div></div>
+        </div>
+        <div class="pages">
+          <a href="c-home.html" target="_blank">Home →</a>
+          <a href="c-category.html" target="_blank">Category →</a>
+          <a href="c-product.html" target="_blank">Product →</a>
+        </div>
+        <div class="verdict"><strong>Best for:</strong> zero design risk, fast ship, looks like the best SaaS dashboards. <strong>Risk:</strong> looks like every other Linear/Resend clone — no signature.</div>
+      </div>
+
+      <!-- D — SIGNAL -->
+      <div class="dir d-dir">
+        <div class="dir-tag"><span class="swatch"></span> D · SIGNAL</div>
+        <h3>The brand, in your face.</h3>
+        <p class="thesis">Tri-color as structure, not decoration. Sharp 0px corners. 144px display type. Tri-color top bar, color-coded stat band, full-bleed numbered rows. Closer to an indie zine than a SaaS dashboard.</p>
+        <div class="attrs">
+          <div class="a"><div class="l">Accent</div><div class="v">Tri-color DNA</div></div>
+          <div class="a"><div class="l">Type</div><div class="v">Inter 800 + Mono</div></div>
+          <div class="a"><div class="l">Shape</div><div class="v">0 px always</div></div>
+        </div>
+        <div class="pages">
+          <a href="d-home.html" target="_blank">Home →</a>
+          <a href="d-category.html" target="_blank">Category →</a>
+          <a href="d-product.html" target="_blank">Product →</a>
+        </div>
+        <div class="verdict"><strong>Best for:</strong> standing out from every other course marketplace. <strong>Risk:</strong> requires strong content discipline; bad copy in all-caps mono = gimmicky.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORING TABLE -->
+<section class="scoring">
+  <div class="container">
+    <h2>How they stack up.</h2>
+    <p class="sub">Subjective scoring against the four things that matter for Uthena's brand and shippability. 1 = weak, 5 = strong.</p>
+
+    <table class="scoretable">
+      <thead>
+        <tr>
+          <th>Criterion</th>
+          <th style="text-align:center;">A · Editorial</th>
+          <th style="text-align:center;">B · Terminal</th>
+          <th style="text-align:center;">C · Control</th>
+          <th style="text-align:center;">D · Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Brand distinctiveness (vs. competitors)</td>
+          <td class="score winner">5</td>
+          <td class="score">3</td>
+          <td class="score">2</td>
+          <td class="score">5</td>
+        </tr>
+        <tr>
+          <td>Matches the new positioning ("home for digital product entrepreneurs")</td>
+          <td class="score winner">5</td>
+          <td class="score">3</td>
+          <td class="score">4</td>
+          <td class="score">4</td>
+        </tr>
+        <tr>
+          <td>Build / ship risk</td>
+          <td class="score">3</td>
+          <td class="score">3</td>
+          <td class="score winner">5</td>
+          <td class="score">2</td>
+        </tr>
+        <tr>
+          <td>Catalog scalability (works with 600+ items)</td>
+          <td class="score">4</td>
+          <td class="score winner">5</td>
+          <td class="score winner">5</td>
+          <td class="score">4</td>
+        </tr>
+        <tr>
+          <td>Honors "professional, not playful" rule</td>
+          <td class="score winner">5</td>
+          <td class="score">4</td>
+          <td class="score winner">5</td>
+          <td class="score">3</td>
+        </tr>
+        <tr>
+          <td>One-accent discipline (brand guide compliance)</td>
+          <td class="score">4</td>
+          <td class="score winner">5</td>
+          <td class="score winner">5</td>
+          <td class="score">2</td>
+        </tr>
+        <tr>
+          <td>Makes the tri-color logo DNA earn its place</td>
+          <td class="score">3</td>
+          <td class="score">2</td>
+          <td class="score">3</td>
+          <td class="score winner">5</td>
+        </tr>
+        <tr>
+          <td>Long-term extensibility (other features won't fight the design)</td>
+          <td class="score">4</td>
+          <td class="score">3</td>
+          <td class="score winner">5</td>
+          <td class="score">3</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>TOTAL</td>
+          <td class="score">33 / 40</td>
+          <td class="score">28 / 40</td>
+          <td class="score">34 / 40</td>
+          <td class="score">28 / 40</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- LIVE PREVIEWS -->
+<section class="thumbs">
+  <div class="container">
+    <div class="thumbs-head">
+      <h2>Live previews.</h2>
+      <span class="nav-meta">Embedded iframes · scroll inside</span>
+    </div>
+
+    <div class="thumb-grid">
+      <div class="thumb">
+        <div class="thumb-head"><span class="nm">A · Editorial · Home</span><a class="lbl" href="a-home.html" target="_blank" style="color:var(--teal);">Open ↗</a></div>
+        <iframe class="thumb-frame" src="a-home.html" loading="lazy"></iframe>
+      </div>
+      <div class="thumb">
+        <div class="thumb-head"><span class="nm">B · Terminal · Home</span><a class="lbl" href="b-home.html" target="_blank" style="color:var(--teal);">Open ↗</a></div>
+        <iframe class="thumb-frame" src="b-home.html" loading="lazy"></iframe>
+      </div>
+      <div class="thumb">
+        <div class="thumb-head"><span class="nm">C · Control · Home</span><a class="lbl" href="c-home.html" target="_blank" style="color:var(--teal);">Open ↗</a></div>
+        <iframe class="thumb-frame" src="c-home.html" loading="lazy"></iframe>
+      </div>
+      <div class="thumb">
+        <div class="thumb-head"><span class="nm">D · Signal · Home</span><a class="lbl" href="d-home.html" target="_blank" style="color:var(--teal);">Open ↗</a></div>
+        <iframe class="thumb-frame" src="d-home.html" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span>© 2026 uthena, inc. · internal design exploration</span>
+      <span>4 directions · 12 pages · pick or remix</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

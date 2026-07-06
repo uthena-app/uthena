@@ -1,0 +1,171 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 920px;
+}
+
+.header {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.lede {
+  color: var(--text-2);
+  font-size: 13px;
+  margin: 0;
+}
+
+.h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0 0 12px;
+}
+
+.pendingBanner,
+.suspendedBanner {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--warn-line);
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-size: 13px;
+}
+
+.suspendedBanner {
+  border-color: var(--danger-line);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.pendingText {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.pendingText code {
+  font-family: var(--font-mono);
+  background: var(--bg-elev-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.bannerLink {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.kpis {
+  display: grid;
+  /* P12.4 — 5 KPIs now (4 product/sales + "This month"). The grid
+     caps at 3 columns so it stays readable on desktop and falls
+     through to 2 cols on tablet, 1 on phone. */
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+@media (min-width: 1100px) {
+  /* At very wide viewports, allow up to 5 cols for full-width
+     readability — the auto-fit above caps at whatever fits the
+     gap + min width. */
+  .kpis {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kpiCard {
+  display: block;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+a.kpiCard:hover {
+  border-color: var(--accent);
+  background: var(--bg-elev-2);
+}
+
+.kpiLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 6px;
+}
+
+.kpiValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.quick {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (max-width: 640px) {
+  .quickGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.quickCard {
+  display: block;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 120ms ease;
+}
+.quickCard:hover {
+  border-color: var(--accent);
+}
+
+.quickTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin: 0 0 4px;
+}
+
+.quickHelp {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+  line-height: 1.4;
+}

@@ -1,0 +1,101 @@
+/* CategoryPill — chip-shaped link used on the home category strip,
+ * browse active filter row, and search results active filter row.
+ *
+ * Tokens:
+ *   --bg-elev-1 — pill background (dark theme); matches the surrounding
+ *     cards so the pill looks "inline" with the grid.
+ *   --line / --accent-line — neutral / hover border.
+ *   --accent-soft — hover background tint (teal, identity).
+ *   --bg-elev-2 — filter-variant background so the active-filter chip
+ *     reads as "selected" against the surrounding pills.
+ *   --text-3 — count badge color (mono number, tertiary).
+ *   --r-pill — fully-rounded shape.
+ *
+ * All colors are tokens; no inline hex. Hover/focus/active states are
+ * defined so the pill is keyboard-accessible (real `:focus-visible`
+ * outline, not just `outline:none`).
+ */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  color: var(--text-1);
+  text-decoration: none;
+  transition:
+    border-color 120ms ease,
+    background 120ms ease,
+    color 120ms ease;
+  line-height: 1;
+}
+
+.pill:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.name {
+  color: inherit;
+  font-weight: 500;
+  /* Long category names shouldn't break the pill's vertical rhythm */
+  white-space: nowrap;
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----- filter variant (active-filter chip with ✕ clear) ------------- */
+
+.filter {
+  background: var(--bg-elev-2);
+  border-color: var(--accent-line);
+  padding-right: 6px;
+}
+
+.filter:hover {
+  /* The pill itself is non-interactive when filter is active; only the
+   * ✕ clear is. Keep the chip's hover neutral so the affordance reads
+   * clearly: chip is "current state", ✕ is "remove". */
+  background: var(--bg-elev-2);
+}
+
+.clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-left: 2px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  line-height: 1;
+  color: var(--text-3);
+  text-decoration: none;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.clear:hover {
+  background: var(--bg-elev-3);
+  color: var(--heading);
+}
+
+.clear:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 1px;
+}

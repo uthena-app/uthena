@@ -1,0 +1,94 @@
+/* VaultFilterBar.module.css — toolbar with three fieldset chip groups
+   (Product / Format / Date added) for the /library file vault (P7.9).
+   Same chip shape as DownloadHistoryFilters + CategoryPill —
+   accent on the active state, hairline border, 11px uppercase legend.
+   Token-only — no inline values. */
+
+/* The product chip group can grow wide (one chip per owned product).
+   Cap the chip row at a reasonable height and let the user scroll if
+   they own more than fits — better than wrapping to N rows that pushes
+   the vault list down the page. */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  margin-bottom: 16px;
+}
+
+.group {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.legend {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 5px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+  font-family: inherit;
+  /* Long product titles (e.g. "AI-Powered Productivity for Founders")
+     shouldn't break inside the chip — the parent wraps when it runs out
+     of room. */
+  white-space: nowrap;
+}
+
+.chip:hover {
+  color: var(--heading);
+  border-color: var(--text-3);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.chip[data-active='true'] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--heading);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    padding: 12px;
+    gap: 12px;
+  }
+  .chip {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+}

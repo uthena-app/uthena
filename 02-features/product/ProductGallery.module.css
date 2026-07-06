@@ -1,0 +1,173 @@
+/* Product gallery — token-only styles matching `mockups/product.html`
+ * lines 47–58 + `mockups/styles/main.css` lines 257–268.
+ *
+ * The gallery is the product detail page's most visible element, so
+ * the CSS needs to be both visually accurate to the mockup AND
+ * keyboard-accessible. Thumbs are real <button>s with role="tab" and
+ * a teal focus ring; the active thumb has a teal border. The video
+ * slot uses a dark gradient with a centered play glyph + "PREVIEW"
+ * label, faithful to the mockup's `.t.video` treatment. */
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+}
+
+/* ===== Main slot (16:9) ===== */
+
+.main {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--bg-elev-1);
+}
+
+.mainImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mainVideo {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #15181b 0%, #1c2024 100%);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  text-align: center;
+  gap: 8px;
+}
+
+.playGlyph {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #001a14;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.playLabel {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+/* "▶ Preview" badge overlay on the main image (mockup-faithful) */
+.mainPlay {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+/* ===== Thumb row (4 slots max) ===== */
+
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-2);
+}
+
+.thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--bg-elev-1);
+  cursor: pointer;
+  padding: 0;
+  /* Reset native button styles */
+  appearance: none;
+  color: inherit;
+  font: inherit;
+  transition: border-color 120ms ease, transform 120ms ease;
+}
+
+.thumb:hover {
+  border-color: var(--teal-line);
+  transform: translateY(-1px);
+}
+
+.thumb:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.thumbOn {
+  border-color: var(--teal);
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Video thumb slot — dark gradient + centered play glyph + label.
+ * Mirrors `mockups/styles/main.css` `.gallery .thumbs .t.video`. */
+.thumbVideo {
+  background: linear-gradient(135deg, #15181b 0%, #1c2024 100%);
+  display: grid;
+  place-items: center;
+}
+
+.thumbPlay {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #001a14;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.thumbVidLabel {
+  position: absolute;
+  bottom: 4px;
+  left: 6px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  color: var(--text-soft);
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 640px) {
+  .thumbs {
+    /* On narrow screens, allow horizontal scroll if more than 2 thumbs.
+     * The mockup is desktop-first; mobile users can swipe the row. */
+    grid-template-columns: repeat(4, 88px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .thumb {
+    scroll-snap-align: start;
+  }
+}

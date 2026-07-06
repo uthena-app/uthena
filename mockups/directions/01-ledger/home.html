@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uthena — Your digital product business, ready to rebrand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* ============ LEDGER — core system ============ */
+:root{
+  --bg:#0A0D12; --card:#10141B; --raised:#151A23; --inset:#0C0F15;
+  --line:#1C222D; --line2:#29303D; --line3:#3A4250;
+  --acc:#2BD48D; --acc-h:#45E3A1; --acc-tint:rgba(43,212,141,.10); --acc-dim:rgba(43,212,141,.35);
+  --amber:#E2B33C; --amber-tint:rgba(226,179,60,.12);
+  --red:#E0606B; --red-tint:rgba(224,96,107,.10);
+  --t1:#E9EDF3; --t2:#98A2B3; --t3:#5C6675;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;
+  --r:8px; --r-s:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font:400 14px/1.6 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit;background:none;border:none}
+button{cursor:pointer}
+::placeholder{color:var(--t3)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 24px}
+.lbl{font:500 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.mono{font-family:var(--mono)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.acc{color:var(--acc)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:650 14px/1 var(--sans);letter-spacing:-.01em;padding:11px 18px;border-radius:var(--r-s);border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;white-space:nowrap}
+.btn svg{flex:none}
+.btn-primary{background:var(--acc);color:#06231A;box-shadow:0 1px 2px rgba(0,0,0,.45)}
+.btn-primary:hover{background:var(--acc-h)}
+.btn-ghost{background:transparent;border-color:var(--line2);color:var(--t1)}
+.btn-ghost:hover{border-color:var(--line3);background:var(--raised)}
+.btn-sm{padding:8px 14px;font-size:13px}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:5px;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:4px;border:1px solid transparent}
+.badge-acc{background:var(--acc-tint);color:var(--acc);border-color:rgba(43,212,141,.25)}
+.badge-amber{background:var(--amber-tint);color:var(--amber);border-color:rgba(226,179,60,.25)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(10,13,18,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{height:64px;display:flex;align-items:center;gap:26px}
+.logo{font:650 19px/1 var(--sans);letter-spacing:-.02em;color:var(--t1);display:inline-flex;align-items:baseline}
+.logo i{width:6px;height:6px;background:var(--acc);border-radius:50%;margin-left:3px;display:inline-block}
+.nav-links{display:flex;gap:22px}
+.nav-links a{color:var(--t2);font-weight:500;font-size:13.5px;transition:color .15s;padding:4px 0}
+.nav-links a:hover{color:var(--t1)}
+.nav-links a.on{color:var(--acc)}
+.nav-search{flex:1;max-width:260px;margin-left:auto;position:relative}
+.nav-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--t3);pointer-events:none}
+.nav-search input{width:100%;background:var(--inset);border:1px solid var(--line);border-radius:var(--r-s);padding:8px 12px 8px 32px;font-size:13px;color:var(--t1);transition:border-color .15s}
+.nav-search input:hover{border-color:var(--line2)}
+.nav-search input:focus{border-color:var(--acc-dim);outline:none}
+.nav-cta{display:flex;gap:10px;align-items:center}
+
+/* sections */
+.sec{padding:76px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:30px}
+.sec-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.sec-eyebrow::after{content:"";height:1px;width:48px;background:var(--line2)}
+h1,h2,h3{letter-spacing:-.02em;font-weight:650}
+.sec-title{font-size:24px;line-height:1.3}
+.sec-sub{color:var(--t2);max-width:560px;margin-top:8px}
+.viewall{font:500 13px var(--sans);color:var(--acc);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.viewall:hover{color:var(--acc-h)}
+.rule{height:1px;background:var(--line);border:none}
+
+/* hero */
+.hero{border-bottom:1px solid var(--line);background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1px);background-size:24px 24px;background-position:0 0}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center;padding:84px 0 88px}
+.hero h1{font-size:42px;line-height:1.12;margin:18px 0 16px}
+.hero p.sub{font-size:16px;color:var(--t2);max-width:520px;margin-bottom:28px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--acc);background:var(--acc-tint);border:1px solid rgba(43,212,141,.25);border-radius:99px;padding:6px 12px}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--acc);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero-note{margin-top:18px;font:400 12px var(--mono);color:var(--t3)}
+
+/* ledger widget */
+.ledger{background:var(--card);border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;box-shadow:0 12px 32px rgba(0,0,0,.35)}
+.ledger-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--raised)}
+.ledger-live{display:inline-flex;align-items:center;gap:6px;font:500 10px var(--mono);letter-spacing:.08em;color:var(--acc)}
+.ledger table{width:100%;border-collapse:collapse;font:400 12px/1.4 var(--mono)}
+.ledger td{padding:11px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+.ledger tr:nth-child(even) td{background:rgba(255,255,255,.015)}
+.ledger .tx{color:var(--t3);white-space:nowrap}
+.ledger .it{color:var(--t1)}
+.ledger .lic{color:var(--t3)}
+.ledger .amt{color:var(--acc);text-align:right;white-space:nowrap}
+.ledger-foot{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--inset)}
+.ledger-foot b{font:600 13px var(--mono);color:var(--acc)}
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:-36px;position:relative;z-index:2}
+.stat{padding:22px 26px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:none}
+.stat b{display:block;font:600 26px/1.2 var(--mono);letter-spacing:-.02em;color:var(--t1)}
+.stat b em{font-style:normal;color:var(--acc)}
+.stat span{display:block;margin-top:6px}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.pillar{background:var(--card);padding:28px;transition:background .15s}
+.pillar:hover{background:var(--raised)}
+.pillar .ic{width:38px;height:38px;border-radius:var(--r-s);background:var(--acc-tint);border:1px solid rgba(43,212,141,.22);display:flex;align-items:center;justify-content:center;color:var(--acc);margin-bottom:18px}
+.pillar h3{font-size:16px;margin-bottom:8px}
+.pillar p{color:var(--t2);font-size:13.5px}
+.pillar .idx{float:right;font:500 11px var(--mono);color:var(--t3);letter-spacing:.08em}
+
+/* product cards */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .15s,background .15s;position:relative}
+.pcard:hover{border-color:var(--line3);background:var(--raised)}
+.thumb{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,var(--g1),var(--g2));overflow:hidden}
+.thumb::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 1px,transparent 1px 22px)}
+.thumb svg{position:absolute;inset:0;margin:auto;color:rgba(255,255,255,.55)}
+.thumb .badge{position:absolute;top:10px;left:10px;z-index:2;backdrop-filter:blur(4px)}
+.pbody{display:flex;flex-direction:column;gap:8px;padding:14px;flex:1}
+.pcat{font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.ptitle{font:650 13.5px/1.42 var(--sans);letter-spacing:-.01em;color:var(--t1);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px}
+.pmeta{display:flex;align-items:center;gap:10px;font:400 12px var(--mono);color:var(--t2)}
+.pmeta .star{color:var(--acc);display:inline-flex;align-items:center;gap:4px}
+.pfoot{margin-top:auto;display:flex;align-items:baseline;justify-content:space-between;gap:8px;border-top:1px dashed var(--line2);padding-top:11px}
+.price{font:600 15px var(--mono);color:var(--t1)}
+.price .from{font:400 11px var(--mono);color:var(--t3);margin-right:4px;text-transform:uppercase;letter-spacing:.06em}
+.was{font:400 12px var(--mono);color:var(--t3);text-decoration:line-through}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:step}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;position:relative}
+.step .n{font:600 13px var(--mono);color:var(--acc);letter-spacing:.08em;display:inline-block;background:var(--acc-tint);border:1px solid rgba(43,212,141,.22);border-radius:4px;padding:4px 8px;margin-bottom:16px}
+.step h3{font-size:15.5px;margin-bottom:8px}
+.step p{color:var(--t2);font-size:13.5px}
+.step::after{content:"";position:absolute;top:50%;right:-16px;width:16px;height:1px;background:var(--line2)}
+.step:last-child::after{display:none}
+
+/* earn split */
+.earn{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.earn-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px;display:flex;flex-direction:column;gap:14px;transition:border-color .15s}
+.earn-card:hover{border-color:var(--line3)}
+.earn-card .big{font:600 40px/1 var(--mono);letter-spacing:-.03em;color:var(--acc)}
+.earn-card h3{font-size:16px}
+.earn-card p{color:var(--t2);font-size:13.5px;max-width:420px}
+.earn-card .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.earn-meta{font:400 12px var(--mono);color:var(--t3)}
+
+/* testimonial */
+.quote{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:40px;max-width:760px;margin:0 auto;text-align:center;position:relative}
+.quote::before{content:"";position:absolute;left:40px;right:40px;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--acc-dim),transparent)}
+.quote p{font-size:18px;line-height:1.55;letter-spacing:-.01em;color:var(--t1)}
+.quote-who{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:12px}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#1E2A6E,#0E4A3A);display:flex;align-items:center;justify-content:center;font:600 12px var(--mono);color:var(--t1);border:1px solid var(--line2)}
+.quote-who b{font-weight:650;font-size:13.5px;display:block;text-align:left}
+.verified{display:inline-flex;align-items:center;gap:4px;font:500 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--acc)}
+
+/* cta band */
+.band{background:var(--raised);border:1px solid var(--line2);border-radius:var(--r);padding:56px 40px;text-align:center;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:22px 22px}
+.band h2{font-size:28px;margin-bottom:10px}
+.band p{color:var(--t2);max-width:480px;margin:0 auto 26px}
+.band .hero-ctas{justify-content:center}
+
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:80px;background:var(--inset)}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:32px;padding:52px 0 40px}
+.foot-brand p{color:var(--t2);font-size:13px;margin:12px 0 20px;max-width:280px}
+.foot-col h4{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:14px}
+.foot-col a{display:block;color:var(--t2);font-size:13px;padding:4px 0;transition:color .15s}
+.foot-col a:hover{color:var(--t1)}
+.newsletter{display:flex;gap:8px;max-width:300px}
+.newsletter input{flex:1;background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);padding:9px 12px;font-size:13px;min-width:0}
+.newsletter input:focus{border-color:var(--acc-dim);outline:none}
+.foot-bottom{border-top:1px solid var(--line);padding:18px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.foot-bottom span{font:400 12px var(--mono);color:var(--t3)}
+.status{display:inline-flex;align-items:center;gap:7px;font:400 12px var(--mono);color:var(--t2)}
+.status i{width:6px;height:6px;border-radius:50%;background:var(--acc);display:inline-block}
+
+/* responsive */
+@media (max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:40px;padding:64px 0 72px}
+  .hero h1{font-size:34px}
+  .pgrid{grid-template-columns:repeat(3,1fr)}
+  .pillars{grid-template-columns:1fr 1fr 1fr}
+  .foot-grid{grid-template-columns:2fr 1fr 1fr 1fr}
+}
+@media (max-width:900px){
+  .nav-links,.nav-search{display:none}
+  .nav-cta{margin-left:auto}
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .pillars{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .step::after{display:none}
+  .earn{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(3){border-left:none;border-top:1px solid var(--line)}
+  .stat:nth-child(4){border-top:1px solid var(--line)}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .foot-brand{grid-column:1/-1}
+}
+@media (max-width:540px){
+  .wrap{padding:0 16px}
+  .sec{padding:56px 0}
+  .hero h1{font-size:28px}
+  .pgrid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .stat{border-left:none;border-top:1px solid var(--line)}
+  .stat:first-child{border-top:none}
+  .quote{padding:28px 20px}
+  .band{padding:40px 20px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="home.html">uthena<i></i></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="category.html">Marketplace</a>
+      <a href="#">Bundles</a>
+      <a href="#">Earn with Uthena</a>
+      <a href="#">FAQ</a>
+    </nav>
+    <div class="nav-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Search 612 products" aria-label="Search products">
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost btn-sm" href="#">Sign in</a>
+      <a class="btn btn-primary btn-sm" href="category.html">Get started</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-tag"><span class="pulse"></span>Private beta — v2 platform</span>
+      <h1>Your digital product business, ready to rebrand.</h1>
+      <p class="sub">Buy the private label rights to 600+ video courses and digital assets. Modify them, sell them as your own, keep 100% of the revenue.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="category.html">Browse the marketplace
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#earn">Become a partner</a>
+      </div>
+      <p class="hero-note">One-time license fees. No revenue share taken from your sales.</p>
+    </div>
+    <aside class="ledger" aria-label="Sample partner ledger">
+      <div class="ledger-head">
+        <span class="lbl" style="color:var(--t2)">Partner ledger</span>
+        <span class="ledger-live"><span class="pulse"></span>LIVE</span>
+      </div>
+      <table>
+        <tbody>
+          <tr><td class="tx">TX-4821</td><td class="it">Python Pro Bootcamp</td><td class="lic">PLR</td><td class="amt">+$97.00</td></tr>
+          <tr><td class="tx">TX-4820</td><td class="it">Personal Brand AI</td><td class="lic">MRR</td><td class="amt">+$147.00</td></tr>
+          <tr><td class="tx">TX-4819</td><td class="it">Canva Masterclass</td><td class="lic">WL</td><td class="amt">+$87.00</td></tr>
+          <tr><td class="tx">TX-4818</td><td class="it">Gen AI for Leaders</td><td class="lic">PLR</td><td class="amt">+$127.00</td></tr>
+          <tr><td class="tx">TX-4817</td><td class="it">B2B Sales Skills</td><td class="lic">PLR</td><td class="amt">+$79.00</td></tr>
+        </tbody>
+      </table>
+      <div class="ledger-foot">
+        <span class="lbl">Platform fee — $0.00</span>
+        <b>You keep 100%</b>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ STAT STRIP ============ -->
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><b>612</b><span class="lbl">Products listed</span></div>
+    <div class="stat"><b>100<em>+</em></b><span class="lbl">Active partners</span></div>
+    <div class="stat"><b>$24M<em>+</em></b><span class="lbl">Resold by partners</span></div>
+    <div class="stat"><b>4.8<span style="color:var(--t3)">/5</span></b><span class="lbl">Avg product rating</span></div>
+  </div>
+</div>
+
+<!-- ============ PILLARS ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-eyebrow"><span class="lbl">What you get</span></div>
+        <h2 class="sec-title">Three layers. One operating stack.</h2>
+        <p class="sec-sub">Everything a digital product entrepreneur needs to source, brand, and sell — without building from zero.</p>
+      </div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <span class="idx">01</span>
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 9l1.5-4h13L20 9M4 9v10h16V9"/><path d="M9 13h6"/></svg></div>
+        <h3>Marketplace</h3>
+        <p>600+ curated PLR video courses and digital assets. Every product ships with whitelabel, PLR, or MRR rights — clearly priced, instantly delivered.</p>
+      </div>
+      <div class="pillar">
+        <span class="idx">02</span>
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg></div>
+        <h3>Platform</h3>
+        <p>Your own storefront, course player, file vault, and affiliate dashboard. We host the infrastructure, you put your brand on it.</p>
+      </div>
+      <div class="pillar">
+        <span class="idx">03</span>
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-2.4 2-3.6Z"/></svg></div>
+        <h3>Toolbox</h3>
+        <p>Sales copy, promo assets, slide decks, email sequences — every asset a course seller needs to launch and grow, included with your license.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOP SELLERS ============ -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-eyebrow"><span class="lbl">Marketplace</span></div>
+        <h2 class="sec-title">Top sellers this month</h2>
+      </div>
+      <a class="viewall" href="category.html">View all 612 products
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="pgrid">
+
+      <a class="pcard" href="product.html">
+        <div class="thumb" style="--g1:#0E4A3A;--g2:#0B2238">
+          <span class="badge badge-acc">Featured</span>
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="20" cy="20" r="11"/><path d="M20 9v22M9 20h22" opacity=".6"/><circle cx="20" cy="20" r="3.5"/></svg>
+        </div>
+        <div class="pbody">
+          <span class="pcat">AI</span>
+          <span class="ptitle">Using AI to Create and Scale a Profitable Personal Brand on Social Media</span>
+          <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.9</span><span>1,240 resold</span></div>
+          <div class="pfoot"><span class="price"><span class="from">From</span>$57</span></div>
+        </div>
+      </a>
+
+      <a class="pcard" href="product.html">
+        <div class="thumb" style="--g1:#1E2A6E;--g2:#101737">
+          <span class="badge badge-amber">Hot</span>
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m14 12-8 8 8 8M26 12l8 8-8 8M22 9l-4 22"/></svg>
+        </div>
+        <div class="pbody">
+          <span class="pcat">Programming</span>
+          <span class="ptitle">Python Pro — The Complete Python Bootcamp</span>
+          <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.8</span><span>2,180 resold</span></div>
+          <div class="pfoot"><span class="price"><span class="from">From</span>$97</span></div>
+        </div>
+      </a>
+
+      <a class="pcard" href="product.html">
+        <div class="thumb" style="--g1:#36234E;--g2:#150F2A">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5 8 10v8c0 8 5.5 13.5 12 17 6.5-3.5 12-9 12-17v-8L20 5Z"/><path d="m15 19 4 4 7-8"/></svg>
+        </div>
+        <div class="pbody">
+          <span class="pcat">Technology</span>
+          <span class="ptitle">Complete Network Hacking Course 2025</span>
+          <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.7</span><span>960 resold</span></div>
+          <div class="pfoot"><span class="price"><span class="from">From</span>$97</span></div>
+        </div>
+      </a>
+
+      <a class="pcard" href="product.html">
+        <div class="thumb" style="--g1:#0E3C52;--g2:#0A1A2C">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="20" cy="20" r="14"/><circle cx="20" cy="20" r="8" opacity=".7"/><circle cx="20" cy="20" r="2.5"/></svg>
+        </div>
+        <div class="pbody">
+          <span class="pcat">AI</span>
+          <span class="ptitle">Artificial Intelligence Explained for Beginners</span>
+          <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>5.0</span><span>420 resold</span></div>
+          <div class="pfoot"><span class="price">$67</span></div>
+        </div>
+      </a>
+
+      <a class="pcard" href="product.html">
+        <div class="thumb" style="--g1:#4A2E14;--g2:#221208">
+          <span class="badge badge-amber">Sale</span>
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 32V20M16 32V12M24 32V16M32 32V8"/></svg>
+        </div>
+        <div class="pbody">
+          <span class="pcat">Business</span>
+          <span class="ptitle">B2B Sales Skills: Cold Lead Gen to Closing</span>
+          <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.8</span><span>710 resold</span></div>
+          <div class="pfoot"><span class="price">$79</span><span class="was">$399</span></div>
+        </div>
+      </a>
+
+      <a class="pcard" href="product.html">
+        <div class="thumb" style="--g1:#4A1F3C;--g2:#200D20">
+          <span class="badge badge-acc">New</span>
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="7" y="7" width="18" height="18" rx="2"/><circle cx="26" cy="26" r="8"/></svg>
+        </div>
+        <div class="pbody">
+          <span class="pcat">Design</span>
+          <span class="ptitle">Canva Content Creation Masterclass 2025</span>
+          <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.9</span><span>180 resold</span></div>
+          <div class="pfoot"><span class="price">$87</span></div>
+        </div>
+      </a>
+
+      <a class="pcard" href="product.html">
+        <div class="thumb" style="--g1:#14424A;--g2:#081E26">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6 12 6-12 6L8 12l12-6Z"/><path d="m8 20 12 6 12-6" opacity=".7"/><path d="m8 28 12 6 12-6" opacity=".4"/></svg>
+        </div>
+        <div class="pbody">
+          <span class="pcat">AI</span>
+          <span class="ptitle">Generative AI for Leaders</span>
+          <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.8</span><span>340 resold</span></div>
+          <div class="pfoot"><span class="price">$127</span></div>
+        </div>
+      </a>
+
+      <a class="pcard" href="product.html">
+        <div class="thumb" style="--g1:#2E3A1C;--g2:#141B0C">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="20" cy="10" rx="11" ry="4.5"/><path d="M9 10v20c0 2.5 4.9 4.5 11 4.5s11-2 11-4.5V10"/><path d="M9 20c0 2.5 4.9 4.5 11 4.5s11-2 11-4.5" opacity=".7"/></svg>
+        </div>
+        <div class="pbody">
+          <span class="pcat">Programming</span>
+          <span class="ptitle">How To Create and Manage SQLite Databases</span>
+          <div class="pmeta"><span class="star"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1L12 2Z"/></svg>4.6</span><span>290 resold</span></div>
+          <div class="pfoot"><span class="price">$67</span></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-eyebrow"><span class="lbl">How it works</span></div>
+        <h2 class="sec-title">From license to launch in three moves.</h2>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="n">01</span>
+        <h3>Find your course</h3>
+        <p>Filter 612 products by niche, license type, length, and rating. Preview lessons before you buy.</p>
+      </div>
+      <div class="step">
+        <span class="n">02</span>
+        <h3>Buy the PLR license</h3>
+        <p>One-time fee. Instant download of all videos, source files, slide decks, and sales copy.</p>
+      </div>
+      <div class="step">
+        <span class="n">03</span>
+        <h3>Sell it as your own</h3>
+        <p>Rebrand, edit, reprice, publish on your own storefront. Keep 100% of every sale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EARN ============ -->
+<section class="sec" id="earn" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-eyebrow"><span class="lbl">Earn with Uthena</span></div>
+        <h2 class="sec-title">Two more ways to get paid.</h2>
+      </div>
+    </div>
+    <div class="earn">
+      <div class="earn-card">
+        <span class="big">60%</span>
+        <h3>For course creators — revenue share</h3>
+        <p>Upload your course once and tap our distribution. You earn 60% of every license sold, with payouts via PayPal on the 1st of each month.</p>
+        <div class="row">
+          <span class="earn-meta">PAYOUT — PAYPAL · MONTHLY</span>
+          <a class="btn btn-ghost btn-sm" href="#">Apply as a creator</a>
+        </div>
+      </div>
+      <div class="earn-card">
+        <span class="big">20%</span>
+        <h3>For affiliates — commission per sale</h3>
+        <p>Get your own branded mini-shop at uthena.com/yourname. Share products you trust, earn 20% commission on every order you refer.</p>
+        <div class="row">
+          <span class="earn-meta">SHOP — UTHENA.COM/YOURNAME</span>
+          <a class="btn btn-ghost btn-sm" href="#">Get your shop</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIAL ============ -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="quote">
+      <p>&ldquo;I bought the courses to resell and am very happy with the quality.&rdquo;</p>
+      <div class="quote-who">
+        <span class="avatar">CB</span>
+        <div>
+          <b>Craig Ballantyne</b>
+          <span class="verified"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Verified buyer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA BAND ============ -->
+<section class="sec" style="padding-top:0;padding-bottom:0">
+  <div class="wrap">
+    <div class="band">
+      <div class="sec-eyebrow" style="justify-content:center"><span class="lbl">Get started</span></div>
+      <h2>Buy once. Sell forever.</h2>
+      <p>600+ courses with private label rights, ready to carry your brand. Your first product can be live this week.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="category.html">Browse the marketplace</a>
+        <a class="btn btn-ghost" href="#earn">Become a partner</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="home.html">uthena<i></i></a>
+        <p>The home for digital product entrepreneurs. Courses, tools, and assets you can rebrand, resell, and run your business on.</p>
+        <form class="newsletter" onsubmit="return false">
+          <input type="email" placeholder="Email for product drops" aria-label="Email address">
+          <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div class="foot-col">
+        <h4>Marketplace</h4>
+        <a href="category.html">All products</a>
+        <a href="category.html">AI courses</a>
+        <a href="#">Bundles</a>
+        <a href="#">New releases</a>
+      </div>
+      <div class="foot-col">
+        <h4>Earn</h4>
+        <a href="#">Sell your course</a>
+        <a href="#">Affiliate program</a>
+        <a href="#">Partner stories</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="#">License terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms of service</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Uthena</span>
+      <span class="status"><i></i>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+/* RequestPayoutButton.module.css — P6.6 payout request surface.
+ *
+ * Token-only styles. Three visual states:
+ *   - ready (button enabled + on-click handler)
+ *   - below (button disabled + muted banner with the threshold + a
+ *     hint about the 14-day refund window closing)
+ *   - empty (no button — muted banner "no available balance")
+ *   - pending (banner only, no button — partner has a pending request
+ *     already; the banner tells them what it is + where it's going)
+ *
+ * The button matches the existing ExportCsvButton language
+ * (32px tall, hairline border, mono numbers for the amount). The
+ * accent fill (`--accent`) is reserved for the enabled CTA so the
+ * partner can find the affordance at a glance.
+ */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.button {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #ffffff;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: background 120ms ease, border-color 120ms ease;
+  white-space: nowrap;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  background: var(--bg-elev-2);
+  border-color: var(--line);
+  color: var(--text-3);
+  cursor: not-allowed;
+}
+
+.banner {
+  border: 1px solid var(--line);
+  background: var(--bg-elev-1);
+  border-radius: 8px;
+  padding: 12px 14px;
+  max-width: 520px;
+}
+
+.banner[data-state="pending"] {
+  border-color: var(--warn-line);
+  background: var(--warn-soft);
+}
+
+.banner[data-state="below"] {
+  border-color: var(--line);
+  background: var(--bg-elev-1);
+}
+
+.banner[data-state="empty"] {
+  border-color: var(--line);
+  background: var(--bg-elev-1);
+}
+
+.bannerTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 4px;
+}
+
+.bannerBody {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.bannerBody strong {
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.success {
+  font-size: 13px;
+  color: var(--success);
+  margin: 0;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger);
+  margin: 0;
+}

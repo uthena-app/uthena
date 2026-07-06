@@ -1,0 +1,420 @@
+/* CurriculumStep — Step 2 styling.
+   Mirror tokens from DetailsStep for the shell + saved-indicator
+   rhythm; module cards get a layered left-rule treatment that
+   distinguishes module headers from lesson rows. Token-only. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5, 24px);
+  max-width: 880px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-h3, 22px);
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.lede {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 64ch;
+}
+
+/* ------- Empty state ---------------------------------------------------- */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  align-items: flex-start;
+  padding: var(--space-6, 32px);
+  background: var(--bg-elev-2);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-lg, 14px);
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.emptyLede {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 56ch;
+}
+
+/* ------- Module list ---------------------------------------------------- */
+
+.moduleList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}
+
+.moduleCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  padding: var(--space-5, 24px);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--action);
+  border-radius: var(--r-lg, 14px);
+}
+
+.moduleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.moduleCtas {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+}
+
+/* ------- Field primitives (shared with DetailsStep) -------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldGrow {
+  flex: 1 1 auto;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--text-3);
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.input,
+.textarea {
+  padding: 10px 12px;
+  border-radius: var(--r-md, 10px);
+  border: 1px solid var(--line);
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.input {
+  height: 40px;
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 56px;
+  font-family: var(--font-sans);
+  line-height: 1.45;
+}
+
+/* ------- Lessons sub-section ------------------------------------------- */
+
+.lessons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  padding: var(--space-4, 16px);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md, 10px);
+}
+
+.lessonsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+}
+
+.lessonsTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.lessonsEmpty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.lessonList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+.lessonRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  padding: var(--space-3, 12px);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r-md, 10px);
+}
+
+.lessonHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2, 8px);
+}
+
+.lessonEyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.lessonCtas {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+}
+
+.lessonGrid {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: var(--space-3, 12px);
+}
+
+.previewToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  font-size: 13px;
+  color: var(--text-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.previewToggle input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+/* ------- CTAs (shared shape language with UploadShell) ----------------- */
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-md, 10px);
+  border: 1px solid var(--line);
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.iconBtn:hover:not(:disabled) {
+  background: var(--bg-elev-1);
+  border-color: var(--line-strong);
+}
+
+.iconBtn:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.iconBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.secondaryCta,
+.primaryCta,
+.dangerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: var(--r-md, 10px);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.primaryCta {
+  background: var(--action);
+  color: var(--on-action);
+  border-color: var(--action);
+}
+
+.primaryCta:hover {
+  background: var(--action-hover);
+  border-color: var(--action-hover);
+}
+
+.primaryCta:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.secondaryCta {
+  background: var(--bg-elev-2);
+  color: var(--text-1);
+  border-color: var(--line);
+}
+
+.secondaryCta:hover {
+  background: var(--bg-elev-1);
+  border-color: var(--line-strong);
+}
+
+.secondaryCta:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.dangerBtn {
+  background: transparent;
+  color: var(--danger);
+  border-color: var(--line);
+  font-size: 13px;
+  padding: 8px 12px;
+}
+
+.dangerBtn:hover {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+}
+
+.dangerBtn:focus-visible {
+  outline: 2px solid var(--danger);
+  outline-offset: 2px;
+}
+
+.addModuleRow {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-3, 12px);
+}
+
+/* ------- Footer / saved-status indicator ------------------------------- */
+
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  padding-top: var(--space-4, 16px);
+  border-top: 1px solid var(--line);
+}
+
+.saveStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  font-size: 13px;
+  color: var(--text-3);
+  min-height: 18px;
+}
+
+.saving {
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.saved {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--success);
+}
+
+.unsaved {
+  color: var(--text-3);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger);
+  margin: 0;
+}
+
+/* ------- Mobile breakpoints -------------------------------------------- */
+
+@media (max-width: 720px) {
+  .lessonGrid {
+    grid-template-columns: 1fr;
+  }
+  .moduleCtas,
+  .lessonCtas {
+    flex-wrap: wrap;
+  }
+}

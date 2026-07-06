@@ -1,0 +1,225 @@
+/* Partner ledger entry detail page — token-only, mirrors
+   /partner/payouts/page.module.css rhythm but tighter for a
+   single-record view. */
+
+.page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.crumb {
+  margin: 0;
+  font-size: 13px;
+}
+
+.crumbLink {
+  color: var(--text-2);
+  text-decoration: none;
+}
+
+.crumbLink:hover {
+  color: var(--heading);
+  text-decoration: underline;
+}
+
+/* ===== Hero ====================================================== */
+
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.heroText {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.kindLabel {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.kindLabel[data-kind='order_sale'] { color: var(--success); }
+.kindLabel[data-kind='subscription'] { color: var(--accent); }
+.kindLabel[data-kind='refund'] { color: var(--danger); }
+.kindLabel[data-kind='payout'] { color: var(--accent); }
+.kindLabel[data-kind='clawback'] { color: var(--danger); }
+.kindLabel[data-kind='adjustment'] { color: var(--text-2); }
+
+.h1Id {
+  font-variant-numeric: tabular-nums;
+  font-size: 18px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.sub {
+  margin: 4px 0 0;
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+.heroNumbers {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.amount {
+  font-size: 28px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+.amount[data-direction='credit'] { color: var(--success); }
+.amount[data-direction='debit'] { color: var(--danger); }
+
+.statusPill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.statusPill[data-status='available'] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.statusPill[data-status='paid'] {
+  background: var(--bg-elev-2);
+  color: var(--text-3);
+}
+
+.statusPill[data-status='locked'],
+.statusPill[data-status='pending_payout'] {
+  background: var(--warn-soft);
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+.statusPill[data-status='void'] {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ===== Missing-card affordance (joins failed) ===================== */
+
+.missingCard {
+  padding: 16px 20px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+}
+
+.missingEyebrow {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.missingText {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+/* ===== Meta strip (royalty + external IDs) ====================== */
+
+.meta {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 24px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev-1);
+}
+
+.metaRow {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaTerm {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.metaDef {
+  margin: 0;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--heading);
+}
+
+.metaDefMono {
+  margin: 0;
+  font-size: 12px;
+  font-family: var(--font-mono, ui-monospace, 'SF Mono', monospace);
+  color: var(--text-2);
+  word-break: break-all;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    flex-direction: column;
+  }
+  .heroNumbers {
+    align-items: flex-start;
+    width: 100%;
+  }
+  .meta {
+    grid-template-columns: 1fr;
+  }
+}

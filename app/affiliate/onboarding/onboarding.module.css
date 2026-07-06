@@ -1,0 +1,7 @@
+/* Affiliate onboarding — page-level CSS. The shell + steps own
+   their own modules; this file is the page wrapper's rhythm. */
+
+.page {
+  background: var(--bg);
+  min-height: 100vh;
+}

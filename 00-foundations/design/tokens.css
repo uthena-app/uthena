@@ -1,0 +1,216 @@
+/* ==========================================================================
+   Uthena v4 — Design tokens (DARK theme)
+   Two-signal color system. Orange = action. Teal = identity/state.
+   Both colors come from the current uthena.com logo / palette DNA.
+   This file is the dark default. Light theme overrides live in
+   design-system-light.css under [data-theme="light"].
+   ========================================================================== */
+
+:root {
+  /* ----- Canvas — monochrome, 5 surface levels plus a brand-tinted one -- */
+  --bg:           #0E1012;          /* page */
+  --bg-elev-1:    #15181B;          /* base card */
+  --bg-elev-2:    #1C2024;          /* raised card (hover, selected) */
+  --bg-elev-3:    #242A2F;          /* popover, dropdown, input fill */
+  --bg-inset:     #0A0C0E;          /* deeper than page — code, table stripes, announcement bar */
+  --bg-brand:     rgba(26, 188, 156, 0.04);  /* very low-opacity teal tint for brand callouts */
+
+  /* ----- Borders — hairlines, slightly warm ----------------------------- */
+  --line:         #2A2F35;          /* hairline */
+  --line-strong:  #3A4148;          /* emphasized border (input hover, secondary button) */
+
+  /* ----- Text — neutral, no warm tints ---------------------------------- */
+  --heading:      #FFFFFF;          /* primary headings, hero text */
+  --text-1:       #ECECEE;          /* primary body text (used as --text-1 alias) */
+  --text-2:       #A1A4AC;          /* secondary */
+  --text-3:       #6B6E76;          /* tertiary, hints */
+  --text-4:       #4A4D55;          /* disabled */
+
+  /* Legacy text aliases (so existing components keep working unchanged) */
+  --text:         var(--text-1);
+
+  /* ----- ACTION — orange. Use for: primary buttons, "Add to cart",
+                  sale price highlight, "SAVE %" tag, destructive confirm,
+                  MRR license pill, stars. */
+  --action:        #F3924A;          /* rgb(243,146,74) */
+  --action-hover:  #FFA862;
+  --action-soft:   rgba(243, 146, 74, 0.12);
+  --action-line:   rgba(243, 146, 74, 0.30);
+  --action-glow:   rgba(243, 146, 74, 0.35);
+
+  /* ----- IDENTITY — teal. Use for: logo dot, links, active nav, focus
+                  rings, PLR license pill, selected license-radio, "MRR"
+                  is NEVER teal (that's orange). */
+  --accent:        #1ABC9C;          /* rgb(26,188,156) */
+  --accent-hover:  #20D2AF;
+  --accent-soft:   rgba(26, 188, 156, 0.10);
+  --accent-line:   rgba(26, 188, 156, 0.25);
+  --accent-glow:   rgba(26, 188, 156, 0.35);
+
+  /* Canonical aliases — the new v4 names. Components should prefer these. */
+  --orange:        var(--action);
+  --orange-hover:  var(--action-hover);
+  --orange-soft:   var(--action-soft);
+  --orange-line:   var(--action-line);
+  --teal:          var(--accent);
+  --teal-hover:    var(--accent-hover);
+  --teal-soft:     var(--accent-soft);
+  --teal-line:     var(--accent-line);
+
+  /* ----- Sale / new — named aliases so spec pages can ask for "sale
+                  color" or "new badge" without coupling to action/accent. */
+  --sale:          var(--action);
+  --sale-soft:     var(--action-soft);
+  --new:           var(--accent);
+  --new-soft:      var(--accent-soft);
+
+  /* ----- Footer (dark page, light footer — brand continuity) -----------
+     The footer is a LIGHT zone on top of the otherwise-dark page. The
+     --footer-* tokens are tuned for that cream background — they don't
+     share values with --text-* / --bg-* because those are tuned for the
+     dark page chrome. Use --footer-* throughout the SiteFooter; don't
+     reach for --text-* here. */
+  --footer-bg:        #F4F4F4;
+  --footer-bg-chip:   #FFFFFF;   /* pay-method chip background */
+  --footer-fg:        #0B0C0D;   /* primary footer text + links */
+  --footer-fg-soft:   #4A4F55;   /* brand-line subtext (between muted and fg) */
+  --footer-fg-muted:  #6A6F75;   /* column headings + copyright + chip text */
+  --footer-line:      #DEDEDE;   /* dividers between columns + above copyright */
+
+  /* ----- Semantic — never decorative ------------------------------------ */
+  --success:        #4DB282;
+  --success-soft:   rgba(77, 178, 130, 0.12);
+  --success-line:   rgba(77, 178, 130, 0.25);
+  --warn:           #E8B341;
+  --warn-soft:      rgba(232, 179, 65, 0.12);
+  --warn-line:      rgba(232, 179, 65, 0.25);
+  --danger:         #E55353;
+  --danger-soft:    rgba(229, 83, 83, 0.12);
+  --danger-line:    rgba(229, 83, 83, 0.25);
+  --info:           #6B8AF0;
+  --info-soft:      rgba(107, 138, 240, 0.12);
+  --info-line:      rgba(107, 138, 240, 0.25);
+
+  /* ----- Star (reviews) — orange, brand-coherent ------------------------ */
+  --star:          var(--action);
+
+  /* ----- Radii ---------------------------------------------------------- */
+  --r-xs:    6px;
+  --r-sm:    8px;
+  --r-md:    10px;
+  --r-lg:    14px;
+  --r-xl:    18px;
+  --r-pill:  999px;
+
+  /* ----- Shadows — used sparingly, only for raised/popover ------------- */
+  --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md:   0 6px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg:   0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 0 1px var(--accent-line), 0 8px 24px rgba(26, 188, 156, 0.12);
+
+  /* ----- Overlays & on-color text — for modals, dialogs, and any element
+     rendered on top of an --action / --accent fill. Both values are tuned
+     per-theme (light theme overrides below). --on-action is the readable
+     text/icon color on the orange action fill; white in dark mode, deep
+     brown in light mode (the orange is identical in both themes but its
+     perceived brightness differs on a cream vs near-black canvas).
+     --on-accent is the readable text/icon color on the teal accent fill
+     (the "PLR" pill, the "tag" overlay, the active license-radio). It is
+     a near-black teal-tinted color; contrast on the teal is well above
+     WCAG AA in both themes so we ship one value (not per-theme).
+     --bg-overlay is the modal/dialog backdrop: a translucent black in
+     dark mode and a translucent warm-gray in light mode (so the
+     backdrop reads as a "darker page" rather than a "vignette"). */
+  --bg-overlay:    rgba(0, 0, 0, 0.6);
+  --on-action:     #1A0E00;
+  --on-accent:     #001A14;
+  --on-success:    #0B0C0D;   /* readable icon/text color on the green --success fill (e.g. confirmation-page checkmark circle) */
+  --on-danger:     #FFFFFF;
+
+  /* ----- Type ----------------------------------------------------------- */
+  /* --font-sans is the body / UI face. Inter, loaded via next/font.
+     --font-display prefers "Inter Tight" (the mockup face) and falls
+     back to Inter so a missing Inter Tight still renders cleanly. If
+     the project wants the actual Inter Tight shipped, register it
+     in next/font and keep this fallback chain — do NOT remove the
+     "Inter" fallback. --font-body is the legacy mockup alias. */
+  --font-sans:    var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-inter), 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-body:    var(--font-sans);
+  --font-mono:    var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ----- Spacing — 4px base unit. The mockup uses --s-1 … --s-10
+     (4 → 128px). The README / design system spec uses --space-1 …
+     --space-9 (4 → 96px). Both name families resolve to the same
+     scale, so authors can pick either style. Use the canonical
+     --space-* names; the --s-* aliases exist only to keep the
+     mockup CSS (and any other consumer that copied it) working
+     unchanged. Don't introduce more. */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --s-1:   var(--space-1);
+  --s-2:   var(--space-2);
+  --s-3:   var(--space-3);
+  --s-4:   var(--space-4);
+  --s-5:   var(--space-5);
+  --s-6:   var(--space-6);
+  --s-7:   var(--space-7);
+  --s-8:   var(--space-8);
+  --s-9:   var(--space-9);
+  --s-10: 128px;
+
+  /* ----- Container widths — used by .container / .container-narrow /
+     .container-wide in primitives.css. The mockup uses --max (1280px);
+     primitives.css already hard-codes 1280/880/1440 in three places.
+     These tokens let the literals be replaced without touching the
+     component layer. */
+  --max:        1280px;
+  --max-narrow:  880px;
+  --max-wide:   1440px;
+
+  /* ----- Text aliases — the mockup uses --text (alias for --text-1,
+     already wired) plus --text-soft (= --text-2) and --text-faint
+     (= --text-3). Adding the aliases lets mockup classes drop in
+     unchanged. */
+  --text-soft:  var(--text-2);
+  --text-faint: var(--text-3);
+
+  /* ----- Badge aliases — the mockup's --badge-sale / --badge-new
+     names are the spec language ("sale tag", "new badge"). The
+     badge primitive (.badge-sale / .badge-new) already binds to
+     --action-soft / --accent-soft. These two scalars are direct
+     aliases for the brand colors themselves, in case a future
+     component wants the literal brand color (not the soft variant)
+     for a sale / new chip. */
+  --badge-sale: var(--action);
+  --badge-new:  var(--accent);
+}
+
+/* ==========================================================================
+   Section background tints — apply a class to a <section> element to give it
+   a non-default background. All values are tokens, so they auto-adapt to
+   light theme. The default section background is var(--bg) — don't apply a
+   tint to every section, only where you want emphasis.
+
+   Rules of use (see BRAND_AND_POSITIONING.md §12):
+   - Default is `tint-base` (page background) — don't apply a tint class
+     unless you want a different background.
+   - One `tint-brand` per page max (brand-moment signal).
+   - One `tint-orange` per page max (deal-moment signal only).
+   - `tint-brand` and `tint-orange` include their border lines so the
+     section reads as a distinct zone.
+   - The footer is its own zone (uses --footer-bg) — don't tint it.
+   ========================================================================== */
+.sec.tint-base   { background: var(--bg); }
+.sec.tint-card   { background: var(--bg-elev-1); }
+.sec.tint-raised { background: var(--bg-elev-2); }
+.sec.tint-inset  { background: var(--bg-inset); }
+.sec.tint-brand  { background: var(--bg-brand); border-top: 1px solid var(--accent-line); border-bottom: 1px solid var(--accent-line); }
+.sec.tint-orange { background: var(--action-soft); border-top: 1px solid var(--action-line); border-bottom: 1px solid var(--action-line); }

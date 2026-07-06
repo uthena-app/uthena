@@ -1,0 +1,323 @@
+/* ReviewStep — token-only. Two-column layout on desktop (items left,
+   summary right), single-column stacked on mobile. Mirrors the
+   legacy /checkout visual rhythm so returning users aren't jarred. */
+
+.wrap {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--space-6, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5, 20px);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  padding-bottom: var(--space-4, 16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.lede {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 64ch;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+.left, .right {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md, 10px);
+  padding: 18px 18px 20px;
+}
+
+.right {
+  background: var(--bg-elev-2);
+}
+
+.sub {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.thumb, .thumbPlaceholder {
+  width: 80px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+}
+
+.itemBody {
+  min-width: 0;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--heading);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title:hover {
+  color: var(--accent, var(--orange));
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 0;
+}
+
+/* P5.9 — Per-line subscriber-discount tag. Same shape as the
+   coupon tag, teal-leaning via the design-system "discount"
+   family. Renders only when the line qualifies (PLR + active
+   subscriber + tier didn't opt out). */
+.subscriberTag {
+  display: inline-block;
+  margin: 4px 0 0;
+  padding: 1px 6px;
+  border-radius: var(--r-sm, 6px);
+  border: 1px solid var(--success-line, var(--teal-line));
+  background: var(--success-soft, var(--teal-soft));
+  color: var(--text-2);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+  vertical-align: 1px;
+}
+
+.itemPrice {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+.editNote {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 16px 0 0;
+}
+
+.editLink {
+  color: var(--accent, var(--orange));
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.editLink:hover {
+  text-decoration: underline;
+}
+
+.totals {
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.row dt, .row dd {
+  margin: 0;
+}
+
+.row dt {
+  color: var(--text-2);
+}
+
+.row dd {
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: var(--text-3) !important;
+  font-size: 12px;
+}
+
+.grand {
+  font-size: 16px;
+  font-weight: 700;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.grand dt, .grand dd {
+  color: var(--heading);
+}
+
+.discount {
+  color: var(--success, var(--teal));
+  font-variant-numeric: tabular-nums;
+}
+
+.couponTag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: var(--r-sm, 6px);
+  border: 1px solid var(--success-line, var(--teal-line));
+  background: var(--success-soft, var(--teal-soft));
+  color: var(--text-1);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+}
+
+.couponBlock {
+  margin: 0 0 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.notice {
+  font-size: 12px;
+  color: var(--warn);
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.notice code {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 4px;
+  font-size: 11px;
+  color: var(--text-1);
+}
+
+.trust {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.trust li {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.trust li::before {
+  content: '✓';
+  color: var(--success, var(--teal));
+  font-weight: 700;
+}
+
+.legalNote {
+  margin: 14px 0 0;
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.legalLink {
+  color: var(--text-2);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legalLink:hover {
+  color: var(--heading);
+}
+
+.navRow {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: var(--space-4, 16px);
+  border-top: 1px solid var(--line);
+}
+
+.backLink {
+  font-size: 13px;
+  color: var(--text-2);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.backLink:hover {
+  color: var(--heading);
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    padding: var(--space-4, 16px);
+  }
+  .h2 {
+    font-size: 19px;
+  }
+}

@@ -1,0 +1,117 @@
+/* cookie-preferences.module.css — page-level shell for /cookie-preferences.
+ * Mirrors the legal-page rhythm: a centered container with eyebrow +
+ * h1 + lede + the interactive form + a follow-up detail section. All
+ * values are design tokens — no inline colors or magic pixels.
+
+   Layout:
+     - page     — full-width surface, dark page bg, vertical padding
+     - container — max-width narrow column (880px) so the form breathes
+     - header   — eyebrow + h1 + lede, generous bottom margin
+     - detail   — secondary info section under the form
+*/
+
+.page {
+  background: var(--bg, #0b0c0d);
+  color: var(--fg, #f4f4f5);
+  min-height: calc(100vh - 200px);
+  padding: var(--s-9, 96px) var(--s-4, 16px) var(--s-9, 96px);
+  font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: var(--s-7, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3, 12px);
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent, #1eb8a6);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display, 'Inter Tight', 'Inter', sans-serif);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--fg, #f4f4f5);
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-2, #b5b8bb);
+  max-width: 64ch;
+}
+
+/* Detail section under the form. */
+.detail {
+  margin-top: var(--s-8, 48px);
+  padding-top: var(--s-6, 24px);
+  border-top: 1px solid var(--line, #2a2f33);
+}
+
+.detailTitle {
+  margin: 0 0 var(--s-4, 16px) 0;
+  font-family: var(--font-display, 'Inter Tight', 'Inter', sans-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg, #f4f4f5);
+}
+
+.detailList {
+  margin: 0 0 var(--s-5, 20px) 0;
+  padding-left: var(--s-5, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3, 12px);
+}
+
+.detailList li {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-2, #b5b8bb);
+}
+
+.detailList li strong {
+  color: var(--fg, #f4f4f5);
+  font-weight: 600;
+}
+
+.detailLink {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-3, #8a8d91);
+  line-height: 1.5;
+}
+
+.inlineLink {
+  color: var(--accent, #1eb8a6);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.inlineLink:hover {
+  color: var(--accent-hover, #25d0bb);
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: var(--s-7, 32px) var(--s-4, 16px) var(--s-7, 32px);
+  }
+}

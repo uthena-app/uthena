@@ -1,0 +1,18 @@
+.page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  background: var(--bg);
+}
+
+.card {
+  width: 100%;
+  max-width: 460px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+}

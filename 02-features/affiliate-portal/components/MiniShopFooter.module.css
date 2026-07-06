@@ -1,0 +1,56 @@
+/* MiniShopFooter — thin 2-row footer with copyright + Powered-by
+   + legal links. */
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 0 32px;
+  margin-top: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.copy {
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.divider {
+  color: var(--text-3);
+}
+
+.powered {
+  color: var(--text-2);
+}
+
+.links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.link {
+  color: var(--text-2);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--teal);
+  text-decoration: underline;
+}

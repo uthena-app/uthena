@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Courses — Uthena Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#131110; --card:#1A1816; --raised:#211E1B; --inset:#0F0E0C;
+    --border:#2A2724; --border-strong:#383430;
+    --gold:#C9A35C; --gold-hover:#DBB76F; --gold-tint:rgba(201,163,92,.10);
+    --ivory:#EDE6DA; --muted:#A59C8E; --faint:#766E62;
+    --radius:3px;
+    --serif:'Fraunces',Georgia,serif;
+    --sans:'Inter',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ivory);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  img,svg{display:block}
+  button{font-family:inherit;font-size:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  input,select{font-family:inherit;font-size:inherit;color:inherit}
+  ::selection{background:rgba(201,163,92,.28);color:var(--ivory)}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:2px}
+
+  .container{max-width:1200px;margin:0 auto;padding:0 32px}
+  .eyebrow{font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 28px;border-radius:var(--radius);font-size:14px;font-weight:500;border:1px solid transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+  .btn-gold{background:var(--gold);color:#161310;box-shadow:0 2px 14px rgba(0,0,0,.4)}
+  .btn-gold:hover{background:var(--gold-hover)}
+  .btn-ghost{border-color:var(--border-strong);color:var(--ivory);background:transparent}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-hover);background:var(--gold-tint)}
+  .btn-sm{padding:9px 18px;font-size:13.5px;box-shadow:none}
+
+  /* ---------- Nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(19,17,16,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{display:flex;align-items:center;gap:36px;height:72px}
+  .brand{font-family:var(--serif);font-weight:600;font-size:24px;display:flex;align-items:baseline;gap:4px;color:var(--ivory)}
+  .brand .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);transform:translateY(-1px)}
+  .nav-links{display:flex;gap:28px}
+  .nav-links a{font-size:14px;color:var(--muted);padding:6px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s}
+  .nav-links a:hover{color:var(--ivory)}
+  .nav-links a.active{color:var(--gold);border-bottom-color:var(--gold)}
+  .nav-actions{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .search{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;background:var(--inset);color:var(--faint);min-width:210px;transition:border-color .15s}
+  .search:focus-within{border-color:var(--gold)}
+  .search input{background:none;border:none;outline:none;color:var(--ivory);width:100%;font-size:13.5px}
+  .search input::placeholder{color:var(--faint)}
+
+  /* ---------- Page header ---------- */
+  .page-head{padding:56px 0 40px;border-bottom:1px solid var(--border)}
+  .crumbs{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .crumbs a:hover{color:var(--gold-hover)}
+  .crumbs .sep{color:var(--border-strong)}
+  .page-head h1{font-family:var(--serif);font-weight:500;font-size:clamp(36px,4.6vw,54px);line-height:1.08;margin:20px 0 12px;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+  .page-head h1 .count{font-family:var(--sans);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:400}
+  .page-head p{color:var(--muted);max-width:62ch}
+
+  /* ---------- Category strip ---------- */
+  .cat-strip{border-bottom:1px solid var(--border)}
+  .cat-strip-inner{display:flex;gap:6px;overflow-x:auto;padding:14px 0;scrollbar-width:none}
+  .cat-strip-inner::-webkit-scrollbar{display:none}
+  .cat{font-size:13.5px;color:var(--muted);padding:8px 16px;border:1px solid transparent;border-radius:2px;white-space:nowrap;transition:color .15s,border-color .15s,background .15s}
+  .cat:hover{color:var(--ivory);border-color:var(--border-strong)}
+  .cat.active{color:var(--gold);border-color:rgba(201,163,92,.5);background:var(--gold-tint)}
+
+  /* ---------- Layout ---------- */
+  .market{display:grid;grid-template-columns:248px 1fr;gap:48px;padding:48px 0 72px;align-items:start}
+
+  /* ---------- Sidebar ---------- */
+  .filters{position:sticky;top:96px}
+  .fgroup{border-top:1px solid var(--border);padding:22px 0}
+  .fgroup:first-child{border-top:none;padding-top:0}
+  .fgroup h4{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:500;margin-bottom:14px}
+  .fopt{display:flex;align-items:center;gap:11px;padding:6px 0;font-size:14px;color:var(--muted);cursor:pointer;transition:color .15s}
+  .fopt:hover{color:var(--ivory)}
+  .fopt input{position:absolute;opacity:0;width:0;height:0}
+  .box{width:16px;height:16px;border:1px solid var(--border-strong);border-radius:2px;display:inline-flex;align-items:center;justify-content:center;flex:none;transition:border-color .15s,background .15s}
+  .box svg{opacity:0;transition:opacity .12s;color:#161310}
+  .fopt input:checked + .box{background:var(--gold);border-color:var(--gold)}
+  .fopt input:checked + .box svg{opacity:1}
+  .fopt input:focus-visible + .box{outline:2px solid var(--gold);outline-offset:2px}
+  .fopt .cnt{margin-left:auto;font-size:12px;color:var(--faint)}
+  .stars-row{display:inline-flex;gap:2px;color:var(--gold)}
+  .stars-row .off{color:var(--border-strong)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .chip{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--gold);background:var(--gold-tint);border:1px solid rgba(201,163,92,.4);border-radius:2px;padding:5px 8px 5px 11px}
+  .chip button{display:inline-flex;padding:2px;color:var(--gold);opacity:.75;transition:opacity .15s}
+  .chip button:hover{opacity:1}
+  .clear-all{font-size:12.5px;color:var(--faint);align-self:center;border-bottom:1px solid transparent;transition:color .15s,border-color .15s}
+  .clear-all:hover{color:var(--ivory);border-bottom-color:var(--border-strong)}
+
+  /* ---------- Toolbar ---------- */
+  .toolbar{display:flex;align-items:center;gap:18px;padding-bottom:22px;border-bottom:1px solid var(--border);margin-bottom:28px}
+  .results{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .toolbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .sort{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted)}
+  .sort select{background:var(--inset);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;color:var(--ivory);font-size:13.5px;cursor:pointer;transition:border-color .15s}
+  .sort select:hover{border-color:var(--border-strong)}
+  .view-toggle{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .view-toggle button{padding:8px 11px;color:var(--faint);transition:color .15s,background .15s}
+  .view-toggle button:hover{color:var(--ivory)}
+  .view-toggle button[aria-pressed="true"]{color:var(--gold);background:var(--gold-tint)}
+  .view-toggle button + button{border-left:1px solid var(--border)}
+
+  /* ---------- Cards ---------- */
+  .grid-products{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .2s}
+  .card:hover{border-color:rgba(201,163,92,.6)}
+  .card:hover .card-title{color:var(--gold-hover)}
+  .thumb{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;position:relative;border-bottom:1px solid var(--border);flex:none}
+  .thumb svg{color:rgba(237,230,218,.5)}
+  .th-wine{background:linear-gradient(140deg,#3D1F2B,#1C1115)}
+  .th-slate{background:linear-gradient(140deg,#2E3744,#14181E)}
+  .th-teal{background:linear-gradient(140deg,#16383A,#0D1B1C)}
+  .th-plum{background:linear-gradient(140deg,#35273F,#17111C)}
+  .th-umber{background:linear-gradient(140deg,#4A3220,#1F150D)}
+  .th-moss{background:linear-gradient(140deg,#2E3A24,#151A10)}
+  .th-ink{background:linear-gradient(140deg,#1F2E4A,#0E131D)}
+  .th-copper{background:linear-gradient(140deg,#4A2B1E,#1D110C)}
+  .th-wine2{background:linear-gradient(140deg,#442020,#190F0E)}
+  .badge{position:absolute;top:12px;left:12px;font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:rgba(19,17,16,.78);border:1px solid rgba(201,163,92,.45);padding:4px 9px;border-radius:2px}
+  .card-body{padding:18px 18px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .card-cat{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .card-title{font-family:var(--serif);font-weight:500;font-size:17.5px;line-height:1.32;transition:color .2s}
+  .card-desc{font-size:13.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .card-spec{display:flex;align-items:center;gap:14px;font-size:12.5px;color:var(--faint)}
+  .card-spec span{display:inline-flex;align-items:center;gap:5px}
+  .card-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:10px;border-top:1px solid var(--border)}
+  .rating{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--muted)}
+  .rating svg{color:var(--gold)}
+  .price{font-family:var(--serif);font-weight:500;font-size:16.5px;color:var(--ivory);white-space:nowrap}
+
+  /* list view */
+  .grid-products.list-view{grid-template-columns:1fr}
+  .grid-products.list-view .card{flex-direction:row}
+  .grid-products.list-view .thumb{width:280px;aspect-ratio:16/10;border-bottom:none;border-right:1px solid var(--border)}
+  .grid-products.list-view .card-desc{-webkit-line-clamp:3}
+
+  /* ---------- Pagination ---------- */
+  .pager{display:flex;justify-content:center;gap:6px;margin-top:52px}
+  .pager a,.pager span{min-width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:var(--radius);font-size:13.5px;color:var(--muted);transition:border-color .15s,color .15s}
+  .pager a:hover{border-color:var(--gold);color:var(--gold-hover)}
+  .pager .current{color:var(--gold);border-color:rgba(201,163,92,.55);background:var(--gold-tint);font-weight:500}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--border);padding:72px 0 0}
+  .footer-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;gap:48px;padding-bottom:64px}
+  .footer-brand p{color:var(--muted);font-size:14px;max-width:34ch;margin:16px 0 28px}
+  .footer-col h4{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-bottom:18px;font-weight:500}
+  .footer-col a{display:block;color:var(--muted);font-size:14px;padding:5px 0;transition:color .15s}
+  .footer-col a:hover{color:var(--gold-hover)}
+  .news{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;max-width:340px;background:var(--inset)}
+  .news input{flex:1;background:none;border:none;outline:none;padding:11px 14px;color:var(--ivory);font-size:13.5px;min-width:0}
+  .news input::placeholder{color:var(--faint)}
+  .news button{background:var(--gold);color:#161310;font-size:13px;font-weight:500;padding:0 18px;transition:background .18s;white-space:nowrap}
+  .news button:hover{background:var(--gold-hover)}
+  .news-note{font-size:12.5px;color:var(--faint);margin-top:10px}
+  .footer-bottom{border-top:1px solid var(--border);padding:26px 0;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--faint)}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1080px){
+    .grid-products{grid-template-columns:repeat(2,1fr)}
+    .search{min-width:150px}
+  }
+  @media (max-width:960px){
+    .nav-links{display:none}
+    .market{grid-template-columns:1fr;gap:36px}
+    .filters{position:static;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0 32px;border:1px solid var(--border);border-radius:var(--radius);padding:8px 22px 14px;background:var(--card)}
+    .filters > .chips,.filters > .fgroup{border-top:none}
+    .filters > .chips{grid-column:1/-1;padding-top:16px;margin-bottom:4px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
+    .footer-brand{grid-column:1/-1}
+    .grid-products.list-view .thumb{width:220px}
+  }
+  @media (max-width:768px){
+    .container{padding:0 20px}
+    .search{display:none}
+    .page-head{padding:40px 0 32px}
+  }
+  @media (max-width:620px){
+    .grid-products{grid-template-columns:1fr}
+    .toolbar{flex-wrap:wrap}
+    .toolbar-right{margin-left:0;width:100%;justify-content:space-between}
+    .footer-grid{grid-template-columns:1fr}
+    .nav-inner{gap:16px}
+    .grid-products.list-view .card{flex-direction:column}
+    .grid-products.list-view .thumb{width:100%;border-right:none;border-bottom:1px solid var(--border)}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="home.html">uthena<span class="dot"></span></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="category.html" class="active">Marketplace</a>
+      <a href="#">Bundles</a>
+      <a href="#">Earn with Uthena</a>
+      <a href="#">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <label class="search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.7-4.7"/></svg>
+        <input type="search" placeholder="Search the collection" aria-label="Search the collection">
+      </label>
+      <a class="btn btn-ghost btn-sm" href="#">Sign in</a>
+      <a class="btn btn-gold btn-sm" href="#">Get started</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= PAGE HEAD ================= -->
+<section class="page-head">
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="category.html">Marketplace</a>
+      <span class="sep">/</span>
+      <span style="color:var(--gold)">AI Courses</span>
+    </nav>
+    <h1>AI Courses <span class="count">84 products</span></h1>
+    <p>Rebrandable video courses on AI tools, workflows, and strategy — licensed for you to modify, brand, and sell as your own.</p>
+  </div>
+</section>
+
+<!-- ================= CATEGORY STRIP ================= -->
+<div class="cat-strip">
+  <div class="container cat-strip-inner">
+    <a class="cat" href="category.html">All</a>
+    <a class="cat active" href="category.html" aria-current="page">AI</a>
+    <a class="cat" href="#">Business</a>
+    <a class="cat" href="#">Crypto</a>
+    <a class="cat" href="#">Design</a>
+    <a class="cat" href="#">Finance</a>
+    <a class="cat" href="#">Marketing</a>
+    <a class="cat" href="#">Productivity</a>
+    <a class="cat" href="#">Programming</a>
+    <a class="cat" href="#">Technology</a>
+  </div>
+</div>
+
+<!-- ================= MARKET ================= -->
+<div class="container market">
+
+  <!-- Sidebar -->
+  <aside class="filters" aria-label="Filters">
+    <div class="chips" id="chips">
+      <!-- chips injected by JS from checked filters -->
+      <button class="clear-all" id="clearAll" type="button">Clear all</button>
+    </div>
+
+    <div class="fgroup">
+      <h4>License type</h4>
+      <label class="fopt"><input type="checkbox" data-label="Whitelabel"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Whitelabel<span class="cnt">61</span></label>
+      <label class="fopt"><input type="checkbox" data-label="PLR"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>PLR<span class="cnt">84</span></label>
+      <label class="fopt"><input type="checkbox" data-label="PLR + MRR" checked><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>PLR + MRR<span class="cnt">37</span></label>
+    </div>
+
+    <div class="fgroup">
+      <h4>Price</h4>
+      <label class="fopt"><input type="checkbox" data-label="Under $50"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Under $50<span class="cnt">12</span></label>
+      <label class="fopt"><input type="checkbox" data-label="$50–100" checked><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>$50–100<span class="cnt">46</span></label>
+      <label class="fopt"><input type="checkbox" data-label="$100–200"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>$100–200<span class="cnt">21</span></label>
+      <label class="fopt"><input type="checkbox" data-label="$200+"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>$200+<span class="cnt">5</span></label>
+    </div>
+
+    <div class="fgroup">
+      <h4>Rating</h4>
+      <label class="fopt"><input type="checkbox" data-label="4.5 ★ & up"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span><span class="stars-row"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg><svg class="off" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg></span>&nbsp;4.5 &amp; up<span class="cnt">52</span></label>
+      <label class="fopt"><input type="checkbox" data-label="4.0 ★ & up"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span><span class="stars-row"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg><svg class="off" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg></span>&nbsp;4.0 &amp; up<span class="cnt">71</span></label>
+    </div>
+
+    <div class="fgroup">
+      <h4>Course length</h4>
+      <label class="fopt"><input type="checkbox" data-label="Under 2 hours"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Under 2 hours<span class="cnt">18</span></label>
+      <label class="fopt"><input type="checkbox" data-label="2–6 hours"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>2–6 hours<span class="cnt">44</span></label>
+      <label class="fopt"><input type="checkbox" data-label="6+ hours"><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>6+ hours<span class="cnt">22</span></label>
+    </div>
+  </aside>
+
+  <!-- Results -->
+  <section>
+    <div class="toolbar">
+      <span class="results">84 results</span>
+      <div class="toolbar-right">
+        <label class="sort">Sort
+          <select aria-label="Sort results">
+            <option>Most popular</option>
+            <option>Newest</option>
+            <option>Price low → high</option>
+            <option>Rating</option>
+          </select>
+        </label>
+        <div class="view-toggle" role="group" aria-label="View">
+          <button type="button" id="viewGrid" aria-pressed="true" aria-label="Grid view">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="3" width="7.5" height="7.5"/><rect x="13.5" y="3" width="7.5" height="7.5"/><rect x="3" y="13.5" width="7.5" height="7.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5"/></svg>
+          </button>
+          <button type="button" id="viewList" aria-pressed="false" aria-label="List view">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-products" id="grid">
+
+      <a class="card" href="product.html">
+        <div class="thumb th-wine">
+          <span class="badge">Featured</span>
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="10"/><circle cx="24" cy="24" r="2.5"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-cat">AI</span>
+          <h3 class="card-title">Using AI to Create and Scale a Profitable Personal Brand on Social Media</h3>
+          <p class="card-desc">A complete, rebrandable system for building a profitable personal brand with AI tools — positioning, content engine, growth, monetization.</p>
+          <div class="card-spec">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M9 9v11"/></svg>42 lessons</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>6h 30m</span>
+          </div>
+          <div class="card-foot">
+            <span class="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg>4.9</span>
+            <span class="price">From $57</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb th-plum">
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M24 8L42 40H6z"/><circle cx="24" cy="29" r="6"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-cat">AI</span>
+          <h3 class="card-title">Artificial Intelligence Explained for Beginners</h3>
+          <p class="card-desc">A plain-language introduction to AI concepts your students can actually use — models, prompts, and practical workflows without the jargon.</p>
+          <div class="card-spec">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M9 9v11"/></svg>28 lessons</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>3h 10m</span>
+          </div>
+          <div class="card-foot">
+            <span class="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg>5.0</span>
+            <span class="price">$67</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb th-ink">
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M24 6l16 9v18l-16 9-16-9V15z"/><path d="M24 6v18m0 0l16-9m-16 9L8 15"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-cat">AI</span>
+          <h3 class="card-title">Generative AI for Leaders</h3>
+          <p class="card-desc">Strategy-level training on deploying generative AI across teams — governance, tooling decisions, and rollout playbooks for executives.</p>
+          <div class="card-spec">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M9 9v11"/></svg>36 lessons</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>5h 45m</span>
+          </div>
+          <div class="card-foot">
+            <span class="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg>4.9</span>
+            <span class="price">$127</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb th-teal">
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="8" y="8" width="14" height="14"/><rect x="26" y="26" width="14" height="14"/><path d="M22 15h10v11M26 33H15V22"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-cat">AI</span>
+          <h3 class="card-title">ChatGPT for Business Automation</h3>
+          <p class="card-desc">Turn repetitive business operations into automated workflows — prompts, custom GPTs, and integrations for service businesses.</p>
+          <div class="card-spec">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M9 9v11"/></svg>31 lessons</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>4h 20m</span>
+          </div>
+          <div class="card-foot">
+            <span class="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg>4.8</span>
+            <span class="price">From $77</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb th-umber">
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="24" cy="24" r="17"/><path d="M24 7c-5 5-5 29 0 34M24 7c5 5 5 29 0 34M7 24h34"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-cat">AI</span>
+          <h3 class="card-title">Midjourney Mastery</h3>
+          <p class="card-desc">From first prompt to consistent brand imagery — styles, references, and a production pipeline for client-ready visuals.</p>
+          <div class="card-spec">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M9 9v11"/></svg>24 lessons</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>3h 40m</span>
+          </div>
+          <div class="card-foot">
+            <span class="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg>4.7</span>
+            <span class="price">$89</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb th-moss">
+          <span class="badge">New</span>
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="5"/><circle cx="36" cy="12" r="5"/><circle cx="24" cy="36" r="5"/><path d="M15 16l6 16M33 16l-6 16M17 12h14"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-cat">AI</span>
+          <h3 class="card-title">AI Agents for Lead Generation</h3>
+          <p class="card-desc">Build autonomous outreach and qualification agents — research, scoring, and follow-up systems that run while you sleep.</p>
+          <div class="card-spec">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M9 9v11"/></svg>33 lessons</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>5h 05m</span>
+          </div>
+          <div class="card-foot">
+            <span class="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg>4.8</span>
+            <span class="price">From $97</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb th-slate">
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M10 38V22M20 38V10M30 38V28M40 38V16"/><path d="M6 42h36"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-cat">AI</span>
+          <h3 class="card-title">AI Copywriting Systems for Solo Operators</h3>
+          <p class="card-desc">A repeatable copy pipeline for emails, landing pages, and ads — voice training, editing passes, and quality control.</p>
+          <div class="card-spec">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M9 9v11"/></svg>22 lessons</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>2h 50m</span>
+          </div>
+          <div class="card-foot">
+            <span class="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg>4.6</span>
+            <span class="price">$69</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb th-copper">
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M8 24h8M32 24h8M24 8v8M24 32v8"/><circle cx="24" cy="24" r="6"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-cat">AI</span>
+          <h3 class="card-title">Prompt Engineering for Course Creators</h3>
+          <p class="card-desc">Outline, script, and produce course material faster — prompt patterns tuned for curriculum design and lesson writing.</p>
+          <div class="card-spec">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M9 9v11"/></svg>18 lessons</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>2h 15m</span>
+          </div>
+          <div class="card-foot">
+            <span class="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg>4.7</span>
+            <span class="price">$59</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="product.html">
+        <div class="thumb th-wine2">
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M8 12h32v24H8z"/><path d="M8 20h32M14 28h12"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-cat">AI</span>
+          <h3 class="card-title">Build an AI-Powered Newsletter Business</h3>
+          <p class="card-desc">Research, write, and monetize a niche newsletter with an AI-assisted production system — from zero to paid subscribers.</p>
+          <div class="card-spec">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M9 9v11"/></svg>38 lessons</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>6h 10m</span>
+          </div>
+          <div class="card-foot">
+            <span class="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.7-4.95 4.5 1.4 6.54L12 16.77 6.05 20l1.4-6.54L2.5 8.96l6.6-.7L12 2z"/></svg>4.9</span>
+            <span class="price">$117</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <nav class="pager" aria-label="Pagination">
+      <a href="#" aria-label="Previous page">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+      </a>
+      <span class="current" aria-current="page">1</span>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#" aria-label="Next page">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </nav>
+  </section>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="home.html">uthena<span class="dot"></span></a>
+      <p>The home for digital product entrepreneurs. Courses, tools, and assets you can rebrand, resell, and run your business on.</p>
+      <div class="news">
+        <input type="email" placeholder="Your email" aria-label="Email address">
+        <button type="button">Subscribe</button>
+      </div>
+      <p class="news-note">One email a month. New releases and partner case studies.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Marketplace</h4>
+      <a href="category.html">All courses</a>
+      <a href="category.html">AI courses</a>
+      <a href="#">Bundles</a>
+      <a href="#">New releases</a>
+      <a href="#">Top sellers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Earn</h4>
+      <a href="#">Sell your courses</a>
+      <a href="#">Affiliate program</a>
+      <a href="#">Partner stories</a>
+      <a href="#">Payouts</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">FAQ</a>
+      <a href="#">Support</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">License terms</a>
+      <a href="#">Terms of service</a>
+      <a href="#">Privacy</a>
+      <a href="#">Refund policy</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 Uthena</span>
+    <span>Buy once. Sell as your own.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var chipsWrap = document.getElementById('chips');
+  var clearBtn = document.getElementById('clearAll');
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.fopt input[type="checkbox"]'));
+
+  function renderChips(){
+    chipsWrap.querySelectorAll('.chip').forEach(function(c){ c.remove(); });
+    var checked = boxes.filter(function(b){ return b.checked; });
+    checked.forEach(function(b){
+      var chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.appendChild(document.createTextNode(b.dataset.label));
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.setAttribute('aria-label', 'Remove filter ' + b.dataset.label);
+      x.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+      x.addEventListener('click', function(){
+        b.checked = false;
+        renderChips();
+      });
+      chip.appendChild(x);
+      chipsWrap.insertBefore(chip, clearBtn);
+    });
+    clearBtn.style.display = checked.length ? '' : 'none';
+  }
+
+  boxes.forEach(function(b){ b.addEventListener('change', renderChips); });
+  clearBtn.addEventListener('click', function(){
+    boxes.forEach(function(b){ b.checked = false; });
+    renderChips();
+  });
+  renderChips();
+
+  // Grid / list toggle
+  var grid = document.getElementById('grid');
+  var gBtn = document.getElementById('viewGrid');
+  var lBtn = document.getElementById('viewList');
+  function setView(list){
+    grid.classList.toggle('list-view', list);
+    gBtn.setAttribute('aria-pressed', String(!list));
+    lBtn.setAttribute('aria-pressed', String(list));
+  }
+  gBtn.addEventListener('click', function(){ setView(false); });
+  lBtn.addEventListener('click', function(){ setView(true); });
+})();
+</script>
+
+</body>
+</html>

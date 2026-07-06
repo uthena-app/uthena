@@ -1,0 +1,101 @@
+/* Admin payouts loading fallback — header + stats + by-partner +
+   ledger. Token-only. Mirrors admin/payouts/page.module.css. */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5) var(--space-9);
+}
+
+.header {
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-7);
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--space-4);
+}
+
+.byPartner {
+  margin-bottom: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.listRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+}
+
+.ledgerSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.entries {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 1fr 100px 140px 100px;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+
+.entry:last-child {
+  border-bottom: none;
+}
+
+.entryMain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .entry {
+    grid-template-columns: 1fr;
+  }
+}

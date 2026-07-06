@@ -1,0 +1,115 @@
+/* /affiliate loading skeleton. Token-only; pulse animation respects
+   prefers-reduced-motion (handled by the Skeleton primitive's CSS). */
+
+.wrap {
+  max-width: 720px;
+}
+
+.eyebrow,
+.h1,
+.lede,
+.cardEyebrow,
+.cardH,
+.cardLine,
+.cardLineShort,
+.cardListItem {
+  background: var(--bg-elev-2);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.eyebrow {
+  width: 96px;
+  height: 11px;
+  margin-bottom: 12px;
+}
+
+.h1 {
+  width: 280px;
+  height: 28px;
+  margin-bottom: 12px;
+}
+
+.lede {
+  width: 420px;
+  height: 16px;
+  margin-bottom: 32px;
+}
+
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.cardEyebrow {
+  width: 72px;
+  height: 11px;
+  margin-bottom: 12px;
+}
+
+.cardH {
+  width: 320px;
+  height: 20px;
+  margin-bottom: 16px;
+}
+
+.cardLine {
+  width: 100%;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.cardLineShort {
+  width: 80%;
+  height: 14px;
+  margin-bottom: 20px;
+}
+
+.cardListItem {
+  width: 90%;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.cardListItem:nth-child(odd) {
+  width: 75%;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .h1,
+  .lede,
+  .cardEyebrow,
+  .cardH,
+  .cardLine,
+  .cardLineShort,
+  .cardListItem {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 24px 20px;
+  }
+  .h1 {
+    width: 220px;
+  }
+  .lede {
+    width: 320px;
+  }
+}

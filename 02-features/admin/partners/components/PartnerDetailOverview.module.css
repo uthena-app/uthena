@@ -1,0 +1,214 @@
+/* PartnerDetailOverview — token-only CSS. Mirrors the customer overview
+   layout (section card grid + 4-card stats + definition list). */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-6, 24px);
+  max-width: 960px;
+}
+
+.section {
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  border-radius: var(--radius-md, 8px);
+  padding: 16px 20px;
+  background: var(--bg-elev-1, #fff);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.h2 {
+  font-size: var(--font-size-lg, 18px);
+  font-weight: 600;
+  margin: 0;
+  color: var(--fg, #111);
+}
+
+/* Status badges — partner status + KYC + tax. The colors map onto
+   the design system: pending/suspended/none = warn, approved = success,
+   rejected = danger. */
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.status,
+.statusSub {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--font-size-xs, 12px);
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.status[data-status='pending'] {
+  background: var(--warn-soft, rgba(217, 119, 6, 0.08));
+  border-color: var(--warn-line, rgba(217, 119, 6, 0.25));
+  color: var(--warn-fg, #92400e);
+}
+.status[data-status='approved'] {
+  background: var(--success-soft, rgba(22, 163, 74, 0.08));
+  border-color: var(--success-line, rgba(22, 163, 74, 0.25));
+  color: var(--success-fg, #166534);
+}
+.status[data-status='suspended'] {
+  background: var(--danger-soft, rgba(220, 38, 38, 0.08));
+  border-color: var(--danger-line, rgba(220, 38, 38, 0.30));
+  color: var(--danger-fg, #991b1b);
+}
+
+/* KYC sub-status — same shape, distinct tone. */
+.statusSub[data-status='none'] {
+  background: var(--bg-elev-2, #fafafa);
+  border-color: var(--line, rgba(0, 0, 0, 0.08));
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+}
+.statusSub[data-status='pending'] {
+  background: var(--warn-soft, rgba(217, 119, 6, 0.08));
+  border-color: var(--warn-line, rgba(217, 119, 6, 0.25));
+  color: var(--warn-fg, #92400e);
+}
+.statusSub[data-status='approved'] {
+  background: var(--success-soft, rgba(22, 163, 74, 0.08));
+  border-color: var(--success-line, rgba(22, 163, 74, 0.25));
+  color: var(--success-fg, #166534);
+}
+.statusSub[data-status='rejected'] {
+  background: var(--danger-soft, rgba(220, 38, 38, 0.08));
+  border-color: var(--danger-line, rgba(220, 38, 38, 0.30));
+  color: var(--danger-fg, #991b1b);
+}
+.statusSub[data-status='submitted'] {
+  background: var(--accent-soft, rgba(234, 88, 12, 0.08));
+  border-color: var(--accent-line, rgba(234, 88, 12, 0.25));
+  color: var(--accent-fg, #9a3412);
+}
+
+/* 6-card stats grid (revenue / paid out / courses / students /
+   orders / refund rate) */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--gap-3, 12px);
+}
+
+.statCard {
+  padding: 12px 14px;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.06));
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-elev-2, #fafafa);
+}
+
+.statLabel {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 6px 0;
+}
+
+.statValue {
+  font-size: var(--font-size-lg, 18px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  color: var(--fg, #111);
+}
+
+/* Contact + identity sections — definition list */
+.dl {
+  display: grid;
+  grid-template-columns: minmax(140px, max-content) 1fr;
+  gap: 8px 24px;
+  margin: 0;
+}
+
+.dlRow {
+  display: contents;
+}
+
+.dt {
+  font-size: var(--font-size-sm, 13px);
+  font-weight: 500;
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.04));
+}
+
+.dd {
+  font-size: var(--font-size-sm, 13px);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg, #111);
+  margin: 0;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line, rgba(0, 0, 0, 0.04));
+  word-break: break-word;
+}
+
+.dd[data-pii='masked'] {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 0.02em;
+}
+
+.unset {
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  font-style: italic;
+}
+
+.maskHint {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--fg-muted, rgba(0, 0, 0, 0.6));
+  margin: 12px 0 0 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg-elev-2, #fafafa);
+  border-left: 3px solid var(--accent, #ea580c);
+}
+
+.code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--font-size-xs, 12px);
+  padding: 1px 6px;
+  background: var(--bg-elev-2, #fafafa);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.06));
+  border-radius: var(--radius-sm, 4px);
+}
+
+.link {
+  color: var(--accent, #ea580c);
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.link:hover {
+  color: var(--accent-fg, #9a3412);
+}
+
+@media (max-width: 900px) {
+  .statsRow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dl {
+    grid-template-columns: minmax(120px, max-content) 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .statsRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .statsRow {
+    grid-template-columns: 1fr;
+  }
+}

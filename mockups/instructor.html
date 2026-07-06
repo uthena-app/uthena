@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard — Partner portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design-system-dark.css">
+<style>
+  .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  @media (max-width: 960px) { .app { grid-template-columns: 1fr; } .sb-app { display: none; } }
+  .sb-app { background: var(--bg-base); border-right: 1px solid var(--border); padding: 16px 12px; display: flex; flex-direction: column; gap: 2px; }
+  .sb-logo { padding: 8px 12px 16px; }
+  .sb-section { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); padding: 12px 12px 6px; font-weight: 600; }
+  .sb-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: var(--r-sm); color: var(--text-2); font-size: 13.5px; cursor: pointer; }
+  .sb-item:hover { background: var(--bg-1); color: var(--text-1); }
+  .sb-item.active { background: var(--bg-1); color: var(--text-1); box-shadow: inset 0 0 0 1px var(--border); }
+  .sb-item .num { margin-left: auto; background: var(--bg-1); color: var(--text-3); padding: 1px 6px; border-radius: 3px; font-size: 10.5px; font-family: var(--font-mono); }
+  .sb-item svg { color: var(--text-3); }
+  .sb-item.active svg { color: var(--accent); }
+  .sb-bottom { margin-top: auto; padding: 12px; border-top: 1px solid var(--border); }
+  .sb-user { display: flex; gap: 10px; align-items: center; padding: 6px; border-radius: var(--r-sm); cursor: pointer; }
+  .sb-user:hover { background: var(--bg-1); }
+  .sb-user .av { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--text-1); border: 1px solid var(--border-2); }
+  .sb-user .uname { font-size: 12.5px; font-weight: 500; }
+  .sb-user .uemail { font-size: 11px; color: var(--text-3); }
+
+  .topbar { height: 56px; padding: 0 24px; border-bottom: 1px solid var(--border); background: var(--bg-base); display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+  .tb-title { font-size: 14.5px; font-weight: 600; }
+  .tb-actions { margin-left: auto; display: flex; gap: 6px; }
+
+  .main { padding: 24px 32px 80px; max-width: 1400px; }
+  @media (max-width: 640px) { .main { padding: 16px; } }
+
+  .page-head { margin-bottom: 24px; }
+  .page-head h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.015em; }
+  .page-head .sub { color: var(--text-2); font-size: 13.5px; margin-top: 4px; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  @media (max-width: 900px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px 18px; }
+  .stat .l { font-size: 11.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; font-weight: 600; }
+  .stat .v { font-family: var(--font-mono); font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+  .stat .delta { font-size: 11.5px; color: var(--text-3); margin-top: 4px; font-family: var(--font-mono); display: flex; align-items: center; gap: 4px; }
+  .stat .delta.up { color: var(--success); }
+  .stat .delta.down { color: var(--danger); }
+
+  .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+  @media (max-width: 1000px) { .grid-2-1 { grid-template-columns: 1fr; } }
+
+  .panel { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md); }
+  .panel-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .panel-head h3 { font-size: 13.5px; font-weight: 600; }
+  .panel-body { padding: 16px; }
+
+  .chart { height: 220px; }
+  .seg { display: inline-flex; background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 2px; }
+  .seg button { padding: 4px 9px; border-radius: 5px; font-size: 11.5px; color: var(--text-2); }
+  .seg button.active { background: var(--bg-2); color: var(--text-1); }
+
+  .payout {
+    background: var(--bg-brand); border: 1px solid var(--accent-line); border-radius: var(--r-md);
+    padding: 18px 22px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin-bottom: 20px;
+  }
+  @media (max-width: 700px) { .payout { grid-template-columns: 1fr; } }
+  .payout .lbl { font-size: 11.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .payout .amt { font-family: var(--font-mono); font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin: 6px 0; color: var(--accent); }
+  .payout .meta { font-size: 12.5px; color: var(--text-2); }
+  .payout .meta strong { color: var(--text-1); font-weight: 500; }
+  .payout .acts { display: flex; gap: 6px; }
+
+  .table-wrap { border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); font-weight: 600; padding: 11px 16px; border-bottom: 1px solid var(--border); background: var(--bg-1); }
+  td { padding: 13px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-2); }
+
+  .perf-row { display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); }
+  .perf-row:last-child { border-bottom: none; }
+  .perf-row .nm { font-size: 13.5px; font-weight: 500; }
+  .perf-row .mt { font-size: 11.5px; color: var(--text-3); margin-top: 1px; font-family: var(--font-mono); }
+  .perf-row .v { font-family: var(--font-mono); font-size: 13.5px; font-weight: 600; text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sb-app">
+    <div class="sb-logo">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-word">uthena</span><span class="logo-mark-dot"></span>
+      </a>
+    </div>
+
+    <div class="sb-section">Partner portal</div>
+    <a class="sb-item active" href="instructor.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <a class="sb-item" href="upload.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+      Upload course
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
+      My courses <span class="num">14</span>
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Sales
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Payouts
+    </a>
+
+    <div class="sb-section">Analytics</div>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      Performance
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+      Affiliates
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Reviews <span class="num">3</span>
+    </a>
+
+    <div class="sb-section">Settings</div>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Payout details
+    </a>
+    <a class="sb-item" href="#">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+      API &amp; webhooks
+    </a>
+
+    <div class="sb-bottom">
+      <div class="sb-user">
+        <div class="av">TJ</div>
+        <div>
+          <div class="uname">TJ Walker</div>
+          <div class="uemail">tj@uthena.com</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <div class="tb-title">Dashboard</div>
+      <div class="tb-actions">
+        <a href="upload.html" class="btn btn-primary btn-sm">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Upload new course
+        </a>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="page-head">
+        <h1>Welcome back, TJ</h1>
+        <div class="sub">Here's how your courses performed in the last 30 days.</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="l">Revenue · 30d</div>
+          <div class="v">$24,381</div>
+          <div class="delta up">▲ 23.4% vs prev</div>
+        </div>
+        <div class="stat">
+          <div class="l">Sales · 30d</div>
+          <div class="v">147</div>
+          <div class="delta up">▲ 12 today</div>
+        </div>
+        <div class="stat">
+          <div class="l">Active students</div>
+          <div class="v">18,420</div>
+          <div class="delta up">▲ 1,204 this month</div>
+        </div>
+        <div class="stat">
+          <div class="l">Avg. rating</div>
+          <div class="v">4.9</div>
+          <div class="delta">across 14 courses</div>
+        </div>
+      </div>
+
+      <div class="payout">
+        <div>
+          <div class="lbl">Next payout · via PayPal Mass Payout</div>
+          <div class="amt">$14,628.60</div>
+          <div class="meta">Scheduled for <strong>Apr 1, 2026</strong> · 47 transactions · $50 minimum cleared</div>
+        </div>
+        <div class="acts">
+          <a href="#" class="btn btn-secondary">View history</a>
+          <a href="#" class="btn btn-primary">Request early</a>
+        </div>
+      </div>
+
+      <div class="grid-2-1">
+        <div>
+          <div class="panel mb-4">
+            <div class="panel-head">
+              <h3>Revenue · 30 days</h3>
+              <div class="seg">
+                <button>7d</button>
+                <button class="active">30d</button>
+                <button>90d</button>
+                <button>1y</button>
+                <button>All</button>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="chart">
+                <svg viewBox="0 0 800 220" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                  <defs>
+                    <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#14A89A" stop-opacity="0.20"/>
+                      <stop offset="100%" stop-color="#14A89A" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <line x1="0" y1="55" x2="800" y2="55" stroke="#1E2128" stroke-dasharray="2 4"/>
+                  <line x1="0" y1="110" x2="800" y2="110" stroke="#1E2128" stroke-dasharray="2 4"/>
+                  <line x1="0" y1="165" x2="800" y2="165" stroke="#1E2128" stroke-dasharray="2 4"/>
+                  <path d="M0,180 L40,160 L80,170 L120,140 L160,150 L200,120 L240,135 L280,100 L320,115 L360,90 L400,80 L440,95 L480,70 L520,85 L560,55 L600,75 L640,50 L680,65 L720,40 L760,55 L800,30 L800,220 L0,220 Z" fill="url(#g1)"/>
+                  <path d="M0,180 L40,160 L80,170 L120,140 L160,150 L200,120 L240,135 L280,100 L320,115 L360,90 L400,80 L440,95 L480,70 L520,85 L560,55 L600,75 L640,50 L680,65 L720,40 L760,55 L800,30" fill="none" stroke="#14A89A" stroke-width="1.5"/>
+                  <circle cx="800" cy="30" r="3" fill="#14A89A"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Recent sales</h3>
+              <a href="#" style="font-size: 12.5px; color: var(--text-2);">Export CSV →</a>
+            </div>
+            <div class="table-wrap" style="border: none; border-radius: 0;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Course</th>
+                    <th>License</th>
+                    <th>Date</th>
+                    <th style="text-align: right;">Your share</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-family: var(--font-mono); color: var(--text-3);">UT-98421</td>
+                    <td>AI for Personal Branding</td>
+                    <td><span class="badge badge-mute">PLR + MRR</span></td>
+                    <td class="t-faint">Mar 28, 14:32</td>
+                    <td style="font-family: var(--font-mono); text-align: right;">$298.20</td>
+                    <td><span class="badge badge-success badge-dot">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-mono); color: var(--text-3);">UT-98420</td>
+                    <td>Generative AI for Leaders</td>
+                    <td><span class="badge badge-mute">PLR</span></td>
+                    <td class="t-faint">Mar 28, 12:18</td>
+                    <td style="font-family: var(--font-mono); text-align: right;">$358.20</td>
+                    <td><span class="badge badge-success badge-dot">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-mono); color: var(--text-3);">UT-98419</td>
+                    <td>Public Speaking Mastery</td>
+                    <td><span class="badge badge-mute">PLR + MRR</span></td>
+                    <td class="t-faint">Mar 28, 09:04</td>
+                    <td style="font-family: var(--font-mono); text-align: right;">$238.20</td>
+                    <td><span class="badge badge-warn badge-dot">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-mono); color: var(--text-3);">UT-98418</td>
+                    <td>AI for Personal Branding</td>
+                    <td><span class="badge badge-mute">PLR</span></td>
+                    <td class="t-faint">Mar 27, 21:48</td>
+                    <td style="font-family: var(--font-mono); text-align: right;">$238.20</td>
+                    <td><span class="badge badge-success badge-dot">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-family: var(--font-mono); color: var(--text-3);">UT-98417</td>
+                    <td>AI for Personal Branding</td>
+                    <td><span class="badge badge-mute">Whitelabel</span></td>
+                    <td class="t-faint">Mar 27, 19:11</td>
+                    <td style="font-family: var(--font-mono); text-align: right;">$118.20</td>
+                    <td><span class="badge badge-danger badge-dot">Refunded</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel mb-4">
+            <div class="panel-head"><h3>My courses</h3><a href="#" style="font-size: 12.5px; color: var(--text-2);">All 14 →</a></div>
+            <div class="panel-body">
+              <div class="perf-row">
+                <div>
+                  <div class="nm">AI for Personal Branding</div>
+                  <div class="mt">$497 · 1,847 sold</div>
+                </div>
+                <div class="v">$11,489</div>
+                <div><span class="badge badge-success badge-dot">Live</span></div>
+              </div>
+              <div class="perf-row">
+                <div>
+                  <div class="nm">Generative AI for Leaders</div>
+                  <div class="mt">$597 · 432 sold</div>
+                </div>
+                <div class="v">$4,217</div>
+                <div><span class="badge badge-success badge-dot">Live</span></div>
+              </div>
+              <div class="perf-row">
+                <div>
+                  <div class="nm">Public Speaking Mastery</div>
+                  <div class="mt">$397 · 2,184 sold</div>
+                </div>
+                <div class="v">$8,675</div>
+                <div><span class="badge badge-success badge-dot">Live</span></div>
+              </div>
+              <div class="perf-row">
+                <div>
+                  <div class="nm">AI Clone Workshop</div>
+                  <div class="mt">Draft · 0 sold</div>
+                </div>
+                <div class="v t-faint">$0</div>
+                <div><span class="badge badge-warn badge-dot">In review</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h3>What to fix</h3></div>
+            <div class="panel-body">
+              <div class="perf-row">
+                <div>
+                  <div class="nm">Add 4K source to AI for Personal Branding</div>
+                  <div class="mt">3 buyers requested higher resolution</div>
+                </div>
+                <div class="v" style="color: var(--accent);">Fix →</div>
+              </div>
+              <div class="perf-row">
+                <div>
+                  <div class="nm">Update sales page copy</div>
+                  <div class="mt">Conversion dropped 12% this week</div>
+                </div>
+                <div class="v" style="color: var(--accent);">Fix →</div>
+              </div>
+              <div class="perf-row">
+                <div>
+                  <div class="nm">Resolve 1 review complaint</div>
+                  <div class="mt">Refund request pending since Mar 22</div>
+                </div>
+                <div class="v" style="color: var(--accent);">Fix →</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

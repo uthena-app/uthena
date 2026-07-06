@@ -1,0 +1,59 @@
+/* ============================================================
+   Uthena v4 — LIGHT theme (demo)
+   Mirrors 00-foundations/design/design-system-light.css
+   Applied when <html data-theme="light">.
+   ============================================================ */
+
+[data-theme="light"] {
+  --bg:           #FAF9F5;
+  --bg-elev-1:    #FFFFFF;
+  --bg-elev-2:    #F2EFE8;
+  --bg-elev-3:    #EAE6DC;
+  --bg-inset:     #F2EFE8;
+  --bg-brand:     rgba(26, 188, 156, 0.06);
+
+  --line:         #E5E1D6;
+  --line-strong:  #D5D0C2;
+
+  --heading:      #0B0C0D;
+  --text-1:       #0B0C0D;
+  --text-2:       #2A2D32;
+  --text-3:       #6B6F7A;
+  --text-4:       #A0A4AC;
+
+  --action:        #F3924A;
+  --action-hover:  #E57A2A;
+  --action-soft:   rgba(243, 146, 74, 0.16);
+  --action-line:   rgba(243, 146, 74, 0.40);
+  --action-glow:   rgba(243, 146, 74, 0.35);
+
+  --accent:        #1ABC9C;
+  --accent-hover:  #159A82;
+  --accent-soft:   rgba(26, 188, 156, 0.14);
+  --accent-line:   rgba(26, 188, 156, 0.40);
+  --accent-glow:   rgba(26, 188, 156, 0.35);
+
+  --footer-bg:    #15181B;
+  --footer-fg:    #ECECEE;
+  --footer-line:  #2A2F35;
+
+  --success:        #2E8B5F;
+  --success-soft:   rgba(46, 139, 95, 0.10);
+  --success-line:   rgba(46, 139, 95, 0.25);
+  --warn:           #B8860B;
+  --warn-soft:      rgba(184, 134, 11, 0.10);
+  --warn-line:      rgba(184, 134, 11, 0.25);
+  --danger:         #C73E3E;
+  --danger-soft:    rgba(199, 62, 62, 0.10);
+  --danger-line:    rgba(199, 62, 62, 0.25);
+  --info:           #4561D8;
+  --info-soft:      rgba(69, 97, 216, 0.10);
+  --info-line:      rgba(69, 97, 216, 0.25);
+
+  --shadow-sm:   0 1px 2px rgba(40, 35, 20, 0.05);
+  --shadow-md:   0 4px 16px rgba(40, 35, 20, 0.08);
+  --shadow-lg:   0 12px 36px rgba(40, 35, 20, 0.10);
+  --shadow-glow: 0 0 0 1px var(--accent-line), 0 6px 20px rgba(26, 188, 156, 0.14);
+}
+
+[data-theme="light"] ::selection { background: var(--action); color: #FFFFFF; }

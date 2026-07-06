@@ -1,0 +1,74 @@
+/* Product rating row — the metadata strip under the product title.
+ * Mockup-faithful to `mockups/styles/main.css` lines 275–278
+ * (`.pinfo .vrow`).
+ *
+ * Layout: a single horizontal row with hairline separators
+ * (· glyphs, dim color) between the rating, byline, and ID badge.
+ * The row wraps naturally on narrow viewports.
+ *
+ * Colors:
+ *   - Stars: var(--star) (== var(--action) per tokens.css)
+ *   - Numeric rating: var(--heading) (bold)
+ *   - "X reviews" / separators: var(--text-soft)
+ *   - Partner link: var(--teal) on hover
+ *   - ID badge: var(--font-mono) for the SKU look
+ */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  font-size: 12px;
+  color: var(--text-soft);
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.stars {
+  color: var(--star);
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+
+.rating b {
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.dim {
+  color: var(--text-soft);
+}
+
+.sep {
+  color: var(--text-faint);
+  user-select: none;
+}
+
+.byline {
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.partnerLink {
+  color: var(--teal);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.partnerLink:hover {
+  text-decoration: underline;
+}
+
+.partnerLink:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.idBadge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: 0.04em;
+}
