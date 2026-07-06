@@ -1,0 +1,127 @@
+# .github/workflows/ci.yml
+#
+# ci — the main gate. Referenced by db-types.yml (which assumed this
+# file existed; it now does). Three parallel jobs:
+#
+#   checks     — pnpm check:all (typecheck, lint, spec/RLS/enum/no-todo/
+#                PII/security-header scripts) + the full vitest suite.
+#   migrations — fresh-database bootstrap of every migration in order
+#                against Postgres 16 + db:verify. Proves a new
+#                environment (CI, Coolify, a new dev machine) can be
+#                stood up from the repo alone.
+#   build      — production `next build` with placeholder env. Proves
+#                the image Coolify builds from infra/Dockerfile will
+#                compile. Placeholder values satisfy env validation;
+#                integration seams are env-gated and fail closed.
+#
+# Keep these green: Coolify auto-deploys whatever lands on main.
+
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Placeholder env for build/tests. Real values live in Coolify only.
+  NEXT_PUBLIC_APP_URL: http://localhost:3000
+  NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-anon-key
+  SUPABASE_SERVICE_ROLE_KEY: ci-placeholder-service-role-key
+  AUTH_SECRET: ci-placeholder-auth-secret-32-chars!!
+  NEXT_TELEMETRY_DISABLED: '1'
+
+jobs:
+  checks:
+    name: Checks + tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: check:all (typecheck, lint, spec/RLS/enum/no-todo/PII/headers)
+        run: pnpm check:all
+
+      - name: Unit + integration tests
+        run: pnpm test
+
+  migrations:
+    name: Fresh-DB migration bootstrap
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 54322:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Bootstrap migrations on a fresh database
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: pnpm db:bootstrap
+
+      - name: Verify bootstrap
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: pnpm db:verify
+
+  build:
+    name: Production build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: next build
+        run: pnpm build

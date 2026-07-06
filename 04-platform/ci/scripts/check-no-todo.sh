@@ -34,9 +34,12 @@ for file in $FILES; do
   case "$rel" in
     */README.md|*/PHASES.md|*/STUBS.md|*/AGENTS.md) continue ;;
   esac
-  if grep -nE "$pattern" "$file" > /dev/null 2>&1; then
+  # References to the audit backlog doc "TODO-HARDENING.md" are
+  # legitimate citations, not placeholders — strip the doc name before
+  # matching so a real TODO on the same line still flags.
+  if sed 's/TODO-HARDENING//g' "$file" | grep -nE "$pattern" > /dev/null 2>&1; then
     echo "  [x] $rel"
-    grep -nE "$pattern" "$file" | head -3 | sed 's/^/      /'
+    sed 's/TODO-HARDENING//g' "$file" | grep -nE "$pattern" | head -3 | sed 's/^/      /'
     violations=$((violations + 1))
   fi
   if grep -nE "$context_pattern" "$file" > /dev/null 2>&1; then

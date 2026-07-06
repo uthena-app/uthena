@@ -10,6 +10,7 @@ test-results
 output
 *.tsbuildinfo
 next-env.d.ts
+vitest.config.ts.timestamp-*
 
 # secrets
 .env

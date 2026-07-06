@@ -1,6 +1,8 @@
 # Uthena — Go-Live Finalization: Progress & Resume State
 
-> Live checkpoint. Last updated **2026-07-03** by the finalization run. Read this first to resume. Companion docs: `AUDIT-2026-07-03.md`, `TODO-HARDENING.md`, `DECISIONS-NEEDED.md` (all owner decisions D1–D15 are answered in that file).
+> **2026-07-06 — SUPERSEDED as the live task list.** The repo moved to GitHub (`uthena-app/uthena`); the "⏳ REMAINING" work below is now tracked task-by-task in [`TODO-GO-LIVE.md`](./TODO-GO-LIVE.md) — work from there. This file stays as the record of what the 2026-07-03 run landed (§DONE) and its caveats.
+>
+> Live checkpoint. Last updated **2026-07-03** by the finalization run. Companion docs: `AUDIT-2026-07-03.md`, `TODO-HARDENING.md`, `DECISIONS-NEEDED.md` (all owner decisions D1–D15 are answered in that file).
 
 ## Where we are
 
@@ -45,10 +47,10 @@ Finalizing the repo for production. Decisions are all made. Work is partitioned 
 
 **Deferred / post-launch (owner-approved):** SEC-4 CSP nonces (D12 post-launch), light theme toggle (D4), QLT-7 full limiter consolidation (removing the 8 Maps), QLT-3 nice-to-have.
 
-**Owner's own tasks (not code):** D1 `git init` + private remote; D2 verify `.env.local` never committed, rotate service-role + AUTH_SECRET if it was.
+**Owner's own tasks (not code):** ~~D1 `git init` + private remote~~ ✅ done 2026-07-06 (`uthena-app/uthena`, private, clean initial commit); ~~D2 verify `.env.local` never committed~~ ✅ verified 2026-07-06 — the GitHub history contains no `.env*` file, so no rotation needed unless the file was shared by other means.
 
 ## Reserved migration numbers
-Used: 0026 (renamed), 0066, 0067 (A), 0070, 0071, 0072 (B). Reserved: **0085** for D (min_price_cents). Next free for any new work: 0086+.
+Used: 0026 (renamed), 0066, 0067 (A), 0070, 0071, 0072 (B), 0086 (refund_status 'approved', 2026-07-06). Reserved: **0085** for D (min_price_cents). Next free for any new work: 0087+.
 
 ## Verify next (central, orchestrator-owned — agents were told NOT to run tsc/vitest to avoid incremental-cache races)
 1. **Recreate the vitest native shim** (node_modules is macOS-arm64; the Linux sandbox needs Linux binaries; `/tmp` shims are ephemeral per session):
@@ -67,6 +69,6 @@ Used: 0026 (renamed), 0066, 0067 (A), 0070, 0071, 0072 (B). Reserved: **0085** f
 4. `next build` is NOT runnable here (native SWC is macOS) — run on the Mac before launch.
 
 ## Known caveats
-- Verification here is typecheck + lint + vitest only; no `next build`, no dev-server/e2e (sandbox is Linux, deps are macOS). Real build + smoke of auth/checkout/player must run on the Mac.
+- ~~Verification here is typecheck + lint + vitest only; no `next build`, no dev-server/e2e (sandbox is Linux, deps are macOS). Real build + smoke of auth/checkout/player must run on the Mac.~~ **Obsolete 2026-07-06:** the repo now fresh-installs on Linux — typecheck + lint + full vitest re-verified green, and `.github/workflows/ci.yml` runs check:all + tests + fresh-DB migration bootstrap + `next build` on every PR. Manual smoke of auth/checkout/player still pending (needs a deployed environment — see `docs/DEPLOYMENT.md`).
 - A used Web Crypto (async) for the maintenance HMAC — deliberate (Edge runtime). This rippled `middleware()` to async; watch for any middleware test asserting a sync return.
 - Stripe live needs Dashboard event subscriptions (dispute/*, payment_failed, session.expired) + Tax enabled; cron for STUB-052 needs scheduling. See B's notes above.
