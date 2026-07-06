@@ -4,14 +4,24 @@ Wholesale PLR video course marketplace. Built from scratch on Next.js 15
 + Supabase + Stripe + Bunny.net, with PostHog for analytics, Gorse for
 recommendations, and Amazon SES for email.
 
-> **Working local + container-first.** No git in the repo for now — the
-> specs in `01-specs/` are the source of truth. The build runs on
-> `localhost` and inside the container at `infra/Dockerfile`.
+> **Repo:** `uthena-app/uthena` (private). Work on a feature branch,
+> PR into `main` — CI (`.github/workflows/ci.yml`) must be green.
+> The specs in `01-specs/` are the source of truth. The build runs on
+> `localhost` and inside the container at `infra/Dockerfile`;
+> production deploys via Coolify — see
+> [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md).
 
 ## Status
 
-The build is sliced into 21 phases — see [`PHASES.md`](./PHASES.md) for
-the full dependency-ordered plan and current status.
+**Finalizing for go-live.** The live task list is
+[`TODO-GO-LIVE.md`](./TODO-GO-LIVE.md) (design/UI + performance
+workstreams, repo chores, owner checklist). Verified 2026-07-06 on a
+fresh Linux install: typecheck clean, lint clean, full vitest suite
+green.
+
+The longer-horizon build plan is sliced into 21 phases — see
+[`PHASES.md`](./PHASES.md) for the full dependency-ordered plan and
+[`docs/PROGRESS.md`](./docs/PROGRESS.md) for the phase checklist.
 
 | Wave | Phases | What |
 |---|---|---|
@@ -38,8 +48,8 @@ cp .env.example .env.local
 pnpm dev
 
 # 5. Open:
-#    - http://localhost:3000
-#    - http://localhost:3000/api/health
+#    - http://localhost:3100   (local dev binds 3100; the production
+#    - http://localhost:3100/api/health        container serves 3000)
 ```
 
 When you don't have Supabase running, the home page still loads — the
@@ -110,8 +120,10 @@ In short:
 - **WYSIWYG from the start.** Long-form content uses the TipTap field
   in `00-foundations/ui/forms/RichTextField.tsx` — no markdown.
 
-## Current phase
+## Current focus
 
-**PH01 in progress.** Scaffold + design tokens + env validation + CI
-scripts + container + working home page. Once the home page boots in
-the container, PH01 ships and we start PH02.
+**Go-live finalization** — work through
+[`TODO-GO-LIVE.md`](./TODO-GO-LIVE.md) top-down (W1 design/UI, W2
+performance/data, W3 repo chores, W5 owner checklist). The 2026-07-03
+audit trail lives in `AUDIT-2026-07-03.md`, `TODO-HARDENING.md`,
+`DECISIONS-NEEDED.md`, and `FINALIZATION-PROGRESS.md`.

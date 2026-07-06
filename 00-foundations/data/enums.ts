@@ -248,7 +248,7 @@ export const ORDER_STATUSES: readonly OrderStatus[] = [
  * `REFUND_STATUS_LABEL` map in
  * `02-features/admin/refunds/types.ts`:
  *   spec `requested` ↔ DB `pending`
- *   spec `approved` ↔ DB `approved` (added in migration 0059 —
+ *   spec `approved` ↔ DB `approved` (added in migration 0086 —
  *     "admin committed, Stripe call in flight, webhook hasn't confirmed
  *     `succeeded` yet")
  *   spec `processed` ↔ DB `succeeded`

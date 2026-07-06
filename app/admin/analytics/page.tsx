@@ -31,7 +31,7 @@ import {
   writeAnalyticsViewAuditLog,
   type AnalyticsRange,
 } from '@features/admin/analytics'
-import styles from './analytics.module.css'
+import styles from './page.module.css'
 
 // P0.21 — `noindex` (also inherited from /admin layout).
 export const metadata: Metadata = sensitivePageMetadata({
