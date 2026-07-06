@@ -95,6 +95,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Bootstrap auth schema (Supabase auth stub — required before migrations)
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: pnpm db:bootstrap:auth
+
       - name: Bootstrap migrations on a fresh database
         env:
           DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
