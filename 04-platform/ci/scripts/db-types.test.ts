@@ -25,7 +25,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it, afterAll } from 'vitest'
 
-import { readGeneratedTypes } from './db-types'
+import { parseCliArgs, readGeneratedTypes } from './db-types'
 
 describe('readGeneratedTypes', () => {
   const tmpDirs: string[] = []
@@ -81,5 +81,27 @@ describe('readGeneratedTypes', () => {
     // throwing. This guards against accidental exceptions in the helper.
     const result = readGeneratedTypes()
     expect(result === null || typeof result === 'string').toBe(true)
+  })
+})
+
+describe('parseCliArgs', () => {
+  it('parses --outputPath=<path> (the form db-types.yml uses)', () => {
+    expect(parseCliArgs(['--outputPath=/tmp/types.generated.ts'])).toEqual({
+      outputPath: '/tmp/types.generated.ts',
+    })
+  })
+
+  it('parses --outputPath <path> (space-separated form)', () => {
+    expect(parseCliArgs(['--outputPath', '/tmp/out.ts'])).toEqual({
+      outputPath: '/tmp/out.ts',
+    })
+  })
+
+  it('ignores an empty value, a missing value, and unknown flags', () => {
+    expect(parseCliArgs(['--outputPath='])).toEqual({})
+    expect(parseCliArgs(['--outputPath'])).toEqual({})
+    expect(parseCliArgs(['--outputPath', '--verbose'])).toEqual({})
+    expect(parseCliArgs(['--unknown', 'x'])).toEqual({})
+    expect(parseCliArgs([])).toEqual({})
   })
 })
