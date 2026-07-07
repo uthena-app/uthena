@@ -93,6 +93,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Bootstrap auth schema (Supabase auth stub — required before migrations)
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: pnpm db:bootstrap:auth
+
       - name: Bootstrap migrations
         env:
           DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
@@ -163,6 +168,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Bootstrap auth schema (Supabase auth stub — required before migrations)
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: pnpm db:bootstrap:auth
+
       - name: Bootstrap migrations
         env:
           DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
@@ -176,13 +186,17 @@ jobs:
       - name: Check for drift
         id: drift
         run: |
-          if git diff --quiet -- 00-foundations/data/types.generated.ts; then
+          # git status --porcelain (not git diff) so a brand-new untracked
+          # types.generated.ts also counts as drift — git diff ignores
+          # untracked files, which would silently drop the first-ever
+          # generation instead of committing it.
+          if [ -z "$(git status --porcelain -- 00-foundations/data/types.generated.ts)" ]; then
             echo "drift=false" >> "$GITHUB_OUTPUT"
             echo "No drift — types are up-to-date."
           else
             echo "drift=true" >> "$GITHUB_OUTPUT"
             echo "Drift detected. The regenerated file will be committed."
-            git diff --stat -- 00-foundations/data/types.generated.ts
+            git status --short -- 00-foundations/data/types.generated.ts
           fi
 
       - name: Configure git

@@ -360,6 +360,10 @@
 > Full step-by-step in [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md).
 
 **Repo / GitHub**
+- [ ] **Make the repository PRIVATE** (Settings → General → Danger
+  Zone → Change visibility). As of 2026-07-06 `uthena-app/uthena` is
+  **public** — the entire product source, specs, and business docs are
+  world-readable. D1's intent was a private remote.
 - [ ] Set `main` as the default branch (Settings → General → Default
   branch) — the first-pushed branch is currently the default.
 - [ ] Protect `main`: require the `ci` checks before merge.

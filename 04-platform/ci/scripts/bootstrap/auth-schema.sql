@@ -1,3 +1,23 @@
+-- Supabase cluster-level roles. A real Supabase instance creates these
+-- at the cluster tier, so `pg_dump --schema=auth` never captures them —
+-- but the migrations' GRANTs and RLS policies reference all three, so a
+-- plain-Postgres bootstrap (CI, docker-compose) fails with
+-- 'role "anon" does not exist' without this block. Idempotent; NOLOGIN
+-- suffices for grant/policy resolution (nothing authenticates as them
+-- outside Supabase). service_role carries BYPASSRLS to mirror Supabase.
+do $$
+begin
+  if not exists (select 1 from pg_roles where rolname = 'anon') then
+    create role anon nologin;
+  end if;
+  if not exists (select 1 from pg_roles where rolname = 'authenticated') then
+    create role authenticated nologin;
+  end if;
+  if not exists (select 1 from pg_roles where rolname = 'service_role') then
+    create role service_role nologin bypassrls;
+  end if;
+end $$;
+
 -- Pre-stubs so the dump's trigger references resolve. See
 -- 0001_handle_new_user.sql for the canonical body; we inline a minimal
 -- version here to avoid the migration-order trap (the trigger fires

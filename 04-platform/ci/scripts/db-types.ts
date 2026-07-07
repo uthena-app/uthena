@@ -254,8 +254,35 @@ function isDirectInvocation(): boolean {
   return process.argv[1].endsWith('db-types.ts') || process.argv[1].endsWith('db-types')
 }
 
+/**
+ * Parse CLI flags into GenerateOptions. The db-types.yml drift check
+ * invokes `pnpm tsx db-types.ts --outputPath=/tmp/types.generated.ts`
+ * so the committed file stays untouched during comparison — before this
+ * parser existed the flag was silently ignored and the wrapper always
+ * wrote to the default committed path. Accepts both `--outputPath=x`
+ * and `--outputPath x` forms; unknown flags are ignored.
+ */
+export function parseCliArgs(argv: readonly string[]): GenerateOptions {
+  const opts: GenerateOptions = {}
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i]
+    if (arg === undefined) continue
+    if (arg.startsWith('--outputPath=')) {
+      const value = arg.slice('--outputPath='.length)
+      if (value) opts.outputPath = value
+    } else if (arg === '--outputPath') {
+      const next = argv[i + 1]
+      if (next && !next.startsWith('--')) {
+        opts.outputPath = next
+        i++
+      }
+    }
+  }
+  return opts
+}
+
 if (isDirectInvocation()) {
-  generateTypes()
+  generateTypes(parseCliArgs(process.argv.slice(2)))
     .then((result) => {
       if (!result.ok && !result.skipped) {
         console.error(`[db:types] aborted: ${result.reason ?? 'unknown error'}`)
